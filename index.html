@@ -117,7 +117,7 @@
   <!-- Rodapé -->
   <footer class="bg-gray-800 text-gray-200 text-center py-4 mt-4">
     <p class="text-sm">
-      &copy; 2025 | Programação Mobile - Prof. Nome Sobrenome. Todos os direitos reservados.
+      &copy; 2025 | Programação Mobile - Prof. Nator Junior. Todos os direitos reservados.
     </p>
   </footer>
 
@@ -133,7 +133,7 @@
     document.addEventListener("DOMContentLoaded", async function() {
       const listaAulas = document.getElementById("aulas-list");
       try {
-        const response = await fetch('./aulas/'); // Ajuste conforme necessário
+        const response = await fetch('aulas/'); // Ajuste conforme necessário
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
