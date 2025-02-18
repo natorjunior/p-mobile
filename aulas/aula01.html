@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 01</title>
+
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="./dist/reveal.css">
+    <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+    <!-- Tema para código -->
+    <link rel="stylesheet" href="./plugin/highlight/monokai.css">
+      <!-- Estilos personalizados -->
+      <style>
+        .reveal h1, .reveal h2 {
+            color: #0056b3;
+        }
+        
+        .reveal pre code {
+            font-size: 1em;
+            background: #222;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .reveal p {
+            font-size: 1.1em;
+        }
+
+        .test-button {
+            background-color: #0056b3;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .test-button:hover {
+            background-color: #003d80;
+        }
+
+        .output {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-top: 5px;
+            color: #333;
+        }
+
+        .comparison-container {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .comparison-box {
+            width: 48%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 - Título -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    Programação para dispositivos Móveis
+                </h2>
+                <p style="color: white; font-size: 1.4em; font-weight: 300; margin-top: 10px;">
+                    Prof. Nator Junior Carvalho da Costa
+                </p>
+            </section>
+            <section>
+
+                <section>
+                    <h3>O que é JSX?</h3>
+                    <p class="fragment fade-in-then-out">JSX é uma extensão da sintaxe do JavaScript que permite escrever HTML dentro do
+                        JavaScript.</p>
+                    <p class="fragment fade-in-then-out">Ele é usado principalmente com o React para definir a estrutura da interface do
+                        usuário.</p>
+                    <p class="fragment fade-in-then-out">JSX é compilado para chamadas `React.createElement()`, tornando a sintaxe mais
+                        intuitiva.</p>
+                </section>
+
+                <section>
+                    <h3>Considere esta declaração de variável:</h3>
+                    <pre><code class="hljs javascript">
+const element = <h1>Hello, world!</h1>;
+                    </code></pre>
+                    <p class="fragment">Este código parece HTML, mas é JSX!</p>
+                    <p class="fragment">JSX permite escrever código declarativo e reutilizável em React.</p>
+                </section>
+
+                <section>
+                    <h3>O que acontece por trás?</h3>
+                    <p class="fragment">O JSX acima é transformado em:</p>
+                    <pre><code class="hljs javascript">
+const element = React.createElement("h1", null, "Hello, world!");
+                    </code></pre>
+                    <p class="fragment">Isso significa que JSX não é obrigatório, mas facilita muito a escrita de
+                        interfaces.</p>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h3>Atividade: Declaração de Variável JSX</h3>
+                    <p class="fragment">Agora é sua vez! Declare uma variável JSX para exibir uma mensagem dinâmica.</p>
+                </section>
+            
+                <section>
+                    <h3>Desafio 1</h3>
+                    <p class="fragment">Crie uma variável chamada `greeting` que exiba a mensagem "Bem-vindo ao React!".</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const greeting = <h1>Bem-vindo ao React!</h1>;
+                    </code></pre>
+                    <p class="fragment fade-in-then-out">Lembre-se: JSX precisa estar dentro de um único elemento pai.</p>
+                </section>
+            
+                <section>
+                    <h3>Desafio 2</h3>
+                    <p class="fragment">Agora, declare uma variável `user` e exiba o nome do usuário dinamicamente.</p>
+                    <pre  class="fragment fade-in-then-out"><code class="hljs javascript">
+const user = "Nator";
+const message = <h2>Olá, {user}!</h2>;
+                    </code></pre>
+                    <p class="fragment">Dica: Use `{ }` para incorporar variáveis em JSX.</p>
+                </section>
+            
+                <section>
+                    <h3>Desafio 3</h3>
+                    <p class="fragment">Crie uma variável `fullName` baseada em um objeto e exiba o nome completo.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const user = { firstName: "Nator", lastName: "Júnior" };
+const fullName = <h3>Olá, {user.firstName} {user.lastName}!</h3>;
+                    </code></pre>
+                    <p class="fragment">JSX pode acessar propriedades de objetos diretamente.</p>
+                </section>
+            
+                <section>
+                    <h3>Agora é com você!</h3>
+                    <p class="fragment">Tente criar uma variável JSX que exiba um número aleatório entre 1 e 100.</p>
+                    <p class="fragment">Use a função `Math.random()` dentro das chaves `{ }`.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const randomNumber = <p>Número aleatório: {Math.floor(Math.random() * 100) + 1}</p>;
+                    </code></pre>
+                    <!-- <p class="fragment">Compartilhe seu código e discuta com a turma!</p> -->
+                </section>
+            </section>
+            
+
+
+            <section>
+                <section>
+                    <h3>Incorporando Expressões em JSX</h3>
+                    <p class="fragment">JSX permite incorporar expressões JavaScript dentro do HTML.</p>
+                    <p class="fragment">Isso torna o código mais dinâmico e interativo.</p>
+                </section>
+            
+                <section>
+                    <h3>Exemplo de Expressão em JSX</h3>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const name = "Nator";
+const element = <h1>Olá, {name}!</h1>;
+                    </code></pre>
+                    <p class="fragment">Aqui, `{name}` é uma expressão JavaScript embutida dentro do JSX.</p>
+                </section>
+            
+                <section>
+                    <h3>Exemplo com Função</h3>
+                    <pre ><code class="hljs javascript">
+function formatName(user) {
+    return user.firstName + " " + user.lastName;
+}
+
+const user = { firstName: "Nator", lastName: "Júnior" };
+
+const element = <h1>Olá, {formatName(user)}!</h1>;
+                    </code></pre>
+                    <p class="fragment">Chamamos uma função diretamente dentro do JSX.</p>
+                </section>
+            
+                <section>
+                    <h3>Operações Matemáticas e Expressões Lógicas</h3>
+                    <pre><code class="hljs javascript">
+const element = <p>A soma de 2 + 2 é {2 + 2}</p>;
+                    </code></pre>
+                    <p class="fragment">Podemos usar operações matemáticas diretamente.</p>
+            
+                    <pre><code class="hljs javascript">
+const isLoggedIn = true;
+const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>;
+                    </code></pre>
+                    <p class="fragment">Expressões lógicas também são válidas dentro do JSX.</p>
+                </section>
+            </section>
+            
+
+        </div>
+    </div>
+
+    <!-- Scripts Reveal.js -->
+    <script src="./dist/reveal.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+
+    <script>
+        Reveal.initialize({
+            center: false,
+            controls: true,
+            progress: true,
+            slideNumber: true,
+            history: true,
+            transition: 'convex',
+            plugins: [RevealHighlight]
+        });
+
+    </script>
+</body>
+
+</html>
