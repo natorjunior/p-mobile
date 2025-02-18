@@ -133,7 +133,7 @@
     document.addEventListener("DOMContentLoaded", async function() {
       const listaAulas = document.getElementById("aulas-list");
       try {
-        const response = await fetch('/aulas/'); // Ajuste conforme necessário
+        const response = await fetch('./aulas/'); // Ajuste conforme necessário
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
