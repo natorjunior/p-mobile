@@ -174,7 +174,7 @@ npx expo start
                     </div>
 
                     <div class="fragment fade-up">
-                        <h3 > e agora ?</h3>
+                        <h3> e agora ?</h3>
                         <pre><code class="hljs javascript">const a = 10;</code></pre>
                     </div>
 
@@ -218,65 +218,7 @@ const element = React.createElement("h1", null, "Hello, world!");
                         interfaces.</p>
                 </section>
             </section>
-            <section>
-                <section>
-                    <h3>Atividade: Declaração de Variável JSX</h3>
-                    <p class="fragment">Agora é sua vez! Declare uma variável JSX para exibir uma mensagem dinâmica.</p>
-                    <pre class="fragment fade-in-then-out"><code class="">import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-    const nome = 'Mundo';
-    return (
-    <View style={{alignItems: 'center'}}>
-        <Text> Olá {nome}</Text>
-    </View>
-    );
-}</code></pre>
-
-    
-                </section>
-
-                <section>
-                    <h3>Desafio 1</h3>
-                    <p class="fragment">Crie uma variável chamada `greeting` que exiba a mensagem "Bem-vindo ao React!".
-                    </p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
-const greeting = <h1>Bem-vindo ao React!</h1>;
-                    </code></pre>
-                    <p class="fragment fade-in-then-out">Lembre-se: JSX precisa estar dentro de um único elemento pai.
-                    </p>
-                </section>
-
-                <section>
-                    <h3>Desafio 2</h3>
-                    <p class="fragment">Agora, declare uma variável `user` e exiba o nome do usuário dinamicamente.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
-const user = "Nator";
-const message = <h2>Olá, {user}!</h2>;
-                    </code></pre>
-                    <p class="fragment">Dica: Use `{ }` para incorporar variáveis em JSX.</p>
-                </section>
-
-                <section>
-                    <h3>Desafio 3</h3>
-                    <p class="fragment">Crie uma variável `fullName` baseada em um objeto e exiba o nome completo.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
-const user = { firstName: "Nator", lastName: "Júnior" };
-const fullName = <h3>Olá, {user.firstName} {user.lastName}!</h3>;
-                    </code></pre>
-                    <p class="fragment">JSX pode acessar propriedades de objetos diretamente.</p>
-                </section>
-
-                <section>
-                    <h3>Agora é com você!</h3>
-                    <p class="fragment">Tente criar uma variável JSX que exiba um número aleatório entre 1 e 100.</p>
-                    <p class="fragment">Use a função `Math.random()` dentro das chaves `{ }`.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
-const randomNumber = <p>Número aleatório: {Math.floor(Math.random() * 100) + 1}</p>;
-                    </code></pre>
-                    <!-- <p class="fragment">Compartilhe seu código e discuta com a turma!</p> -->
-                </section>
-            </section>
 
 
 
@@ -323,6 +265,230 @@ const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>;
                     </code></pre>
                     <p class="fragment">Expressões lógicas também são válidas dentro do JSX.</p>
                 </section>
+
+            </section>
+            <section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
+                <br><br><br><br>
+                <h1 class="text-5xl font-bold mb-4">🧐</h1>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    De onde vem isso ?</h4>
+            </section>
+            <section>
+
+                <section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
+                    <br><br><br><br>
+                    <h1>😱</h1>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                        Isso não é novo</h4>
+                </section>
+
+                <section>
+                    <h3>Variáveis & Interpolação</h3>
+                    <pre class="fragment fade-in-then-out"><code class="hljs php">&lt;?php
+    $nome = "Nator";
+    echo "Olá, $nome!";
+?&gt;</code></pre>
+                </section>
+
+                <section>
+                    <h3>Funções & Exibição Rápida</h3>
+                    <pre class="fragment"><code class="hljs php">&lt;?php
+    $nome = "Nator";
+    function saudacao($nome) {
+        return "Olá, {$nome}!";
+    }
+?&gt;
+
+&lt;h1&gt;Bem-vindo, &lt;?= $nome ?&gt;!&lt;/h1&gt;
+&lt;p&gt;&lt;?= saudacao("Mundo") ?&gt;&lt;/p&gt;</code></pre>
+                </section>
+            </section>
+
+
+
+            <section>
+                <section>
+                    <h3>Atividade: Declaração de Variável JSX</h3>
+                    <p class="fragment">Agora é sua vez! Declare uma variável JSX para exibir uma mensagem dinâmica.
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class="">import { StyleSheet, Text, View } from 'react-native';
+
+export default function App() {
+    const nome = 'Mundo';
+    return (
+    <View style={{alignItems: 'center'}}>
+        <Text> Olá {nome}</Text>
+    </View>
+    );
+}</code></pre>
+
+
+                </section>
+
+                <section>
+                    <h3>Desafio 1</h3>
+                    <p class="fragment">Crie uma variável chamada `greeting` que exiba a mensagem "Bem-vindo ao
+                        React!".
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const greeting = <h1>Bem-vindo ao React!</h1>;
+                    </code></pre>
+                    <p class="fragment fade-in-then-out">Lembre-se: JSX precisa estar dentro de um único elemento
+                        pai.
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Desafio 2</h3>
+                    <p class="fragment">Agora, declare uma variável `user` e exiba o nome do usuário dinamicamente.
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const user = "Nator";
+const message = <h2>Olá, {user}!</h2>;
+                    </code></pre>
+                    <p class="fragment">Dica: Use `{ }` para incorporar variáveis em JSX.</p>
+                </section>
+
+                <section>
+                    <h3>Desafio 3</h3>
+                    <p class="fragment">Crie uma variável `fullName` baseada em um objeto e exiba o nome completo.
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const user = { firstName: "Nator", lastName: "Júnior" };
+const fullName = <h3>Olá, {user.firstName} {user.lastName}!</h3>;
+                    </code></pre>
+                    <p class="fragment">JSX pode acessar propriedades de objetos diretamente.</p>
+                </section>
+
+                <section>
+                    <h3>Agora é com você!</h3>
+                    <p class="fragment">Tente criar uma variável JSX que exiba um número aleatório entre 1 e 100.
+                    </p>
+                    <p class="fragment">Use a função `Math.random()` dentro das chaves `{ }`.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const randomNumber = <p>Número aleatório: {Math.floor(Math.random() * 100) + 1}</p>;
+                    </code></pre>
+                    <!-- <p class="fragment">Compartilhe seu código e discuta com a turma!</p> -->
+                </section>
+            </section>
+
+            <!-- ------------------------------ -->
+            <!-- REVISAO DE JS -->
+
+            <section>
+                <br><br><br><br>
+                <h1>Extra</h1>
+                <h6>Revisão de JS</h6>
+            </section>
+            <section>
+
+                <!-- Atividade 1 -->
+                <section>
+                    <h3>Atividade 1: Soma de dois números</h3>
+                    <p class="fragment">Solicitar dois valores via <code class="hljs javascript">prompt()</code> e exibir a soma.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const a = Number(prompt("Digite o primeiro número:"));
+const b = Number(prompt("Digite o segundo número:"));
+alert("A soma é: " + (a + b));
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 2 -->
+                <section>
+                    <h3>Atividade 2: Imprimir números de 1 a 5</h3>
+                    <p class="fragment">Use um laço de repetição para exibir números sequencialmente.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+for (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 3 -->
+                <section>
+                    <h3>Atividade 3: Calcular média de notas</h3>
+                    <p class="fragment">Dado um array de notas, calcule a média e exiba o resultado.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const notas = [8, 7, 9, 10];
+const soma = notas.reduce((acc, nota) => acc + nota, 0);
+const media = soma / notas.length;
+console.log("Média:", media);
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 4 -->
+                <section>
+                    <h3>Atividade 4: Função para verificar par ou ímpar</h3>
+                    <p class="fragment">Crie uma função que receba um número e retorne <em>true</em> se for par, ou
+                        <em>false</em> se for ímpar.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+function ehPar(numero) {
+    return numero % 2 === 0;
+}
+
+console.log(ehPar(10)); // true
+console.log(ehPar(7));  // false
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 5 -->
+                <section>
+                    <h3>Atividade 5: Filtrar números maiores que 5</h3>
+                    <p class="fragment">Dado um array de números, retorne apenas os valores maiores que 5.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const lista = [2, 7, 5, 9, 3, 10];
+const filtrado = lista.filter(num => num > 5);
+console.log(filtrado); // [7, 9, 10]
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 6 -->
+                <section>
+                    <h3>Atividade 6: Exemplo de objeto e acesso às propriedades</h3>
+                    <p class="fragment">Crie um objeto <code>pessoa</code> e acesse suas propriedades <code>nome</code>
+                        e <code>idade</code>.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const pessoa = {
+    nome: "Nator",
+    idade: 25
+};
+
+console.log(pessoa.nome);  // "Nator"
+console.log(pessoa.idade); // 25
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 7 -->
+                <section>
+                    <h3>Atividade 7: Calcular fatorial</h3>
+                    <p class="fragment">Crie uma função para calcular o fatorial de um número.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+function fatorial(n) {
+    let resultado = 1;
+    for (let i = 1; i <= n; i++) {
+        resultado *= i;
+    }
+    return resultado;
+}
+
+console.log(fatorial(5)); // 120
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 8 -->
+                <section>
+                    <h3>Atividade 8: Retornar vogais de uma string</h3>
+                    <p class="fragment">Dada uma string, extraia apenas as vogais e exiba-as.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+// Resposta (Exemplo)
+function extrairVogais(texto) {
+    return texto.match(/[aeiou]/gi) || [];
+}
+
+console.log(extrairVogais("Programação")); 
+// [ 'o', 'a', 'a', 'ã', 'o' ]
+                  </code></pre>
+                </section>
             </section>
 
 
@@ -338,7 +504,7 @@ const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>;
             center: false,
             controls: true,
             progress: true,
-            
+
             slideNumber: true,
             history: true,
             transition: 'convex',
