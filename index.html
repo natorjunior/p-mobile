@@ -150,48 +150,46 @@
       const sidebar = document.getElementById("sidebar");
       sidebar.classList.toggle("-translate-x-full");
     }
+    
+  document.addEventListener("DOMContentLoaded", async function() {
+    const listaAulas = document.getElementById("aulas-list");
 
-    // Exemplo de carregamento dinâmico das aulas
-    document.addEventListener("DOMContentLoaded", async function() {
-      const listaAulas = document.getElementById("aulas-list");
-
-      try {
-        // ATENÇÃO: Se você não tiver permissões (directory listing) para ./aulas/,
-        // essa requisição pode dar 403 (Forbidden).
-        // Veja abaixo a sugestão de usar JSON ou criar manualmente os links.
-
-        const response = await fetch('./aulas/');
-        // Se o servidor não permitir listar a pasta, retornará erro.
-        // Em caso de 403, cairá no "catch" abaixo.
-
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const links = Array.from(doc.querySelectorAll('a'));
-        const aulaLinks = links.filter(link => link.href.includes('aula') && link.href.endsWith('.html'));
-        
-        if (aulaLinks.length === 0) {
-          listaAulas.innerHTML = '<p class="text-gray-400 text-justify">Nenhuma aula disponível no momento.</p>';
-          return;
-        }
-        
-        aulaLinks.forEach((link, index) => {
-          let li = document.createElement("li");
-          li.innerHTML = `
-            <a href="${link.href}" 
-               class="block p-4 bg-green-500 text-gray-900 rounded-lg hover:bg-green-400 transition-colors text-center font-semibold"
-            >
-              📱 Aula ${index + 1}
-            </a>
-          `;
-          listaAulas.appendChild(li);
-        });
-      } catch (error) {
-        console.error("Erro ao carregar aulas: ", error);
-        listaAulas.innerHTML = '<p class="text-red-500 text-justify">Erro ao carregar aulas (possível 403 Forbidden).</p>';
+    try {
+      // Em vez de tentar listar a pasta, busca o arquivo JSON com as aulas
+      const response = await fetch('./aulas/aulas.json');
+      
+      // Verifica se deu tudo certo (HTTP 200)
+      if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`);
       }
-    });
-  </script>
+      
+      // Lê o conteúdo como JSON
+      const aulas = await response.json();
+      
+      // Se não vier nada, mostra mensagem
+      if (!aulas || !Array.isArray(aulas) || aulas.length === 0) {
+        listaAulas.innerHTML = '<p class="text-gray-400 text-justify">Nenhuma aula disponível no momento.</p>';
+        return;
+      }
+
+      // Cria itens <li> para cada aula
+      aulas.forEach((aula, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <a href="${aula.link}" 
+             class="block p-4 bg-green-500 text-gray-900 rounded-lg hover:bg-green-400 transition-colors text-center font-semibold">
+            📱 ${aula.titulo || 'Aula ' + (index + 1)}
+          </a>
+        `;
+        listaAulas.appendChild(li);
+      });
+
+    } catch (error) {
+      console.error("Erro ao carregar aulas: ", error);
+      listaAulas.innerHTML = '<p class="text-red-500 text-justify">Erro ao carregar aulas.</p>';
+    }
+  });
+</script>
 
 </body>
 </html>
