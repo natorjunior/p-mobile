@@ -6,83 +6,92 @@
   <title>Programação Mobile</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Fonte personalizada */
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    /* Transição suave para sidebar móvel */
+    #sidebar {
+      transition: transform 0.3s ease-in-out;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
 
-  <!-- Cabeçalho -->
-  <header class="relative bg-gradient-to-r from-blue-600 to-blue-500 py-6 text-white text-center shadow-md">
-    <!-- Botão Hambúrguer (Mobile) -->
-    <button 
-      class="absolute left-4 top-5 md:hidden bg-blue-500 hover:bg-blue-700 transition-colors p-2 rounded focus:outline-none" 
-      onclick="toggleSidebar()"
-      aria-label="Abrir Menu">
-      <!-- Ícone hambúrguer -->
-      <div class="w-5 h-0.5 bg-white mb-1"></div>
-      <div class="w-5 h-0.5 bg-white mb-1"></div>
-      <div class="w-5 h-0.5 bg-white"></div>
-    </button>
-    
-    <h1 class="text-4xl font-bold">Disciplina de Programação Mobile</h1>
-    <p class="text-lg mt-1 opacity-90">Aulas e materiais de estudo</p>
+  <!-- HEADER -->
+  <header class="relative">
+    <!-- Fundo em gradiente escuro -->
+    <div class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 py-8 px-4 md:py-12 text-center text-white">
+      <!-- Botão hambúrguer (mobile) -->
+      <button 
+        class="absolute left-4 top-6 md:hidden bg-gray-700 hover:bg-gray-600 p-2 rounded focus:outline-none"
+        onclick="toggleSidebar()" aria-label="Abrir Menu">
+        <span class="block w-6 h-0.5 bg-white mb-1"></span>
+        <span class="block w-6 h-0.5 bg-white mb-1"></span>
+        <span class="block w-6 h-0.5 bg-white"></span>
+      </button>
+      <h1 class="text-3xl md:text-4xl font-bold">Disciplina de Programação Mobile</h1>
+      <p class="text-lg md:text-xl mt-2 opacity-90">Aulas e materiais de estudo</p>
+    </div>
+    <!-- Wave (SVG) -->
+    <div class="w-full overflow-hidden leading-none text-white -mt-1">
+      <svg class="block w-full h-16 md:h-20" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <!-- Ajuste a cor/tons conforme desejar -->
+        <path fill="#1F2937" fill-opacity="1" d="M0,224L24,213.3C48,203,96,181,144,192C192,203,240,245,288,234.7C336,224,384,160,432,154.7C480,149,528,203,576,218.7C624,235,672,213,720,181.3C768,149,816,107,864,85.3C912,64,960,64,1008,96C1056,128,1104,192,1152,224C1200,256,1248,288,1296,272C1344,256,1392,192,1416,160L1440,128L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"/>
+      </svg>
+    </div>
   </header>
 
-  <!-- Container Principal (Sidebar + Conteúdo) -->
-  <div class="flex flex-1 relative">
-    
-    <!-- Sidebar (Responsivo) -->
+  <!-- CONTAINER GERAL -->
+  <div class="flex flex-1">
+
+    <!-- SIDEBAR (fixa em telas md e retrátil em mobile) -->
     <aside 
-      id="sidebar"
-      class="fixed top-0 left-0 bottom-0 z-10 w-64 md:w-72 bg-white shadow-xl p-5 transform -translate-x-full md:translate-x-0 transition-transform 
-             md:static md:flex-shrink-0 md:h-auto"
-      aria-label="Menu lateral">
-      
-      <div class="mb-6">
-        <h2 class="text-xl font-semibold text-gray-700">Professor</h2>
-        <div class="flex items-center mt-4 space-x-4">
+      id="sidebar" 
+      class="fixed md:static inset-y-0 left-0 z-30 w-64 bg-gray-800 shadow-md border-r border-gray-700 transform -translate-x-full md:translate-x-0 p-6">
+      <!-- Seção Professor -->
+      <div class="mt-8">
+        <h2 class="text-xl font-semibold text-gray-100">Professor</h2>
+        <div class="flex items-center my-4 space-x-4">
           <img 
-            src="https://avatars.githubusercontent.com/u/51802728?v=4"
+            src="https://avatars.githubusercontent.com/u/51802728?v=4" 
             alt="Foto do Professor" 
-            class="w-20 h-20 rounded-full object-cover shadow-md">
+            class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover shadow-md">
           <div>
-            <h3 class="text-lg font-medium text-gray-900 leading-tight">Prof. Msc Nator Junior</h3>
-            <p class="text-sm text-gray-600 mt-1" style="text-align: justify;">
-              Mestre em Ciência da Computação, com ênfase em 
-              <strong class="font-medium text-gray-800">Programação, Otimização, Algoritmos e Inteligência Computacional</strong>.
+            <h3 class="text-md md:text-lg font-semibold text-gray-200 leading-tight">
+              Prof. Msc Nator Junior
+            </h3>
+            <p class="text-xs md:text-sm text-gray-400">
+              Mestre em Ciência da Computação,<br />
+              <strong>Algoritmos, Otimização e IA</strong>.
             </p>
           </div>
         </div>
       </div>
+      <hr class="my-4 border-gray-700">
 
-      <hr class="my-4 border-gray-200">
-
-      <!-- Menu Lateral -->
+      <!-- Menu de Navegação -->
       <nav>
-        <h2 class="text-xl font-semibold text-gray-700">Menu</h2>
+        <h2 class="text-xl font-semibold text-gray-100">Menu</h2>
         <ul class="mt-3 space-y-2">
           <li>
-            <a 
-              href="#" 
-              class="block py-2 px-3 rounded transition-colors text-gray-700 
-                     hover:bg-blue-50 hover:text-blue-600"
-            >
+            <a href="#" 
+               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors">
               Início
             </a>
           </li>
           <li>
-            <a 
-              href="#" 
-              class="block py-2 px-3 rounded transition-colors text-gray-700 
-                     hover:bg-blue-50 hover:text-blue-600"
-            >
+            <a href="#" 
+               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors">
               Sobre
             </a>
           </li>
           <li>
-            <a 
-              href="#" 
-              class="block py-2 px-3 rounded transition-colors text-gray-700 
-                     hover:bg-blue-50 hover:text-blue-600"
-            >
+            <a href="#" 
+               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors">
               Contato
             </a>
           </li>
@@ -90,50 +99,53 @@
       </nav>
     </aside>
 
-    <!-- Conteúdo Principal -->
-    <main class="flex-1 mx-auto w-full max-w-4xl p-4 sm:p-6 mt-4 md:mt-0">
-      <!-- Seção Sobre a Disciplina -->
-      <section class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-semibold text-gray-800">Sobre a Disciplina</h2>
-        <p class="text-gray-600 mt-2 leading-relaxed" style="text-align: justify;">
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="flex-1 ml-0 md:ml-0 p-6 space-y-6">
+      <!-- SOBRE A DISCIPLINA -->
+      <section class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-semibold text-gray-100 mb-4">Sobre a Disciplina</h2>
+        <p class="text-gray-300 leading-relaxed text-justify">
           Nesta disciplina, você aprenderá os conceitos fundamentais de 
-          <span class="font-medium text-gray-800">desenvolvimento de aplicativos móveis</span>. 
+          <span class="font-semibold text-gray-100">desenvolvimento de aplicativos móveis</span>. 
           Exploraremos desde o ciclo de vida de um app até aspectos de design responsivo e boas práticas 
           de programação para diferentes plataformas, como Android e iOS. Abordaremos também linguagens 
-          e frameworks modernos (por exemplo, Kotlin, Swift, React Native, Flutter), além de exemplos práticos 
-          para a construção de aplicativos reais. Nosso objetivo é capacitá-lo(a) a planejar, 
+          e frameworks modernos (por exemplo, Kotlin, Swift, React Native, Flutter), além de exemplos 
+          práticos para a construção de aplicativos reais. Nosso objetivo é capacitá-lo(a) a planejar, 
           desenvolver e publicar soluções mobile eficientes e atraentes.
         </p>
       </section>
 
-      <!-- Seção Aulas Disponíveis -->
-      <section class="bg-white p-6 rounded-lg shadow-lg mt-8">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Aulas Disponíveis</h2>
-        <ul id="aulas-list" class="space-y-3"></ul>
+      <!-- AULAS DISPONÍVEIS -->
+      <section class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-semibold text-gray-100 mb-4">Aulas Disponíveis</h2>
+        <ul id="aulas-list" class="space-y-3">
+          <!-- Conteúdo carregado via JavaScript -->
+        </ul>
       </section>
     </main>
   </div>
 
-  <!-- Rodapé -->
-  <footer class="bg-gray-800 text-gray-200 text-center py-4 mt-4">
+  <!-- RODAPÉ -->
+  <footer class="bg-gray-800 text-gray-400 text-center py-4 mt-8 border-t border-gray-700">
     <p class="text-sm">
       &copy; 2025 | Programação Mobile - Prof. Nator Junior. Todos os direitos reservados.
     </p>
   </footer>
 
-  <!-- Script para carregar as aulas + Toggle da Sidebar -->
+  <!-- SCRIPTS -->
   <script>
-    // Mostrar/Ocultar sidebar em telas pequenas
+    // Toggle da sidebar em dispositivos móveis
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
       sidebar.classList.toggle("-translate-x-full");
     }
 
-    // Buscar lista de aulas
+    // Exemplo de carregamento dinâmico das aulas
     document.addEventListener("DOMContentLoaded", async function() {
       const listaAulas = document.getElementById("aulas-list");
       try {
-        const response = await fetch('./aulas/'); // Ajuste conforme necessário
+        // Ajuste o caminho conforme necessário para listar as aulas
+        const response = await fetch('./aulas/');
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
@@ -141,19 +153,15 @@
         const aulaLinks = links.filter(link => link.href.includes('aula') && link.href.endsWith('.html'));
         
         if (aulaLinks.length === 0) {
-          listaAulas.innerHTML = '<p class="text-gray-500" style="text-align: justify;">Nenhuma aula disponível no momento.</p>';
+          listaAulas.innerHTML = '<p class="text-gray-400 text-justify">Nenhuma aula disponível no momento.</p>';
           return;
         }
         
         aulaLinks.forEach((link, index) => {
           let li = document.createElement("li");
           li.innerHTML = `
-            <a 
-              href="${link.href}" 
-              class="block p-4 bg-blue-500 text-white rounded-lg 
-                     hover:bg-blue-600 transition-colors 
-                     text-center font-semibold"
-            >
+            <a href="${link.href}" 
+               class="block p-4 bg-green-500 text-gray-900 rounded-lg hover:bg-green-400 transition-colors text-center font-semibold">
               📱 Aula ${index + 1}
             </a>
           `;
@@ -161,9 +169,10 @@
         });
       } catch (error) {
         console.error("Erro ao carregar aulas: ", error);
-        listaAulas.innerHTML = '<p class="text-red-500" style="text-align: justify;">Erro ao carregar aulas.</p>';
+        listaAulas.innerHTML = '<p class="text-red-500 text-justify">Erro ao carregar aulas.</p>';
       }
     });
   </script>
+
 </body>
 </html>
