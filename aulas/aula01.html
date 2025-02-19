@@ -417,6 +417,110 @@ console.log(acesso);
                 <div class="output" id="ifElseOutput"></div>
             </section>
 
+<!-- Slide 1 - Variáveis e seus Tipos -->
+<section>
+    <h2>Variáveis e seus Tipos</h2>
+    <!-- <p>Exemplos de declaração de variáveis e verificação de seus tipos.</p> -->
+    
+    <pre>
+<code class="hljs javascript" data-line-numbers="1-8">let nome = "Maria";
+let idade = 30;
+const ativo = true;
+var salario = 2500.50;
+
+console.log("Tipo de nome:", typeof nome);
+console.log("Tipo de idade:", typeof idade);
+console.log("Tipo de ativo:", typeof ativo);
+console.log("Tipo de salario:", typeof salario);
+</code></pre>
+    
+    <button class="test-button" onclick="testVariaveis()">Executar</button>
+    <div class="output" id="variaveisOutput"></div>
+</section>
+
+<!-- Slide 2 - Operadores Aritméticos -->
+<section>
+    <h6>Operadores Aritméticos</h6>
+    <!-- <p>Realizando operações básicas: soma, subtração, multiplicação, divisão e módulo.</p> -->
+    
+    <pre>
+<code class="hljs javascript" data-line-numbers="1-8">let a = 10;
+let b = 3;
+let soma = a + b;
+let sub = a - b;
+let mult = a * b;
+let div = a / b;
+let mod = a % b;
+
+console.log("Soma:", soma);
+console.log("Subtração:", sub);
+console.log("Multiplicação:", mult);
+console.log("Divisão:", div);
+console.log("Módulo:", mod);
+</code></pre>
+    <button class="test-button" onclick="testAritmeticos()">Executar</button>
+    <div class="output" id="aritmeticosOutput"></div>
+</section>
+
+<!-- Slide 3 - Operadores Relacionais -->
+<section>
+    <h2>Operadores Relacionais</h2>
+    <!-- <p>Comparações entre valores usando operadores relacionais.</p> -->
+    
+    <pre>
+<code class="hljs javascript" data-line-numbers="1-7">let a = 5;
+let b = 10;
+
+console.log("a > b:", a > b);
+console.log("a < b:", a < b);
+console.log("a == b:", a == b);
+console.log("a !== b:", a !== b);
+</code></pre>
+    
+    <button class="test-button" onclick="testRelacionais()">Executar</button>
+    <div class="output" id="relacionaisOutput"></div>
+</section>
+
+<!-- Slide 4 - Operadores Lógicos -->
+<section>
+    <h2>Operadores Lógicos</h2>
+    <p>Utilizando AND (&&), OR (||) e NOT (!).</p>
+    
+    <pre>
+<code class="hljs javascript" data-line-numbers="1-7">let possuiIngresso = true;
+let temIdentidade = false;
+
+console.log("Pode entrar (&&):", possuiIngresso && temIdentidade);
+console.log("Pode entrar (||):", possuiIngresso || temIdentidade);
+console.log("Negação (!possuiIngresso):", !possuiIngresso);
+</code></pre>
+    
+    <button class="test-button" onclick="testLogicos()">Executar</button>
+    <div class="output" id="logicosOutput"></div>
+</section>
+
+<!-- Slide 5 - Laços de Repetição -->
+<section>
+    <h2>Laços de Repetição</h2>
+    <p>Exemplo de loop utilizando o laço <code>for</code>.</p>
+    
+    <pre>
+<code class="hljs javascript" data-line-numbers="1-6">let output = "";
+for (let i = 1; i <= 5; i++) {
+    output += "Número: " + i + "\n";
+}
+console.log(output);
+</code></pre>
+    
+    <button class="test-button" onclick="testLacos()">Executar</button>
+    <div class="output" id="lacosOutput"></div>
+</section>
+
+
+
+
+
+
 
 
 
@@ -570,6 +674,58 @@ console.log(extrairVogais("Programação"));
             let status = (idade >= 18) ? "Permitido" : "Negado";
             document.querySelectorAll("#ternarioOutput, #ternarioOutput2, #ternarioOutput3").forEach(el => el.innerText = status);
         }
+        function testVariaveis() {
+    let nome = "Maria";
+    let idade = 30;
+    const ativo = true;
+    var salario = 2500.50;
+    let output = "Nome: " + nome + " (Tipo: " + typeof nome + ")\n" +
+                 "Idade: " + idade + " (Tipo: " + typeof idade + ")\n" +
+                 "Ativo: " + ativo + " (Tipo: " + typeof ativo + ")\n" +
+                 "Salário: " + salario + " (Tipo: " + typeof salario + ")";
+    document.querySelector("#variaveisOutput").innerText = output;
+}
+
+function testAritmeticos() {
+    let a = 10, b = 3;
+    let soma = a + b;
+    let sub = a - b;
+    let mult = a * b;
+    let div = a / b;
+    let mod = a % b;
+    let output = "Soma: " + soma + "\n" +
+                 "Subtração: " + sub + "\n" +
+                 "Multiplicação: " + mult + "\n" +
+                 "Divisão: " + div + "\n" +
+                 "Módulo: " + mod;
+    document.querySelector("#aritmeticosOutput").innerText = output;
+}
+
+function testRelacionais() {
+    let a = 5, b = 10;
+    let output = "a > b: " + (a > b) + "\n" +
+                 "a < b: " + (a < b) + "\n" +
+                 "a == b: " + (a == b) + "\n" +
+                 "a !== b: " + (a !== b);
+    document.querySelector("#relacionaisOutput").innerText = output;
+}
+
+function testLogicos() {
+    let possuiIngresso = true;
+    let temIdentidade = false;
+    let output = "Pode entrar (&&): " + (possuiIngresso && temIdentidade) + "\n" +
+                 "Pode entrar (||): " + (possuiIngresso || temIdentidade) + "\n" +
+                 "Negação (!possuiIngresso): " + (!possuiIngresso);
+    document.querySelector("#logicosOutput").innerText = output;
+}
+
+function testLacos() {
+    let output = "";
+    for (let i = 1; i <= 5; i++) {
+         output += "Número: " + i + "\n";
+    }
+    document.querySelector("#lacosOutput").innerText = output;
+}
     </script>
 </body>
 
