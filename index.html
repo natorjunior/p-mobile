@@ -28,7 +28,8 @@
       <!-- Botão hambúrguer (mobile) -->
       <button 
         class="absolute left-4 top-6 md:hidden bg-gray-700 hover:bg-gray-600 p-2 rounded focus:outline-none"
-        onclick="toggleSidebar()" aria-label="Abrir Menu">
+        onclick="toggleSidebar()" 
+        aria-label="Abrir Menu">
         <span class="block w-6 h-0.5 bg-white mb-1"></span>
         <span class="block w-6 h-0.5 bg-white mb-1"></span>
         <span class="block w-6 h-0.5 bg-white"></span>
@@ -39,8 +40,11 @@
     <!-- Wave (SVG) -->
     <div class="w-full overflow-hidden leading-none text-white -mt-1">
       <svg class="block w-full h-16 md:h-20" viewBox="0 0 1440 320" preserveAspectRatio="none">
-        <!-- Ajuste a cor/tons conforme desejar -->
-        <path fill="#1F2937" fill-opacity="1" d="M0,224L24,213.3C48,203,96,181,144,192C192,203,240,245,288,234.7C336,224,384,160,432,154.7C480,149,528,203,576,218.7C624,235,672,213,720,181.3C768,149,816,107,864,85.3C912,64,960,64,1008,96C1056,128,1104,192,1152,224C1200,256,1248,288,1296,272C1344,256,1392,192,1416,160L1440,128L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"/>
+        <path 
+          fill="#1F2937" 
+          fill-opacity="1" 
+          d="M0,224L24,213.3C48,203,96,181,144,192C192,203,240,245,288,234.7C336,224,384,160,432,154.7C480,149,528,203,576,218.7C624,235,672,213,720,181.3C768,149,816,107,864,85.3C912,64,960,64,1008,96C1056,128,1104,192,1152,224C1200,256,1248,288,1296,272C1344,256,1392,192,1416,160L1440,128L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"
+        />
       </svg>
     </div>
   </header>
@@ -51,18 +55,20 @@
     <!-- SIDEBAR (fixa em telas md e retrátil em mobile) -->
     <aside 
       id="sidebar" 
-      class="fixed md:static inset-y-0 left-0 z-30 w-64 bg-gray-800 shadow-md border-r border-gray-700 transform -translate-x-full md:translate-x-0 p-6">
+      class="fixed md:static inset-y-0 left-0 z-30 w-64 bg-gray-800 shadow-md border-r border-gray-700 transform -translate-x-full md:translate-x-0 p-6"
+    >
       <!-- Seção Professor -->
       <div class="mt-8">
-        <h2 class="text-xl font-semibold text-gray-100">Professor</h2>
+        <h2 class="text-xl font-semibold text-gray-100">Sobre</h2>
         <div class="flex items-center my-4 space-x-4">
           <img 
             src="https://avatars.githubusercontent.com/u/51802728?v=4" 
             alt="Foto do Professor" 
-            class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover shadow-md">
+            class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover shadow-md"
+          />
           <div>
             <h3 class="text-md md:text-lg font-semibold text-gray-200 leading-tight">
-              Prof. Msc Nator Junior
+              Prof. Msc. Nator Junior
             </h3>
             <p class="text-xs md:text-sm text-gray-400">
               Mestre em Ciência da Computação,<br />
@@ -71,7 +77,7 @@
           </div>
         </div>
       </div>
-      <hr class="my-4 border-gray-700">
+      <hr class="my-4 border-gray-700" />
 
       <!-- Menu de Navegação -->
       <nav>
@@ -79,19 +85,22 @@
         <ul class="mt-3 space-y-2">
           <li>
             <a href="#" 
-               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors">
+               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors"
+            >
               Início
             </a>
           </li>
           <li>
             <a href="#" 
-               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors">
+               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors"
+            >
               Sobre
             </a>
           </li>
           <li>
             <a href="#" 
-               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors">
+               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors"
+            >
               Contato
             </a>
           </li>
@@ -100,7 +109,9 @@
     </aside>
 
     <!-- CONTEÚDO PRINCIPAL -->
-    <main class="flex-1 ml-0 md:ml-0 p-6 space-y-6">
+    <!-- Obs.: Em telas md+ o main empurra 64px para direita (tamanho da sidebar) -->
+    <main class="flex-1 ml-0 md:ml-1 p-6 space-y-6">
+      
       <!-- SOBRE A DISCIPLINA -->
       <section class="bg-gray-800 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-semibold text-gray-100 mb-4">Sobre a Disciplina</h2>
@@ -143,9 +154,16 @@
     // Exemplo de carregamento dinâmico das aulas
     document.addEventListener("DOMContentLoaded", async function() {
       const listaAulas = document.getElementById("aulas-list");
+
       try {
-        // Ajuste o caminho conforme necessário para listar as aulas
+        // ATENÇÃO: Se você não tiver permissões (directory listing) para ./aulas/,
+        // essa requisição pode dar 403 (Forbidden).
+        // Veja abaixo a sugestão de usar JSON ou criar manualmente os links.
+
         const response = await fetch('./aulas/');
+        // Se o servidor não permitir listar a pasta, retornará erro.
+        // Em caso de 403, cairá no "catch" abaixo.
+
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
@@ -161,7 +179,8 @@
           let li = document.createElement("li");
           li.innerHTML = `
             <a href="${link.href}" 
-               class="block p-4 bg-green-500 text-gray-900 rounded-lg hover:bg-green-400 transition-colors text-center font-semibold">
+               class="block p-4 bg-green-500 text-gray-900 rounded-lg hover:bg-green-400 transition-colors text-center font-semibold"
+            >
               📱 Aula ${index + 1}
             </a>
           `;
@@ -169,7 +188,7 @@
         });
       } catch (error) {
         console.error("Erro ao carregar aulas: ", error);
-        listaAulas.innerHTML = '<p class="text-red-500 text-justify">Erro ao carregar aulas.</p>';
+        listaAulas.innerHTML = '<p class="text-red-500 text-justify">Erro ao carregar aulas (possível 403 Forbidden).</p>';
       }
     });
   </script>
