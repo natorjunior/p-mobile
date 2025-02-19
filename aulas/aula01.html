@@ -11,13 +11,16 @@
     <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
 
     <!-- Tema para código -->
-    <link rel="stylesheet" href="./plugin/highlight/monokai.css">
-      <!-- Estilos personalizados -->
-      <style>
-        .reveal h1, .reveal h2 {
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+
+    <!-- Estilos personalizados -->
+    <style>
+        .reveal h1,
+        .reveal h2 {
             color: #0056b3;
         }
-        
+
         .reveal pre code {
             font-size: 1em;
             background: #222;
@@ -71,22 +74,128 @@
 
             <!-- Slide 1 - Título -->
             <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
                     Programação para dispositivos Móveis
-                </h2>
-                <p style="color: white; font-size: 1.4em; font-weight: 300; margin-top: 10px;">
-                    Prof. Nator Junior Carvalho da Costa
+                </h4>
+                <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+                    Prof. Msc. Nator Junior Carvalho da Costa
                 </p>
+
+                <h1>🐳</h1>
             </section>
+
             <section>
+                <h6>configuração do Node e Expo na sua máquina</h6>
 
                 <section>
+                    <h4>Passo 1</h4>
+                    <p>Baixe e instale o <strong>Node.js</strong> pelo site oficial:
+                        <a href="https://nodejs.org/pt/download" target="_blank">https://nodejs.org/pt/download</a>.
+                    </p>
+                    <div style="max-width: 800px; margin: auto;">
+                        <iframe src="https://nodejs.org/pt/download" width="100%" height="400" style="border: none;"
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </section>
+
+                <section>
+                    <h4>Passo 2</h4>
+                    <p>Verifique a instalação com:</p>
+
+                    <pre><code data-trim data-noescape>
+                    node -v // CMD ou bash 
+                        </code></pre>
+
+                    <p>Saída esperada:</p>
+
+                    <pre><code data-trim data-noescape>
+                    v18.17.0
+                        </code></pre>
+                </section>
+
+                <section>
+                    <h4>Passo 3</h4>
+                    <p>Instale o <strong>Expo CLI</strong>:</p>
+
+                    <pre><code class=""  data-trim data-noescape>
+                  npm install -g expo
+                    </code></pre>
+
+                    <!-- Simulação de Terminal -->
+                    <div class="terminal fragment fade-in-out"
+                        style="background: #1e1e1e; text-align: left; color: #c5c8c6; padding: 10px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+                        <p><span style="color: #6A9955;">$</span> npm install -g expo</p>
+                        <p>Instalando Expo CLI...</p>
+                        <p>Expo CLI instalado com sucesso!</p>
+                    </div>
+                </section>
+
+
+
+
+                <section style="text-align: left;">
+                    <h4>Passo 4</h4>
+                    <p>Confira a instalação do Expo executando:</p>
+                    <pre><code data-trim data-noescape>
+npx expo --version
+    </code></pre>
+                </section>
+
+                <section style="text-align: left;">
+                    <h4>Passo 5</h4>
+                    <p>Crie um novo projeto Expo:</p>
+                    <pre><code data-trim data-noescape>
+npx create-expo-app meu-app --template blank
+    </code></pre>
+                    <!-- <p>Escolha um template durante a configuração.</p> -->
+                </section>
+
+                <section style="text-align: left;">
+                    <h4>Passo 6</h4>
+                    <p>Entre na pasta do projeto e inicie o servidor:</p>
+                    <pre><code data-trim data-noescape>
+cd meu-app
+npx expo start
+    </code></pre>
+                    <!-- <p>Saída esperada:</p>
+                    <img src="https://raw.githubusercontent.com/expo/expo/main/docs/public/static/images/start-command.png"
+                        alt="Tela do Expo CLI após executar expo start" width="80%"
+                        style="border-radius: 10px; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);"> -->
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <div class="fragment">
+                        <h3> Oque é isso ?</h3>
+                        <pre><code class="hljs html"><h1>Hello, world!</h1>;</code></pre>
+                    </div>
+
+                    <div class="fragment fade-up">
+                        <h3 > e agora ?</h3>
+                        <pre><code class="hljs javascript">const a = 10;</code></pre>
+                    </div>
+
+                    <div class="fragment fade-up">
+                        <h3> e agora ?</h3>
+                        <pre><code class="hljs javascript">const element = <h1>Hello, world!</h1>;</code></pre>
+                    </div>
+                </section>
+            </section>
+
+            <section>
+                <section>
                     <h3>O que é JSX?</h3>
-                    <p class="fragment fade-in-then-out">JSX é uma extensão da sintaxe do JavaScript que permite escrever HTML dentro do
+                    <p class="fragment fade-in-then-out">JSX é uma extensão da sintaxe do JavaScript que permite
+                        escrever HTML dentro do
                         JavaScript.</p>
-                    <p class="fragment fade-in-then-out">Ele é usado principalmente com o React para definir a estrutura da interface do
+                    <p class="fragment fade-in-then-out">Ele é usado principalmente com o React para definir a estrutura
+                        da interface do
                         usuário.</p>
-                    <p class="fragment fade-in-then-out">JSX é compilado para chamadas `React.createElement()`, tornando a sintaxe mais
+                    <p class="fragment fade-in-then-out">JSX é compilado para chamadas `React.createElement()`, tornando
+                        a sintaxe mais
                         intuitiva.</p>
                 </section>
 
@@ -113,27 +222,41 @@ const element = React.createElement("h1", null, "Hello, world!");
                 <section>
                     <h3>Atividade: Declaração de Variável JSX</h3>
                     <p class="fragment">Agora é sua vez! Declare uma variável JSX para exibir uma mensagem dinâmica.</p>
+                    <pre class="fragment fade-in-then-out"><code class="">import { StyleSheet, Text, View } from 'react-native';
+
+export default function App() {
+    const nome = 'Mundo';
+    return (
+    <View style={{alignItems: 'center'}}>
+        <Text> Olá {nome}</Text>
+    </View>
+    );
+}</code></pre>
+
+    
                 </section>
-            
+
                 <section>
                     <h3>Desafio 1</h3>
-                    <p class="fragment">Crie uma variável chamada `greeting` que exiba a mensagem "Bem-vindo ao React!".</p>
+                    <p class="fragment">Crie uma variável chamada `greeting` que exiba a mensagem "Bem-vindo ao React!".
+                    </p>
                     <pre class="fragment fade-in-then-out"><code class="hljs javascript">
 const greeting = <h1>Bem-vindo ao React!</h1>;
                     </code></pre>
-                    <p class="fragment fade-in-then-out">Lembre-se: JSX precisa estar dentro de um único elemento pai.</p>
+                    <p class="fragment fade-in-then-out">Lembre-se: JSX precisa estar dentro de um único elemento pai.
+                    </p>
                 </section>
-            
+
                 <section>
                     <h3>Desafio 2</h3>
                     <p class="fragment">Agora, declare uma variável `user` e exiba o nome do usuário dinamicamente.</p>
-                    <pre  class="fragment fade-in-then-out"><code class="hljs javascript">
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
 const user = "Nator";
 const message = <h2>Olá, {user}!</h2>;
                     </code></pre>
                     <p class="fragment">Dica: Use `{ }` para incorporar variáveis em JSX.</p>
                 </section>
-            
+
                 <section>
                     <h3>Desafio 3</h3>
                     <p class="fragment">Crie uma variável `fullName` baseada em um objeto e exiba o nome completo.</p>
@@ -143,7 +266,7 @@ const fullName = <h3>Olá, {user.firstName} {user.lastName}!</h3>;
                     </code></pre>
                     <p class="fragment">JSX pode acessar propriedades de objetos diretamente.</p>
                 </section>
-            
+
                 <section>
                     <h3>Agora é com você!</h3>
                     <p class="fragment">Tente criar uma variável JSX que exiba um número aleatório entre 1 e 100.</p>
@@ -154,7 +277,7 @@ const randomNumber = <p>Número aleatório: {Math.floor(Math.random() * 100) + 1
                     <!-- <p class="fragment">Compartilhe seu código e discuta com a turma!</p> -->
                 </section>
             </section>
-            
+
 
 
             <section>
@@ -163,7 +286,7 @@ const randomNumber = <p>Número aleatório: {Math.floor(Math.random() * 100) + 1
                     <p class="fragment">JSX permite incorporar expressões JavaScript dentro do HTML.</p>
                     <p class="fragment">Isso torna o código mais dinâmico e interativo.</p>
                 </section>
-            
+
                 <section>
                     <h3>Exemplo de Expressão em JSX</h3>
                     <pre class="fragment fade-in-then-out"><code class="hljs javascript">
@@ -172,10 +295,10 @@ const element = <h1>Olá, {name}!</h1>;
                     </code></pre>
                     <p class="fragment">Aqui, `{name}` é uma expressão JavaScript embutida dentro do JSX.</p>
                 </section>
-            
+
                 <section>
                     <h3>Exemplo com Função</h3>
-                    <pre ><code class="hljs javascript">
+                    <pre><code class="hljs javascript">
 function formatName(user) {
     return user.firstName + " " + user.lastName;
 }
@@ -186,14 +309,14 @@ const element = <h1>Olá, {formatName(user)}!</h1>;
                     </code></pre>
                     <p class="fragment">Chamamos uma função diretamente dentro do JSX.</p>
                 </section>
-            
+
                 <section>
                     <h3>Operações Matemáticas e Expressões Lógicas</h3>
                     <pre><code class="hljs javascript">
 const element = <p>A soma de 2 + 2 é {2 + 2}</p>;
                     </code></pre>
                     <p class="fragment">Podemos usar operações matemáticas diretamente.</p>
-            
+
                     <pre><code class="hljs javascript">
 const isLoggedIn = true;
 const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>;
@@ -201,7 +324,7 @@ const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>;
                     <p class="fragment">Expressões lógicas também são válidas dentro do JSX.</p>
                 </section>
             </section>
-            
+
 
         </div>
     </div>
@@ -215,6 +338,7 @@ const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>;
             center: false,
             controls: true,
             progress: true,
+            
             slideNumber: true,
             history: true,
             transition: 'convex',
