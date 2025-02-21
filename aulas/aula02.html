@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 01</title>
+
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="./dist/reveal.css">
+    <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+    <!-- Tema para código -->
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+
+    <!-- Estilos personalizados -->
+    <style>
+        .reveal h1,
+        .reveal h2 {
+            color: #0056b3;
+        }
+
+        .reveal pre code {
+            font-size: 1em;
+            background: #222;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .reveal p {
+            font-size: 1.1em;
+        }
+
+        .test-button {
+            background-color: #0056b3;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .test-button:hover {
+            background-color: #003d80;
+        }
+
+        .output {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-top: 5px;
+            color: #333;
+        }
+
+        .comparison-container {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .comparison-box {
+            width: 48%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 - Título -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    Programação para dispositivos Móveis
+                </h4>
+                <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+                    Prof. Msc. Nator Junior Carvalho da Costa
+                </p>
+                <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    Aula 02
+                </h6>
+                <h1>🐢</h1>
+            </section>
+
+
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    Revisão de JavaScript
+                </h4>
+                <h1>🐝</h1>
+            </section>
+            
+            <!-- Slide 1 - Variáveis e seus Tipos -->
+            <section>
+                <h2>Variáveis e seus Tipos</h2>
+                <!-- <p>Exemplos de declaração de variáveis e verificação de seus tipos.</p> -->
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-8">let nome = "Maria";
+let idade = 30;
+const ativo = true;
+var salario = 2500.50;
+
+console.log("Tipo de nome:", typeof nome);
+console.log("Tipo de idade:", typeof idade);
+console.log("Tipo de ativo:", typeof ativo);
+console.log("Tipo de salario:", typeof salario);
+</code></pre>
+
+                <button class="test-button" onclick="testVariaveis()">Executar</button>
+                <div class="output" id="variaveisOutput"></div>
+            </section>
+
+            <!-- Slide 2 - Operadores Aritméticos -->
+            <section>
+                <h6>Operadores Aritméticos</h6>
+                <!-- <p>Realizando operações básicas: soma, subtração, multiplicação, divisão e módulo.</p> -->
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-8">let a = 10;
+let b = 3;
+let soma = a + b;
+let sub = a - b;
+let mult = a * b;
+let div = a / b;
+let mod = a % b;
+
+console.log("Soma:", soma);
+console.log("Subtração:", sub);
+console.log("Multiplicação:", mult);
+console.log("Divisão:", div);
+console.log("Módulo:", mod);
+</code></pre>
+                <button class="test-button" onclick="testAritmeticos()">Executar</button>
+                <div class="output" id="aritmeticosOutput"></div>
+            </section>
+
+            <!-- Slide 3 - Operadores Relacionais -->
+            <section>
+                <h2>Operadores Relacionais</h2>
+                <!-- <p>Comparações entre valores usando operadores relacionais.</p> -->
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-7">let a = 5;
+let b = 10;
+
+console.log("a > b:", a > b);
+console.log("a < b:", a < b);
+console.log("a == b:", a == b);
+console.log("a !== b:", a !== b);
+</code></pre>
+
+                <button class="test-button" onclick="testRelacionais()">Executar</button>
+                <div class="output" id="relacionaisOutput"></div>
+            </section>
+
+            <!-- Slide 4 - Operadores Lógicos -->
+            <section>
+                <h2>Operadores Lógicos</h2>
+                <p>Utilizando AND (&&), OR (||) e NOT (!).</p>
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-7">let possuiIngresso = true;
+let temIdentidade = false;
+
+console.log("Pode entrar (&&):", possuiIngresso && temIdentidade);
+console.log("Pode entrar (||):", possuiIngresso || temIdentidade);
+console.log("Negação (!possuiIngresso):", !possuiIngresso);
+</code></pre>
+
+                <button class="test-button" onclick="testLogicos()">Executar</button>
+                <div class="output" id="logicosOutput"></div>
+            </section>
+
+            <!-- Slide 5 - Laços de Repetição -->
+            <section>
+                <h2>Laços de Repetição</h2>
+                <p>Exemplo de loop utilizando o laço <code>for</code>.</p>
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-6">let output = "";
+for (let i = 1; i <= 5; i++) {
+    output += "Número: " + i + "\n";
+}
+console.log(output);
+</code></pre>
+
+                <button class="test-button" onclick="testLacos()">Executar</button>
+                <div class="output" id="lacosOutput"></div>
+            </section>
+
+
+
+
+
+
+
+
+
+
+            <section>
+
+                <!-- Atividade 1 -->
+                <section>
+                    <h3>Atividade 1: Soma de dois números</h3>
+                    <p class="fragment">Solicitar dois valores via <code class="hljs javascript">prompt()</code> e
+                        exibir a soma.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const a = Number(prompt("Digite o primeiro número:"));
+const b = Number(prompt("Digite o segundo número:"));
+alert("A soma é: " + (a + b));
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 2 -->
+                <section>
+                    <h3>Atividade 2: Imprimir números de 1 a 5</h3>
+                    <p class="fragment">Use um laço de repetição para exibir números sequencialmente.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+for (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 3 -->
+                <section>
+                    <h3>Atividade 3: Calcular média de notas</h3>
+                    <p class="fragment">Dado um array de notas, calcule a média e exiba o resultado.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const notas = [8, 7, 9, 10];
+const soma = notas.reduce((acc, nota) => acc + nota, 0);
+const media = soma / notas.length;
+console.log("Média:", media);
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 4 -->
+                <section>
+                    <h3>Atividade 4: Função para verificar par ou ímpar</h3>
+                    <p class="fragment">Crie uma função que receba um número e retorne <em>true</em> se for par, ou
+                        <em>false</em> se for ímpar.
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+function ehPar(numero) {
+    return numero % 2 === 0;
+}
+
+console.log(ehPar(10)); // true
+console.log(ehPar(7));  // false
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 5 -->
+                <section>
+                    <h3>Atividade 5: Filtrar números maiores que 5</h3>
+                    <p class="fragment">Dado um array de números, retorne apenas os valores maiores que 5.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const lista = [2, 7, 5, 9, 3, 10];
+const filtrado = lista.filter(num => num > 5);
+console.log(filtrado); // [7, 9, 10]
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 6 -->
+                <section>
+                    <h3>Atividade 6: Exemplo de objeto e acesso às propriedades</h3>
+                    <p class="fragment">Crie um objeto <code>pessoa</code> e acesse suas propriedades <code>nome</code>
+                        e <code>idade</code>.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const pessoa = {
+    nome: "Nator",
+    idade: 25
+};
+
+console.log(pessoa.nome);  // "Nator"
+console.log(pessoa.idade); // 25
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 7 -->
+                <section>
+                    <h3>Atividade 7: Calcular fatorial</h3>
+                    <p class="fragment">Crie uma função para calcular o fatorial de um número.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+function fatorial(n) {
+    let resultado = 1;
+    for (let i = 1; i <= n; i++) {
+        resultado *= i;
+    }
+    return resultado;
+}
+
+console.log(fatorial(5)); // 120
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 8 -->
+                <section>
+                    <h3>Atividade 8: Retornar vogais de uma string</h3>
+                    <p class="fragment">Dada uma string, extraia apenas as vogais e exiba-as.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+// Resposta (Exemplo)
+function extrairVogais(texto) {
+    return texto.match(/[aeiou]/gi) || [];
+}
+
+console.log(extrairVogais("Programação")); 
+// [ 'o', 'a', 'a', 'ã', 'o' ]
+                  </code></pre>
+                </section>
+            </section>
+
+
+        </div>
+    </div>
+
+    <!-- Scripts Reveal.js -->
+    <script src="./dist/reveal.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+
+    <script>
+        Reveal.initialize({
+            center: false,
+            controls: true,
+            progress: true,
+
+            slideNumber: true,
+            history: true,
+            transition: 'convex',
+            plugins: [RevealHighlight]
+        });
+
+        function testIfElse() {
+            let idade = 20;
+            let acesso;
+
+            if (idade >= 18) {
+                acesso = "Permitido";
+            } else {
+                acesso = "Negado";
+            }
+
+            document.querySelectorAll("#ifElseOutput, #ifElseOutput2").forEach(el => el.innerText = acesso);
+        }
+
+        function testTernario() {
+            let idade = 20;
+            let status = (idade >= 18) ? "Permitido" : "Negado";
+            document.querySelectorAll("#ternarioOutput, #ternarioOutput2, #ternarioOutput3").forEach(el => el.innerText = status);
+        }
+        function testVariaveis() {
+            let nome = "Maria";
+            let idade = 30;
+            const ativo = true;
+            var salario = 2500.50;
+            let output = "Nome: " + nome + " (Tipo: " + typeof nome + ")\n" +
+                "Idade: " + idade + " (Tipo: " + typeof idade + ")\n" +
+                "Ativo: " + ativo + " (Tipo: " + typeof ativo + ")\n" +
+                "Salário: " + salario + " (Tipo: " + typeof salario + ")";
+            document.querySelector("#variaveisOutput").innerText = output;
+        }
+
+        function testAritmeticos() {
+            let a = 10, b = 3;
+            let soma = a + b;
+            let sub = a - b;
+            let mult = a * b;
+            let div = a / b;
+            let mod = a % b;
+            let output = "Soma: " + soma + "\n" +
+                "Subtração: " + sub + "\n" +
+                "Multiplicação: " + mult + "\n" +
+                "Divisão: " + div + "\n" +
+                "Módulo: " + mod;
+            document.querySelector("#aritmeticosOutput").innerText = output;
+        }
+
+        function testRelacionais() {
+            let a = 5, b = 10;
+            let output = "a > b: " + (a > b) + "\n" +
+                "a < b: " + (a < b) + "\n" +
+                "a == b: " + (a == b) + "\n" +
+                "a !== b: " + (a !== b);
+            document.querySelector("#relacionaisOutput").innerText = output;
+        }
+
+        function testLogicos() {
+            let possuiIngresso = true;
+            let temIdentidade = false;
+            let output = "Pode entrar (&&): " + (possuiIngresso && temIdentidade) + "\n" +
+                "Pode entrar (||): " + (possuiIngresso || temIdentidade) + "\n" +
+                "Negação (!possuiIngresso): " + (!possuiIngresso);
+            document.querySelector("#logicosOutput").innerText = output;
+        }
+
+        function testLacos() {
+            let output = "";
+            for (let i = 1; i <= 5; i++) {
+                output += "Número: " + i + "\n";
+            }
+            document.querySelector("#lacosOutput").innerText = output;
+        }
+    </script>
+</body>
+
+</html>
