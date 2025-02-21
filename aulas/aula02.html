@@ -108,7 +108,7 @@
                         <code>**</code>, <code>//</code>
                     </h6>
                     </p>
-                    <pre ><code class="javascript" data-trim data-noescape>
+                    <pre><code class="javascript" data-trim data-noescape>
 let a = 15;
 let b = 4;
 
@@ -173,6 +173,109 @@ console.log("Divisão Inteira:", Math.floor(a / b));  // Divisão Inteira: 3
                     </table>
                     </p>
                 </section>
+
+                <section>
+                    <style>
+                        /* Estilização do bloco de código editável */
+                        pre.playground-container {
+                            background: #2d2d2d;
+                            padding: 10px;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                            overflow: auto;
+                        }
+
+                        pre.playground-container code[contenteditable="true"] {
+                            display: block;
+                            background-color: #1e1e1e;
+                            color: #dcdcdc;
+                            padding: 10px;
+                            border: 1px solid #444;
+                            border-radius: 4px;
+                            font-family: 'Fira Code', monospace;
+                            min-height: 100px;
+                            outline: none;
+                            white-space: pre;
+                        }
+
+                        /* Botão para executar o código */
+                        #run-code {
+                            margin-top: 10px;
+                            background: #6272a4;
+                            color: #fff;
+                            border: none;
+                            padding: 10px 15px;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            transition: background 0.3s;
+                        }
+
+                        #run-code:hover {
+                            background: #505c8b;
+                        }
+
+                        /* Área de saída */
+                        #output {
+                            margin-top: 15px;
+                            border: 1px solid #ccc;
+                            padding: 10px;
+                            background: #fff;
+                            color: #333;
+                            border-radius: 4px;
+                            white-space: pre-wrap;
+                            font-family: 'Courier New', Courier, monospace;
+                            min-height: 50px;
+                        }
+                    </style>
+
+                    <h3>Teste de Mesa</h3>
+                    <p class="fragment">
+                    <h6>Qual o valor será impresso como resultado do programa?</h6>
+                    </p>
+
+                    <!-- Bloco de código editável -->
+                    <pre class="playground-container fragment">
+                      <code id="editable-code" contenteditable="true">// Código do Playground
+let a = 15;
+let b = 4;
+console.log("Soma:", a + b);</code>
+                    </pre>
+
+                    <button id="run-code" class="fragment">Executar Código</button>
+                    <pre id="output" class="fragment"></pre>
+
+                    <script>
+                        // Função para executar o código editado
+                        document.getElementById('run-code').addEventListener('click', function () {
+                            var outputDiv = document.getElementById('output');
+                            outputDiv.textContent = ''; // Limpa a saída anterior
+
+                            // Obtém o código do elemento <code>
+                            var code = document.getElementById('editable-code').innerText;
+
+                            // Redefine o console.log para capturar a saída
+                            var originalLog = console.log;
+                            console.log = function (...args) {
+                                args.forEach(arg => {
+                                    outputDiv.textContent += arg + '\n';
+                                });
+                                originalLog.apply(console, args);
+                            };
+
+                            try {
+                                eval(code);
+                            } catch (e) {
+                                outputDiv.textContent = 'Erro: ' + e.message;
+                            }
+
+                            // Restaura o console.log original
+                            console.log = originalLog;
+                        });
+                    </script>
+                </section>
+
+
+
             </section>
 
             <!-- Slide 8.2: Operadores Relacionais -->
@@ -180,15 +283,17 @@ console.log("Divisão Inteira:", Math.floor(a / b));  // Divisão Inteira: 3
                 <section>
                     <h3>Operadores Relacionais</h3>
                     <p class="fragment">
-                        Compare valores com: <code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>,
-                        <code>&gt;=</code>, <code>&lt;=</code>
+                        Compare valores com: <code>===</code>, <code>==</code>, <code>!=</code>, <code>&gt;</code>,
+                        <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>
                     </p>
-                    <pre class="fragment"><code data-trim data-noescape>
-x = 10; y = 20
-print("x == y:", x == y)
-print("x < y:", x < y)
-  </code></pre>
+                    <pre class="fragment"><code data-trim data-noescape class="JavaScript">// JavaScript: Comparação de valores
+let x = 10;
+let y = 20;
+console.log("x == y:", x == y);
+console.log("x < y:", x < y);
+</code></pre>
                 </section>
+
                 <section>
                     <p class="fragment">
                         <!-- Tabela Ilustrativa: Operadores Relacionais -->
@@ -202,8 +307,13 @@ print("x < y:", x < y)
                         </thead>
                         <tbody>
                             <tr style="background: #ffffff;">
+                                <td style="padding: 8px; border: 1px solid #f57f17;">===</td>
+                                <td style="padding: 8px; border: 1px solid #f57f17;">Igual valor e tipo</td>
+                                <td style="padding: 8px; border: 1px solid #f57f17;">10 == 20 → False</td>
+                            </tr>
+                            <tr style="background: #ffffff;">
                                 <td style="padding: 8px; border: 1px solid #f57f17;">==</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">Igual</td>
+                                <td style="padding: 8px; border: 1px solid #f57f17;">Igual valor</td>
                                 <td style="padding: 8px; border: 1px solid #f57f17;">10 == 20 → False</td>
                             </tr>
                             <tr style="background: #f7f7f7;">
@@ -239,15 +349,17 @@ print("x < y:", x < y)
 
             <!-- Slide 8.3: Operadores Lógicos -->
             <section>
+
                 <h3>Operadores Lógicos</h3>
                 <p class="fragment">
                     Combine condições com: <code>and</code>, <code>or</code>, <code>not</code>
                 </p>
-                <pre class="fragment"><code data-trim data-noescape>
-p = True; q = False
-print("p and q:", p and q)
-print("not p:", not p)
-  </code></pre>
+                <pre class="fragment"><code data-trim data-noescape class="javascript">
+let p = true;
+let q = false;
+
+console.log("p and q:", p && q);
+console.log("not p:", !p);</code></pre>
                 <p class="fragment">
                     <!-- Tabela Ilustrativa: Operadores Lógicos -->
                 <table style="width:100%; border-collapse: collapse; text-align: center; margin-top: 10px;">
@@ -260,19 +372,19 @@ print("not p:", not p)
                     </thead>
                     <tbody>
                         <tr style="background: #ffffff;">
-                            <td style="padding: 8px; border: 1px solid #c2185b;">and</td>
+                            <td style="padding: 8px; border: 1px solid #c2185b;">&&</td>
                             <td style="padding: 8px; border: 1px solid #c2185b;">E Lógico</td>
-                            <td style="padding: 8px; border: 1px solid #c2185b;">True and False → False</td>
+                            <td style="padding: 8px; border: 1px solid #c2185b;">True && False → False</td>
                         </tr>
                         <tr style="background: #f7f7f7;">
-                            <td style="padding: 8px; border: 1px solid #c2185b;">or</td>
+                            <td style="padding: 8px; border: 1px solid #c2185b;">||</td>
                             <td style="padding: 8px; border: 1px solid #c2185b;">Ou Lógico</td>
-                            <td style="padding: 8px; border: 1px solid #c2185b;">True or False → True</td>
+                            <td style="padding: 8px; border: 1px solid #c2185b;">True || False → True</td>
                         </tr>
                         <tr style="background: #ffffff;">
-                            <td style="padding: 8px; border: 1px solid #c2185b;">not</td>
+                            <td style="padding: 8px; border: 1px solid #c2185b;">!</td>
                             <td style="padding: 8px; border: 1px solid #c2185b;">Negação</td>
-                            <td style="padding: 8px; border: 1px solid #c2185b;">not True → False</td>
+                            <td style="padding: 8px; border: 1px solid #c2185b;">! True → False</td>
                         </tr>
                     </tbody>
                 </table>
@@ -282,17 +394,342 @@ print("not p:", not p)
 
             <!-- Slide 9: Operadores - Atividade Prática -->
             <section class="bg-green">
-                <h2>Atividade Prática: Operadores</h2>
-                <p class="fragment">Crie um programa que:</p>
-                <ul class="fragment">
-                    <li>Solicite dois números ao usuário</li>
-                    <li>Verifique se o primeiro número é maior, menor ou igual ao segundo</li>
-                    <li>Realize e exiba as operações de soma, subtração, multiplicação e divisão</li>
-                </ul>
+                <!-- Teste de Mesa 1: Número Positivo, Negativo ou Zero -->
+                <section>
+                    <style>
+                        /* Estilização comum para os playgrounds */
+                        pre.playground-container {
+                            background: #2d2d2d;
+                            padding: 10px;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                            overflow: auto;
+                        }
+
+                        pre.playground-container code[contenteditable="true"] {
+                            display: block;
+                            background-color: #1e1e1e;
+                            color: #dcdcdc;
+                            padding: 10px;
+                            border: 1px solid #444;
+                            border-radius: 4px;
+                            font-family: 'Fira Code', monospace;
+                            min-height: 100px;
+                            outline: none;
+                            white-space: pre;
+                        }
+
+                        button.run-code {
+                            margin-top: 10px;
+                            background: #6272a4;
+                            color: #fff;
+                            border: none;
+                            padding: 10px 15px;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            transition: background 0.3s;
+                        }
+
+                        button.run-code:hover {
+                            background: #505c8b;
+                        }
+
+                        pre.output {
+                            margin-top: 15px;
+                            border: 1px solid #ccc;
+                            padding: 10px;
+                            background: #fff;
+                            color: #333;
+                            border-radius: 4px;
+                            white-space: pre-wrap;
+                            font-family: 'Courier New', Courier, monospace;
+                            min-height: 50px;
+                        }
+                    </style>
+
+                    <h5>Teste de Mesa 1: Número Positivo, Negativo ou Zero</h5>
+                    <p class="fragment">
+                    <h6>Qual o valor de saída do código abaixo ?</h6>
+                    </p>
+                    <pre class="playground-container fragment">
+      <code id="editable-code-1" contenteditable="true" data-line-numbers>let num = 0; // Altere este valor para testar
+if (num > 0) {
+    console.log(num + " é positivo.");
+} else if (num < 0) {
+    console.log(num + " é negativo.");
+} else {
+    console.log("O número é zero.");
+}</code>
+    </pre>
+                    <button id="run-code-1" class="run-code fragment">Executar Código</button>
+                    <pre id="output-1" class="output fragment"></pre>
+
+                    <script>
+                        document.getElementById('run-code-1').addEventListener('click', function () {
+                            var outputDiv = document.getElementById('output-1');
+                            outputDiv.textContent = '';
+                            var code = document.getElementById('editable-code-1').innerText;
+                            var originalLog = console.log;
+                            console.log = function (...args) {
+                                args.forEach(arg => { outputDiv.textContent += arg + '\n'; });
+                                originalLog.apply(console, args);
+                            };
+                            try { eval(code); } catch (e) { outputDiv.textContent = 'Erro: ' + e.message; }
+                            console.log = originalLog;
+                        });
+                    </script>
+                </section>
+
+                <!-- Teste de Mesa 2: Verificação de Idade para Votar -->
+                <section>
+                    <h5>Teste de Mesa 2: Verificação de Idade para Votar</h5>
+                    <p class="fragment">
+                    <h6>Qual o resultado da operacao abaixo ?</h6>
+                    </p>
+                    <pre class="playground-container fragment">
+      <code id="editable-code-2" contenteditable="true" data-line-numbers>// Código do Playground: Votação
+let age = 15; 
+if (age >= 16) {
+    console.log("Pode votar.");
+} else {
+    console.log("Não pode votar.");
+}</code>
+    </pre>
+                    <button id="run-code-2" class="run-code fragment">Executar Código</button>
+                    <pre id="output-2" class="output fragment"></pre>
+
+                    <script>
+                        document.getElementById('run-code-2').addEventListener('click', function () {
+                            var outputDiv = document.getElementById('output-2');
+                            outputDiv.textContent = '';
+                            var code = document.getElementById('editable-code-2').innerText;
+                            var originalLog = console.log;
+                            console.log = function (...args) {
+                                args.forEach(arg => { outputDiv.textContent += arg + '\n'; });
+                                originalLog.apply(console, args);
+                            };
+                            try { eval(code); } catch (e) { outputDiv.textContent = 'Erro: ' + e.message; }
+                            console.log = originalLog;
+                        });
+                    </script>
+                </section>
+
+                <!-- Teste de Mesa 3: Maior entre Dois Números -->
+                <section>
+                    <h5>Teste de Mesa 3: Maior entre Dois Números</h5>
+                    <p class="fragment">
+                    <h6>Qual o resultado da operacao abaixo ?</h6>
+                    </p>
+                    <pre class="playground-container fragment">
+      <code id="editable-code-3" contenteditable="true" data-line-numbers>
+let a = 10; // Altere este valor
+let b = 20; // Altere este valor
+if (a > b) {
+    console.log(a + " é maior que " + b);
+} else if (a < b) {
+    console.log(b + " é maior que " + a);
+} else {
+    console.log("Ambos os números são iguais.");
+}</code>
+    </pre>
+                    <button id="run-code-3" class="run-code fragment">Executar Código</button>
+                    <pre id="output-3" class="output fragment"></pre>
+
+                    <script>
+                        document.getElementById('run-code-3').addEventListener('click', function () {
+                            var outputDiv = document.getElementById('output-3');
+                            outputDiv.textContent = '';
+                            var code = document.getElementById('editable-code-3').innerText;
+                            var originalLog = console.log;
+                            console.log = function (...args) {
+                                args.forEach(arg => { outputDiv.textContent += arg + '\n'; });
+                                originalLog.apply(console, args);
+                            };
+                            try { eval(code); } catch (e) { outputDiv.textContent = 'Erro: ' + e.message; }
+                            console.log = originalLog;
+                        });
+                    </script>
+                </section>
+
+
+
+                <!-- Teste de Mesa 5: Aprovação de Aluno -->
+                <section>
+                    <h3>Teste de Mesa 4: Aprovação de Aluno</h3>
+                    <p class="fragment">
+                    <h6>Altere o valor de <code>score</code> para testar se o aluno é aprovado (nota mínima 7).</h6>
+                    </p>
+                    <pre class="playground-container fragment">
+      <code id="editable-code-5" contenteditable="true">let score = 6.5; // Altere este valor para testar
+if (score >= 7) {
+    console.log("Aprovado com nota " + score);
+} else {
+    console.log("Reprovado com nota " + score);
+}</code>
+    </pre>
+                    <button id="run-code-5" class="run-code fragment">Executar Código</button>
+                    <pre id="output-5" class="output fragment"></pre>
+
+                    <script>
+                        document.getElementById('run-code-5').addEventListener('click', function () {
+                            var outputDiv = document.getElementById('output-5');
+                            outputDiv.textContent = '';
+                            var code = document.getElementById('editable-code-5').innerText;
+                            var originalLog = console.log;
+                            console.log = function (...args) {
+                                args.forEach(arg => { outputDiv.textContent += arg + '\n'; });
+                                originalLog.apply(console, args);
+                            };
+                            try { eval(code); } catch (e) { outputDiv.textContent = 'Erro: ' + e.message; }
+                            console.log = originalLog;
+                        });
+                    </script>
+                </section>
+
             </section>
 
 
 
+
+            <!-- Slide 1: Componente &lt;Text&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <section>
+                    <br><br><br><br>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                        Componente &lt;Text&gt; no React Native
+                    </h4>
+                    <h1>🐝</h1>
+                </section>
+
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+                        <!-- Coluna 1: Conteúdo e código -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                                Introdução ao Componente &lt;Text&gt;
+                            </h4>
+                            <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                                O componente &lt;Text&gt; é a base para exibir texto em um app React Native. Use-o para
+                                renderizar strings simples.
+                                <br><br>
+                                
+                            </h6>
+                            <pre
+                                style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; overflow: auto; margin-top: 20px;">
+  <code class="language-jsx" data-line-numbers>import React from 'react';
+import { Text, View } from 'react-native';
+export default function App() {
+    return (
+        &lt;View&gt;
+            &lt;Text&gt;Hello, React Native!&lt;/Text&gt;
+        &lt;/View&gt;
+    );
+}</code>
+        </pre>
+                        </div>
+                </section>
+
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/ex01" data-snack-platform="web"
+                                data-snack-preview="true" data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Slide 2: Componente &lt;View&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    Componente &lt;View&gt; no React Native
+                </h4>
+                <h1>📦</h1>
+            </section>
+
+            
+
+            <!-- Slide 3: Componente &lt;Image&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    Componente &lt;Image&gt; no React Native
+                </h4>
+                <h1>🖼️</h1>
+            </section>
+
+            <!-- Slide 4: Componente &lt;Button&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    Componente &lt;Button&gt; no React Native
+                </h4>
+                <h1>🔘</h1>
+            </section>
+
+            <!-- Slide 5: Componente &lt;TextInput&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    Componente &lt;TextInput&gt; no React Native
+                </h4>
+                <h1>⌨️</h1>
+            </section>
+
+            <!-- Slide 6: Componente &lt;ScrollView&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    Componente &lt;ScrollView&gt; no React Native
+                </h4>
+                <h1>📜</h1>
+            </section>
+
+            <!-- Slide 7: Componente &lt;FlatList&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    Componente &lt;FlatList&gt; no React Native
+                </h4>
+                <h1>📋</h1>
+            </section>
+
+            <!-- Slide 8: Componente &lt;TouchableOpacity&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    Componente &lt;TouchableOpacity&gt; no React Native
+                </h4>
+                <h1>👆</h1>
+            </section>
+
+            <!-- Slide 9: Componente &lt;SafeAreaView&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    Componente &lt;SafeAreaView&gt; no React Native
+                </h4>
+                <h1>🛡️</h1>
+            </section>
+
+            <!-- Slide 10: Componente &lt;StatusBar&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    Componente &lt;StatusBar&gt; no React Native
+                </h4>
+                <h1>📶</h1>
+            </section>
 
 
             <!-- Slide 1 - Variáveis e seus Tipos -->
