@@ -82,7 +82,7 @@
                     Prof. Msc. Nator Junior Carvalho da Costa
                 </p>
 
-                <h1>🐳</h1>
+                <h1>🐢</h1>
             </section>
 
             <section>
@@ -175,12 +175,12 @@ npx expo start
 
                     <div class="fragment fade-up">
                         <h3> e agora ?</h3>
-                        <pre><code class="hljs javascript">const a = 10;</code></pre>
+                        <pre><code class="hljs javascript">const a = 10; //react.js</code></pre>
                     </div>
 
                     <div class="fragment fade-up">
                         <h3> e agora ?</h3>
-                        <pre><code class="hljs javascript">const element = <h1>Hello, world!</h1>;</code></pre>
+                        <pre><code class="hljs javascript">const element = <h1>Hello, world!</h1>; //react.js</code></pre>
                     </div>
                 </section>
             </section>
@@ -202,7 +202,7 @@ npx expo start
                 <section>
                     <h3>Considere esta declaração de variável:</h3>
                     <pre><code class="hljs javascript">
-const element = <h1>Hello, world!</h1>;
+const element = <h1>Hello, world!</h1>; //react.js
                     </code></pre>
                     <p class="fragment">Este código parece HTML, mas é JSX!</p>
                     <p class="fragment">JSX permite escrever código declarativo e reutilizável em React.</p>
@@ -212,7 +212,7 @@ const element = <h1>Hello, world!</h1>;
                     <h3>O que acontece por trás?</h3>
                     <p class="fragment">O JSX acima é transformado em:</p>
                     <pre><code class="hljs javascript">
-const element = React.createElement("h1", null, "Hello, world!");
+const element = React.createElement("h1", null, "Hello, world!"); 
                     </code></pre>
                     <p class="fragment">Isso significa que JSX não é obrigatório, mas facilita muito a escrita de
                         interfaces.</p>
@@ -232,8 +232,8 @@ const element = React.createElement("h1", null, "Hello, world!");
                 <section>
                     <h3>Exemplo de Expressão em JSX</h3>
                     <pre class="fragment fade-in-then-out"><code class="hljs javascript">
-const name = "Nator";
-const element = <h1>Olá, {name}!</h1>;
+const name = "Nator";  //react.js
+const element = <h1>Olá, {name}!</h1>; //react.js
                     </code></pre>
                     <p class="fragment">Aqui, `{name}` é uma expressão JavaScript embutida dentro do JSX.</p>
                 </section>
@@ -241,13 +241,13 @@ const element = <h1>Olá, {name}!</h1>;
                 <section>
                     <h3>Exemplo com Função</h3>
                     <pre><code class="hljs javascript">
-function formatName(user) {
+function formatName(user) { //react.js
     return user.firstName + " " + user.lastName;
 }
 
 const user = { firstName: "Nator", lastName: "Júnior" };
 
-const element = <h1>Olá, {formatName(user)}!</h1>;
+const element = <h1>Olá, {formatName(user)}!</h1>; //react.js
                     </code></pre>
                     <p class="fragment">Chamamos uma função diretamente dentro do JSX.</p>
                 </section>
@@ -255,13 +255,13 @@ const element = <h1>Olá, {formatName(user)}!</h1>;
                 <section>
                     <h3>Operações Matemáticas e Expressões Lógicas</h3>
                     <pre><code class="hljs javascript">
-const element = <p>A soma de 2 + 2 é {2 + 2}</p>;
+const element = <p>A soma de 2 + 2 é {2 + 2}</p>; //react.js
                     </code></pre>
                     <p class="fragment">Podemos usar operações matemáticas diretamente.</p>
 
                     <pre><code class="hljs javascript">
 const isLoggedIn = true;
-const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>;
+const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>; //react.js
                     </code></pre>
                     <p class="fragment">Expressões lógicas também são válidas dentro do JSX.</p>
                 </section>
@@ -312,44 +312,88 @@ const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>;
                     <p class="fragment">Agora é sua vez! Declare uma variável JSX para exibir uma mensagem dinâmica.
                     </p>
                     <pre class="fragment fade-in-then-out"><code class="">import { StyleSheet, Text, View } from 'react-native';
-
-export default function App() {
-    const nome = 'Mundo';
-    return (
-    <View style={{alignItems: 'center'}}>
-        <Text> Olá {nome}</Text>
-    </View>
-    );
+export default function App() { 
+    const nome = 'Mundo'; 
+    return ( 
+    &lt;View style={{alignItems: 'center'}}&gt; 
+        &lt;Text&gt; Olá {nome}&lt;/Text&gt; 
+    &lt;/View&gt; 
+    ); 
 }</code></pre>
 
-
                 </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
 
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/ex02" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                        
+                    </div>
+                </section>
+                
                 <section>
                     <h3>Desafio 1</h3>
                     <p class="fragment">Crie uma variável chamada `greeting` que exiba a mensagem "Bem-vindo ao
                         React!".
                     </p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
-const greeting = <h1>Bem-vindo ao React!</h1>;
+                    <pre class="fragment fade-in-then-out"><code class=" language-jsx">
+const greeting = &lt;Text&gt;Bem-vindo ao React Native!&lt;/Text&gt;
                     </code></pre>
                     <p class="fragment fade-in-then-out">Lembre-se: JSX precisa estar dentro de um único elemento
                         pai.
                     </p>
                 </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                    <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
 
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/ex03" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                        
+                    </div>
+                </section>
                 <section>
                     <h3>Desafio 2</h3>
                     <p class="fragment">Agora, declare uma variável `user` e exiba o nome do usuário dinamicamente.
                     </p>
                     <pre class="fragment fade-in-then-out"><code class="hljs javascript">
-const user = "Nator";
-const message = <h2>Olá, {user}!</h2>;
+const user = "Nator"; 
+const message = &lt;Text&gt;Olá, {user}!&lt;/Text&gt;;                        
                     </code></pre>
                     <p class="fragment">Dica: Use `{ }` para incorporar variáveis em JSX.</p>
                 </section>
+<!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+    <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+    style="padding: 20px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
 
-                <section>
+        <!-- Coluna 2: Embed do Expo Snack -->
+        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+            <div data-snack-id="@natorjunior/ex04" data-snack-platform="web" data-snack-preview="true"
+                data-snack-theme="light"
+                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+            </div>
+            <script async src="https://snack.expo.dev/embed.js"></script>
+        </div>
+        
+    </div>
+</section>
+                <!-- <section>
                     <h3>Desafio 3</h3>
                     <p class="fragment">Crie uma variável `fullName` baseada em um objeto e exiba o nome completo.
                     </p>
@@ -368,8 +412,7 @@ const fullName = <h3>Olá, {user.firstName} {user.lastName}!</h3>;
                     <pre class="fragment fade-in-then-out"><code class="hljs javascript">
 const randomNumber = <p>Número aleatório: {Math.floor(Math.random() * 100) + 1}</p>;
                     </code></pre>
-                    <!-- <p class="fragment">Compartilhe seu código e discuta com a turma!</p> -->
-                </section>
+                </section> -->
             </section>
 
             <!-- ------------------------------ -->
@@ -386,13 +429,13 @@ const randomNumber = <p>Número aleatório: {Math.floor(Math.random() * 100) + 1
             <section>
                 <h2>Operador Ternário</h2>
                 <p>Forma compacta de verificar condições.</p>
-                
+
                 <pre>
 <code class="hljs javascript" data-line-numbers="1-3|1|2|3">let idade = 18;
 let acesso = (idade >= 18) ? "Permitido" : "Negado";
 console.log(acesso);
                 </code></pre>
-                
+
                 <button class="test-button" onclick="testTernario()">Executar</button>
                 <div class="output" id="ternarioOutput"></div>
             </section>
@@ -417,12 +460,12 @@ console.log(acesso);
                 <div class="output" id="ifElseOutput"></div>
             </section>
 
-<!-- Slide 1 - Variáveis e seus Tipos -->
-<section>
-    <h2>Variáveis e seus Tipos</h2>
-    <!-- <p>Exemplos de declaração de variáveis e verificação de seus tipos.</p> -->
-    
-    <pre>
+            <!-- Slide 1 - Variáveis e seus Tipos -->
+            <section>
+                <h2>Variáveis e seus Tipos</h2>
+                <!-- <p>Exemplos de declaração de variáveis e verificação de seus tipos.</p> -->
+
+                <pre>
 <code class="hljs javascript" data-line-numbers="1-8">let nome = "Maria";
 let idade = 30;
 const ativo = true;
@@ -433,17 +476,17 @@ console.log("Tipo de idade:", typeof idade);
 console.log("Tipo de ativo:", typeof ativo);
 console.log("Tipo de salario:", typeof salario);
 </code></pre>
-    
-    <button class="test-button" onclick="testVariaveis()">Executar</button>
-    <div class="output" id="variaveisOutput"></div>
-</section>
 
-<!-- Slide 2 - Operadores Aritméticos -->
-<section>
-    <h6>Operadores Aritméticos</h6>
-    <!-- <p>Realizando operações básicas: soma, subtração, multiplicação, divisão e módulo.</p> -->
-    
-    <pre>
+                <button class="test-button" onclick="testVariaveis()">Executar</button>
+                <div class="output" id="variaveisOutput"></div>
+            </section>
+
+            <!-- Slide 2 - Operadores Aritméticos -->
+            <section>
+                <h6>Operadores Aritméticos</h6>
+                <!-- <p>Realizando operações básicas: soma, subtração, multiplicação, divisão e módulo.</p> -->
+
+                <pre>
 <code class="hljs javascript" data-line-numbers="1-8">let a = 10;
 let b = 3;
 let soma = a + b;
@@ -458,16 +501,16 @@ console.log("Multiplicação:", mult);
 console.log("Divisão:", div);
 console.log("Módulo:", mod);
 </code></pre>
-    <button class="test-button" onclick="testAritmeticos()">Executar</button>
-    <div class="output" id="aritmeticosOutput"></div>
-</section>
+                <button class="test-button" onclick="testAritmeticos()">Executar</button>
+                <div class="output" id="aritmeticosOutput"></div>
+            </section>
 
-<!-- Slide 3 - Operadores Relacionais -->
-<section>
-    <h2>Operadores Relacionais</h2>
-    <!-- <p>Comparações entre valores usando operadores relacionais.</p> -->
-    
-    <pre>
+            <!-- Slide 3 - Operadores Relacionais -->
+            <section>
+                <h2>Operadores Relacionais</h2>
+                <!-- <p>Comparações entre valores usando operadores relacionais.</p> -->
+
+                <pre>
 <code class="hljs javascript" data-line-numbers="1-7">let a = 5;
 let b = 10;
 
@@ -476,17 +519,17 @@ console.log("a < b:", a < b);
 console.log("a == b:", a == b);
 console.log("a !== b:", a !== b);
 </code></pre>
-    
-    <button class="test-button" onclick="testRelacionais()">Executar</button>
-    <div class="output" id="relacionaisOutput"></div>
-</section>
 
-<!-- Slide 4 - Operadores Lógicos -->
-<section>
-    <h2>Operadores Lógicos</h2>
-    <p>Utilizando AND (&&), OR (||) e NOT (!).</p>
-    
-    <pre>
+                <button class="test-button" onclick="testRelacionais()">Executar</button>
+                <div class="output" id="relacionaisOutput"></div>
+            </section>
+
+            <!-- Slide 4 - Operadores Lógicos -->
+            <section>
+                <h2>Operadores Lógicos</h2>
+                <p>Utilizando AND (&&), OR (||) e NOT (!).</p>
+
+                <pre>
 <code class="hljs javascript" data-line-numbers="1-7">let possuiIngresso = true;
 let temIdentidade = false;
 
@@ -494,27 +537,27 @@ console.log("Pode entrar (&&):", possuiIngresso && temIdentidade);
 console.log("Pode entrar (||):", possuiIngresso || temIdentidade);
 console.log("Negação (!possuiIngresso):", !possuiIngresso);
 </code></pre>
-    
-    <button class="test-button" onclick="testLogicos()">Executar</button>
-    <div class="output" id="logicosOutput"></div>
-</section>
 
-<!-- Slide 5 - Laços de Repetição -->
-<section>
-    <h2>Laços de Repetição</h2>
-    <p>Exemplo de loop utilizando o laço <code>for</code>.</p>
-    
-    <pre>
+                <button class="test-button" onclick="testLogicos()">Executar</button>
+                <div class="output" id="logicosOutput"></div>
+            </section>
+
+            <!-- Slide 5 - Laços de Repetição -->
+            <section>
+                <h2>Laços de Repetição</h2>
+                <p>Exemplo de loop utilizando o laço <code>for</code>.</p>
+
+                <pre>
 <code class="hljs javascript" data-line-numbers="1-6">let output = "";
 for (let i = 1; i <= 5; i++) {
     output += "Número: " + i + "\n";
 }
 console.log(output);
 </code></pre>
-    
-    <button class="test-button" onclick="testLacos()">Executar</button>
-    <div class="output" id="lacosOutput"></div>
-</section>
+
+                <button class="test-button" onclick="testLacos()">Executar</button>
+                <div class="output" id="lacosOutput"></div>
+            </section>
 
 
 
@@ -530,7 +573,8 @@ console.log(output);
                 <!-- Atividade 1 -->
                 <section>
                     <h3>Atividade 1: Soma de dois números</h3>
-                    <p class="fragment">Solicitar dois valores via <code class="hljs javascript">prompt()</code> e exibir a soma.</p>
+                    <p class="fragment">Solicitar dois valores via <code class="hljs javascript">prompt()</code> e
+                        exibir a soma.</p>
                     <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
 const a = Number(prompt("Digite o primeiro número:"));
 const b = Number(prompt("Digite o segundo número:"));
@@ -565,7 +609,8 @@ console.log("Média:", media);
                 <section>
                     <h3>Atividade 4: Função para verificar par ou ímpar</h3>
                     <p class="fragment">Crie uma função que receba um número e retorne <em>true</em> se for par, ou
-                        <em>false</em> se for ímpar.</p>
+                        <em>false</em> se for ímpar.
+                    </p>
                     <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
 function ehPar(numero) {
     return numero % 2 === 0;
@@ -675,57 +720,57 @@ console.log(extrairVogais("Programação"));
             document.querySelectorAll("#ternarioOutput, #ternarioOutput2, #ternarioOutput3").forEach(el => el.innerText = status);
         }
         function testVariaveis() {
-    let nome = "Maria";
-    let idade = 30;
-    const ativo = true;
-    var salario = 2500.50;
-    let output = "Nome: " + nome + " (Tipo: " + typeof nome + ")\n" +
-                 "Idade: " + idade + " (Tipo: " + typeof idade + ")\n" +
-                 "Ativo: " + ativo + " (Tipo: " + typeof ativo + ")\n" +
-                 "Salário: " + salario + " (Tipo: " + typeof salario + ")";
-    document.querySelector("#variaveisOutput").innerText = output;
-}
+            let nome = "Maria";
+            let idade = 30;
+            const ativo = true;
+            var salario = 2500.50;
+            let output = "Nome: " + nome + " (Tipo: " + typeof nome + ")\n" +
+                "Idade: " + idade + " (Tipo: " + typeof idade + ")\n" +
+                "Ativo: " + ativo + " (Tipo: " + typeof ativo + ")\n" +
+                "Salário: " + salario + " (Tipo: " + typeof salario + ")";
+            document.querySelector("#variaveisOutput").innerText = output;
+        }
 
-function testAritmeticos() {
-    let a = 10, b = 3;
-    let soma = a + b;
-    let sub = a - b;
-    let mult = a * b;
-    let div = a / b;
-    let mod = a % b;
-    let output = "Soma: " + soma + "\n" +
-                 "Subtração: " + sub + "\n" +
-                 "Multiplicação: " + mult + "\n" +
-                 "Divisão: " + div + "\n" +
-                 "Módulo: " + mod;
-    document.querySelector("#aritmeticosOutput").innerText = output;
-}
+        function testAritmeticos() {
+            let a = 10, b = 3;
+            let soma = a + b;
+            let sub = a - b;
+            let mult = a * b;
+            let div = a / b;
+            let mod = a % b;
+            let output = "Soma: " + soma + "\n" +
+                "Subtração: " + sub + "\n" +
+                "Multiplicação: " + mult + "\n" +
+                "Divisão: " + div + "\n" +
+                "Módulo: " + mod;
+            document.querySelector("#aritmeticosOutput").innerText = output;
+        }
 
-function testRelacionais() {
-    let a = 5, b = 10;
-    let output = "a > b: " + (a > b) + "\n" +
-                 "a < b: " + (a < b) + "\n" +
-                 "a == b: " + (a == b) + "\n" +
-                 "a !== b: " + (a !== b);
-    document.querySelector("#relacionaisOutput").innerText = output;
-}
+        function testRelacionais() {
+            let a = 5, b = 10;
+            let output = "a > b: " + (a > b) + "\n" +
+                "a < b: " + (a < b) + "\n" +
+                "a == b: " + (a == b) + "\n" +
+                "a !== b: " + (a !== b);
+            document.querySelector("#relacionaisOutput").innerText = output;
+        }
 
-function testLogicos() {
-    let possuiIngresso = true;
-    let temIdentidade = false;
-    let output = "Pode entrar (&&): " + (possuiIngresso && temIdentidade) + "\n" +
-                 "Pode entrar (||): " + (possuiIngresso || temIdentidade) + "\n" +
-                 "Negação (!possuiIngresso): " + (!possuiIngresso);
-    document.querySelector("#logicosOutput").innerText = output;
-}
+        function testLogicos() {
+            let possuiIngresso = true;
+            let temIdentidade = false;
+            let output = "Pode entrar (&&): " + (possuiIngresso && temIdentidade) + "\n" +
+                "Pode entrar (||): " + (possuiIngresso || temIdentidade) + "\n" +
+                "Negação (!possuiIngresso): " + (!possuiIngresso);
+            document.querySelector("#logicosOutput").innerText = output;
+        }
 
-function testLacos() {
-    let output = "";
-    for (let i = 1; i <= 5; i++) {
-         output += "Número: " + i + "\n";
-    }
-    document.querySelector("#lacosOutput").innerText = output;
-}
+        function testLacos() {
+            let output = "";
+            for (let i = 1; i <= 5; i++) {
+                output += "Número: " + i + "\n";
+            }
+            document.querySelector("#lacosOutput").innerText = output;
+        }
     </script>
 </body>
 
