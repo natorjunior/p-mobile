@@ -13,7 +13,7 @@
     <!-- Tema para código -->
     <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
     <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
     <!-- Estilos personalizados -->
     <style>
         .reveal h1,
@@ -65,7 +65,32 @@
         .comparison-box {
             width: 48%;
         }
-    </style>
+
+        <style>
+    /* Torna o bloco de código relativo para posicionamento do botão */
+    pre {
+      position: relative;
+    }
+    /* Estilização discreta para o botão de copiar */
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    /* Exibe o botão quando o mouse está sobre o bloco */
+    pre:hover .copy-btn {
+      opacity: 1;
+    }
+  </style>
 </head>
 
 <body>
@@ -175,13 +200,14 @@ npx expo start
 
                     <div class="fragment fade-up">
                         <h3> e agora ?</h3>
-                        <pre><code class="hljs javascript">const a = 10; //react.js</code></pre>
+                        <pre><code class="hljs javascript">const a = 10;</code></pre>
                     </div>
 
                     <div class="fragment fade-up">
                         <h3> e agora ?</h3>
-                        <pre><code class="hljs javascript">const element = <h1>Hello, world!</h1>; //react.js</code></pre>
+                        <pre><code class="hljs javascript">const element = <h1>Hello, world!</h1>;</code></pre>
                     </div>
+                    <h6 class="fragment fade-up">Exemplos em <b>react.js</b></h6>
                 </section>
             </section>
 
@@ -304,7 +330,24 @@ const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>; //react.js
                 </section>
             </section>
 
-
+<section>
+    <!-- Exemplo do componente Text -->
+    <section>
+        <h4>&lt;Text&gt; Component</h4>
+        <p>Utilizado para renderizar textos na tela.</p>
+        <pre class="code-snippet fragment fade-in-then-out">
+        <code>&lt;Text&gt;Meu texto&lt;/Text&gt;</code>
+        </pre>
+    </section>
+    
+    <!-- Exemplo do componente View -->
+    <section>
+        <h4>&lt;View&gt; Component</h4>
+        <p>Utilizado como container para organizar outros componentes.</p>
+        <pre class="code-snippet fragment fade-in-then-out language-jsx">
+        <code>&lt;View&gt; &lt;MeuComponent /&gt; &lt;/View&gt;</code> </pre>
+    </section>
+</section>
 
             <section>
                 <section>
@@ -320,7 +363,7 @@ export default function App() {
     &lt;/View&gt; 
     ); 
 }</code></pre>
-
+<h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
                 </section>
                 <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
                 <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
@@ -335,10 +378,10 @@ export default function App() {
                             </div>
                             <script async src="https://snack.expo.dev/embed.js"></script>
                         </div>
-                        
+
                     </div>
                 </section>
-                
+
                 <section>
                     <h3>Desafio 1</h3>
                     <p class="fragment">Crie uma variável chamada `greeting` que exiba a mensagem "Bem-vindo ao
@@ -350,9 +393,10 @@ const greeting = &lt;Text&gt;Bem-vindo ao React Native!&lt;/Text&gt;
                     <p class="fragment fade-in-then-out">Lembre-se: JSX precisa estar dentro de um único elemento
                         pai.
                     </p>
+                    <h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
                 </section>
                 <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
-                    <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
                     style="padding: 20px;">
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
 
@@ -364,7 +408,7 @@ const greeting = &lt;Text&gt;Bem-vindo ao React Native!&lt;/Text&gt;
                             </div>
                             <script async src="https://snack.expo.dev/embed.js"></script>
                         </div>
-                        
+
                     </div>
                 </section>
                 <section>
@@ -377,22 +421,23 @@ const message = &lt;Text&gt;Olá, {user}!&lt;/Text&gt;;
                     </code></pre>
                     <p class="fragment">Dica: Use `{ }` para incorporar variáveis em JSX.</p>
                 </section>
-<!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
-    <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-    style="padding: 20px;">
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
 
-        <!-- Coluna 2: Embed do Expo Snack -->
-        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-            <div data-snack-id="@natorjunior/ex04" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-            </div>
-            <script async src="https://snack.expo.dev/embed.js"></script>
-        </div>
-        
-    </div>
-</section>
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/ex04" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+
+                    </div>
+<h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
+                </section>
                 <!-- <section>
                     <h3>Desafio 3</h3>
                     <p class="fragment">Crie uma variável `fullName` baseada em um objeto e exiba o nome completo.
@@ -417,6 +462,150 @@ const randomNumber = <p>Número aleatório: {Math.floor(Math.random() * 100) + 1
 
             <!-- ------------------------------ -->
             <!-- REVISAO DE JS -->
+
+
+            <section>
+                <section>
+                    <br><br><br><br>
+                    <h1>Extra</h1>
+                    <h6>Exercicios em JS</h6>
+                    <!-- Slide 1: Verificação de Par ou Ímpar -->
+                </section>
+                <section>
+                    <h5>Atividade 1: Verificação de Par ou Ímpar</h5>
+<ul>
+    <li style="text-align: justify;" >Crie uma função em JavaScript que receba um número e verifique se ele é par ou ímpar, utilizando
+        operadores relacionais e lógicos.</li>
+</ul>
+<pre>
+    <code class="fragment fade-in-then-out">// Função para verificar se um número é par ou ímpar
+function verificarParImpar(num) {
+if(num % 2 === 0) {
+    return "Par";
+} else {
+    return "Ímpar";
+}
+}
+
+// Testando a função:
+console.log(verificarParImpar(4)); // Saída: "Par"
+console.log(verificarParImpar(7)); // Saída: "Ímpar"</code></pre>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+                </section>
+
+                <!-- Slide 2: Validação de Senha -->
+                <section>
+                    <h5>Atividade 2: Validação de Senha</h5>
+                    <p>
+                        <ul>
+                            <li style="text-align: justify;" >Crie uma função que receba uma senha (string) e verifique se ela atende aos seguintes critérios:</li>
+                            <ul style="text-align: justify;" >
+                                <li>Possuir pelo menos 8 caracteres;</li>
+                                <li>Conter ao menos uma letra e um número.</li>
+                            </ul>
+                        </ul>
+                    </p>
+                    <pre><code class="fragment fade-in-then-out">// Função para validar senha
+function validarSenha(senha) {
+    if (senha.length < 8) {
+        return false;
+    }
+    let temNumero = /\d/.test(senha);
+    let temLetra = /[a-zA-Z]/.test(senha);
+
+    return temNumero && temLetra;
+}
+console.log(validarSenha("abc12345")); // true
+console.log(validarSenha("abcdefg"));  // false</code></pre>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+                </section>
+
+                <!-- Slide 3: Cálculo da Média -->
+                <section>
+                    <h5>Atividade 3: Função para Calcular Média</h5>
+                    <ul>
+                        <li style="text-align: justify;">
+                            Crie uma função que receba um array de números e retorne a média aritmética dos valores. Utilize
+                            um laço de repetição para somar os elementos do array.
+                       </li>
+                    </ul>
+                   
+                    <pre><code class="fragment fade-in-then-out">// Função para calcular a média
+function calcularMedia(numeros) {
+    let soma = 0;
+    for(let i = 0; i < numeros.length; i++) {
+        soma += numeros[i];
+    }
+    return soma / numeros.length;
+}
+
+// Testando a função:
+console.log(calcularMedia([10, 20, 30])); // Saída: 20</code></pre>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+                </section>
+
+                <!-- Slide 4: Contagem Regressiva -->
+                <section>
+                    <h5>Atividade 4: Contagem Regressiva</h5>
+<ul  style="text-align: justify;">
+    <li>Crie um script que realize uma contagem regressiva a partir de um número fornecido pelo usuário
+        até zero, utilizando um laço de repetição.</li>
+</ul>
+<pre><code class="fragment fade-in-then-out">// Função para realizar a contagem regressiva
+function contagemRegressiva(inicio) {
+    for(let i = inicio; i >= 0; i--) {
+        console.log(i);
+    }
+}
+
+// Exemplo de uso:
+contagemRegressiva(5); 
+// Saída no console: 5, 4, 3, 2, 1, 0</code></pre>
+    <h6>playground: http://u.acilab.com.br/Wa</h6>
+                </section>
+
+                <!-- Slide 5: Jogo de Adivinhação -->
+                <!-- <section>
+                    <h5>Atividade 5: Jogo de Adivinhação</h5>
+                    <p>
+                        Desenvolva um jogo simples em JavaScript onde:
+                        <br>- O programa gera um número aleatório entre 1 e 100.
+                        <br>- O usuário deve adivinhar esse número.
+                        <br>- Após cada palpite, o programa informa se o chute foi <em>muito alto</em> ou <em>muito
+                            baixo</em>.
+                        <br>Utilize funções, operadores lógicos e laços de repetição para implementar o jogo.
+                    </p>
+                    <pre><code>
+  // Função para gerar número aleatório entre min e max (inclusive)
+  function gerarNumero(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  
+  // Jogo de Adivinhação
+  function jogoAdivinhacao() {
+    const numeroSecreto = gerarNumero(1, 100);
+    let palpite;
+    
+    do {
+      palpite = parseInt(prompt("Adivinhe o número entre 1 e 100:"), 10);
+      
+      if(palpite > numeroSecreto) {
+        console.log("Muito alto! Tente novamente.");
+      } else if(palpite < numeroSecreto) {
+        console.log("Muito baixo! Tente novamente.");
+      }
+    } while(palpite !== numeroSecreto);
+    
+    console.log("Parabéns! Você acertou o número.");
+  }
+  
+  // Iniciando o jogo:
+  jogoAdivinhacao();
+    </code></pre>
+                </section> -->
+            </section>
+
+
 
             <section>
                 <br><br><br><br>
@@ -688,7 +877,27 @@ console.log(extrairVogais("Programação"));
     <!-- Scripts Reveal.js -->
     <script src="./dist/reveal.js"></script>
     <script src="./plugin/highlight/highlight.js"></script>
+<!-- Inclusão do Clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Para cada elemento <pre> com um <code>, adiciona um botão de copiar
+    document.querySelectorAll('pre').forEach(function(pre, index) {
+      var code = pre.querySelector('code');
+      var codeId = 'code-' + index;
+      code.setAttribute('id', codeId);
 
+      var button = document.createElement('button');
+      button.className = 'copy-btn';
+      button.textContent = 'Copiar';
+      button.setAttribute('data-clipboard-target', '#' + codeId);
+
+      pre.appendChild(button);
+    });
+    // Inicializa o ClipboardJS para todos os botões de copiar
+    new ClipboardJS('.copy-btn');
+  });
+</script>
     <script>
         Reveal.initialize({
             center: false,
