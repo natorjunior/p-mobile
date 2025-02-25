@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 01</title>
+
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="./dist/reveal.css">
+    <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+    <!-- Tema para código -->
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+
+    <!-- Estilos personalizados -->
+    <style>
+        .reveal h1,
+        .reveal h2 {
+            color: #0056b3;
+        }
+
+        .reveal pre code {
+            font-size: 1em;
+            background: #222;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .reveal p {
+            font-size: 1.1em;
+        }
+
+        .test-button {
+            background-color: #0056b3;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .test-button:hover {
+            background-color: #003d80;
+        }
+
+        .output {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-top: 5px;
+            color: #333;
+        }
+
+        .comparison-container {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .comparison-box {
+            width: 48%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 - Título -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    Programação para dispositivos Móveis
+                </h4>
+                <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+                    Prof. Msc. Nator Junior Carvalho da Costa
+                </p>
+                <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    Aula 03 - Introdução ao React: JSX, criação de componentes, props, state e hooks básicos;
+                </h6>
+                <h1>🐢</h1>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Scripts Reveal.js -->
+    <script src="./dist/reveal.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+
+    <script>
+        Reveal.initialize({
+            center: false,
+            controls: true,
+            progress: true,
+
+            slideNumber: true,
+            history: true,
+            transition: 'convex',
+            plugins: [RevealHighlight]
+        });
+
+        function testIfElse() {
+            let idade = 20;
+            let acesso;
+
+            if (idade >= 18) {
+                acesso = "Permitido";
+            } else {
+                acesso = "Negado";
+            }
+
+            document.querySelectorAll("#ifElseOutput, #ifElseOutput2").forEach(el => el.innerText = acesso);
+        }
+
+        function testTernario() {
+            let idade = 20;
+            let status = (idade >= 18) ? "Permitido" : "Negado";
+            document.querySelectorAll("#ternarioOutput, #ternarioOutput2, #ternarioOutput3").forEach(el => el.innerText = status);
+        }
+        function testVariaveis() {
+            let nome = "Maria";
+            let idade = 30;
+            const ativo = true;
+            var salario = 2500.50;
+            let output = "Nome: " + nome + " (Tipo: " + typeof nome + ")\n" +
+                "Idade: " + idade + " (Tipo: " + typeof idade + ")\n" +
+                "Ativo: " + ativo + " (Tipo: " + typeof ativo + ")\n" +
+                "Salário: " + salario + " (Tipo: " + typeof salario + ")";
+            document.querySelector("#variaveisOutput").innerText = output;
+        }
+
+        function testAritmeticos() {
+            let a = 10, b = 3;
+            let soma = a + b;
+            let sub = a - b;
+            let mult = a * b;
+            let div = a / b;
+            let mod = a % b;
+            let output = "Soma: " + soma + "\n" +
+                "Subtração: " + sub + "\n" +
+                "Multiplicação: " + mult + "\n" +
+                "Divisão: " + div + "\n" +
+                "Módulo: " + mod;
+            document.querySelector("#aritmeticosOutput").innerText = output;
+        }
+
+        function testRelacionais() {
+            let a = 5, b = 10;
+            let output = "a > b: " + (a > b) + "\n" +
+                "a < b: " + (a < b) + "\n" +
+                "a == b: " + (a == b) + "\n" +
+                "a !== b: " + (a !== b);
+            document.querySelector("#relacionaisOutput").innerText = output;
+        }
+
+        function testLogicos() {
+            let possuiIngresso = true;
+            let temIdentidade = false;
+            let output = "Pode entrar (&&): " + (possuiIngresso && temIdentidade) + "\n" +
+                "Pode entrar (||): " + (possuiIngresso || temIdentidade) + "\n" +
+                "Negação (!possuiIngresso): " + (!possuiIngresso);
+            document.querySelector("#logicosOutput").innerText = output;
+        }
+
+        function testLacos() {
+            let output = "";
+            for (let i = 1; i <= 5; i++) {
+                output += "Número: " + i + "\n";
+            }
+            document.querySelector("#lacosOutput").innerText = output;
+        }
+    </script>
+</body>
+
+</html>

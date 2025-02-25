@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula 01</title>
+    <title>Aula 02</title>
 
     <!-- Reveal.js -->
     <link rel="stylesheet" href="./dist/reveal.css">
@@ -12,8 +12,7 @@
 
     <!-- Tema para código -->
     <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
-    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
     <!-- Estilos personalizados -->
     <style>
         .reveal h1,
@@ -64,6 +63,32 @@
 
         .comparison-box {
             width: 48%;
+        }
+
+        /* Torna o bloco de código relativo para posicionamento do botão */
+        pre {
+            position: relative;
+        }
+
+        /* Estilização discreta para o botão de copiar */
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Exibe o botão quando o mouse está sobre o bloco */
+        pre:hover .copy-btn {
+            opacity: 1;
         }
     </style>
 </head>
@@ -614,7 +639,7 @@ if (score >= 7) {
                                 O componente &lt;Text&gt; é a base para exibir texto em um app React Native. Use-o para
                                 renderizar strings simples.
                                 <br><br>
-                                
+
                             </h6>
                             <pre
                                 style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; overflow: auto; margin-top: 20px;">
@@ -629,6 +654,9 @@ export default function App() {
 }</code>
         </pre>
                         </div>
+
+
+
                 </section>
 
                 <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
@@ -638,8 +666,8 @@ export default function App() {
 
                         <!-- Coluna 2: Embed do Expo Snack -->
                         <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-                            <div data-snack-id="@natorjunior/ex01" data-snack-platform="web"
-                                data-snack-preview="true" data-snack-theme="light"
+                            <div data-snack-id="@natorjunior/ex01" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
                                 style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
                             </div>
                             <script async src="https://snack.expo.dev/embed.js"></script>
@@ -650,41 +678,218 @@ export default function App() {
 
             <!-- Slide 2: Componente &lt;View&gt; -->
             <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <br><br><br><br>
-                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                    Componente &lt;View&gt; no React Native
-                </h4>
-                <h1>📦</h1>
+                <section>
+                    <br><br><br><br>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                        Componente &lt;View&gt; no React Native
+                    </h4>
+                    <h1>📦</h1>
+                </section>
+
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="">
+                        <!-- Coluna: Conteúdo e código -->
+                        <div style="flex: 1  50%; padding: 20px; box-sizing: border-box;">
+                            <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                                Exemplo de Uso do Componente &lt;View&gt;
+                            </h4>
+                            <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                                O componente <View> atua como um container para estruturar e agrupar outros componentes
+                                    na sua interface.
+                            </h6>
+                            <pre
+                                style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+    <code class="language-jsx" >import React from 'react';
+import { View, Text } from 'react-native';
+
+export default function App() { 
+    return ( 
+    &lt;View style={{alignItems: 'center'}}&gt; 
+        &lt;Text&gt;Bem-vindo ao React Native!&lt;/Text&gt; 
+    &lt;/View&gt; 
+    ); 
+}</code>
+                            </pre>
+                        </div>
+                    </div>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/view" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                    </div>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/view2" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                    </div>
+                </section>
             </section>
 
-            
+
 
             <!-- Slide 3: Componente &lt;Image&gt; -->
             <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <br><br><br><br>
-                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                    Componente &lt;Image&gt; no React Native
-                </h4>
-                <h1>🖼️</h1>
+
+                <section>
+                    <br><br><br><br>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                        Componente &lt;Image&gt; no React Native
+                    </h4>
+                    <h1>🖼️</h1>
+                </section>
+                <section>
+                    <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                        O componente &lt;image &gt;
+                    </h6>
+                    <pre class="fragment fade-in-then-out"><code class="">import React from 'react';
+import { View, Image } from 'react-native';
+
+export default function App() { 
+    return ( 
+    &lt;View style={{alignItems: 'center'}}&gt; 
+        &lt;Image 
+            source={{uri: 'https://reactnative.dev/img/tiny_logo.png'}}
+            style={{width: 50, height: 50}} 
+        /&gt; 
+    &lt;/View&gt; 
+    ); 
+}</code></pre>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/image" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                    </div>
+                </section>
             </section>
 
             <!-- Slide 4: Componente &lt;Button&gt; -->
             <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <br><br><br><br>
-                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                    Componente &lt;Button&gt; no React Native
-                </h4>
-                <h1>🔘</h1>
+                <section>
+                    <br><br><br><br>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                        Componente &lt;Button&gt; no React Native
+                    </h4>
+                    <h1>🔘</h1>
+                </section>
+                <section>
+                    <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                        O componente &lt;Button &gt;
+                    </h6>
+                    <pre class="fragment fade-in-then-out"><code class="">
+import React from 'react';
+import { View, Button, Alert } from 'react-native';
+
+export default function App() { 
+    return ( 
+    &lt;View style={{alignItems: 'center'}}&gt; 
+        &lt;Button 
+            title="Pressione-me" 
+            onPress={() => Alert.alert('Botão pressionado!')}
+        /&gt; 
+    &lt;/View&gt; 
+    ); 
+}
+</code></pre>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/button" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                    </div>
+                </section>
             </section>
 
-            <!-- Slide 5: Componente &lt;TextInput&gt; -->
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <br><br><br><br>
-                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                    Componente &lt;TextInput&gt; no React Native
-                </h4>
-                <h1>⌨️</h1>
-            </section>
+
+<!-- Slide: Componente &lt;TextInput&gt; -->
+<section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+    <section>
+        <br><br><br><br>
+        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+            Componente &lt;TextInput&gt; no React Native
+        </h4>
+        <h1>⌨️</h1>
+    </section>
+    <section>
+        <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+            O componente &lt;TextInput&gt; permite capturar entrada de texto do usuário.
+        </h6>
+        <pre class="fragment fade-in-then-out"><code class="">
+import React, { useState } from 'react';
+import { View, TextInput, Text } from 'react-native';
+
+export default function App() { 
+    const [text, setText] = useState('');
+    
+    return ( 
+    &lt;View style={{alignItems: 'center', padding: 20}}&gt; 
+        &lt;TextInput 
+            style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, paddingHorizontal: 10}} 
+            placeholder="Digite algo..."
+            onChangeText={setText}
+            value={text}
+        /&gt; 
+        &lt;Text&gt;Você digitou: {text}&lt;/Text&gt;
+    &lt;/View&gt; 
+    ); 
+}
+</code></pre>
+    </section>
+    <!-- Slide: Introdução ao <TextInput> com Expo Snack lado a lado -->
+    <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+        style="padding: 20px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+            <!-- Coluna 2: Embed do Expo Snack -->
+            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                <div data-snack-id="@natorjunior/textinput" data-snack-platform="web" data-snack-preview="true"
+                    data-snack-theme="light"
+                    style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                </div>
+                <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+        </div>
+    </section>
+</section>
+
 
             <!-- Slide 6: Componente &lt;ScrollView&gt; -->
             <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
@@ -732,235 +937,33 @@ export default function App() {
             </section>
 
 
-            <!-- Slide 1 - Variáveis e seus Tipos -->
-            <section>
-                <h2>Variáveis e seus Tipos</h2>
-                <!-- <p>Exemplos de declaração de variáveis e verificação de seus tipos.</p> -->
-
-                <pre>
-<code class="hljs javascript" data-line-numbers="1-8">let nome = "Maria";
-let idade = 30;
-const ativo = true;
-var salario = 2500.50;
-
-console.log("Tipo de nome:", typeof nome);
-console.log("Tipo de idade:", typeof idade);
-console.log("Tipo de ativo:", typeof ativo);
-console.log("Tipo de salario:", typeof salario);
-</code></pre>
-
-                <button class="test-button" onclick="testVariaveis()">Executar</button>
-                <div class="output" id="variaveisOutput"></div>
-            </section>
-
-            <!-- Slide 2 - Operadores Aritméticos -->
-            <section>
-                <h6>Operadores Aritméticos</h6>
-                <!-- <p>Realizando operações básicas: soma, subtração, multiplicação, divisão e módulo.</p> -->
-
-                <pre>
-<code class="hljs javascript" data-line-numbers="1-8">let a = 10;
-let b = 3;
-let soma = a + b;
-let sub = a - b;
-let mult = a * b;
-let div = a / b;
-let mod = a % b;
-
-console.log("Soma:", soma);
-console.log("Subtração:", sub);
-console.log("Multiplicação:", mult);
-console.log("Divisão:", div);
-console.log("Módulo:", mod);
-</code></pre>
-                <button class="test-button" onclick="testAritmeticos()">Executar</button>
-                <div class="output" id="aritmeticosOutput"></div>
-            </section>
-
-            <!-- Slide 3 - Operadores Relacionais -->
-            <section>
-                <h2>Operadores Relacionais</h2>
-                <!-- <p>Comparações entre valores usando operadores relacionais.</p> -->
-
-                <pre>
-<code class="hljs javascript" data-line-numbers="1-7">let a = 5;
-let b = 10;
-
-console.log("a > b:", a > b);
-console.log("a < b:", a < b);
-console.log("a == b:", a == b);
-console.log("a !== b:", a !== b);
-</code></pre>
-
-                <button class="test-button" onclick="testRelacionais()">Executar</button>
-                <div class="output" id="relacionaisOutput"></div>
-            </section>
-
-            <!-- Slide 4 - Operadores Lógicos -->
-            <section>
-                <h2>Operadores Lógicos</h2>
-                <p>Utilizando AND (&&), OR (||) e NOT (!).</p>
-
-                <pre>
-<code class="hljs javascript" data-line-numbers="1-7">let possuiIngresso = true;
-let temIdentidade = false;
-
-console.log("Pode entrar (&&):", possuiIngresso && temIdentidade);
-console.log("Pode entrar (||):", possuiIngresso || temIdentidade);
-console.log("Negação (!possuiIngresso):", !possuiIngresso);
-</code></pre>
-
-                <button class="test-button" onclick="testLogicos()">Executar</button>
-                <div class="output" id="logicosOutput"></div>
-            </section>
-
-            <!-- Slide 5 - Laços de Repetição -->
-            <section>
-                <h2>Laços de Repetição</h2>
-                <p>Exemplo de loop utilizando o laço <code>for</code>.</p>
-
-                <pre>
-<code class="hljs javascript" data-line-numbers="1-6">let output = "";
-for (let i = 1; i <= 5; i++) {
-    output += "Número: " + i + "\n";
-}
-console.log(output);
-</code></pre>
-
-                <button class="test-button" onclick="testLacos()">Executar</button>
-                <div class="output" id="lacosOutput"></div>
-            </section>
-
-
-
-
-
-
-
-
-
-
-            <section>
-
-                <!-- Atividade 1 -->
-                <section>
-                    <h3>Atividade 1: Soma de dois números</h3>
-                    <p class="fragment">Solicitar dois valores via <code class="hljs javascript">prompt()</code> e
-                        exibir a soma.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-const a = Number(prompt("Digite o primeiro número:"));
-const b = Number(prompt("Digite o segundo número:"));
-alert("A soma é: " + (a + b));
-                  </code></pre>
-                </section>
-
-                <!-- Atividade 2 -->
-                <section>
-                    <h3>Atividade 2: Imprimir números de 1 a 5</h3>
-                    <p class="fragment">Use um laço de repetição para exibir números sequencialmente.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-for (let i = 1; i <= 5; i++) {
-    console.log(i);
-}
-                  </code></pre>
-                </section>
-
-                <!-- Atividade 3 -->
-                <section>
-                    <h3>Atividade 3: Calcular média de notas</h3>
-                    <p class="fragment">Dado um array de notas, calcule a média e exiba o resultado.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-const notas = [8, 7, 9, 10];
-const soma = notas.reduce((acc, nota) => acc + nota, 0);
-const media = soma / notas.length;
-console.log("Média:", media);
-                  </code></pre>
-                </section>
-
-                <!-- Atividade 4 -->
-                <section>
-                    <h3>Atividade 4: Função para verificar par ou ímpar</h3>
-                    <p class="fragment">Crie uma função que receba um número e retorne <em>true</em> se for par, ou
-                        <em>false</em> se for ímpar.
-                    </p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-function ehPar(numero) {
-    return numero % 2 === 0;
-}
-
-console.log(ehPar(10)); // true
-console.log(ehPar(7));  // false
-                  </code></pre>
-                </section>
-
-                <!-- Atividade 5 -->
-                <section>
-                    <h3>Atividade 5: Filtrar números maiores que 5</h3>
-                    <p class="fragment">Dado um array de números, retorne apenas os valores maiores que 5.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-const lista = [2, 7, 5, 9, 3, 10];
-const filtrado = lista.filter(num => num > 5);
-console.log(filtrado); // [7, 9, 10]
-                  </code></pre>
-                </section>
-
-                <!-- Atividade 6 -->
-                <section>
-                    <h3>Atividade 6: Exemplo de objeto e acesso às propriedades</h3>
-                    <p class="fragment">Crie um objeto <code>pessoa</code> e acesse suas propriedades <code>nome</code>
-                        e <code>idade</code>.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-const pessoa = {
-    nome: "Nator",
-    idade: 25
-};
-
-console.log(pessoa.nome);  // "Nator"
-console.log(pessoa.idade); // 25
-                  </code></pre>
-                </section>
-
-                <!-- Atividade 7 -->
-                <section>
-                    <h3>Atividade 7: Calcular fatorial</h3>
-                    <p class="fragment">Crie uma função para calcular o fatorial de um número.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-function fatorial(n) {
-    let resultado = 1;
-    for (let i = 1; i <= n; i++) {
-        resultado *= i;
-    }
-    return resultado;
-}
-
-console.log(fatorial(5)); // 120
-                  </code></pre>
-                </section>
-
-                <!-- Atividade 8 -->
-                <section>
-                    <h3>Atividade 8: Retornar vogais de uma string</h3>
-                    <p class="fragment">Dada uma string, extraia apenas as vogais e exiba-as.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
-// Resposta (Exemplo)
-function extrairVogais(texto) {
-    return texto.match(/[aeiou]/gi) || [];
-}
-
-console.log(extrairVogais("Programação")); 
-// [ 'o', 'a', 'a', 'ã', 'o' ]
-                  </code></pre>
-                </section>
-            </section>
-
-
         </div>
     </div>
 
     <!-- Scripts Reveal.js -->
     <script src="./dist/reveal.js"></script>
     <script src="./plugin/highlight/highlight.js"></script>
+    <!-- Inclusão do Clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Para cada elemento <pre> com um <code>, adiciona um botão de copiar
+            document.querySelectorAll('pre').forEach(function (pre, index) {
+                var code = pre.querySelector('code');
+                var codeId = 'code-' + index;
+                code.setAttribute('id', codeId);
 
+                var button = document.createElement('button');
+                button.className = 'copy-btn';
+                button.textContent = 'Copiar';
+                button.setAttribute('data-clipboard-target', '#' + codeId);
+
+                pre.appendChild(button);
+            });
+            // Inicializa o ClipboardJS para todos os botões de copiar
+            new ClipboardJS('.copy-btn');
+        });
+    </script>
     <script>
         Reveal.initialize({
             center: false,
