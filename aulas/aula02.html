@@ -891,50 +891,106 @@ export default function App() {
 </section>
 
 
-            <!-- Slide 6: Componente &lt;ScrollView&gt; -->
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <br><br><br><br>
-                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                    Componente &lt;ScrollView&gt; no React Native
-                </h4>
-                <h1>📜</h1>
-            </section>
+<section>
+    <section>
+        <br><br><br><br>
+        <h1>Extra</h1>
+        <h6>Exercicios em JS</h6>
+        <!-- Slide 1: Verificação de Par ou Ímpar -->
+    </section>
+    <section>
+        <h5>Atividade 1: Verificação de Par ou Ímpar</h5>
+<ul>
+<li style="text-align: justify;" >Crie uma função em JavaScript que receba um número e verifique se ele é par ou ímpar, utilizando
+operadores relacionais e lógicos.</li>
+</ul>
+<pre>
+<code class="fragment fade-in-then-out">// Função para verificar se um número é par ou ímpar
+function verificarParImpar(num) {
+    if(num % 2 === 0) {
+        return "Par";
+    } else {
+        return "Ímpar";
+    }
+}
 
-            <!-- Slide 7: Componente &lt;FlatList&gt; -->
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <br><br><br><br>
-                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                    Componente &lt;FlatList&gt; no React Native
-                </h4>
-                <h1>📋</h1>
-            </section>
+// Testando a função:
+console.log(verificarParImpar(4)); // Saída: "Par"
+console.log(verificarParImpar(7)); // Saída: "Ímpar"</code></pre>
+<h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
+    </section>
 
-            <!-- Slide 8: Componente &lt;TouchableOpacity&gt; -->
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <br><br><br><br>
-                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                    Componente &lt;TouchableOpacity&gt; no React Native
-                </h4>
-                <h1>👆</h1>
-            </section>
+    <!-- Slide 2: Validação de Senha -->
+    <section>
+        <h5>Atividade 2: Validação de Senha</h5>
+        <p>
+            <ul>
+                <li style="text-align: justify;" >Crie uma função que receba uma senha (string) e verifique se ela atende aos seguintes critérios:</li>
+                <ul style="text-align: justify;" >
+                    <li>Possuir pelo menos 8 caracteres;</li>
+                    <li>Conter ao menos uma letra e um número.</li>
+                </ul>
+            </ul>
+        </p>
+        <pre><code class="fragment fade-in-then-out">// Função para validar senha
+function validarSenha(senha) {
+    if (senha.length < 8) {
+        return false;
+    }
+    let temNumero = /\d/.test(senha);
+    let temLetra = /[a-zA-Z]/.test(senha);
 
-            <!-- Slide 9: Componente &lt;SafeAreaView&gt; -->
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <br><br><br><br>
-                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                    Componente &lt;SafeAreaView&gt; no React Native
-                </h4>
-                <h1>🛡️</h1>
-            </section>
+    return temNumero && temLetra;
+}
+console.log(validarSenha("abc12345")); // true
+console.log(validarSenha("abcdefg"));  // false</code></pre>
+<h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
+    </section>
 
-            <!-- Slide 10: Componente &lt;StatusBar&gt; -->
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <br><br><br><br>
-                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                    Componente &lt;StatusBar&gt; no React Native
-                </h4>
-                <h1>📶</h1>
-            </section>
+    <!-- Slide 3: Cálculo da Média -->
+    <section>
+        <h5>Atividade 3: Função para Calcular Média</h5>
+        <ul>
+            <li style="text-align: justify;">
+                Crie uma função que receba um array de números e retorne a média aritmética dos valores. Utilize
+                um laço de repetição para somar os elementos do array.
+           </li>
+        </ul>
+       
+        <pre><code class="fragment fade-in-then-out">// Função para calcular a média
+function calcularMedia(numeros) {
+    let soma = 0;
+    for(let i = 0; i < numeros.length; i++) {
+        soma += numeros[i];
+    }
+    return soma / numeros.length;
+}
+
+// Testando a função:
+console.log(calcularMedia([10, 20, 30])); // Saída: 20</code></pre>
+<h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
+    </section>
+
+    <!-- Slide 4: Contagem Regressiva -->
+    <section>
+        <h5>Atividade 4: Contagem Regressiva</h5>
+<ul  style="text-align: justify;">
+<li>Crie um script que realize uma contagem regressiva a partir de um número fornecido pelo usuário
+até zero, utilizando um laço de repetição.</li>
+</ul>
+<pre><code class="fragment fade-in-then-out">// Função para realizar a contagem regressiva
+function contagemRegressiva(inicio) {
+    for(let i = inicio; i >= 0; i--) {
+        console.log(i);
+    }
+}
+
+// Exemplo de uso:
+contagemRegressiva(5); 
+// Saída no console: 5, 4, 3, 2, 1, 0</code></pre>
+<h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
+    </section>
+</section>
 
 
         </div>
