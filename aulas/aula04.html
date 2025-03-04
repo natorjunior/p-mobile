@@ -279,38 +279,40 @@
             <section data-auto-animate>
                 <h1 style="margin-top: 100px; color: red;">Auto-Animate</h1>
             </section>
+            <section>
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code data-trim data-line-numbers>
+                      let planets = [
+                        { name: 'mars', diameter: 6779 },
+                      ]
+                    </code></pre>
+                </section>
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code data-trim data-line-numbers>
+                      let planets = [
+                        { name: 'mars', diameter: 6779 },
+                        { name: 'earth', diameter: 12742 },
+                        { name: 'jupiter', diameter: 139820 }
+                      ]
+                    </code></pre>
+                </section>
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code data-trim data-line-numbers>
+                      let circumferenceReducer = ( c, planet ) => {
+                        return c + planet.diameter * Math.PI;
+                      }
+                  
+                      let planets = [
+                        { name: 'mars', diameter: 6779 },
+                        { name: 'earth', diameter: 12742 },
+                        { name: 'jupiter', diameter: 139820 }
+                      ]
+                  
+                      let c = planets.reduce( circumferenceReducer, 0 )
+                    </code></pre>
+                </section>
+            </section>
 
-            <section data-auto-animate>
-                <pre data-id="code-animation"><code data-trim data-line-numbers>
-                  let planets = [
-                    { name: 'mars', diameter: 6779 },
-                  ]
-                </code></pre>
-            </section>
-            <section data-auto-animate>
-                <pre data-id="code-animation"><code data-trim data-line-numbers>
-                  let planets = [
-                    { name: 'mars', diameter: 6779 },
-                    { name: 'earth', diameter: 12742 },
-                    { name: 'jupiter', diameter: 139820 }
-                  ]
-                </code></pre>
-            </section>
-            <section data-auto-animate>
-                <pre data-id="code-animation"><code data-trim data-line-numbers>
-                  let circumferenceReducer = ( c, planet ) => {
-                    return c + planet.diameter * Math.PI;
-                  }
-              
-                  let planets = [
-                    { name: 'mars', diameter: 6779 },
-                    { name: 'earth', diameter: 12742 },
-                    { name: 'jupiter', diameter: 139820 }
-                  ]
-              
-                  let c = planets.reduce( circumferenceReducer, 0 )
-                </code></pre>
-            </section>
         </div>
     </div>
 
