@@ -1,11 +1,15 @@
 [
   {
-    "titulo": "Aula 1 - Visão geral",
-    "link": "./aulas/aula01.html"
+    "titulo": "Aula 2 - Visão geral",
+    "link": "./aulas/aula02.html"
   },
   {
-    "titulo": "Aula 2 - Components",
-    "link": "./aulas/aula02.html"
+    "titulo": "Aula 3 - Components Básicos",
+    "link": "./aulas/aula03.html"
+  },
+  {
+    "titulo": "Aula 4 - Workshop (node js)",
+    "link": "./aulas/aula04.html"
   }
 ]
   

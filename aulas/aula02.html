@@ -12,6 +12,7 @@
 
     <!-- Tema para código -->
     <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
     <!-- Estilos personalizados -->
     <style>
@@ -65,32 +66,30 @@
             width: 48%;
         }
 
-        /* Torna o bloco de código relativo para posicionamento do botão */
-        pre {
-            position: relative;
-        }
-
-        /* Estilização discreta para o botão de copiar */
-        .copy-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            padding: 4px 8px;
-            font-size: 12px;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        /* Exibe o botão quando o mouse está sobre o bloco */
-        pre:hover .copy-btn {
-            opacity: 1;
-        }
-    </style>
+    /* Torna o bloco de código relativo para posicionamento do botão */
+    pre {
+      position: relative;
+    }
+    /* Estilização discreta para o botão de copiar */
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    /* Exibe o botão quando o mouse está sobre o bloco */
+    pre:hover .copy-btn {
+      opacity: 1;
+    }
+  </style>
 </head>
 
 <body>
@@ -112,827 +111,402 @@
                 <h1>🐢</h1>
             </section>
 
+            <section>
+                <h6>configuração do Node e Expo na sua máquina</h6>
 
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <section>
+                    <h4>Passo 1</h4>
+                    <p>Baixe e instale o <strong>Node.js</strong> pelo site oficial:
+                        <a href="https://nodejs.org/pt/download" target="_blank">https://nodejs.org/pt/download</a>.
+                    </p>
+                    <div style="max-width: 800px; margin: auto;">
+                        <iframe src="https://nodejs.org/pt/download" width="100%" height="400" style="border: none;"
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </section>
+
+                <section>
+                    <h4>Passo 2</h4>
+                    <p>Verifique a instalação com:</p>
+
+                    <pre><code data-trim data-noescape>
+                    node -v // CMD ou bash 
+                        </code></pre>
+
+                    <p>Saída esperada:</p>
+
+                    <pre><code data-trim data-noescape>
+                    v18.17.0
+                        </code></pre>
+                </section>
+
+                <section>
+                    <h4>Passo 3</h4>
+                    <p>Instale o <strong>Expo CLI</strong>:</p>
+
+                    <pre><code class=""  data-trim data-noescape>
+                  npm install -g expo
+                    </code></pre>
+
+                    <!-- Simulação de Terminal -->
+                    <div class="terminal fragment fade-in-out"
+                        style="background: #1e1e1e; text-align: left; color: #c5c8c6; padding: 10px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+                        <p><span style="color: #6A9955;">$</span> npm install -g expo</p>
+                        <p>Instalando Expo CLI...</p>
+                        <p>Expo CLI instalado com sucesso!</p>
+                    </div>
+                </section>
+
+
+
+
+                <section style="text-align: left;">
+                    <h4>Passo 4</h4>
+                    <p>Confira a instalação do Expo executando:</p>
+                    <pre><code data-trim data-noescape>
+npx expo --version
+    </code></pre>
+                </section>
+
+                <section style="text-align: left;">
+                    <h4>Passo 5</h4>
+                    <p>Crie um novo projeto Expo:</p>
+                    <pre><code data-trim data-noescape>
+npx create-expo-app meu-app --template blank
+    </code></pre>
+                    <!-- <p>Escolha um template durante a configuração.</p> -->
+                </section>
+
+                <section style="text-align: left;">
+                    <h4>Passo 6</h4>
+                    <p>Entre na pasta do projeto e inicie o servidor:</p>
+                    <pre><code data-trim data-noescape>
+cd meu-app
+npx expo start
+    </code></pre>
+                    <!-- <p>Saída esperada:</p>
+                    <img src="https://raw.githubusercontent.com/expo/expo/main/docs/public/static/images/start-command.png"
+                        alt="Tela do Expo CLI após executar expo start" width="80%"
+                        style="border-radius: 10px; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);"> -->
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <div class="fragment">
+                        <h3> Oque é isso ?</h3>
+                        <pre><code class="hljs html"><h1>Hello, world!</h1>;</code></pre>
+                    </div>
+
+                    <div class="fragment fade-up">
+                        <h3> e agora ?</h3>
+                        <pre><code class="hljs javascript">const a = 10;</code></pre>
+                    </div>
+
+                    <div class="fragment fade-up">
+                        <h3> e agora ?</h3>
+                        <pre><code class="hljs javascript">const element = <h1>Hello, world!</h1>;</code></pre>
+                    </div>
+                    <h6 class="fragment fade-up">Exemplos em <b>react.js</b></h6>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h3>O que é JSX?</h3>
+                    <p class="fragment fade-in-then-out">JSX é uma extensão da sintaxe do JavaScript que permite
+                        escrever HTML dentro do
+                        JavaScript.</p>
+                    <p class="fragment fade-in-then-out">Ele é usado principalmente com o React para definir a estrutura
+                        da interface do
+                        usuário.</p>
+                    <p class="fragment fade-in-then-out">JSX é compilado para chamadas `React.createElement()`, tornando
+                        a sintaxe mais
+                        intuitiva.</p>
+                </section>
+
+                <section>
+                    <h3>Considere esta declaração de variável:</h3>
+                    <pre><code class="hljs javascript">
+const element = <h1>Hello, world!</h1>; //react.js
+                    </code></pre>
+                    <p class="fragment">Este código parece HTML, mas é JSX!</p>
+                    <p class="fragment">JSX permite escrever código declarativo e reutilizável em React.</p>
+                </section>
+
+                <section>
+                    <h3>O que acontece por trás?</h3>
+                    <p class="fragment">O JSX acima é transformado em:</p>
+                    <pre><code class="hljs javascript">
+const element = React.createElement("h1", null, "Hello, world!"); 
+                    </code></pre>
+                    <p class="fragment">Isso significa que JSX não é obrigatório, mas facilita muito a escrita de
+                        interfaces.</p>
+                </section>
+            </section>
+
+
+
+
+            <section>
+                <section>
+                    <h3>Incorporando Expressões em JSX</h3>
+                    <p class="fragment">JSX permite incorporar expressões JavaScript dentro do HTML.</p>
+                    <p class="fragment">Isso torna o código mais dinâmico e interativo.</p>
+                </section>
+
+                <section>
+                    <h3>Exemplo de Expressão em JSX</h3>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const name = "Nator";  //react.js
+const element = <h1>Olá, {name}!</h1>; //react.js
+                    </code></pre>
+                    <p class="fragment">Aqui, `{name}` é uma expressão JavaScript embutida dentro do JSX.</p>
+                </section>
+
+                <section>
+                    <h3>Exemplo com Função</h3>
+                    <pre><code class="hljs javascript">
+function formatName(user) { //react.js
+    return user.firstName + " " + user.lastName;
+}
+
+const user = { firstName: "Nator", lastName: "Júnior" };
+
+const element = <h1>Olá, {formatName(user)}!</h1>; //react.js
+                    </code></pre>
+                    <p class="fragment">Chamamos uma função diretamente dentro do JSX.</p>
+                </section>
+
+                <section>
+                    <h3>Operações Matemáticas e Expressões Lógicas</h3>
+                    <pre><code class="hljs javascript">
+const element = <p>A soma de 2 + 2 é {2 + 2}</p>; //react.js
+                    </code></pre>
+                    <p class="fragment">Podemos usar operações matemáticas diretamente.</p>
+
+                    <pre><code class="hljs javascript">
+const isLoggedIn = true;
+const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>; //react.js
+                    </code></pre>
+                    <p class="fragment">Expressões lógicas também são válidas dentro do JSX.</p>
+                </section>
+
+            </section>
+            <section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
                 <br><br><br><br>
-
+                <h1 class="text-5xl font-bold mb-4">🧐</h1>
                 <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
-                    Revisão de JavaScript
-                </h4>
-                <h1>🐝</h1>
+                    De onde vem isso ?</h4>
             </section>
-
-            <!-- Slide 8.1: Operadores Aritméticos -->
-            <section>
-                <section>
-                    <h3>Operadores Aritméticos</h3>
-                    <p class="fragment">
-                    <h6>
-                        Use operadores para cálculos: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>,
-                        <code>%</code>,
-                        <code>**</code>, <code>//</code>
-                    </h6>
-                    </p>
-                    <pre><code class="javascript" data-trim data-noescape>
-let a = 15;
-let b = 4;
-
-console.log("Soma:", a + b);             // Soma: 19
-console.log("Subtração:", a - b);          // Subtração: 11
-console.log("Multiplicação:", a * b);      // Multiplicação: 60
-console.log("Divisão:", a / b);            // Divisão: 3.75
-console.log("Módulo:", a % b);             // Módulo: 3
-console.log("Exponenciação:", a ** b);     // Exponenciação: 50625
-console.log("Divisão Inteira:", Math.floor(a / b));  // Divisão Inteira: 3
-                        
-  </code></pre>
-                </section>
-                <section>
-                    <p class="fragment">
-                        <!-- Tabela Ilustrativa: Operadores Aritméticos -->
-                    <table style="width:100%; border-collapse: collapse; text-align: center; margin-top: 10px;">
-                        <thead>
-                            <tr style="background: linear-gradient(to right, #e0f7fa, #b2ebf2);">
-                                <th style="padding: 8px; border: 1px solid #00796b;">Operador</th>
-                                <th style="padding: 8px; border: 1px solid #00796b;">Operação</th>
-                                <th style="padding: 8px; border: 1px solid #00796b;">Exemplo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background: #ffffff;">
-                                <td style="padding: 8px; border: 1px solid #00796b;">+</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">Adição</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">15 + 4 = 19</td>
-                            </tr>
-                            <tr style="background: #f7f7f7;">
-                                <td style="padding: 8px; border: 1px solid #00796b;">-</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">Subtração</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">15 - 4 = 11</td>
-                            </tr>
-                            <tr style="background: #ffffff;">
-                                <td style="padding: 8px; border: 1px solid #00796b;">*</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">Multiplicação</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">15 * 4 = 60</td>
-                            </tr>
-                            <tr style="background: #f7f7f7;">
-                                <td style="padding: 8px; border: 1px solid #00796b;">/</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">Divisão</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">15 / 4 = 3.75</td>
-                            </tr>
-                            <tr style="background: #ffffff;">
-                                <td style="padding: 8px; border: 1px solid #00796b;">%</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">Módulo</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">15 % 4 = 3</td>
-                            </tr>
-                            <tr style="background: #f7f7f7;">
-                                <td style="padding: 8px; border: 1px solid #00796b;">**</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">Exponenciação</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">15 ** 4 = 50625</td>
-                            </tr>
-                            <tr style="background: #ffffff;">
-                                <td style="padding: 8px; border: 1px solid #00796b;">//</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">Divisão Inteira</td>
-                                <td style="padding: 8px; border: 1px solid #00796b;">15 // 4 = 3</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    </p>
-                </section>
-
-                <section>
-                    <style>
-                        /* Estilização do bloco de código editável */
-                        pre.playground-container {
-                            background: #2d2d2d;
-                            padding: 10px;
-                            border-radius: 8px;
-                            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-                            overflow: auto;
-                        }
-
-                        pre.playground-container code[contenteditable="true"] {
-                            display: block;
-                            background-color: #1e1e1e;
-                            color: #dcdcdc;
-                            padding: 10px;
-                            border: 1px solid #444;
-                            border-radius: 4px;
-                            font-family: 'Fira Code', monospace;
-                            min-height: 100px;
-                            outline: none;
-                            white-space: pre;
-                        }
-
-                        /* Botão para executar o código */
-                        #run-code {
-                            margin-top: 10px;
-                            background: #6272a4;
-                            color: #fff;
-                            border: none;
-                            padding: 10px 15px;
-                            border-radius: 4px;
-                            cursor: pointer;
-                            transition: background 0.3s;
-                        }
-
-                        #run-code:hover {
-                            background: #505c8b;
-                        }
-
-                        /* Área de saída */
-                        #output {
-                            margin-top: 15px;
-                            border: 1px solid #ccc;
-                            padding: 10px;
-                            background: #fff;
-                            color: #333;
-                            border-radius: 4px;
-                            white-space: pre-wrap;
-                            font-family: 'Courier New', Courier, monospace;
-                            min-height: 50px;
-                        }
-                    </style>
-
-                    <h3>Teste de Mesa</h3>
-                    <p class="fragment">
-                    <h6>Qual o valor será impresso como resultado do programa?</h6>
-                    </p>
-
-                    <!-- Bloco de código editável -->
-                    <pre class="playground-container fragment">
-                      <code id="editable-code" contenteditable="true">// Código do Playground
-let a = 15;
-let b = 4;
-console.log("Soma:", a + b);</code>
-                    </pre>
-
-                    <button id="run-code" class="fragment">Executar Código</button>
-                    <pre id="output" class="fragment"></pre>
-
-                    <script>
-                        // Função para executar o código editado
-                        document.getElementById('run-code').addEventListener('click', function () {
-                            var outputDiv = document.getElementById('output');
-                            outputDiv.textContent = ''; // Limpa a saída anterior
-
-                            // Obtém o código do elemento <code>
-                            var code = document.getElementById('editable-code').innerText;
-
-                            // Redefine o console.log para capturar a saída
-                            var originalLog = console.log;
-                            console.log = function (...args) {
-                                args.forEach(arg => {
-                                    outputDiv.textContent += arg + '\n';
-                                });
-                                originalLog.apply(console, args);
-                            };
-
-                            try {
-                                eval(code);
-                            } catch (e) {
-                                outputDiv.textContent = 'Erro: ' + e.message;
-                            }
-
-                            // Restaura o console.log original
-                            console.log = originalLog;
-                        });
-                    </script>
-                </section>
-
-
-
-            </section>
-
-            <!-- Slide 8.2: Operadores Relacionais -->
-            <section>
-                <section>
-                    <h3>Operadores Relacionais</h3>
-                    <p class="fragment">
-                        Compare valores com: <code>===</code>, <code>==</code>, <code>!=</code>, <code>&gt;</code>,
-                        <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>
-                    </p>
-                    <pre class="fragment"><code data-trim data-noescape class="JavaScript">// JavaScript: Comparação de valores
-let x = 10;
-let y = 20;
-console.log("x == y:", x == y);
-console.log("x < y:", x < y);
-</code></pre>
-                </section>
-
-                <section>
-                    <p class="fragment">
-                        <!-- Tabela Ilustrativa: Operadores Relacionais -->
-                    <table style="width:100%; border-collapse: collapse; text-align: center; margin-top: 10px;">
-                        <thead>
-                            <tr style="background: linear-gradient(to right, #fff9c4, #ffe082);">
-                                <th style="padding: 8px; border: 1px solid #f57f17;">Operador</th>
-                                <th style="padding: 8px; border: 1px solid #f57f17;">Comparação</th>
-                                <th style="padding: 8px; border: 1px solid #f57f17;">Exemplo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background: #ffffff;">
-                                <td style="padding: 8px; border: 1px solid #f57f17;">===</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">Igual valor e tipo</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">10 == 20 → False</td>
-                            </tr>
-                            <tr style="background: #ffffff;">
-                                <td style="padding: 8px; border: 1px solid #f57f17;">==</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">Igual valor</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">10 == 20 → False</td>
-                            </tr>
-                            <tr style="background: #f7f7f7;">
-                                <td style="padding: 8px; border: 1px solid #f57f17;">!=</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">Diferente</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">10 != 20 → True</td>
-                            </tr>
-                            <tr style="background: #ffffff;">
-                                <td style="padding: 8px; border: 1px solid #f57f17;">&gt;</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">Maior</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">10 &gt; 20 → False</td>
-                            </tr>
-                            <tr style="background: #f7f7f7;">
-                                <td style="padding: 8px; border: 1px solid #f57f17;">&lt;</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">Menor</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">10 &lt; 20 → True</td>
-                            </tr>
-                            <tr style="background: #ffffff;">
-                                <td style="padding: 8px; border: 1px solid #f57f17;">&gt;=</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">Maior ou Igual</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">10 &gt;= 20 → False</td>
-                            </tr>
-                            <tr style="background: #f7f7f7;">
-                                <td style="padding: 8px; border: 1px solid #f57f17;">&lt;=</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">Menor ou Igual</td>
-                                <td style="padding: 8px; border: 1px solid #f57f17;">10 &lt;= 20 → True</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    </p>
-                </section>
-            </section>
-
-            <!-- Slide 8.3: Operadores Lógicos -->
             <section>
 
-                <h3>Operadores Lógicos</h3>
-                <p class="fragment">
-                    Combine condições com: <code>and</code>, <code>or</code>, <code>not</code>
-                </p>
-                <pre class="fragment"><code data-trim data-noescape class="javascript">
-let p = true;
-let q = false;
-
-console.log("p and q:", p && q);
-console.log("not p:", !p);</code></pre>
-                <p class="fragment">
-                    <!-- Tabela Ilustrativa: Operadores Lógicos -->
-                <table style="width:100%; border-collapse: collapse; text-align: center; margin-top: 10px;">
-                    <thead>
-                        <tr style="background: linear-gradient(to right, #fce4ec, #f8bbd0);">
-                            <th style="padding: 8px; border: 1px solid #c2185b;">Operador</th>
-                            <th style="padding: 8px; border: 1px solid #c2185b;">Descrição</th>
-                            <th style="padding: 8px; border: 1px solid #c2185b;">Exemplo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="background: #ffffff;">
-                            <td style="padding: 8px; border: 1px solid #c2185b;">&&</td>
-                            <td style="padding: 8px; border: 1px solid #c2185b;">E Lógico</td>
-                            <td style="padding: 8px; border: 1px solid #c2185b;">True && False → False</td>
-                        </tr>
-                        <tr style="background: #f7f7f7;">
-                            <td style="padding: 8px; border: 1px solid #c2185b;">||</td>
-                            <td style="padding: 8px; border: 1px solid #c2185b;">Ou Lógico</td>
-                            <td style="padding: 8px; border: 1px solid #c2185b;">True || False → True</td>
-                        </tr>
-                        <tr style="background: #ffffff;">
-                            <td style="padding: 8px; border: 1px solid #c2185b;">!</td>
-                            <td style="padding: 8px; border: 1px solid #c2185b;">Negação</td>
-                            <td style="padding: 8px; border: 1px solid #c2185b;">! True → False</td>
-                        </tr>
-                    </tbody>
-                </table>
-                </p>
-            </section>
-
-
-            <!-- Slide 9: Operadores - Atividade Prática -->
-            <section class="bg-green">
-                <!-- Teste de Mesa 1: Número Positivo, Negativo ou Zero -->
-                <section>
-                    <style>
-                        /* Estilização comum para os playgrounds */
-                        pre.playground-container {
-                            background: #2d2d2d;
-                            padding: 10px;
-                            border-radius: 8px;
-                            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-                            overflow: auto;
-                        }
-
-                        pre.playground-container code[contenteditable="true"] {
-                            display: block;
-                            background-color: #1e1e1e;
-                            color: #dcdcdc;
-                            padding: 10px;
-                            border: 1px solid #444;
-                            border-radius: 4px;
-                            font-family: 'Fira Code', monospace;
-                            min-height: 100px;
-                            outline: none;
-                            white-space: pre;
-                        }
-
-                        button.run-code {
-                            margin-top: 10px;
-                            background: #6272a4;
-                            color: #fff;
-                            border: none;
-                            padding: 10px 15px;
-                            border-radius: 4px;
-                            cursor: pointer;
-                            transition: background 0.3s;
-                        }
-
-                        button.run-code:hover {
-                            background: #505c8b;
-                        }
-
-                        pre.output {
-                            margin-top: 15px;
-                            border: 1px solid #ccc;
-                            padding: 10px;
-                            background: #fff;
-                            color: #333;
-                            border-radius: 4px;
-                            white-space: pre-wrap;
-                            font-family: 'Courier New', Courier, monospace;
-                            min-height: 50px;
-                        }
-                    </style>
-
-                    <h5>Teste de Mesa 1: Número Positivo, Negativo ou Zero</h5>
-                    <p class="fragment">
-                    <h6>Qual o valor de saída do código abaixo ?</h6>
-                    </p>
-                    <pre class="playground-container fragment">
-      <code id="editable-code-1" contenteditable="true" data-line-numbers>let num = 0; // Altere este valor para testar
-if (num > 0) {
-    console.log(num + " é positivo.");
-} else if (num < 0) {
-    console.log(num + " é negativo.");
-} else {
-    console.log("O número é zero.");
-}</code>
-    </pre>
-                    <button id="run-code-1" class="run-code fragment">Executar Código</button>
-                    <pre id="output-1" class="output fragment"></pre>
-
-                    <script>
-                        document.getElementById('run-code-1').addEventListener('click', function () {
-                            var outputDiv = document.getElementById('output-1');
-                            outputDiv.textContent = '';
-                            var code = document.getElementById('editable-code-1').innerText;
-                            var originalLog = console.log;
-                            console.log = function (...args) {
-                                args.forEach(arg => { outputDiv.textContent += arg + '\n'; });
-                                originalLog.apply(console, args);
-                            };
-                            try { eval(code); } catch (e) { outputDiv.textContent = 'Erro: ' + e.message; }
-                            console.log = originalLog;
-                        });
-                    </script>
-                </section>
-
-                <!-- Teste de Mesa 2: Verificação de Idade para Votar -->
-                <section>
-                    <h5>Teste de Mesa 2: Verificação de Idade para Votar</h5>
-                    <p class="fragment">
-                    <h6>Qual o resultado da operacao abaixo ?</h6>
-                    </p>
-                    <pre class="playground-container fragment">
-      <code id="editable-code-2" contenteditable="true" data-line-numbers>// Código do Playground: Votação
-let age = 15; 
-if (age >= 16) {
-    console.log("Pode votar.");
-} else {
-    console.log("Não pode votar.");
-}</code>
-    </pre>
-                    <button id="run-code-2" class="run-code fragment">Executar Código</button>
-                    <pre id="output-2" class="output fragment"></pre>
-
-                    <script>
-                        document.getElementById('run-code-2').addEventListener('click', function () {
-                            var outputDiv = document.getElementById('output-2');
-                            outputDiv.textContent = '';
-                            var code = document.getElementById('editable-code-2').innerText;
-                            var originalLog = console.log;
-                            console.log = function (...args) {
-                                args.forEach(arg => { outputDiv.textContent += arg + '\n'; });
-                                originalLog.apply(console, args);
-                            };
-                            try { eval(code); } catch (e) { outputDiv.textContent = 'Erro: ' + e.message; }
-                            console.log = originalLog;
-                        });
-                    </script>
-                </section>
-
-                <!-- Teste de Mesa 3: Maior entre Dois Números -->
-                <section>
-                    <h5>Teste de Mesa 3: Maior entre Dois Números</h5>
-                    <p class="fragment">
-                    <h6>Qual o resultado da operacao abaixo ?</h6>
-                    </p>
-                    <pre class="playground-container fragment">
-      <code id="editable-code-3" contenteditable="true" data-line-numbers>
-let a = 10; // Altere este valor
-let b = 20; // Altere este valor
-if (a > b) {
-    console.log(a + " é maior que " + b);
-} else if (a < b) {
-    console.log(b + " é maior que " + a);
-} else {
-    console.log("Ambos os números são iguais.");
-}</code>
-    </pre>
-                    <button id="run-code-3" class="run-code fragment">Executar Código</button>
-                    <pre id="output-3" class="output fragment"></pre>
-
-                    <script>
-                        document.getElementById('run-code-3').addEventListener('click', function () {
-                            var outputDiv = document.getElementById('output-3');
-                            outputDiv.textContent = '';
-                            var code = document.getElementById('editable-code-3').innerText;
-                            var originalLog = console.log;
-                            console.log = function (...args) {
-                                args.forEach(arg => { outputDiv.textContent += arg + '\n'; });
-                                originalLog.apply(console, args);
-                            };
-                            try { eval(code); } catch (e) { outputDiv.textContent = 'Erro: ' + e.message; }
-                            console.log = originalLog;
-                        });
-                    </script>
-                </section>
-
-
-
-                <!-- Teste de Mesa 5: Aprovação de Aluno -->
-                <section>
-                    <h3>Teste de Mesa 4: Aprovação de Aluno</h3>
-                    <p class="fragment">
-                    <h6>Altere o valor de <code>score</code> para testar se o aluno é aprovado (nota mínima 7).</h6>
-                    </p>
-                    <pre class="playground-container fragment">
-      <code id="editable-code-5" contenteditable="true">let score = 6.5; // Altere este valor para testar
-if (score >= 7) {
-    console.log("Aprovado com nota " + score);
-} else {
-    console.log("Reprovado com nota " + score);
-}</code>
-    </pre>
-                    <button id="run-code-5" class="run-code fragment">Executar Código</button>
-                    <pre id="output-5" class="output fragment"></pre>
-
-                    <script>
-                        document.getElementById('run-code-5').addEventListener('click', function () {
-                            var outputDiv = document.getElementById('output-5');
-                            outputDiv.textContent = '';
-                            var code = document.getElementById('editable-code-5').innerText;
-                            var originalLog = console.log;
-                            console.log = function (...args) {
-                                args.forEach(arg => { outputDiv.textContent += arg + '\n'; });
-                                originalLog.apply(console, args);
-                            };
-                            try { eval(code); } catch (e) { outputDiv.textContent = 'Erro: ' + e.message; }
-                            console.log = originalLog;
-                        });
-                    </script>
-                </section>
-
-            </section>
-
-
-
-
-            <!-- Slide 1: Componente &lt;Text&gt; -->
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <section>
+                <section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
                     <br><br><br><br>
-                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                        Componente &lt;Text&gt; no React Native
-                    </h4>
-                    <h1>🐝</h1>
+                    <h1>😱</h1>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                        Isso não é novo</h4>
                 </section>
 
-                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
-                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-                    style="padding: 20px;">
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-                        <!-- Coluna 1: Conteúdo e código -->
-                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-                            <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                                Introdução ao Componente &lt;Text&gt;
-                            </h4>
-                            <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
-                                O componente &lt;Text&gt; é a base para exibir texto em um app React Native. Use-o para
-                                renderizar strings simples.
-                                <br><br>
+                <section>
+                    <h3>Variáveis & Interpolação</h3>
+                    <pre class="fragment fade-in-then-out"><code class="hljs php">&lt;?php
+    $nome = "Nator";
+    echo "Olá, $nome!";
+?&gt;</code></pre>
+                </section>
 
-                            </h6>
-                            <pre
-                                style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; overflow: auto; margin-top: 20px;">
-  <code class="language-jsx" data-line-numbers>import React from 'react';
-import { Text, View } from 'react-native';
-export default function App() {
-    return (
-        &lt;View&gt;
-            &lt;Text&gt;Hello, React Native!&lt;/Text&gt;
-        &lt;/View&gt;
-    );
-}</code>
+                <section>
+                    <h3>Funções & Exibição Rápida</h3>
+                    <pre class="fragment"><code class="hljs php">&lt;?php
+    $nome = "Nator";
+    function saudacao($nome) {
+        return "Olá, {$nome}!";
+    }
+?&gt;
+
+&lt;h1&gt;Bem-vindo, &lt;?= $nome ?&gt;!&lt;/h1&gt;
+&lt;p&gt;&lt;?= saudacao("Mundo") ?&gt;&lt;/p&gt;</code></pre>
+                </section>
+            </section>
+
+<section>
+    <!-- Exemplo do componente Text -->
+    <section>
+        <h4>&lt;Text&gt; Component</h4>
+        <p>Utilizado para renderizar textos na tela.</p>
+        <pre class="code-snippet fragment fade-in-then-out">
+        <code>&lt;Text&gt;Meu texto&lt;/Text&gt;</code>
         </pre>
-                        </div>
-
-
-
-                </section>
-
-                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
-                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-                    style="padding: 20px;">
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-                        <!-- Coluna 2: Embed do Expo Snack -->
-                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-                            <div data-snack-id="@natorjunior/ex01" data-snack-platform="web" data-snack-preview="true"
-                                data-snack-theme="light"
-                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-                            </div>
-                            <script async src="https://snack.expo.dev/embed.js"></script>
-                        </div>
-                    </div>
-                </section>
-            </section>
-
-            <!-- Slide 2: Componente &lt;View&gt; -->
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <section>
-                    <br><br><br><br>
-                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                        Componente &lt;View&gt; no React Native
-                    </h4>
-                    <h1>📦</h1>
-                </section>
-
-                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-                    style="padding: 20px;">
-                    <div style="">
-                        <!-- Coluna: Conteúdo e código -->
-                        <div style="flex: 1  50%; padding: 20px; box-sizing: border-box;">
-                            <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                                Exemplo de Uso do Componente &lt;View&gt;
-                            </h4>
-                            <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
-                                O componente <View> atua como um container para estruturar e agrupar outros componentes
-                                    na sua interface.
-                            </h6>
-                            <pre
-                                style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; margin-top: 20px;">
-    <code class="language-jsx" >import React from 'react';
-import { View, Text } from 'react-native';
-
-export default function App() { 
-    return ( 
-    &lt;View style={{alignItems: 'center'}}&gt; 
-        &lt;Text&gt;Bem-vindo ao React Native!&lt;/Text&gt; 
-    &lt;/View&gt; 
-    ); 
-}</code>
-                            </pre>
-                        </div>
-                    </div>
-                </section>
-                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
-                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-                    style="padding: 20px;">
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-                        <!-- Coluna 2: Embed do Expo Snack -->
-                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-                            <div data-snack-id="@natorjunior/view" data-snack-platform="web" data-snack-preview="true"
-                                data-snack-theme="light"
-                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-                            </div>
-                            <script async src="https://snack.expo.dev/embed.js"></script>
-                        </div>
-                    </div>
-                </section>
-                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
-                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-                    style="padding: 20px;">
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-                        <!-- Coluna 2: Embed do Expo Snack -->
-                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-                            <div data-snack-id="@natorjunior/view2" data-snack-platform="web" data-snack-preview="true"
-                                data-snack-theme="light"
-                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-                            </div>
-                            <script async src="https://snack.expo.dev/embed.js"></script>
-                        </div>
-                    </div>
-                </section>
-            </section>
-
-
-
-            <!-- Slide 3: Componente &lt;Image&gt; -->
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-
-                <section>
-                    <br><br><br><br>
-                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                        Componente &lt;Image&gt; no React Native
-                    </h4>
-                    <h1>🖼️</h1>
-                </section>
-                <section>
-                    <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
-                        O componente &lt;image &gt;
-                    </h6>
-                    <pre class="fragment fade-in-then-out"><code class="">import React from 'react';
-import { View, Image } from 'react-native';
-
-export default function App() { 
-    return ( 
-    &lt;View style={{alignItems: 'center'}}&gt; 
-        &lt;Image 
-            source={{uri: 'https://reactnative.dev/img/tiny_logo.png'}}
-            style={{width: 50, height: 50}} 
-        /&gt; 
-    &lt;/View&gt; 
-    ); 
-}</code></pre>
-                </section>
-                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
-                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-                    style="padding: 20px;">
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-                        <!-- Coluna 2: Embed do Expo Snack -->
-                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-                            <div data-snack-id="@natorjunior/image" data-snack-platform="web" data-snack-preview="true"
-                                data-snack-theme="light"
-                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-                            </div>
-                            <script async src="https://snack.expo.dev/embed.js"></script>
-                        </div>
-                    </div>
-                </section>
-            </section>
-
-            <!-- Slide 4: Componente &lt;Button&gt; -->
-            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                <section>
-                    <br><br><br><br>
-                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-                        Componente &lt;Button&gt; no React Native
-                    </h4>
-                    <h1>🔘</h1>
-                </section>
-                <section>
-                    <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
-                        O componente &lt;Button &gt;
-                    </h6>
-                    <pre class="fragment fade-in-then-out"><code class="">
-import React from 'react';
-import { View, Button, Alert } from 'react-native';
-
-export default function App() { 
-    return ( 
-    &lt;View style={{alignItems: 'center'}}&gt; 
-        &lt;Button 
-            title="Pressione-me" 
-            onPress={() => Alert.alert('Botão pressionado!')}
-        /&gt; 
-    &lt;/View&gt; 
-    ); 
-}
-</code></pre>
-                </section>
-                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
-                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-                    style="padding: 20px;">
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-                        <!-- Coluna 2: Embed do Expo Snack -->
-                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-                            <div data-snack-id="@natorjunior/button" data-snack-platform="web" data-snack-preview="true"
-                                data-snack-theme="light"
-                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-                            </div>
-                            <script async src="https://snack.expo.dev/embed.js"></script>
-                        </div>
-                    </div>
-                </section>
-            </section>
-
-
-<!-- Slide: Componente &lt;TextInput&gt; -->
-<section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-    <section>
-        <br><br><br><br>
-        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-            Componente &lt;TextInput&gt; no React Native
-        </h4>
-        <h1>⌨️</h1>
     </section>
-    <section>
-        <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
-            O componente &lt;TextInput&gt; permite capturar entrada de texto do usuário.
-        </h6>
-        <pre class="fragment fade-in-then-out"><code class="">
-import React, { useState } from 'react';
-import { View, TextInput, Text } from 'react-native';
-
-export default function App() { 
-    const [text, setText] = useState('');
     
-    return ( 
-    &lt;View style={{alignItems: 'center', padding: 20}}&gt; 
-        &lt;TextInput 
-            style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, paddingHorizontal: 10}} 
-            placeholder="Digite algo..."
-            onChangeText={setText}
-            value={text}
-        /&gt; 
-        &lt;Text&gt;Você digitou: {text}&lt;/Text&gt;
-    &lt;/View&gt; 
-    ); 
-}
-</code></pre>
-    </section>
-    <!-- Slide: Introdução ao <TextInput> com Expo Snack lado a lado -->
-    <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-        style="padding: 20px;">
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-            <!-- Coluna 2: Embed do Expo Snack -->
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-                <div data-snack-id="@natorjunior/textinput" data-snack-platform="web" data-snack-preview="true"
-                    data-snack-theme="light"
-                    style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-                </div>
-                <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
-        </div>
+    <!-- Exemplo do componente View -->
+    <section>
+        <h4>&lt;View&gt; Component</h4>
+        <p>Utilizado como container para organizar outros componentes.</p>
+        <pre class="code-snippet fragment fade-in-then-out language-jsx">
+        <code>&lt;View&gt; &lt;MeuComponent /&gt; &lt;/View&gt;</code> </pre>
     </section>
 </section>
 
+            <section>
+                <section>
+                    <h3>Atividade: Declaração de Variável JSX</h3>
+                    <p class="fragment">Agora é sua vez! Declare uma variável JSX para exibir uma mensagem dinâmica.
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class="">import { StyleSheet, Text, View } from 'react-native';
+export default function App() { 
+    const nome = 'Mundo'; 
+    return ( 
+    &lt;View style={{alignItems: 'center'}}&gt; 
+        &lt;Text&gt; Olá {nome}&lt;/Text&gt; 
+    &lt;/View&gt; 
+    ); 
+}</code></pre>
+<h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
 
-<section>
-    <section>
-        <br><br><br><br>
-        <h1>Extra</h1>
-        <h6>Exercicios em JS</h6>
-        <!-- Slide 1: Verificação de Par ou Ímpar -->
-    </section>
-    <section>
-        <h5>Atividade 1: Verificação de Par ou Ímpar</h5>
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/ex02" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Desafio 1</h3>
+                    <p class="fragment">Crie uma variável chamada `greeting` que exiba a mensagem "Bem-vindo ao
+                        React!".
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class=" language-jsx">
+const greeting = &lt;Text&gt;Bem-vindo ao React Native!&lt;/Text&gt;
+                    </code></pre>
+                    <p class="fragment fade-in-then-out">Lembre-se: JSX precisa estar dentro de um único elemento
+                        pai.
+                    </p>
+                    <h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/ex03" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+
+                    </div>
+                </section>
+                <section>
+                    <h3>Desafio 2</h3>
+                    <p class="fragment">Agora, declare uma variável `user` e exiba o nome do usuário dinamicamente.
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const user = "Nator"; 
+const message = &lt;Text&gt;Olá, {user}!&lt;/Text&gt;;                        
+                    </code></pre>
+                    <p class="fragment">Dica: Use `{ }` para incorporar variáveis em JSX.</p>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/ex04" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+
+                    </div>
+<h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
+                </section>
+                <!-- <section>
+                    <h3>Desafio 3</h3>
+                    <p class="fragment">Crie uma variável `fullName` baseada em um objeto e exiba o nome completo.
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const user = { firstName: "Nator", lastName: "Júnior" };
+const fullName = <h3>Olá, {user.firstName} {user.lastName}!</h3>;
+                    </code></pre>
+                    <p class="fragment">JSX pode acessar propriedades de objetos diretamente.</p>
+                </section>
+
+                <section>
+                    <h3>Agora é com você!</h3>
+                    <p class="fragment">Tente criar uma variável JSX que exiba um número aleatório entre 1 e 100.
+                    </p>
+                    <p class="fragment">Use a função `Math.random()` dentro das chaves `{ }`.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const randomNumber = <p>Número aleatório: {Math.floor(Math.random() * 100) + 1}</p>;
+                    </code></pre>
+                </section> -->
+            </section>
+
+            <!-- ------------------------------ -->
+            <!-- REVISAO DE JS -->
+
+
+            <section>
+                <section>
+                    <br><br><br><br>
+                    <h1>Extra</h1>
+                    <h6>Exercicios em JS</h6>
+                    <!-- Slide 1: Verificação de Par ou Ímpar -->
+                </section>
+                <section>
+                    <h5>Atividade 1: Verificação de Par ou Ímpar</h5>
 <ul>
-<li style="text-align: justify;" >Crie uma função em JavaScript que receba um número e verifique se ele é par ou ímpar, utilizando
-operadores relacionais e lógicos.</li>
+    <li style="text-align: justify;" >Crie uma função em JavaScript que receba um número e verifique se ele é par ou ímpar, utilizando
+        operadores relacionais e lógicos.</li>
 </ul>
 <pre>
-<code class="fragment fade-in-then-out">// Função para verificar se um número é par ou ímpar
+    <code class="fragment fade-in-then-out">// Função para verificar se um número é par ou ímpar
 function verificarParImpar(num) {
-    if(num % 2 === 0) {
-        return "Par";
-    } else {
-        return "Ímpar";
-    }
+if(num % 2 === 0) {
+    return "Par";
+} else {
+    return "Ímpar";
+}
 }
 
 // Testando a função:
 console.log(verificarParImpar(4)); // Saída: "Par"
 console.log(verificarParImpar(7)); // Saída: "Ímpar"</code></pre>
-<h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
-    </section>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+                </section>
 
-    <!-- Slide 2: Validação de Senha -->
-    <section>
-        <h5>Atividade 2: Validação de Senha</h5>
-        <p>
-            <ul>
-                <li style="text-align: justify;" >Crie uma função que receba uma senha (string) e verifique se ela atende aos seguintes critérios:</li>
-                <ul style="text-align: justify;" >
-                    <li>Possuir pelo menos 8 caracteres;</li>
-                    <li>Conter ao menos uma letra e um número.</li>
-                </ul>
-            </ul>
-        </p>
-        <pre><code class="fragment fade-in-then-out">// Função para validar senha
+                <!-- Slide 2: Validação de Senha -->
+                <section>
+                    <h5>Atividade 2: Validação de Senha</h5>
+                    <p>
+                        <ul>
+                            <li style="text-align: justify;" >Crie uma função que receba uma senha (string) e verifique se ela atende aos seguintes critérios:</li>
+                            <ul style="text-align: justify;" >
+                                <li>Possuir pelo menos 8 caracteres;</li>
+                                <li>Conter ao menos uma letra e um número.</li>
+                            </ul>
+                        </ul>
+                    </p>
+                    <pre><code class="fragment fade-in-then-out">// Função para validar senha
 function validarSenha(senha) {
     if (senha.length < 8) {
         return false;
@@ -944,20 +518,20 @@ function validarSenha(senha) {
 }
 console.log(validarSenha("abc12345")); // true
 console.log(validarSenha("abcdefg"));  // false</code></pre>
-<h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
-    </section>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+                </section>
 
-    <!-- Slide 3: Cálculo da Média -->
-    <section>
-        <h5>Atividade 3: Função para Calcular Média</h5>
-        <ul>
-            <li style="text-align: justify;">
-                Crie uma função que receba um array de números e retorne a média aritmética dos valores. Utilize
-                um laço de repetição para somar os elementos do array.
-           </li>
-        </ul>
-       
-        <pre><code class="fragment fade-in-then-out">// Função para calcular a média
+                <!-- Slide 3: Cálculo da Média -->
+                <section>
+                    <h5>Atividade 3: Função para Calcular Média</h5>
+                    <ul>
+                        <li style="text-align: justify;">
+                            Crie uma função que receba um array de números e retorne a média aritmética dos valores. Utilize
+                            um laço de repetição para somar os elementos do array.
+                       </li>
+                    </ul>
+                   
+                    <pre><code class="fragment fade-in-then-out">// Função para calcular a média
 function calcularMedia(numeros) {
     let soma = 0;
     for(let i = 0; i < numeros.length; i++) {
@@ -968,15 +542,15 @@ function calcularMedia(numeros) {
 
 // Testando a função:
 console.log(calcularMedia([10, 20, 30])); // Saída: 20</code></pre>
-<h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
-    </section>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+                </section>
 
-    <!-- Slide 4: Contagem Regressiva -->
-    <section>
-        <h5>Atividade 4: Contagem Regressiva</h5>
+                <!-- Slide 4: Contagem Regressiva -->
+                <section>
+                    <h5>Atividade 4: Contagem Regressiva</h5>
 <ul  style="text-align: justify;">
-<li>Crie um script que realize uma contagem regressiva a partir de um número fornecido pelo usuário
-até zero, utilizando um laço de repetição.</li>
+    <li>Crie um script que realize uma contagem regressiva a partir de um número fornecido pelo usuário
+        até zero, utilizando um laço de repetição.</li>
 </ul>
 <pre><code class="fragment fade-in-then-out">// Função para realizar a contagem regressiva
 function contagemRegressiva(inicio) {
@@ -988,9 +562,314 @@ function contagemRegressiva(inicio) {
 // Exemplo de uso:
 contagemRegressiva(5); 
 // Saída no console: 5, 4, 3, 2, 1, 0</code></pre>
-<h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
-    </section>
-</section>
+    <h6>playground: http://u.acilab.com.br/Wa</h6>
+                </section>
+
+                <!-- Slide 5: Jogo de Adivinhação -->
+                <!-- <section>
+                    <h5>Atividade 5: Jogo de Adivinhação</h5>
+                    <p>
+                        Desenvolva um jogo simples em JavaScript onde:
+                        <br>- O programa gera um número aleatório entre 1 e 100.
+                        <br>- O usuário deve adivinhar esse número.
+                        <br>- Após cada palpite, o programa informa se o chute foi <em>muito alto</em> ou <em>muito
+                            baixo</em>.
+                        <br>Utilize funções, operadores lógicos e laços de repetição para implementar o jogo.
+                    </p>
+                    <pre><code>
+  // Função para gerar número aleatório entre min e max (inclusive)
+  function gerarNumero(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  
+  // Jogo de Adivinhação
+  function jogoAdivinhacao() {
+    const numeroSecreto = gerarNumero(1, 100);
+    let palpite;
+    
+    do {
+      palpite = parseInt(prompt("Adivinhe o número entre 1 e 100:"), 10);
+      
+      if(palpite > numeroSecreto) {
+        console.log("Muito alto! Tente novamente.");
+      } else if(palpite < numeroSecreto) {
+        console.log("Muito baixo! Tente novamente.");
+      }
+    } while(palpite !== numeroSecreto);
+    
+    console.log("Parabéns! Você acertou o número.");
+  }
+  
+  // Iniciando o jogo:
+  jogoAdivinhacao();
+    </code></pre>
+                </section> -->
+            </section>
+
+
+
+            <section>
+                <br><br><br><br>
+                <h1>Extra</h1>
+                <h6>Revisão de JS</h6>
+            </section>
+
+
+            <!-- Slide 2 - Operador Ternário -->
+            <section>
+                <h2>Operador Ternário</h2>
+                <p>Forma compacta de verificar condições.</p>
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-3|1|2|3">let idade = 18;
+let acesso = (idade >= 18) ? "Permitido" : "Negado";
+console.log(acesso);
+                </code></pre>
+
+                <button class="test-button" onclick="testTernario()">Executar</button>
+                <div class="output" id="ternarioOutput"></div>
+            </section>
+
+            <!-- Slide 3A - If/Else -->
+            <section>
+                <h2>Condicional If/Else</h2>
+
+                <pre><code class="hljs javascript" data-line-numbers="1-10|1-2|4,6,8|5,7|10|1-10">let idade = 20;
+let acesso;
+
+if (idade >= 18) {
+    acesso = "Permitido";
+} else {
+    acesso = "Negado";
+}
+
+console.log(acesso);
+                </code></pre>
+
+                <button class="test-button" onclick="testIfElse()">Executar</button>
+                <div class="output" id="ifElseOutput"></div>
+            </section>
+
+            <!-- Slide 1 - Variáveis e seus Tipos -->
+            <section>
+                <h2>Variáveis e seus Tipos</h2>
+                <!-- <p>Exemplos de declaração de variáveis e verificação de seus tipos.</p> -->
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-8">let nome = "Maria";
+let idade = 30;
+const ativo = true;
+var salario = 2500.50;
+
+console.log("Tipo de nome:", typeof nome);
+console.log("Tipo de idade:", typeof idade);
+console.log("Tipo de ativo:", typeof ativo);
+console.log("Tipo de salario:", typeof salario);
+</code></pre>
+
+                <button class="test-button" onclick="testVariaveis()">Executar</button>
+                <div class="output" id="variaveisOutput"></div>
+            </section>
+
+            <!-- Slide 2 - Operadores Aritméticos -->
+            <section>
+                <h6>Operadores Aritméticos</h6>
+                <!-- <p>Realizando operações básicas: soma, subtração, multiplicação, divisão e módulo.</p> -->
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-8">let a = 10;
+let b = 3;
+let soma = a + b;
+let sub = a - b;
+let mult = a * b;
+let div = a / b;
+let mod = a % b;
+
+console.log("Soma:", soma);
+console.log("Subtração:", sub);
+console.log("Multiplicação:", mult);
+console.log("Divisão:", div);
+console.log("Módulo:", mod);
+</code></pre>
+                <button class="test-button" onclick="testAritmeticos()">Executar</button>
+                <div class="output" id="aritmeticosOutput"></div>
+            </section>
+
+            <!-- Slide 3 - Operadores Relacionais -->
+            <section>
+                <h2>Operadores Relacionais</h2>
+                <!-- <p>Comparações entre valores usando operadores relacionais.</p> -->
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-7">let a = 5;
+let b = 10;
+
+console.log("a > b:", a > b);
+console.log("a < b:", a < b);
+console.log("a == b:", a == b);
+console.log("a !== b:", a !== b);
+</code></pre>
+
+                <button class="test-button" onclick="testRelacionais()">Executar</button>
+                <div class="output" id="relacionaisOutput"></div>
+            </section>
+
+            <!-- Slide 4 - Operadores Lógicos -->
+            <section>
+                <h2>Operadores Lógicos</h2>
+                <p>Utilizando AND (&&), OR (||) e NOT (!).</p>
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-7">let possuiIngresso = true;
+let temIdentidade = false;
+
+console.log("Pode entrar (&&):", possuiIngresso && temIdentidade);
+console.log("Pode entrar (||):", possuiIngresso || temIdentidade);
+console.log("Negação (!possuiIngresso):", !possuiIngresso);
+</code></pre>
+
+                <button class="test-button" onclick="testLogicos()">Executar</button>
+                <div class="output" id="logicosOutput"></div>
+            </section>
+
+            <!-- Slide 5 - Laços de Repetição -->
+            <section>
+                <h2>Laços de Repetição</h2>
+                <p>Exemplo de loop utilizando o laço <code>for</code>.</p>
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-6">let output = "";
+for (let i = 1; i <= 5; i++) {
+    output += "Número: " + i + "\n";
+}
+console.log(output);
+</code></pre>
+
+                <button class="test-button" onclick="testLacos()">Executar</button>
+                <div class="output" id="lacosOutput"></div>
+            </section>
+
+
+
+
+
+
+
+
+
+
+            <section>
+
+                <!-- Atividade 1 -->
+                <section>
+                    <h3>Atividade 1: Soma de dois números</h3>
+                    <p class="fragment">Solicitar dois valores via <code class="hljs javascript">prompt()</code> e
+                        exibir a soma.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const a = Number(prompt("Digite o primeiro número:"));
+const b = Number(prompt("Digite o segundo número:"));
+alert("A soma é: " + (a + b));
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 2 -->
+                <section>
+                    <h3>Atividade 2: Imprimir números de 1 a 5</h3>
+                    <p class="fragment">Use um laço de repetição para exibir números sequencialmente.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+for (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 3 -->
+                <section>
+                    <h3>Atividade 3: Calcular média de notas</h3>
+                    <p class="fragment">Dado um array de notas, calcule a média e exiba o resultado.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const notas = [8, 7, 9, 10];
+const soma = notas.reduce((acc, nota) => acc + nota, 0);
+const media = soma / notas.length;
+console.log("Média:", media);
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 4 -->
+                <section>
+                    <h3>Atividade 4: Função para verificar par ou ímpar</h3>
+                    <p class="fragment">Crie uma função que receba um número e retorne <em>true</em> se for par, ou
+                        <em>false</em> se for ímpar.
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+function ehPar(numero) {
+    return numero % 2 === 0;
+}
+
+console.log(ehPar(10)); // true
+console.log(ehPar(7));  // false
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 5 -->
+                <section>
+                    <h3>Atividade 5: Filtrar números maiores que 5</h3>
+                    <p class="fragment">Dado um array de números, retorne apenas os valores maiores que 5.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const lista = [2, 7, 5, 9, 3, 10];
+const filtrado = lista.filter(num => num > 5);
+console.log(filtrado); // [7, 9, 10]
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 6 -->
+                <section>
+                    <h3>Atividade 6: Exemplo de objeto e acesso às propriedades</h3>
+                    <p class="fragment">Crie um objeto <code>pessoa</code> e acesse suas propriedades <code>nome</code>
+                        e <code>idade</code>.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const pessoa = {
+    nome: "Nator",
+    idade: 25
+};
+
+console.log(pessoa.nome);  // "Nator"
+console.log(pessoa.idade); // 25
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 7 -->
+                <section>
+                    <h3>Atividade 7: Calcular fatorial</h3>
+                    <p class="fragment">Crie uma função para calcular o fatorial de um número.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+function fatorial(n) {
+    let resultado = 1;
+    for (let i = 1; i <= n; i++) {
+        resultado *= i;
+    }
+    return resultado;
+}
+
+console.log(fatorial(5)); // 120
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 8 -->
+                <section>
+                    <h3>Atividade 8: Retornar vogais de uma string</h3>
+                    <p class="fragment">Dada uma string, extraia apenas as vogais e exiba-as.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+// Resposta (Exemplo)
+function extrairVogais(texto) {
+    return texto.match(/[aeiou]/gi) || [];
+}
+
+console.log(extrairVogais("Programação")); 
+// [ 'o', 'a', 'a', 'ã', 'o' ]
+                  </code></pre>
+                </section>
+            </section>
 
 
         </div>
@@ -999,27 +878,27 @@ contagemRegressiva(5);
     <!-- Scripts Reveal.js -->
     <script src="./dist/reveal.js"></script>
     <script src="./plugin/highlight/highlight.js"></script>
-    <!-- Inclusão do Clipboard.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Para cada elemento <pre> com um <code>, adiciona um botão de copiar
-            document.querySelectorAll('pre').forEach(function (pre, index) {
-                var code = pre.querySelector('code');
-                var codeId = 'code-' + index;
-                code.setAttribute('id', codeId);
+<!-- Inclusão do Clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Para cada elemento <pre> com um <code>, adiciona um botão de copiar
+    document.querySelectorAll('pre').forEach(function(pre, index) {
+      var code = pre.querySelector('code');
+      var codeId = 'code-' + index;
+      code.setAttribute('id', codeId);
 
-                var button = document.createElement('button');
-                button.className = 'copy-btn';
-                button.textContent = 'Copiar';
-                button.setAttribute('data-clipboard-target', '#' + codeId);
+      var button = document.createElement('button');
+      button.className = 'copy-btn';
+      button.textContent = 'Copiar';
+      button.setAttribute('data-clipboard-target', '#' + codeId);
 
-                pre.appendChild(button);
-            });
-            // Inicializa o ClipboardJS para todos os botões de copiar
-            new ClipboardJS('.copy-btn');
-        });
-    </script>
+      pre.appendChild(button);
+    });
+    // Inicializa o ClipboardJS para todos os botões de copiar
+    new ClipboardJS('.copy-btn');
+  });
+</script>
     <script>
         Reveal.initialize({
             center: false,

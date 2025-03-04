@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 04</title>
+
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="./dist/reveal.css">
+    <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+    <!-- Tema para código -->
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+    <!-- <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css"> -->
+    <link rel="stylesheet" href="aula04-materials/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+
+
+    <!-- Menu plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <link href=" https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css " rel="stylesheet">
+   
+    <style>
+        .reveal h1,
+        .reveal h2 {
+            color: #0056b3;
+        }
+
+        .reveal pre code {
+            font-size: 1em;
+            background: #222;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .reveal p {
+            font-size: 1.1em;
+        }
+
+        .test-button {
+            background-color: #0056b3;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .test-button:hover {
+            background-color: #003d80;
+        }
+
+        .output {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-top: 5px;
+            color: #333;
+        }
+
+        .comparison-container {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .comparison-box {
+            width: 48%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 - Título -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    Programação para dispositivos Móveis
+                </h4>
+                <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+                    Prof. Msc. Nator Junior Carvalho da Costa
+                </p>
+                <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    Workshop (node.js) e Express
+                </h6>
+                <h1>🐢</h1>
+            </section>
+
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br>
+                <br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    🛠 Workshop: Criando um Chat em Tempo Real com MQTT e Node.js</h6>
+                    <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+                        🎯 Objetivo:
+                        Criar um chat em tempo real utilizando Node.js e MQTT, onde múltiplos usuários podem enviar
+                        mensagens e recebê-las instantaneamente.
+                    </p>
+            </section>
+
+            <section>
+                <section>
+                    <br><br><br><br><br>
+                    <h3>O que é o MQTT</h3>
+                </section>
+
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">📡 Introdução ao MQTT</h2>
+                    <p style="color: white; font-size: 1.2em; font-weight: 300;">
+                        <br><br>
+                        Protocolo leve de mensagens assíncronas usado em IoT, sistemas distribuídos e comunicação em
+                        tempo real.
+                    </p>
+                </section>
+
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">🔹 Como funciona?</h2>
+                    <ul style="color: white; font-size: 1.em;">
+                        <li>📌 Um <b>cliente</b> publica mensagens em um <b>tópico</b></li>
+                        <li>📌 Outros <b>clientes subscrevem</b> esse tópico e recebem as mensagens</li>
+                        <li>📌 Um <b>broker</b> gerencia a comunicação</li>
+                    </ul>
+                </section>
+
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <!-- <h1>Ilustração Interativa do MQTT - Correio Interno</h1> -->
+                    <div id="controls">
+                        <label for="topicInput" style="color: white; font-size: 1.em; font-weight: 300;">Assunto da
+                            Mensagem:</label>
+                        <input type="text" id="topicInput" value="financeiro/pagamentos">
+                        <button id="publishButton">Enviar Mensagem</button>
+                    </div>
+                    <div id="container" style="color: white; font-size: 0.9em; font-weight: 300;">
+                        <svg id="lines-svg"></svg>
+                        <div id="publisher" class="node" data-tooltip="Remetente: Envia a mensagem."
+                            style="color: white; font-size: 0.6em; font-weight: 300;">
+                            Remetente
+                        </div>
+                        <div id="broker" class="node"
+                            data-tooltip="Central de Correspondência: Recebe e encaminha a mensagem."
+                            style="color: white; font-size: 0.6em; font-weight: 300;">
+                            Central de Correspondência (BROKER)
+                        </div>
+                        <div id="subscriber1" class="node" data-tooltip="Financeiro: Inscrito em 'financeiro/#'."
+                            style="color: white; font-size: 0.6em; font-weight: 300;">
+                            Financeiro
+                            <div class="subscription" style="color: #222;">financeiro/#</div>
+                        </div>
+                        <div id="subscriber2" class="node"
+                            data-tooltip="Pagamentos: Inscrito em 'financeiro/pagamentos'."
+                            style="color: white; font-size: 0.6em; font-weight: 300;">
+                            Pagamentos
+                            <div class="subscription" style="color: #222;">financeiro/pagamentos</div>
+                        </div>
+                        <div id="subscriber3" class="node" data-tooltip="Recursos Humanos: Inscrito em 'rh/#'."
+                            style="color: white; font-size: 0.6em; font-weight: 300;">
+                            Recursos Humanos
+                            <div class="subscription" style="color: #222;">rh/#</div>
+                        </div>
+                        <div id="message" class="message"></div>
+                    </div>
+                </section>
+
+
+                <!-- Slide introdutório -->
+                <section data-markdown>
+                    <textarea data-template>
+        ## Publicação MQTT com Node.js
+        - **Conectar ao Broker MQTT**
+        - **Publicar uma mensagem**
+        - **Encerrar conexão**
+    </textarea>
+                </section>
+
+
+                <!-- Criando o projeto Node.js -->
+                <section data-markdown>
+                    <textarea data-template>
+                    ## Criando o projeto Node.js
+                    ```sh
+                    mkdir projeto-mqtt
+                    cd projeto-mqtt
+                    npm init -y
+                    npm install mqtt
+                    ```
+                </textarea>
+                </section>
+
+                <!-- Criando o arquivo de publicação -->
+                <section data-markdown>
+                    <textarea data-template>
+                    ## Criando o arquivo `publicar.js`
+                    ```sh
+                     publicar.js
+                    ```
+                </textarea>
+                </section>
+
+
+                <!-- Código MQTT com step-by-step highlighting -->
+                <section data-markdown>
+                    <!-- <h6>Terminal MQTT em Tempo Real</h6> -->
+                    <textarea data-template>
+        ```js [1-2|3-4|5-9|6|1-10]
+        const mqtt = require('mqtt'); // Importa a biblioteca MQTT
+        const client = mqtt.connect('mqtt://test.mosquitto.org'); // Conecta ao broker
+
+        client.on('connect', () => {
+            console.log('Conectado ao MQTT Broker');
+            client.publish('workshop/em-sala', 'Meu nome é: Nator Junior', () => {
+                console.log('Mensagem publicada!');
+                client.end(); // Encerra a conexão
+            });
+        });
+        ```
+    </textarea>
+
+                </section>
+
+
+                <!-- Simulação de terminal -->
+                <section data-markdown>
+                    <textarea data-template>
+                    ## Simulação de Publicação no Terminal
+                    ```sh
+                    node publicar.js
+                    ```
+                    **Saída esperada no terminal**:
+                    ```sh
+                    Conectado ao MQTT Broker
+                    Mensagem publicada!
+                    ```
+                </textarea>
+                </section>
+
+
+                <!-- Terminal simulado -->
+                <section>
+                    <h6>Terminal MQTT em Tempo Real</h6>
+                    <div id="terminal" style="color: white; font-size: 0.5em; font-weight: 300;">Conectando ao broker
+                        MQTT...\n</div>
+                    <button onclick="sendMessage()">Publicar Mensagem</button>
+                </section>
+                <section>
+                    <h2>⚡ Por que usar MQTT ao invés de WebSockets?</h2>
+                    <div class="comparison-container">
+                        <div class="comparison-box">
+                            <h3>✅ MQTT</h3>
+                            <ul>
+                                <li>✔️ Menor consumo de banda</li>
+                                <li>✔️ Protocolo leve e eficiente</li>
+                                <li>✔️ Ideal para IoT</li>
+                                <li>✔️ Suporte a QoS (Quality of Service)</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-box">
+                            <h3>⚠️ WebSockets</h3>
+                            <ul>
+                                <li>⚠️ Consome mais banda</li>
+                                <li>⚠️ Mais pesado para dispositivos pequenos</li>
+                                <li>⚠️ Não é otimizado para conexões intermitentes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+            </section>
+
+
+        </div>
+    </div>
+
+    <!-- Scripts Reveal.js -->
+    <script src="./dist/reveal.js"></script>
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+
+    <script src="./aula04-materials/script.js"></script>
+
+    <script>
+
+        Reveal.initialize({
+
+            center: false,
+            controls: true,
+            progress: true,
+
+            slideNumber: true,
+            history: true,
+            transition: 'convex',
+            plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
+            markdown: {
+                smartypants: true,
+            }
+        });
+
+        // Conectar ao Broker MQTT
+        const client = mqtt.connect('wss://test.mosquitto.org:8081'); // WebSocket MQTT
+
+        client.on('connect', () => {
+            logTerminal('✅ Conectado ao MQTT Broker');
+            client.subscribe('workshop/em-sala');
+        });
+
+        client.on('message', (topic, message) => {
+            logTerminal(`📩 Mensagem recebida: ${message.toString()}`);
+        });
+
+        function sendMessage() {
+            const nome = "Aluno " + Math.floor(Math.random() * 100);
+            const mensagem = `Meu nome é: ${nome}`;
+            client.publish('workshop/em-sala', mensagem);
+            //logTerminal(`📤 Publicado: ${mensagem}`);
+        }
+
+        function logTerminal(texto) {
+            const terminal = document.getElementById("terminal");
+            terminal.textContent += texto + "\n";
+            terminal.scrollTop = terminal.scrollHeight; // Rolar para baixo automaticamente
+        }
+    </script>
+</body>
+
+</html>
