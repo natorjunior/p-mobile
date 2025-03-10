@@ -1,0 +1,145 @@
+
+                <!-- Slide 5 - Gerenciamento de Estado &amp; useState -->
+                <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <section>
+                        <br><br>
+                        <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
+                            Gerenciamento de Estado &amp; useState
+                        </h2>
+                        <p
+                            style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
+                            Utilize o hook <code>useState</code> para gerenciar o estado de forma dinâmica em seu
+                            componente.
+                        </p>
+                    </section>
+                    <section>
+                        <pre
+                            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
+            <code class="">
+import React, { useState } from 'react';
+import { View, Text, Button } from 'react-native';
+
+export default function Counter() { 
+    const [count, setCount] = useState(0);
+
+    return ( 
+        &lt;View style={{ alignItems: 'center', padding: 20 }}&gt; 
+            &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Contador: {count}&lt;/Text&gt; 
+            &lt;Button 
+                title="Incrementar" 
+                onPress={() => setCount(count + 1)} 
+            /&gt; 
+            &lt;Button 
+                title="Resetar" 
+                onPress={() => setCount(0)} 
+            /&gt; 
+        &lt;/View&gt; 
+    ); 
+}
+            </code>
+        </pre>
+                    </section>
+                </section>
+
+                <!-- Slide 6 - Introdução ao useEffect -->
+                <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <section>
+                        <br><br>
+                        <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
+                            Introdução ao useEffect
+                        </h2>
+                        <p
+                            style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
+                            O hook <code>useEffect</code> permite executar efeitos colaterais, como atualizar o console
+                            após
+                            mudanças de estado.
+                        </p>
+                    </section>
+                    <section>
+                        <pre
+                            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
+            <code class="">
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button } from 'react-native';
+
+export default function CounterWithEffect() { 
+    const [count, setCount] = useState(0);
+
+    useEffect(() => { 
+        console.log('O contador foi atualizado:', count); 
+    }, [count]);
+
+    return ( 
+        &lt;View style={{ alignItems: 'center', padding: 20 }}&gt; 
+            &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Contador: {count}&lt;/Text&gt; 
+            &lt;Button 
+                title="Incrementar" 
+                onPress={() => setCount(count + 1)} 
+            /&gt; 
+        &lt;/View&gt; 
+    ); 
+}
+            </code>
+        </pre>
+                    </section>
+                </section>
+
+                <!-- Slide 7 - Exercício Prático: Lista de Tarefas -->
+                <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <section>
+                        <br><br>
+                        <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
+                            Exercício Prático: Lista de Tarefas
+                        </h2>
+                        <p
+                            style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
+                            Crie um componente que permita adicionar tarefas a uma lista utilizando
+                            <code>useState</code> e
+                            registre alterações com <code>useEffect</code>.
+                        </p>
+                    </section>
+                    <section>
+                        <pre
+                            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
+            <code class="">
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
+
+export default function TaskList() { 
+    const [tasks, setTasks] = useState([]);
+    const [input, setInput] = useState('');
+
+    useEffect(() => { 
+        console.log('Lista de tarefas atualizada:', tasks); 
+    }, [tasks]);
+
+    const addTask = () => { 
+        if (input.trim()) { 
+            setTasks([...tasks, input.trim()]); 
+            setInput('');
+        } 
+    };
+
+    return ( 
+        &lt;View style={{ padding: 20 }}&gt; 
+            &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Minhas Tarefas&lt;/Text&gt; 
+            &lt;TextInput 
+                placeholder="Digite uma tarefa..." 
+                value={input} 
+                onChangeText={setInput}
+                style={{ height: 40, borderColor: '#fff', borderWidth: 1, marginBottom: 10, color: 'white', paddingHorizontal: 10 }}
+            /&gt; 
+            &lt;Button 
+                title="Adicionar" 
+                onPress={addTask} 
+            /&gt; 
+            {tasks.map((task, index) => ( 
+                &lt;Text key={index} style={{ marginTop: 10 }}&gt;{task}&lt;/Text&gt; 
+            ))} 
+        &lt;/View&gt; 
+    ); 
+}
+            </code>
+        </pre>
+                    </section>
+                </section>
