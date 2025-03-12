@@ -670,7 +670,162 @@ export default Profile;
                 </section>
             </section>
 
+            <section>
+                <section>
+                    <br><br><br><br>
+                    <h1>Extra</h1>
+                    <h6>Exercícios em JS – Functions e Arrow Functions</h6>
+                </section>
+            
+                <!-- Slide 1: Verificação de Par ou Ímpar -->
+                <section>
+                    <h5>Atividade 1: Verificação de Par ou Ímpar</h5>
+                    <ul>
+                        <li>Crie uma função que receba um número e verifique se ele é par ou ímpar, utilizando operadores relacionais e lógicos.</li>
+                    </ul>
+                    <pre>
+<code class="fragment fade-in-then-out">
+// Versão com Function
+function verificarParImpar(num) {
+    if(num % 2 === 0) {
+        return "Par";
+    } else {
+        return "Ímpar";
+    }
+}
+console.log(verificarParImpar(4)); // Saída: "Par"
+console.log(verificarParImpar(7)); // Saída: "Ímpar"
 
+// Versão com Arrow Function
+const verificarParImparArrow = (num) => num % 2 === 0 ? "Par" : "Ímpar";
+console.log(verificarParImparArrow(4)); // Saída: "Par"
+console.log(verificarParImparArrow(7)); // Saída: "Ímpar"
+</code>
+                    </pre>
+                    <h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
+                </section>
+            
+                <!-- Slide 2: Validação de Senha -->
+                <section>
+                    <h5>Atividade 2: Validação de Senha</h5>
+                    <p>
+                        <ul>
+                            <li>Crie uma função que receba uma senha (string) e verifique se ela atende aos seguintes critérios:</li>
+                            <ul>
+                                <li>Possuir pelo menos 8 caracteres;</li>
+                                <li>Conter ao menos uma letra e um número.</li>
+                            </ul>
+                        </ul>
+                    </p>
+                    <pre>
+<code class="fragment fade-in-then-out">
+// Versão com Function
+function validarSenha(senha) {
+    if (senha.length < 8) {
+        return false;
+    }
+    let temNumero = /\d/.test(senha);
+    let temLetra = /[a-zA-Z]/.test(senha);
+    return temNumero && temLetra;
+}
+console.log(validarSenha("abc12345")); // true
+console.log(validarSenha("abcdefg"));  // false
+
+// Versão com Arrow Function
+const validarSenhaArrow = (senha) => {
+    if (senha.length < 8) return false;
+    const temNumero = /\d/.test(senha);
+    const temLetra = /[a-zA-Z]/.test(senha);
+    return temNumero && temLetra;
+};
+console.log(validarSenhaArrow("abc12345")); // true
+console.log(validarSenhaArrow("abcdefg"));  // false
+</code>
+                    </pre>
+                    <h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
+                </section>
+            
+                <!-- Slide 3: Cálculo da Média -->
+                <section>
+                    <h5>Atividade 3: Função para Calcular Média</h5>
+                    <ul>
+                        <li>Crie uma função que receba um array de números e retorne a média aritmética dos valores. Utilize um laço de repetição para somar os elementos do array.</li>
+                    </ul>
+                    <pre>
+<code class="fragment fade-in-then-out">
+// Versão com Function
+function calcularMedia(numeros) {
+    let soma = 0;
+    for(let i = 0; i < numeros.length; i++) {
+        soma += numeros[i];
+    }
+    return soma / numeros.length;
+}
+console.log(calcularMedia([10, 20, 30])); // Saída: 20
+
+// Versão com Arrow Function usando reduce
+const calcularMediaArrow = (numeros) => {
+    const soma = numeros.reduce((acumulador, valor) => acumulador + valor, 0);
+    return soma / numeros.length;
+};
+console.log(calcularMediaArrow([10, 20, 30])); // Saída: 20
+</code>
+                    </pre>
+                    <h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
+                </section>
+            
+                <!-- Slide 4: Contagem Regressiva -->
+                <section>
+                    <h5>Atividade 4: Contagem Regressiva</h5>
+                    <ul>
+                        <li>Crie um script que realize uma contagem regressiva a partir de um número fornecido pelo usuário até zero, utilizando um laço de repetição.</li>
+                    </ul>
+                    <pre>
+<code class="fragment fade-in-then-out">
+// Versão com Function
+function contagemRegressiva(inicio) {
+    for(let i = inicio; i >= 0; i--) {
+        console.log(i);
+    }
+}
+contagemRegressiva(5); // Saída: 5, 4, 3, 2, 1, 0
+
+// Versão com Arrow Function
+const contagemRegressivaArrow = (inicio) => {
+    for(let i = inicio; i >= 0; i--) {
+        console.log(i);
+    }
+};
+contagemRegressivaArrow(5); // Saída: 5, 4, 3, 2, 1, 0
+</code>
+                    </pre>
+                    <h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
+                </section>
+            
+                <!-- Slide 5: Exercício Extra – Converter Celsius para Fahrenheit -->
+                <section>
+                    <h5>Atividade 5: Converter Celsius para Fahrenheit</h5>
+                    <ul>
+                        <li>Crie uma função que converta uma temperatura em Celsius para Fahrenheit.</li>
+                        <li>Fórmula: (Celsius * 9/5) + 32</li>
+                    </ul>
+                    <pre>
+<code class="fragment fade-in-then-out">
+// Versão com Function
+function converterCelsiusFahrenheit(celsius) {
+    return (celsius * 9/5) + 32;
+}
+console.log(converterCelsiusFahrenheit(0)); // Saída: 32
+
+// Versão com Arrow Function
+const converterCelsiusFahrenheitArrow = (celsius) => (celsius * 9/5) + 32;
+console.log(converterCelsiusFahrenheitArrow(0)); // Saída: 32
+</code>
+                    </pre>
+                    <h6 style="text-transform: none;">playground: http://u.acilab.com.br/Wa</h6>
+                </section>
+            </section>
+            
         </div>
     </div>
 
