@@ -1,145 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt">
 
-                <!-- Slide 5 - Gerenciamento de Estado &amp; useState -->
-                <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                    <section>
-                        <br><br>
-                        <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
-                            Gerenciamento de Estado &amp; useState
-                        </h2>
-                        <p
-                            style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
-                            Utilize o hook <code>useState</code> para gerenciar o estado de forma dinâmica em seu
-                            componente.
-                        </p>
-                    </section>
-                    <section>
-                        <pre
-                            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
-            <code class="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 04</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+  <!-- <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css"> -->
+  <link rel="stylesheet" href="aula04-materials/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+
+
+  <!-- Menu plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+  <link href=" https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css " rel="stylesheet">
+
+  <style>
+    .reveal h1,
+    .reveal h2 {
+      color: #0056b3;
+    }
+
+    .reveal pre code {
+      font-size: 1em;
+      background: #222;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .reveal p {
+      font-size: 1.1em;
+    }
+
+    .test-button {
+      background-color: #0056b3;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+
+    .test-button:hover {
+      background-color: #003d80;
+    }
+
+    .output {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 1em;
+      margin-top: 5px;
+      color: #333;
+    }
+
+    .comparison-container {
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .comparison-box {
+      width: 48%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Slide 1 - Título -->
+      <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <br><br><br><br>
+        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+          Programação para dispositivos Móveis
+        </h4>
+        <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+          Aula 05 - Hooks
+        </h6>
+        <h1>🐢</h1>
+      </section>
+
+
+      <!-- Slide 3: Exemplo: useState -->
+      <section data-auto-animate>
+        <pre
+          style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
+      <code class="language-jsx" data-line-numbers="16|16-26|3|8|1-11">
+  import React, { useState } from 'react';
+  import { SafeAreaView, View, Text, Button } from 'react-native';
+  
+  export default function Counter() {
+    const [count, setCount] = useState(0);
+  
+    return (
+      &lt;SafeAreaView&gt;
+        &lt;View style={{ alignItems: 'center', marginTop: 50 }}&gt;
+          &lt;Text style={{ fontSize: 24 }}&gt;Você clicou {count} vezes&lt;/Text&gt;
+          &lt;Button title="Clique aqui" onPress={() => setCount(count + 1)} /&gt;
+        &lt;/View&gt;
+      &lt;/SafeAreaView&gt;
+    );
+  }
+      </code>
+    </pre>
+      </section>
+
+      <!-- Slide 4: Hook de Efeito -->
+      <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="margin-left:40px; color: white;">Hook de Efeito</h2>
+        <p style="margin:20px 40px; color: white;">
+          <code>useEffect</code> executa ações após a renderização, como iniciar timers ou buscar dados.
+          No React Native, é útil para configurar subscrições ou atualizar recursos externos.
+        </p>
+      </section>
+
+      <!-- Slide 5: Exemplo: useEffect -->
+      <section data-auto-animate>
+        <pre
+          style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
+      <code class="language-jsx" data-line-numbers="16|16-26|3|8|1-11">
+  import React, { useState, useEffect } from 'react';
+  import { SafeAreaView, View, Text } from 'react-native';
+  
+  export default function Timer() {
+    const [seconds, setSeconds] = useState(0);
+  
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setSeconds(prev => prev + 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }, []);
+  
+    return (
+      &lt;SafeAreaView&gt;
+        &lt;View style={{ alignItems: 'center', marginTop: 50 }}&gt;
+          &lt;Text style={{ fontSize: 24 }}&gt;Tempo: {seconds}s&lt;/Text&gt;
+        &lt;/View&gt;
+      &lt;/SafeAreaView&gt;
+    );
+  }
+      </code>
+    </pre>
+      </section>
+
+      <!-- Slide 6: Regras dos Hooks -->
+      <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="margin-left:40px; color: white;">Regras dos Hooks</h2>
+        <p style="margin:20px 40px; color: white;">
+          • Chame os Hooks somente no nível superior dos componentes.<br>
+          • Use Hooks apenas em componentes funcionais ou em seus próprios Hooks customizados.
+        </p>
+      </section>
+
+
+      <!-- Slide 5 - Gerenciamento de Estado &amp; useState -->
+      <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <section>
+          <br><br>
+          <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
+            Gerenciamento de Estado &amp; useState
+          </h2>
+          <p style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
+            Utilize o hook <code>useState</code> para gerenciar o estado de forma dinâmica em seu
+            componente.
+          </p>
+        </section>
+        <section>
+          <pre
+            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
+          <code class="">
 import React, { useState } from 'react';
 import { View, Text, Button } from 'react-native';
 
 export default function Counter() { 
-    const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
-    return ( 
-        &lt;View style={{ alignItems: 'center', padding: 20 }}&gt; 
-            &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Contador: {count}&lt;/Text&gt; 
-            &lt;Button 
-                title="Incrementar" 
-                onPress={() => setCount(count + 1)} 
-            /&gt; 
-            &lt;Button 
-                title="Resetar" 
-                onPress={() => setCount(0)} 
-            /&gt; 
-        &lt;/View&gt; 
-    ); 
+  return ( 
+      &lt;View style={{ alignItems: 'center', padding: 20 }}&gt; 
+          &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Contador: {count}&lt;/Text&gt; 
+          &lt;Button 
+              title="Incrementar" 
+              onPress={() => setCount(count + 1)} 
+          /&gt; 
+          &lt;Button 
+              title="Resetar" 
+              onPress={() => setCount(0)} 
+          /&gt; 
+      &lt;/View&gt; 
+  ); 
 }
-            </code>
-        </pre>
-                    </section>
-                </section>
+          </code>
+      </pre>
+        </section>
+      </section>
 
-                <!-- Slide 6 - Introdução ao useEffect -->
-                <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                    <section>
-                        <br><br>
-                        <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
-                            Introdução ao useEffect
-                        </h2>
-                        <p
-                            style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
-                            O hook <code>useEffect</code> permite executar efeitos colaterais, como atualizar o console
-                            após
-                            mudanças de estado.
-                        </p>
-                    </section>
-                    <section>
-                        <pre
-                            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
-            <code class="">
+      <!-- Slide 6 - Introdução ao useEffect -->
+      <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <section>
+          <br><br>
+          <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
+            Introdução ao useEffect
+          </h2>
+          <p style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
+            O hook <code>useEffect</code> permite executar efeitos colaterais, como atualizar o console
+            após
+            mudanças de estado.
+          </p>
+        </section>
+        <section>
+          <pre
+            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
+          <code class="">
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
 
 export default function CounterWithEffect() { 
-    const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
-    useEffect(() => { 
-        console.log('O contador foi atualizado:', count); 
-    }, [count]);
+  useEffect(() => { 
+      console.log('O contador foi atualizado:', count); 
+  }, [count]);
 
-    return ( 
-        &lt;View style={{ alignItems: 'center', padding: 20 }}&gt; 
-            &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Contador: {count}&lt;/Text&gt; 
-            &lt;Button 
-                title="Incrementar" 
-                onPress={() => setCount(count + 1)} 
-            /&gt; 
-        &lt;/View&gt; 
-    ); 
+  return ( 
+      &lt;View style={{ alignItems: 'center', padding: 20 }}&gt; 
+          &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Contador: {count}&lt;/Text&gt; 
+          &lt;Button 
+              title="Incrementar" 
+              onPress={() => setCount(count + 1)} 
+          /&gt; 
+      &lt;/View&gt; 
+  ); 
 }
-            </code>
-        </pre>
-                    </section>
-                </section>
+          </code>
+      </pre>
+        </section>
+      </section>
 
-                <!-- Slide 7 - Exercício Prático: Lista de Tarefas -->
-                <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-                    <section>
-                        <br><br>
-                        <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
-                            Exercício Prático: Lista de Tarefas
-                        </h2>
-                        <p
-                            style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
-                            Crie um componente que permita adicionar tarefas a uma lista utilizando
-                            <code>useState</code> e
-                            registre alterações com <code>useEffect</code>.
-                        </p>
-                    </section>
-                    <section>
-                        <pre
-                            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
-            <code class="">
+      <!-- Slide 7 - Exercício Prático: Lista de Tarefas -->
+      <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <section>
+          <br><br>
+          <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
+            Exercício Prático: Lista de Tarefas
+          </h2>
+          <p style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
+            Crie um componente que permita adicionar tarefas a uma lista utilizando
+            <code>useState</code> e
+            registre alterações com <code>useEffect</code>.
+          </p>
+        </section>
+        <section>
+          <pre
+            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
+          <code class="">
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 
 export default function TaskList() { 
-    const [tasks, setTasks] = useState([]);
-    const [input, setInput] = useState('');
+  const [tasks, setTasks] = useState([]);
+  const [input, setInput] = useState('');
 
-    useEffect(() => { 
-        console.log('Lista de tarefas atualizada:', tasks); 
-    }, [tasks]);
+  useEffect(() => { 
+      console.log('Lista de tarefas atualizada:', tasks); 
+  }, [tasks]);
 
-    const addTask = () => { 
-        if (input.trim()) { 
-            setTasks([...tasks, input.trim()]); 
-            setInput('');
-        } 
-    };
+  const addTask = () => { 
+      if (input.trim()) { 
+          setTasks([...tasks, input.trim()]); 
+          setInput('');
+      } 
+  };
 
-    return ( 
-        &lt;View style={{ padding: 20 }}&gt; 
-            &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Minhas Tarefas&lt;/Text&gt; 
-            &lt;TextInput 
-                placeholder="Digite uma tarefa..." 
-                value={input} 
-                onChangeText={setInput}
-                style={{ height: 40, borderColor: '#fff', borderWidth: 1, marginBottom: 10, color: 'white', paddingHorizontal: 10 }}
-            /&gt; 
-            &lt;Button 
-                title="Adicionar" 
-                onPress={addTask} 
-            /&gt; 
-            {tasks.map((task, index) => ( 
-                &lt;Text key={index} style={{ marginTop: 10 }}&gt;{task}&lt;/Text&gt; 
-            ))} 
-        &lt;/View&gt; 
-    ); 
+  return ( 
+      &lt;View style={{ padding: 20 }}&gt; 
+          &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Minhas Tarefas&lt;/Text&gt; 
+          &lt;TextInput 
+              placeholder="Digite uma tarefa..." 
+              value={input} 
+              onChangeText={setInput}
+              style={{ height: 40, borderColor: '#fff', borderWidth: 1, marginBottom: 10, color: 'white', paddingHorizontal: 10 }}
+          /&gt; 
+          &lt;Button 
+              title="Adicionar" 
+              onPress={addTask} 
+          /&gt; 
+          {tasks.map((task, index) => ( 
+              &lt;Text key={index} style={{ marginTop: 10 }}&gt;{task}&lt;/Text&gt; 
+          ))} 
+      &lt;/View&gt; 
+  ); 
 }
-            </code>
-        </pre>
-                    </section>
-                </section>
+          </code>
+      </pre>
+        </section>
+      </section>
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="./dist/reveal.js"></script>
+  <script src="./plugin/markdown/markdown.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+
+  <script src="./aula04-materials/script.js"></script>
+
+  <script>
+
+    Reveal.initialize({
+
+      center: false,
+      controls: true,
+      progress: true,
+
+      slideNumber: true,
+      history: true,
+      transition: 'convex',
+      plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
+      markdown: {
+        smartypants: true,
+      }
+    });
+
+  </script>
+</body>
+
+</html>
