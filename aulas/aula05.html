@@ -104,7 +104,8 @@
         <section data-background-color="aquamarine" data-auto-animate>
           <h2>Atividade 1: Componente de Saudação</h2>
           <h3>Atividade</h3>
-          <p>Crie um componente funcional chamado <code>Greeting</code> que receba uma propriedade <code>name</code> e exiba:</p>
+          <p>Crie um componente funcional chamado <code>Greeting</code> que receba uma propriedade <code>name</code> e
+            exiba:</p>
           <ul>
             <li><code>Olá, [name]!</code> caso <code>name</code> possua um valor;</li>
             <li><code>Olá, visitante!</code> se <code>name</code> estiver vazio, nulo ou indefinido.</li>
@@ -135,7 +136,8 @@ export default Greeting;</code></pre>
         <section data-background-color="aquamarine" data-auto-animate>
           <h2>Atividade 2: Verificação de Idade</h2>
           <h3>Atividade</h3>
-          <p>Crie um componente funcional chamado <code>AgeCheck</code> que receba uma propriedade <code>idade</code> e exiba:</p>
+          <p>Crie um componente funcional chamado <code>AgeCheck</code> que receba uma propriedade <code>idade</code> e
+            exiba:</p>
           <ul>
             <li><code>Você é maior de idade.</code> se <code>idade</code> for maior ou igual a 18;</li>
             <li><code>Você é menor de idade.</code> se <code>idade</code> for menor que 18.</li>
@@ -275,6 +277,91 @@ export default function Contador() {
 
 
 
+        <!-- NOVA ATIVIDADE 4: Entrada de Texto Dinâmica -->
+        <section data-background-color="#34495e">
+          <h2 style="margin-left:40px; color: white;">Atividade 3: Entrada de Texto Dinâmica</h2>
+          <h3 style="margin-left:40px; color: white;">Atividade</h3>
+          <p style="margin:20px 40px; color: white; font-size: 1.2em;">
+            Crie um componente funcional chamado <code>DynamicInput</code> que contenha um campo de entrada
+            (<code>TextInput</code>). Conforme o usuário digita, o valor deve ser exibido em tempo real abaixo do campo.
+          </p>
+        </section>
+
+        <section data-background-color="#34495e">
+          <h2 style="margin-left:40px; color: white;">Atividade 3: Resposta</h2>
+          <pre
+            style="margin:20px 40px; background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 4px; color: white;">
+<code class="language-jsx">import React, { useState } from 'react';
+import { SafeAreaView, View, Text, TextInput } from 'react-native';
+
+export default function DynamicInput() {
+  const [texto, setTexto] = useState('');
+
+  return (
+    &lt;SafeAreaView&gt;
+      &lt;View style={{ padding: 20 }}&gt;
+        &lt;TextInput
+          placeholder="Digite algo..."
+          value={texto}
+          onChangeText={setTexto}
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
+        /&gt;
+        &lt;Text style={{ fontSize: 18 }}&gt;Você digitou: {texto}&lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+</code>
+          </pre>
+          <p style="margin:20px 40px; color: white;">Teste digitando no campo para ver a atualização dinâmica do texto.
+          </p>
+        </section>
+
+        <!-- Atividade 4: Validação de Email -->
+        <section data-background-color="#5d6d7e">
+          <h2 style="margin-left:40px; color: white;">Atividade 4: Validação de Email</h2>
+          <!-- <h3 style="margin-left:40px; color: white;">Atividade</h3> -->
+          <p style="margin:20px 40px; color: white; font-size: 0.9em;text-align: justify;">
+            Crie um componente funcional chamado <code>EmailValidator</code> que contenha um campo de entrada
+            (<code>TextInput</code>). Enquanto o usuário digita seu email, verifique se o valor contém o símbolo
+            <code>@</code> e um ponto (<code>.</code>). Se o email for considerado válido, exiba a mensagem
+            <code>Email Válido</code> em verde; caso contrário, exiba <code>Email Inválido</code> em vermelho.
+          </p>
+        </section>
+
+        <section data-background-color="#5d6d7e">
+          <h2 style="margin-left:40px; color: white;">Atividade 4: Resposta</h2>
+          <pre
+            style="margin:20px 40px; background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 4px; color: white;">
+<code class="language-jsx">import React, { useState } from 'react';
+import { SafeAreaView, View, Text, TextInput } from 'react-native';
+
+export default function EmailValidator() {
+  const [email, setEmail] = useState('');
+
+  const isValidEmail = email.includes('@') && email.includes('.');
+
+  return (
+    &lt;SafeAreaView&gt;
+      &lt;View style={{ padding: 20 }}&gt;
+        &lt;TextInput
+          placeholder="Digite seu email..."
+          value={email}
+          onChangeText={setEmail}
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingHorizontal: 5 }}
+        /&gt;
+        &lt;Text style={{ fontSize: 18, color: isValidEmail ? 'green' : 'red' }}&gt;
+          { isValidEmail ? 'Email Válido' : 'Email Inválido' }
+        &lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+</code>
+  </pre>
+          <p style="margin:20px 40px; color: white;">Digite diferentes emails no campo para testar a validação
+            dinamicamente.</p>
+        </section>
 
 
         <!-- Tópico 5: Estado vs Props -->
@@ -367,8 +454,7 @@ export default function Contador() {
           <div style=" display: flex;">
             <!-- Código (aparece como fragmento) -->
             <div class="fragment" style="width: 100%;">
-              <pre
-                style="background-color: rgba(255,255,255,0.1);">
+              <pre style="background-color: rgba(255,255,255,0.1);">
 <code class="language-jsx" data-line-numbers="1|5|9-13|12|14-18|16|19|22-24|">import React, { useState } from 'react';
 import { SafeAreaView, View, Text, Button } from 'react-native';
 
@@ -425,6 +511,112 @@ export default function TemaToggle() {
         </section>
 
 
+        <!-- Atividade 5: Toggle de Tema -->
+        <section data-background-color="#8e44ad">
+          <h2 style="margin-left:40px; color: white; font-size: 1.5em;">Atividade 5: Toggle de Tema</h2>
+          <!-- <h3 style="margin-left:40px; color: white; font-size: 1.3em;">Atividade</h3> -->
+          <p style="margin:20px 40px; color: white; font-size: 0.7em; text-align: justify;">
+            Desenvolva um componente funcional chamado <code>ToggleTheme</code> com as seguintes características:
+          </p>
+          <ul style="margin:20px 60px; color: white; font-size: 0.7em; text-align: justify; line-height: 1.5;">
+            <li><strong>Início:</strong> O componente deve iniciar no modo <code>"Claro"</code>.</li>
+            <li><strong>Alternância:</strong> Ao pressionar um botão, o estado deve ser alternado para
+              <code>"Escuro"</code> ou <code>"Claro"</code>, alternando entre os dois.</li>
+            <li><strong>Exibição do Modo:</strong> O modo atual deve ser exibido na tela, permitindo ao usuário
+              identificar a alternância.</li>
+            <li><strong>Uso do <code>useState</code>:</strong> Utilize esse hook para controlar o estado do tema.</li>
+          </ul>
+          <p style="margin:20px 40px; color: white; font-size: 0.7em; text-align: justify;">
+            Este exercício ilustra a manipulação de estados com <code>useState</code> e a renderização condicional para
+            alterar a interface dinamicamente.
+          </p>
+        </section>
+
+        <section data-background-color="#8e44ad">
+          <h2 style="margin-left:40px; color: white; font-size: 1.5em;">Atividade 5: Resposta</h2>
+          <pre
+            style="margin:20px 40px; background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 4px; color: white; font-size: 0.4em;">
+<code class="language-jsx">import React, { useState } from 'react';
+import { SafeAreaView, View, Text, Button } from 'react-native';
+
+export default function ToggleTheme() {
+  const [modo, setModo] = useState('Claro');
+
+  const toggleModo = () => {
+    setModo(modo === 'Claro' ? 'Escuro' : 'Claro');
+  };
+
+  return (
+    &lt;SafeAreaView&gt;
+      &lt;View style={{ padding: 20 }}&gt;
+        &lt;Text style={{ fontSize: 20 }}&gt;Modo Atual: {modo}&lt;/Text&gt;
+        &lt;Button title="Alternar Modo" onPress={toggleModo} /&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+</code>
+          </pre>
+          <p style="margin:20px 40px; color: white; font-size: 1.1em; text-align: justify;">
+            Clique no botão para alternar entre os modos e observe a atualização dinâmica do tema.
+          </p>
+        </section>
+
+        <!-- Atividade 6: Contador com Mensagem de Limite -->
+        <section data-background-color="#16a085">
+          <h2 style="margin-left:40px; color: white; font-size: 1.5em;">Atividade 6: Contador com Mensagem de Limite
+          </h2>
+          <!-- <h3 style="margin-left:40px; color: white; font-size: 1.3em;">Atividade</h3> -->
+          <p style="margin:20px 40px; color: white; font-size: 0.7em; text-align: justify;">
+            Crie um componente funcional chamado <code>LimitCounter</code> que atenda aos seguintes requisitos:
+          </p>
+          <ul style="margin:20px 60px; color: white; font-size: 0.7em; text-align: justify; line-height: 1.5;">
+            <li><strong>Contador:</strong> Inicialize um contador com o valor zero utilizando o hook
+              <code>useState</code>.</li>
+            <li><strong>Exibição:</strong> Mostre na tela o valor atual do contador.</li>
+            <li><strong>Incremento:</strong> Inclua um botão que, ao ser pressionado, incremente o contador.</li>
+            <li>
+              <strong>Limite:</strong> Ao atingir ou ultrapassar o valor 10, exiba uma mensagem em destaque:
+              <ul style="margin-left:20px; list-style-type: circle; line-height: 1.5;">
+                <li>Exiba <code>Limite Atingido!</code> em vermelho.</li>
+              </ul>
+            </li>
+          </ul>
+          <p style="margin:20px 40px; color: white; font-size: 1.2em; text-align: justify;">
+            Este exercício demonstra o uso do hook <code>useState</code> e a renderização condicional para fornecer um
+            feedback visual quando um limite pré-definido é atingido.
+          </p>
+        </section>
+
+        <section data-background-color="#16a085">
+          <h2 style="margin-left:40px; color: white; font-size: 1.5em;">Atividade 6: Resposta</h2>
+          <pre
+            style="margin:20px 40px; background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 4px; color: white; font-size: 0.4em;">
+<code class="language-jsx">import React, { useState } from 'react';
+import { SafeAreaView, View, Text, Button } from 'react-native';
+
+export default function LimitCounter() {
+  const [contador, setContador] = useState(0);
+  const limite = 10;
+
+  return (
+    &lt;SafeAreaView&gt;
+      &lt;View style={{ padding: 20 }}&gt;
+        &lt;Text style={{ fontSize: 20 }}&gt;Contador: {contador}&lt;/Text&gt;
+        {contador >= limite ? (
+          &lt;Text style={{ fontSize: 18, color: 'red', marginVertical: 10 }}&gt;Limite Atingido!&lt;/Text&gt;
+        ) : null}
+        &lt;Button title="Incrementar" onPress={() => setContador(contador + 1)} /&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+</code>
+          </pre>
+          <p style="margin:20px 40px; color: white; font-size: 0.7em; text-align: justify;">
+            Pressione o botão para incrementar o contador. Quando o valor atingir 10, a mensagem de alerta será exibida.
+          </p>
+        </section>
 
         <!-- Script para interatividade -->
         <script>
