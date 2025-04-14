@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula 04</title>
+  <title>Aula 05 - Hooks</title>
 
   <!-- Reveal.js -->
   <link rel="stylesheet" href="./dist/reveal.css">
@@ -12,14 +12,11 @@
 
   <!-- Tema para código -->
   <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
-  <!-- <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css"> -->
-  <link rel="stylesheet" href="aula04-materials/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
-
+  <link rel="stylesheet" href="aula05-materials/style.css">
 
   <!-- Menu plugin -->
   <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
-  <link href=" https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css " rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
 
   <style>
     .reveal h1,
@@ -81,232 +78,390 @@
       <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
         <br><br><br><br>
         <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
-          Programação para dispositivos Móveis
+          Programação para Dispositivos Móveis
         </h4>
         <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
           Prof. Msc. Nator Junior Carvalho da Costa
         </p>
         <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
-          Aula 05 - Hooks
+          Aula 05 - Hooks no React Native
         </h6>
-        <h1>🐢</h1>
+        <h1>🪝</h1>
       </section>
 
 
-      <!-- Slide 3: Exemplo: useState -->
-      <section data-auto-animate>
-        <pre
-          style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
-      <code class="language-jsx" data-line-numbers="16|16-26|3|8|1-11">
-  import React, { useState } from 'react';
-  import { SafeAreaView, View, Text, Button } from 'react-native';
-  
-  export default function Counter() {
-    const [count, setCount] = useState(0);
-  
-    return (
-      &lt;SafeAreaView&gt;
-        &lt;View style={{ alignItems: 'center', marginTop: 50 }}&gt;
-          &lt;Text style={{ fontSize: 24 }}&gt;Você clicou {count} vezes&lt;/Text&gt;
-          &lt;Button title="Clique aqui" onPress={() => setCount(count + 1)} /&gt;
-        &lt;/View&gt;
-      &lt;/SafeAreaView&gt;
-    );
-  }
-      </code>
-    </pre>
-      </section>
-
-      <!-- Slide 4: Hook de Efeito -->
+      <!-- Slide 2: Closure e Gerenciamento de Estado -->
       <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-        <h2 style="margin-left:40px; color: white;">Hook de Efeito</h2>
+
+        <section>
+          <br><br><br><br><br>
+          <h2 style="margin-left:40px; color: white;">Pra começar!</h2>
+        </section>
+
+
+
+        <!-- Slide 3: Decoração com auto animate (Background aquamarine) -->
+        <section data-background-color="aquamarine" data-auto-animate>
+          <h2>Atividade 1: Componente de Saudação</h2>
+          <h3>Atividade</h3>
+          <p>Crie um componente funcional chamado <code>Greeting</code> que receba uma propriedade <code>name</code> e exiba:</p>
+          <ul>
+            <li><code>Olá, [name]!</code> caso <code>name</code> possua um valor;</li>
+            <li><code>Olá, visitante!</code> se <code>name</code> estiver vazio, nulo ou indefinido.</li>
+          </ul>
+        </section>
+
+        <!-- Slide 4: Decoração com auto animate (Background rgb(70,70,255)) -->
+        <section data-background-color="rgb(70, 70, 255)" data-auto-animate>
+          <h2>Atividade 1: Resposta</h2>
+          <pre><code class="language-jsx">import React from 'react';
+import { Text, View } from 'react-native';
+
+const Greeting = ({ name }) => {
+  return (
+    &lt;View style={{ padding: 10 }}&gt;
+      &lt;Text style={{ fontSize: 18 }}&gt;
+        { name ? `Olá, ${name}!` : 'Olá, visitante!' }
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};
+
+export default Greeting;</code></pre>
+          <p>Dica: Teste renderizando o componente com diferentes valores para <code>name</code>.</p>
+        </section>
+
+        <!-- Slide 3: Decoração com auto animate (Background aquamarine) -->
+        <section data-background-color="aquamarine" data-auto-animate>
+          <h2>Atividade 2: Verificação de Idade</h2>
+          <h3>Atividade</h3>
+          <p>Crie um componente funcional chamado <code>AgeCheck</code> que receba uma propriedade <code>idade</code> e exiba:</p>
+          <ul>
+            <li><code>Você é maior de idade.</code> se <code>idade</code> for maior ou igual a 18;</li>
+            <li><code>Você é menor de idade.</code> se <code>idade</code> for menor que 18.</li>
+          </ul>
+        </section>
+
+        <!-- Slide 4: Decoração com auto animate (Background rgb(70,70,255)) -->
+        <section data-background-color="rgb(70, 70, 255)" data-auto-animate>
+          <h2>Atividade 2: Resposta</h2>
+          <pre><code class="language-jsx">import React from 'react';
+import { Text, View } from 'react-native';
+
+const AgeCheck = ({ idade }) => {
+  return (
+    &lt;View style={{ padding: 10 }}&gt;
+      &lt;Text style={{ fontSize: 18 }}&gt;
+        { idade >= 18 ? 'Você é maior de idade.' : 'Você é menor de idade.' }
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};
+
+export default AgeCheck;</code></pre>
+          <p>Dica: Teste o componente com valores de <code>idade</code> menores e maiores que 18.</p>
+        </section>
+
+        <section>
+          <br><br><br><br><br>
+          <h2 style="margin-left:40px; color: white;">Hooks e Gerenciamento de Estados</h2>
+        </section>
+
+        <!-- Tópico 3: Gerenciamento de Estado -->
+        <section>
+          <h2 style="margin-left:40px; color: white;">Gerenciamento de Estado</h2>
+          <ul style="margin:20px 40px; color: white; font-size: 1.2em; list-style-type: disc;">
+            <li><strong>Estado:</strong> Objeto que armazena dados dinâmicos do componente.</li>
+            <li>Atualiza a interface quando modificado.</li>
+            <li>No React, é gerenciado com o hook <code>useState</code>.</li>
+          </ul>
+        </section>
+
+        <!-- Section 1: Exemplo Visual do Estado -->
+        <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-transition="slide">
+          <h3 style="margin-left:40px; color: white;">Estado em Ação</h3>
+          <div style="margin:20px 40px; display: flex; align-items: center; gap: 30px;">
+            <!-- Card ilustrativo com animação: cada parte é um fragmento -->
+            <div class="fragment"
+              style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center; width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); position: relative; transition: transform 0.3s;">
+              <p class="fragment" style="font-size: 2.8em; color: #0056b3; margin: 0;">7</p>
+              <p class="fragment" style="font-size: 0.9em; color: #333;">Cliques</p>
+              <div class="fragment"
+                style="margin-top: 15px; font-size: 0.8em; color: #666; background: #e0e0e0; padding: 5px; border-radius: 4px;">
+                Estado: <code>{ cliques: 7 }</code>
+              </div>
+              <div class="fragment"
+                style="position: absolute; top: -10px; right: -10px; background: #28a745; color: white; padding: 5px 10px; border-radius: 50%; font-size: 0.7em;">
+                Atualizado!
+              </div>
+            </div>
+            <!-- Descrição técnica: aparece após o card -->
+            <div class="fragment">
+              <ul style="color: white; font-size: 1.1em; list-style-type: disc;">
+                <li><strong>Evento</strong>: Uma interação (ex.: clique) modifica o estado.</li>
+                <li><strong>Re-renderização</strong>: O React Native atualiza a interface com o novo valor do estado.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Parágrafo explicativo: aparece por último -->
+          <p class="fragment" style="margin:20px 40px; color: white; font-size: 0.9em;">
+            O estado é um objeto mutável que persiste entre renderizações, controlado por <code>useState</code>.
+          </p>
+        </section>
+
+
+        <!-- Section 2: Exemplo Interativo -->
+        <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h3 style="margin-left:40px; color: white;">Exemplo Interativo: Contador</h3>
+          <div style="margin:20px 40px; display: flex; gap: 30px;">
+            <!-- Visualização interativa -->
+            <div
+              style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center; width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+              <p id="contador-valor" style="font-size: 2.8em; color: #0056b3; margin: 0;">0</p>
+              <p style="font-size: 0.9em; color: #333;">Cliques</p>
+              <div
+                style="margin-top: 15px; font-size: 0.6em; color: #666; background: #e0e0e0; padding: 5px; border-radius: 4px;">
+                Estado: <code id="contador-estado">{ cliques: 0 }</code>
+              </div>
+              <button onclick="incrementarContador()"
+                style="margin-top: 15px; background: #0056b3; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9em;">
+                Clicar!
+              </button>
+            </div>
+            <!-- Código correspondente -->
+            <div style="width: 90%;">
+              <pre
+                style="background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 4px; color: white; overflow-x: auto;">
+        <code class="language-jsx" data-line-numbers="1|5|10|10-11">import React, { useState } from 'react';
+import { SafeAreaView, View, Text, Button } from 'react-native';
+
+export default function Contador() {
+  const [cliques, setCliques] = useState(0);
+
+  return (
+    &lt;SafeAreaView&gt;
+      &lt;View&gt;
+        &lt;Text&gt;Cliques: {cliques}&lt;/Text&gt;
+        &lt;Button title="Clicar!" onPress={() => setCliques(cliques + 1)} /&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+        </code>
+      </pre>
+            </div>
+          </div>
+          <p style="margin:20px 40px; color: white;">
+            Clique no botão para simular a atualização do estado com <code>useState</code>!
+          </p>
+        </section>
+
+        <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+          style="padding: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+            <!-- Coluna 2: Embed do Expo Snack -->
+            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+              <div data-snack-id="@natorjunior/05ex1" data-snack-platform="web" data-snack-preview="true"
+                data-snack-theme="light"
+                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+              </div>
+              <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+          </div>
+        </section>
+
+
+
+
+
+        <!-- Tópico 5: Estado vs Props -->
+        <section>
+          <h3 style="margin-left:40px; color: white;">Estado vs Props</h3>
+          <div style="margin:20px 40px;">
+            <table style="width: 100%; color: white; font-size: 0.9em; border-collapse: collapse;">
+              <thead>
+                <tr style="background: rgba(255,255,255,0.2);">
+                  <th style="padding: 12px; text-align: left;">Propriedade</th>
+                  <th style="padding: 12px; text-align: left;">Estado</th>
+                  <th style="padding: 12px; text-align: left;">Props</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.3);">Origem</td>
+                  <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.3);">Interno ao componente</td>
+                  <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.3);">Passado pelo pai</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.3);">Mutabilidade</td>
+                  <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.3);">Mutável via
+                    <code>setState</code>
+                  </td>
+                  <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.3);">Imutável</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.3);">Finalidade</td>
+                  <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.3);">Dados dinâmicos</td>
+                  <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.3);">Dados estáticos</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px;">Exemplo</td>
+                  <td style="padding: 12px;">Contador incrementável</td>
+                  <td style="padding: 12px;">Título fixo</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Tópico 6: Contador em React -->
+        <section>
+          <h3 style="margin-left:40px; color: white;">Exemplo: Contador com React</h3>
+          <pre
+            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin:20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
+<code class="language-jsx" data-line-numbers="1|5|10|11|12|10-12">import React, { useState } from 'react';
+import { SafeAreaView, View, Text, Button } from 'react-native';
+
+export default function Contador() {
+  const [cliques, setCliques] = useState(0);
+
+  return (
+    &lt;SafeAreaView&gt;
+      &lt;View style={{ alignItems: 'center', marginTop: 50 }}&gt;
+        &lt;Text style={{ fontSize: 24 }}&gt;Cliques: {cliques}&lt;/Text&gt;
+        &lt;Button title="Incrementar" onPress={() =&gt; setCliques(cliques + 1)} /&gt;
+        &lt;Button title="Resetar" onPress={() =&gt; setCliques(0)} /&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+} </code>
+    </pre>
+          <ul style="margin:20px 40px; color: white; list-style-type: disc;">
+            <li><code>useState</code> mantém e atualiza o estado.</li>
+            <li>Exemplifica atualização da UI após cliques.</li>
+          </ul>
+        </section>
+
+        <!-- Snack lado a lado -->
+        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+          style="padding: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+            <!-- Coluna 2: Embed do Expo Snack -->
+            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+              <div data-snack-id="@natorjunior/05ex2" data-snack-platform="web" data-snack-preview="true"
+                data-snack-theme="light"
+                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+              </div>
+              <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tópico 7: Toggle de Tema -->
+        <section data-transition="slide" data-auto-animate>
+          <h3 style=" color: white;">Exemplo: Toggle de Tema</h3>
+          <div style=" display: flex;">
+            <!-- Código (aparece como fragmento) -->
+            <div class="fragment" style="width: 100%;">
+              <pre
+                style="background-color: rgba(255,255,255,0.1);">
+<code class="language-jsx" data-line-numbers="1|5|9-13|12|14-18|16|19|22-24|">import React, { useState } from 'react';
+import { SafeAreaView, View, Text, Button } from 'react-native';
+
+export default function TemaToggle() {
+  const [isDark, setIsDark] = useState(false);
+
+  return (
+    &lt;SafeAreaView&gt;
+      &lt;View style={{
+        alignItems: 'center',
+        marginTop: 50,
+        backgroundColor: isDark ? '#333' : '#fff'
+      }}&gt;
+        &lt;Text style={{
+          fontSize: 24,
+          color: isDark ? '#fff' : '#000',
+          marginBottom: 20
+        }}&gt;
+          Tema: {isDark ? 'Escuro' : 'Claro'}
+        &lt;/Text&gt;
+        &lt;View style={{ marginBottom: 10, width: 200 }}&gt;
+          &lt;Button 
+          title="Alternar Tema" 
+          onPress={() =&gt; setIsDark(!isDark)} /&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+</code>
+      </pre>
+            </div>
+          </div>
+          <!-- Descrição e pontos-chave (aparecem após os exemplos) -->
+          <ul class="fragment" style="margin:20px 40px; color: white; list-style-type: disc;">
+            <li>Demonstra mudança de tema baseada no estado.</li>
+            <li>A interface reage instantaneamente à interação.</li>
+          </ul>
+        </section>
+        <!-- Snack lado a lado -->
+        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+          style="padding: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+            <!-- Coluna 2: Embed do Expo Snack -->
+            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+              <div data-snack-id="@natorjunior/05ex3" data-snack-platform="web" data-snack-preview="true"
+                data-snack-theme="light"
+                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+              </div>
+              <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+          </div>
+        </section>
+
+
+
+        <!-- Script para interatividade -->
+        <script>
+          let isDark = false;
+          function alternarTema() {
+            isDark = !isDark;
+            const visual = document.getElementById('tema-visual');
+            const texto = document.getElementById('tema-texto');
+            const estado = document.getElementById('tema-estado');
+
+            visual.style.background = isDark ? '#333' : '#fff';
+            texto.style.color = isDark ? '#fff' : '#000';
+            texto.innerText = isDark ? 'Tema Escuro' : 'Tema Claro';
+            estado.innerHTML = '<code>{ isDark: ' + isDark + ' }</code>';
+          }
+        </script>
+
+
+      </section>
+
+
+      <!-- Slide 3: Conceito de Hooks -->
+      <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="margin-left:40px; color: white;">O que são Hooks?</h2>
         <p style="margin:20px 40px; color: white;">
-          <code>useEffect</code> executa ações após a renderização, como iniciar timers ou buscar dados.
-          No React Native, é útil para configurar subscrições ou atualizar recursos externos.
+          Hooks são funções do React para gerenciar estado e efeitos em componentes funcionais.
+        </p>
+        <p style="margin:20px 40px; color: white;">
+          • Criados na versão 16.8.<br>
+          • Simplificam a lógica no React Native.<br>
+          • Exemplos: <code>useState</code>, <code>useEffect</code>, <code>useContext</code>.
         </p>
       </section>
 
-      <!-- Slide 5: Exemplo: useEffect -->
-      <section data-auto-animate>
-        <pre
-          style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
-      <code class="language-jsx" data-line-numbers="16|16-26|3|8|1-11">
-  import React, { useState, useEffect } from 'react';
-  import { SafeAreaView, View, Text } from 'react-native';
-  
-  export default function Timer() {
-    const [seconds, setSeconds] = useState(0);
-  
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setSeconds(prev => prev + 1);
-      }, 1000);
-      return () => clearInterval(interval);
-    }, []);
-  
-    return (
-      &lt;SafeAreaView&gt;
-        &lt;View style={{ alignItems: 'center', marginTop: 50 }}&gt;
-          &lt;Text style={{ fontSize: 24 }}&gt;Tempo: {seconds}s&lt;/Text&gt;
-        &lt;/View&gt;
-      &lt;/SafeAreaView&gt;
-    );
-  }
-      </code>
-    </pre>
-      </section>
-
-      <!-- Slide 6: Regras dos Hooks -->
-      <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-        <h2 style="margin-left:40px; color: white;">Regras dos Hooks</h2>
-        <p style="margin:20px 40px; color: white;">
-          • Chame os Hooks somente no nível superior dos componentes.<br>
-          • Use Hooks apenas em componentes funcionais ou em seus próprios Hooks customizados.
-        </p>
-      </section>
 
 
-      <!-- Slide 5 - Gerenciamento de Estado &amp; useState -->
-      <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-        <section>
-          <br><br>
-          <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
-            Gerenciamento de Estado &amp; useState
-          </h2>
-          <p style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
-            Utilize o hook <code>useState</code> para gerenciar o estado de forma dinâmica em seu
-            componente.
-          </p>
-        </section>
-        <section>
-          <pre
-            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
-          <code class="">
-import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
 
-export default function Counter() { 
-  const [count, setCount] = useState(0);
-
-  return ( 
-      &lt;View style={{ alignItems: 'center', padding: 20 }}&gt; 
-          &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Contador: {count}&lt;/Text&gt; 
-          &lt;Button 
-              title="Incrementar" 
-              onPress={() => setCount(count + 1)} 
-          /&gt; 
-          &lt;Button 
-              title="Resetar" 
-              onPress={() => setCount(0)} 
-          /&gt; 
-      &lt;/View&gt; 
-  ); 
-}
-          </code>
-      </pre>
-        </section>
-      </section>
-
-      <!-- Slide 6 - Introdução ao useEffect -->
-      <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-        <section>
-          <br><br>
-          <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
-            Introdução ao useEffect
-          </h2>
-          <p style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
-            O hook <code>useEffect</code> permite executar efeitos colaterais, como atualizar o console
-            após
-            mudanças de estado.
-          </p>
-        </section>
-        <section>
-          <pre
-            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
-          <code class="">
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
-
-export default function CounterWithEffect() { 
-  const [count, setCount] = useState(0);
-
-  useEffect(() => { 
-      console.log('O contador foi atualizado:', count); 
-  }, [count]);
-
-  return ( 
-      &lt;View style={{ alignItems: 'center', padding: 20 }}&gt; 
-          &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Contador: {count}&lt;/Text&gt; 
-          &lt;Button 
-              title="Incrementar" 
-              onPress={() => setCount(count + 1)} 
-          /&gt; 
-      &lt;/View&gt; 
-  ); 
-}
-          </code>
-      </pre>
-        </section>
-      </section>
-
-      <!-- Slide 7 - Exercício Prático: Lista de Tarefas -->
-      <section data-align="left" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-        <section>
-          <br><br>
-          <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-left: 40px;">
-            Exercício Prático: Lista de Tarefas
-          </h2>
-          <p style="color: white; font-size: 1.1em; margin: 20px 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
-            Crie um componente que permita adicionar tarefas a uma lista utilizando
-            <code>useState</code> e
-            registre alterações com <code>useEffect</code>.
-          </p>
-        </section>
-        <section>
-          <pre
-            style="background-color: rgba(255,255,255,0.1); padding: 10px; margin: 20px 40px; border-radius: 4px; color: white; overflow-x: auto;">
-          <code class="">
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
-
-export default function TaskList() { 
-  const [tasks, setTasks] = useState([]);
-  const [input, setInput] = useState('');
-
-  useEffect(() => { 
-      console.log('Lista de tarefas atualizada:', tasks); 
-  }, [tasks]);
-
-  const addTask = () => { 
-      if (input.trim()) { 
-          setTasks([...tasks, input.trim()]); 
-          setInput('');
-      } 
-  };
-
-  return ( 
-      &lt;View style={{ padding: 20 }}&gt; 
-          &lt;Text style={{ fontSize: 24, marginBottom: 10 }}&gt;Minhas Tarefas&lt;/Text&gt; 
-          &lt;TextInput 
-              placeholder="Digite uma tarefa..." 
-              value={input} 
-              onChangeText={setInput}
-              style={{ height: 40, borderColor: '#fff', borderWidth: 1, marginBottom: 10, color: 'white', paddingHorizontal: 10 }}
-          /&gt; 
-          &lt;Button 
-              title="Adicionar" 
-              onPress={addTask} 
-          /&gt; 
-          {tasks.map((task, index) => ( 
-              &lt;Text key={index} style={{ marginTop: 10 }}&gt;{task}&lt;/Text&gt; 
-          ))} 
-      &lt;/View&gt; 
-  ); 
-}
-          </code>
-      </pre>
-        </section>
-      </section>
     </div>
   </div>
 
@@ -315,25 +470,33 @@ export default function TaskList() {
   <script src="./plugin/markdown/markdown.js"></script>
   <script src="./plugin/highlight/highlight.js"></script>
 
-  <script src="./aula04-materials/script.js"></script>
-
   <script>
-
     Reveal.initialize({
-
       center: false,
       controls: true,
       progress: true,
-
       slideNumber: true,
       history: true,
       transition: 'convex',
+      // Activate the scroll view
+      // view: 'scroll',
+
+      // Force the scrollbar to remain visible
+      // scrollProgress: true,
       plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
       markdown: {
         smartypants: true,
       }
     });
-
+  </script>
+  <!-- Script para interatividade -->
+  <script>
+    let contador = 0;
+    function incrementarContador() {
+      contador += 1;
+      document.getElementById('contador-valor').innerText = contador;
+      document.getElementById('contador-estado').innerText = `{ cliques: ${contador} }`;
+    }
   </script>
 </body>
 
