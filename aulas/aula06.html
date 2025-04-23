@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 06 - useEffect e Ciclo de Vida</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="plugin/highlight/atom-one-dark.css">
+  <link rel="stylesheet" href="aula05-materials/style.css">
+
+  <!-- Menu plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
+
+  <style>
+    .reveal h1,
+    .reveal h2 {
+      color: #0056b3;
+    }
+
+    .reveal pre code {
+      font-size: 1em;
+      background: #222;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .reveal p {
+      font-size: 1.1em;
+    }
+
+    .example-box {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .effect-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .effect-visualization {
+      border: 2px solid #61dafb;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+      background: rgba(97,218,251,0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Slide 1: Título -->
+      <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <br><br><br><br>
+        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+          Programação para Dispositivos Móveis
+        </h4>
+        <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+          Aula 06 - useEffect e Ciclo de Vida em React Native
+        </h6>
+        <h1>🔄</h1>
+      </section>
+
+      <!-- Slide 2: O que é useEffect? - Conceito Básico -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">O que é useEffect?</h2>
+        <div class="example-box fragment fade-up">
+          <p style="color: white; font-size: 1.2em;">
+            É como um "assistente" que nos ajuda a executar ações extras em nossos componentes:
+          </p>
+          <ul style="color: white; font-size: 1.1em;">
+            <li class="fragment fade-right">🔄 Executa código quando algo muda</li>
+            <li class="fragment fade-right">🎬 Roda quando o componente aparece na tela</li>
+            <li class="fragment fade-right">🧹 Limpa quando o componente some da tela</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 3: Primeiro Exemplo - Muito Básico -->
+      <section data-background-color="#2c3e50">
+        <h2 style="color: white;">Exemplo Básico</h2>
+        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+          import React, { useState, useEffect } from 'react-native';
+          import { View, Text } from 'react-native';
+
+          const MensagemBoasVindas = () => {
+            const [mensagem, setMensagem] = useState('Carregando...');
+
+            useEffect(() => {
+              // Este código roda quando o componente aparece
+              setMensagem('Bem-vindo ao App!');
+            }, []); // Array vazio = roda apenas uma vez
+
+            return (
+              &lt;View style={{ padding: 20 }}&gt;
+                &lt;Text style={{ fontSize: 20 }}&gt;
+                  {mensagem}
+                &lt;/Text&gt;
+              &lt;/View&gt;
+            );
+          };
+        </code></pre>
+      </section>
+
+      <!-- Slide 4: Primeira Atividade Prática - Muito Simples -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">Atividade 1: Mensagem do Dia</h2>
+        <div class="example-box">
+          <p style="color: white;">Crie um componente que:</p>
+          <ul style="color: white; font-size: 1.1em;">
+            <li class="fragment fade-right">1. Comece com a mensagem "Carregando..."</li>
+            <li class="fragment fade-right">2. Use useEffect para mudar para "Bom dia!" após 2 segundos</li>
+            <li class="fragment fade-right">3. Adicione um emoji ☀️ no final da mensagem</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 5: Solução da Primeira Atividade -->
+      <section data-background-color="#2c3e50">
+        <h2 style="color: white;">Solução: Mensagem do Dia</h2>
+        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+          import React, { useState, useEffect } from 'react-native';
+          import { View, Text, StyleSheet } from 'react-native';
+
+          const MensagemDoDia = () => {
+            const [mensagem, setMensagem] = useState('Carregando...');
+
+            useEffect(() => {
+              // Espera 2 segundos e muda a mensagem
+              setTimeout(() => {
+                setMensagem('Bom dia! ☀️');
+              }, 2000);
+            }, []);
+
+            return (
+              &lt;View style={styles.container}&gt;
+                &lt;Text style={styles.texto}&gt;{mensagem}&lt;/Text&gt;
+              &lt;/View&gt;
+            );
+          };
+
+          const styles = StyleSheet.create({
+            container: {
+              padding: 20,
+              alignItems: 'center',
+            },
+            texto: {
+              fontSize: 24,
+              color: '#2c3e50',
+            },
+          });
+        </code></pre>
+      </section>
+
+      <!-- Slide 6: useEffect com Dependências - Conceito Básico -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">useEffect com Dependências</h2>
+        <div class="example-box">
+          <p style="color: white; font-size: 1.2em;">
+            O useEffect pode "observar" mudanças em valores:
+          </p>
+          <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+            const [nome, setNome] = useState('');
+
+            useEffect(() => {
+              // Roda sempre que 'nome' mudar
+              console.log('O nome mudou para:', nome);
+            }, [nome]); // nome está na lista de dependências
+          </code></pre>
+        </div>
+      </section>
+
+      <!-- Slide 7: Segunda Atividade - Contador Simples -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">Atividade 2: Contador com Mensagem</h2>
+        <div class="example-box">
+          <p style="color: white;">Crie um contador que:</p>
+          <ul style="color: white; font-size: 1.1em;">
+            <li class="fragment fade-right">1. Tenha um botão para aumentar o número</li>
+            <li class="fragment fade-right">2. Use useEffect para mostrar "Número par!" quando o contador for par</li>
+            <li class="fragment fade-right">3. Mostre "Número ímpar!" quando for ímpar</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 8: Solução da Segunda Atividade -->
+      <section data-background-color="#2c3e50">
+        <h2 style="color: white;">Solução: Contador com Mensagem</h2>
+        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+          import React, { useState, useEffect } from 'react-native';
+          import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+
+          const ContadorMensagem = () => {
+            const [contador, setContador] = useState(0);
+            const [mensagem, setMensagem] = useState('');
+
+            useEffect(() => {
+              // Verifica se é par ou ímpar
+              if (contador % 2 === 0) {
+                setMensagem('Número par! 👍');
+              } else {
+                setMensagem('Número ímpar! 👆');
+              }
+            }, [contador]); // Roda quando contador muda
+
+            return (
+              &lt;View style={styles.container}&gt;
+                &lt;Text style={styles.numero}&gt;{contador}&lt;/Text&gt;
+                &lt;Text style={styles.mensagem}&gt;{mensagem}&lt;/Text&gt;
+                &lt;TouchableOpacity 
+                  style={styles.botao}
+                  onPress={() => setContador(contador + 1)}
+                &gt;
+                  &lt;Text style={styles.textoBotao}&gt;Aumentar&lt;/Text&gt;
+                &lt;/TouchableOpacity&gt;
+              &lt;/View&gt;
+            );
+          };
+
+          const styles = StyleSheet.create({
+            container: {
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+            numero: {
+              fontSize: 48,
+              marginBottom: 10,
+            },
+            mensagem: {
+              fontSize: 24,
+              marginBottom: 20,
+              color: '#34495e',
+            },
+            botao: {
+              backgroundColor: '#3498db',
+              padding: 15,
+              borderRadius: 10,
+            },
+            textoBotao: {
+              color: 'white',
+              fontSize: 18,
+            },
+          });
+        </code></pre>
+      </section>
+
+      <!-- Slide 9: Limpeza no useEffect - Conceito Básico -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">Limpeza no useEffect</h2>
+        <div class="example-box">
+          <p style="color: white; font-size: 1.2em;">
+            Às vezes precisamos "limpar" algo quando o componente some:
+          </p>
+          <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+            useEffect(() => {
+              // Cria algo
+              const timer = setTimeout(() => {
+                console.log('Olá!');
+              }, 1000);
+
+              // Função de limpeza
+              return () => {
+                clearTimeout(timer); // Limpa o timer
+              };
+            }, []);
+          </code></pre>
+        </div>
+      </section>
+
+      <!-- Slide 10: Terceira Atividade - Timer Simples -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">Atividade 3: Timer Simples</h2>
+        <div class="example-box">
+          <p style="color: white;">Crie um timer que:</p>
+          <ul style="color: white; font-size: 1.1em;">
+            <li class="fragment fade-right">1. Mostre os segundos passando</li>
+            <li class="fragment fade-right">2. Tenha um botão para iniciar/pausar</li>
+            <li class="fragment fade-right">3. Limpe o timer quando pausar</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 11: Solução da Terceira Atividade -->
+      <section data-background-color="#2c3e50">
+        <h2 style="color: white;">Solução: Timer Simples</h2>
+        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+          import React, { useState, useEffect } from 'react-native';
+          import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+
+          const TimerSimples = () => {
+            const [segundos, setSegundos] = useState(0);
+            const [ativo, setAtivo] = useState(false);
+
+            useEffect(() => {
+              let timer = null;
+              
+              if (ativo) {
+                timer = setInterval(() => {
+                  setSegundos(s => s + 1);
+                }, 1000);
+              }
+
+              // Limpa o timer quando desativa
+              return () => {
+                if (timer) clearInterval(timer);
+              };
+            }, [ativo]);
+
+            const alternarTimer = () => setAtivo(!ativo);
+
+            return (
+              &lt;View style={styles.container}&gt;
+                &lt;Text style={styles.timer}&gt;
+                  {segundos} segundos
+                &lt;/Text&gt;
+                &lt;TouchableOpacity 
+                  style={styles.botao}
+                  onPress={alternarTimer}
+                &gt;
+                  &lt;Text style={styles.textoBotao}&gt;
+                    {ativo ? 'Pausar' : 'Iniciar'}
+                  &lt;/Text&gt;
+                &lt;/TouchableOpacity&gt;
+              &lt;/View&gt;
+            );
+          };
+
+          const styles = StyleSheet.create({
+            container: {
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+            timer: {
+              fontSize: 36,
+              marginBottom: 20,
+            },
+            botao: {
+              backgroundColor: '#2ecc71',
+              padding: 15,
+              borderRadius: 10,
+              minWidth: 120,
+              alignItems: 'center',
+            },
+            textoBotao: {
+              color: 'white',
+              fontSize: 18,
+            },
+          });
+        </code></pre>
+      </section>
+
+      <!-- Continue com os exemplos mais avançados que já existiam, mas agora depois de ter construído uma base sólida -->
+      <!-- Slide 4: Exemplo Prático - Contador com useEffect -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <section>
+          <h2 style="color: white;">Exemplo: Contador com useEffect</h2>
+          <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+            import React, { useState, useEffect } from 'react';
+            import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+
+            const ContadorComEfeito = () => {
+              const [contador, setContador] = useState(0);
+
+              useEffect(() => {
+                if (contador > 0) {
+                  // Exemplo de efeito
+                  console.log('Contador atualizado:', contador);
+                }
+              }, [contador]);
+
+              return (
+                &lt;View style={styles.container}&gt;
+                  &lt;Text style={styles.texto}&gt;Contador: {contador}&lt;/Text&gt;
+                  &lt;TouchableOpacity 
+                    style={styles.botao}
+                    onPress={() => setContador(prev => prev + 1)}
+                  &gt;
+                    &lt;Text style={styles.textoBotao}&gt;Incrementar&lt;/Text&gt;
+                  &lt;/TouchableOpacity&gt;
+                &lt;/View&gt;
+              );
+            };
+
+            const styles = StyleSheet.create({
+              container: {
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+              texto: {
+                fontSize: 24,
+                marginBottom: 20,
+                color: '#fff',
+              },
+              botao: {
+                backgroundColor: '#61dafb',
+                padding: 15,
+                borderRadius: 8,
+              },
+              textoBotao: {
+                color: '#fff',
+                fontSize: 16,
+              },
+            });
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Slide 5: Ciclo de Vida com useEffect -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <section>
+          <h2 style="color: white;">Ciclo de Vida com useEffect</h2>
+          <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+            <div class="example-box fragment fade-left" style="flex: 1; min-width: 250px; margin: 10px;">
+              <h3 style="color: #61dafb;">Montagem</h3>
+              <pre><code class="language-jsx" data-trim>
+                useEffect(() => {
+                  // Equivalente a componentDidMount
+                  const unsubscribe = 
+                    AppState.addEventListener('change', handleAppStateChange);
+                  
+                  return () => unsubscribe.remove();
+                }, []);
+              </code></pre>
+            </div>
+            
+            <div class="example-box fragment fade-up" style="flex: 1; min-width: 250px; margin: 10px;">
+              <h3 style="color: #61dafb;">Atualização</h3>
+              <pre><code class="language-jsx" data-trim>
+                useEffect(() => {
+                  // Equivalente a componentDidUpdate
+                  if (dados) {
+                    AsyncStorage.setItem('dados', JSON.stringify(dados));
+                  }
+                }, [dados]);
+              </code></pre>
+            </div>
+
+            <div class="example-box fragment fade-right" style="flex: 1; min-width: 250px; margin: 10px;">
+              <h3 style="color: #61dafb;">Desmontagem</h3>
+              <pre><code class="language-jsx" data-trim>
+                useEffect(() => {
+                  const subscription = Dimensions.addEventListener(
+                    'change',
+                    updateLayout
+                  );
+                  
+                  return () => subscription.remove();
+                }, []);
+              </code></pre>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Slide 6: Casos de Uso Comuns em React Native -->
+      <section data-background-color="#34495e">
+        <section>
+          <h2 style="color: white;">Casos de Uso em React Native</h2>
+          <div class="r-stack">
+            <div class="example-box fragment fade-in-then-out" style="width: 90%;">
+              <h3 style="color: #61dafb;">1. Gerenciando Orientação da Tela</h3>
+              <pre><code class="language-jsx" data-trim data-line-numbers>
+                import { Dimensions } from 'react-native';
+
+                const [isLandscape, setIsLandscape] = useState(false);
+
+                useEffect(() => {
+                  const subscription = Dimensions.addEventListener(
+                    'change',
+                    ({ window: { width, height } }) => {
+                      setIsLandscape(width > height);
+                    }
+                  );
+                  
+                  return () => subscription.remove();
+                }, []);
+              </code></pre>
+            </div>
+
+            <div class="example-box fragment fade-in-then-out" style="width: 90%;">
+              <h3 style="color: #61dafb;">2. Gerenciando Estado do App</h3>
+              <pre><code class="language-jsx" data-trim data-line-numbers>
+                import { AppState } from 'react-native';
+
+                const [appState, setAppState] = useState(AppState.currentState);
+
+                useEffect(() => {
+                  const subscription = AppState.addEventListener('change', nextAppState => {
+                    setAppState(nextAppState);
+                  });
+
+                  return () => subscription.remove();
+                }, []);
+              </code></pre>
+            </div>
+
+            <div class="example-box fragment fade-in-then-out" style="width: 90%;">
+              <h3 style="color: #61dafb;">3. Gerenciando Localização</h3>
+              <pre><code class="language-jsx" data-trim data-line-numbers>
+                import * as Location from 'expo-location';
+
+                const [location, setLocation] = useState(null);
+
+                useEffect(() => {
+                  (async () => {
+                    let { status } = await Location.requestForegroundPermissionsAsync();
+                    if (status !== 'granted') return;
+
+                    let location = await Location.getCurrentPositionAsync({});
+                    setLocation(location);
+                  })();
+                }, []);
+              </code></pre>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Slide 7: Exemplo Prático - Monitor de Conexão -->
+      <section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Monitor de Conexão</h2>
+          <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+            import React, { useState, useEffect } from 'react';
+            import { View, Text, StyleSheet } from 'react-native';
+            import NetInfo from '@react-native-community/netinfo';
+
+            const MonitorConexao = () => {
+              const [isConnected, setIsConnected] = useState(true);
+              const [connectionType, setConnectionType] = useState('');
+
+              useEffect(() => {
+                const unsubscribe = NetInfo.addEventListener(state => {
+                  setIsConnected(state.isConnected);
+                  setConnectionType(state.type);
+                });
+
+                return () => unsubscribe();
+              }, []);
+
+              return (
+                &lt;View style={styles.container}&gt;
+                  &lt;Text style={[
+                    styles.status,
+                    { color: isConnected ? '#4CAF50' : '#f44336' }
+                  ]}&gt;
+                    {isConnected ? 'Conectado' : 'Desconectado'}
+                  &lt;/Text&gt;
+                  &lt;Text style={styles.tipo}&gt;
+                    Tipo: {connectionType}
+                  &lt;/Text&gt;
+                &lt;/View&gt;
+              );
+            };
+
+            const styles = StyleSheet.create({
+              container: {
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#f5f5f5',
+              },
+              status: {
+                fontSize: 24,
+                fontWeight: 'bold',
+                marginBottom: 10,
+              },
+              tipo: {
+                fontSize: 18,
+                color: '#666',
+              },
+            });
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Slide 8: Atividade Prática -->
+      <section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Atividade: Cronômetro de Treino</h2>
+          <div style="margin: 20px; color: white;">
+            <p class="fragment fade-up">Crie um componente de cronômetro para treinos com:</p>
+            <ul style="font-size: 1.1em;">
+              <li class="fragment fade-right">Timer com minutos e segundos</li>
+              <li class="fragment fade-right">Botões de Iniciar, Pausar e Resetar</li>
+              <li class="fragment fade-right">Salvamento do último tempo no AsyncStorage</li>
+              <li class="fragment fade-right">Vibração ao completar um minuto</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Solução</h2>
+          <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+            import React, { useState, useEffect } from 'react';
+            import { 
+              View, Text, TouchableOpacity, 
+              StyleSheet, Vibration, 
+              AsyncStorage 
+            } from 'react-native';
+
+            const CronometroTreino = () => {
+              const [segundos, setSegundos] = useState(0);
+              const [ativo, setAtivo] = useState(false);
+              const [ultimoTempo, setUltimoTempo] = useState(null);
+
+              useEffect(() => {
+                let intervalo = null;
+                
+                if (ativo) {
+                  intervalo = setInterval(() => {
+                    setSegundos(s => {
+                      const novoTempo = s + 1;
+                      if (novoTempo % 60 === 0) {
+                        Vibration.vibrate();
+                      }
+                      return novoTempo;
+                    });
+                  }, 1000);
+                }
+                
+                return () => clearInterval(intervalo);
+              }, [ativo]);
+
+              useEffect(() => {
+                // Carregar último tempo
+                AsyncStorage.getItem('ultimoTempo')
+                  .then(tempo => setUltimoTempo(tempo));
+              }, []);
+
+              const formatarTempo = (total) => {
+                const minutos = Math.floor(total / 60);
+                const segundos = total % 60;
+                return `${minutos}:${segundos.toString().padStart(2, '0')}`;
+              };
+
+              const alternarTimer = () => setAtivo(!ativo);
+              
+              const resetar = async () => {
+                setAtivo(false);
+                await AsyncStorage.setItem('ultimoTempo', formatarTempo(segundos));
+                setUltimoTempo(formatarTempo(segundos));
+                setSegundos(0);
+              };
+
+              return (
+                &lt;View style={styles.container}&gt;
+                  &lt;Text style={styles.timer}&gt;
+                    {formatarTempo(segundos)}
+                  &lt;/Text&gt;
+                  
+                  {ultimoTempo && (
+                    &lt;Text style={styles.ultimoTempo}&gt;
+                      Último tempo: {ultimoTempo}
+                    &lt;/Text&gt;
+                  )}
+
+                  &lt;View style={styles.botoesContainer}&gt;
+                    &lt;TouchableOpacity 
+                      style={[styles.botao, ativo ? styles.botaoPausar : styles.botaoIniciar]}
+                      onPress={alternarTimer}
+                    &gt;
+                      &lt;Text style={styles.textoBotao}&gt;
+                        {ativo ? 'Pausar' : 'Iniciar'}
+                      &lt;/Text&gt;
+                    &lt;/TouchableOpacity&gt;
+
+                    &lt;TouchableOpacity 
+                      style={[styles.botao, styles.botaoResetar]}
+                      onPress={resetar}
+                    &gt;
+                      &lt;Text style={styles.textoBotao}&gt;Resetar&lt;/Text&gt;
+                    &lt;/TouchableOpacity&gt;
+                  &lt;/View&gt;
+                &lt;/View&gt;
+              );
+            };
+
+            const styles = StyleSheet.create({
+              container: {
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#f5f5f5',
+              },
+              timer: {
+                fontSize: 72,
+                fontWeight: 'bold',
+                color: '#2c3e50',
+                marginBottom: 20,
+              },
+              ultimoTempo: {
+                fontSize: 16,
+                color: '#7f8c8d',
+                marginBottom: 30,
+              },
+              botoesContainer: {
+                flexDirection: 'row',
+                gap: 20,
+              },
+              botao: {
+                paddingHorizontal: 30,
+                paddingVertical: 15,
+                borderRadius: 25,
+                minWidth: 120,
+                alignItems: 'center',
+              },
+              botaoIniciar: {
+                backgroundColor: '#2ecc71',
+              },
+              botaoPausar: {
+                backgroundColor: '#e74c3c',
+              },
+              botaoResetar: {
+                backgroundColor: '#34495e',
+              },
+              textoBotao: {
+                color: '#fff',
+                fontSize: 16,
+                fontWeight: 'bold',
+              },
+            });
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Slide 9: Dicas e Boas Práticas -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">Dicas e Boas Práticas</h2>
+        <div class="example-box">
+          <ul style="color: white; font-size: 1.1em;">
+            <li class="fragment fade-right">✅ Use cleanup functions para evitar memory leaks</li>
+            <li class="fragment fade-right">✅ Gerencie subscrições nativas corretamente</li>
+            <li class="fragment fade-right">✅ Evite loops infinitos verificando dependências</li>
+            <li class="fragment fade-right">✅ Separe efeitos por responsabilidade</li>
+            <li class="fragment fade-right">✅ Use APIs nativas com moderação</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 10: Conclusão -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">Conclusão</h2>
+        <div class="example-box fragment fade-up">
+          <ul style="color: white; font-size: 1.1em;">
+            <li>useEffect é fundamental para gerenciar side effects</li>
+            <li>Permite interação com APIs nativas do dispositivo</li>
+            <li>Gerencia eficientemente o ciclo de vida</li>
+            <li>Essencial para aplicativos React Native robustos</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      center: false,
+      controls: true,
+      progress: true,
+      slideNumber: true,
+      history: true,
+      transition: 'convex',
+      plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
+      markdown: {
+        smartypants: true
+      },
+      // Configurações adicionais para animações
+      width: 1200,
+      height: 800,
+      hash: true,
+      respondToHashChanges: true,
+      // Configuração do menu
+      menu: {
+        side: 'left',
+        width: 300,
+        numbers: true,
+        titleSelector: 'h1, h2, h3, h4, h5, h6'
+      }
+    });
+  </script>
+</body>
+
+</html>

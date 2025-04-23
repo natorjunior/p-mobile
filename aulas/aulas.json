@@ -10,6 +10,10 @@
   {
     "titulo": "Aula 4 - Criando Components e Props",
     "link": "./aulas/aula04.html"
+  },
+  {
+    "titulo": "Aula 5 - Aula 05 - Hooks no React Native",
+    "link": "./aulas/aula05.html"
   }
 ]
   
