@@ -7,11 +7,11 @@
   <title>Aula 06 - useEffect e Ciclo de Vida</title>
 
   <!-- Reveal.js -->
-  <link rel="stylesheet" href="dist/reveal.css">
-  <link rel="stylesheet" href="dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
 
   <!-- Tema para código -->
-  <link rel="stylesheet" href="plugin/highlight/atom-one-dark.css">
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
   <link rel="stylesheet" href="aula05-materials/style.css">
 
   <!-- Menu plugin -->
@@ -80,6 +80,240 @@
         <h1>🔄</h1>
       </section>
 
+      <section data-align="center" data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+        <section>
+        <br><br><br><br>
+        <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+          🚀 Para Começar 🚀
+        </h2>
+        <p style="color: #d1e8ff; font-size: 1.2em; margin-top: 10px;">
+          Vamos explorar uma apricação básica em React Native.
+        </p>
+
+      </section>
+
+
+        <!-- Exemplo 1: Componente Básico -->
+        
+          <section>
+              <h3 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">1. Criando um Componente Básico</h3>
+              <p style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">Vamos começar com uma estrutura simples</p>
+          </section>
+
+          <section data-auto-animate>
+              <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">Passo 1: Estrutura Inicial</h4>
+              <pre data-id="code-animation"><code class="language-jsx" data-trim data-line-numbers>
+import React from 'react';
+import { View, Text } from 'react-native';
+
+const TaskApp = () => {
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;Minha Lista de Tarefas&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};</code></pre>
+          </section>
+
+          <section data-auto-animate>
+              <h4  style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">Passo 2: Adicionando Estilo</h4>
+              <pre data-id="code-animation" style="height: 75vh;"><code class="language-jsx" data-trim data-line-numbers>
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const TaskApp = () => {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Minha Lista de Tarefas&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};
+
+const styles = StyleSheet.create({
+container: {
+  flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5'
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333'
+  }
+});</code></pre>
+          </section>
+
+          <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+          style="padding: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+  
+              <!-- Coluna 2: Embed do Expo Snack -->
+              <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                  <div data-snack-id="@natorjunior/useeffect-basico1" data-snack-platform="web"
+                      data-snack-preview="true" data-snack-theme="light"
+                      style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                  </div>
+                  <script async src="https://snack.expo.dev/embed.js"></script>
+              </div>
+          </div>
+      </section>          
+      <!-- Exemplo 2: Adicionando Estado -->
+          <section data-auto-animate>
+              <h4  style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">2. Gerenciando Estado</h4>
+              <pre data-id="code-animation-2"><code class="language-jsx" data-trim data-line-numbers>
+const TaskApp = () => {
+  const [tasks, setTasks] = useState([]);
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Minha Lista de Tarefas&lt;/Text&gt;
+      &lt;Text&gt;Total: {tasks.length} tarefas&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};</code></pre>
+<h4 class="fragment fade-right" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">O que será impresso na tela ?</h4>
+
+          </section>
+
+          <section data-auto-animate>
+              <h4  style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">Adicionando Tarefas</h4>
+              <pre  data-id="code-animation-2"><code class="language-jsx" data-trim data-line-numbers="">
+const TaskApp = () => {
+  const [tasks, setTasks] = useState([
+    { id: 1, text: 'Estudar React Native' },
+    { id: 2, text: 'Fazer exercícios' }
+  ]);
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Minha Lista de Tarefas&lt;/Text&gt;
+      &lt;Text&gt;Total: {tasks.length} tarefas&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};
+</code></pre>
+<h4 class="fragment fade-right" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">O que será impresso na tela ?</h4>
+          </section>
+          <section data-auto-animate>
+            <h4>Adicionando Tarefas</h4>
+            <pre data-id="code-animation-2" style="height: 75vh;"><code class="language-jsx" data-trim data-line-numbers="">
+const TaskApp = () => {
+  const [tasks, setTasks] = useState([
+    { id: 1, text: 'Estudar React Native' },
+    { id: 2, text: 'Fazer exercícios' }
+  ]);
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Minha Lista de Tarefas&lt;/Text&gt;
+      &lt;Text&gt;Total: {tasks.length} tarefas&lt;/Text&gt;
+      {
+        tasks.map(task => (
+          &lt;Text key={task.id}&gt;• {task.text}&lt;/Text&gt;
+        ))
+      }
+    &lt;/View&gt;
+  );
+};
+const styles = StyleSheet.create({
+container: {
+  flex: 1,
+  backgroundColor: '#ecf0f1',
+  padding: 8,
+}
+});</code></pre>
+        </section>
+          <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+          style="padding: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+    
+              <!-- Coluna 2: Embed do Expo Snack -->
+              <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                  <div data-snack-id="@natorjunior/useeffect-basico2" data-snack-platform="web"
+                      data-snack-preview="true" data-snack-theme="light"
+                      style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                  </div>
+                  <script async src="https://snack.expo.dev/embed.js"></script>
+              </div>
+          </div>
+      </section>  
+   
+      <!-- Exemplo 3: Interatividade -->
+      
+          <section data-auto-animate>
+              <h4>3. Adicionando Interatividade</h4>
+              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+const TaskApp = () => {
+const [tasks, setTasks] = useState([
+  { id: 1, text: 'Estudar React Native', done: false },
+  { id: 2, text: 'Fazer exercícios', done: false }
+]);
+
+const toggleTask = (id) => {
+  setTasks(tasks.map(task =>
+    task.id === id ? { ...task, done: !task.done } : task
+  ));
+};</code></pre>
+          </section>
+
+          <section data-auto-animate>
+              <h4>Interface Interativa</h4>
+              <pre style="height: 75vh;" data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+const TaskApp = () => {
+  const [tasks, setTasks] = useState([
+    { id: 1, text: 'Estudar React Native', done: false },
+    { id: 2, text: 'Fazer exercícios', done: false }
+  ]);
+
+  const toggleTask = (id) => {
+    setTasks(tasks.map(task =>
+      task.id === id ? { ...task, done: !task.done } : task
+    ));
+  };
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Minha Lista de Tarefas&lt;/Text&gt;
+      {
+        tasks.map(task => (
+          &lt;TouchableOpacity
+            key={task.id}
+            onPress={() => toggleTask(task.id)}
+            style={styles.task}
+          &gt;
+            &lt;Text style={[
+              styles.taskText,
+              task.done && styles.taskDone
+            ]}&gt;
+              {task.done ? '✅' : '⭕'} {task.text}
+            &lt;/Text&gt;
+          &lt;/TouchableOpacity&gt;
+          )
+        )
+      }
+    &lt;/View&gt;
+  );
+};</code></pre>
+          </section>
+          <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+          style="padding: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+    
+              <!-- Coluna 2: Embed do Expo Snack -->
+              <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                  <div data-snack-id="@natorjunior/tasks" data-snack-platform="web"
+                      data-snack-preview="true" data-snack-theme="light"
+                      style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                  </div>
+                  <script async src="https://snack.expo.dev/embed.js"></script>
+              </div>
+          </div>
+        </section>  
+      </section>
+
+
+
+
+
+
       <!-- Slide 2: O que é useEffect? - Conceito Básico -->
       <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
         <h2 style="color: white;">O que é useEffect?</h2>
@@ -97,30 +331,107 @@
 
       <!-- Slide 3: Primeiro Exemplo - Muito Básico -->
       <section data-background-color="#2c3e50">
-        <h2 style="color: white;">Exemplo Básico</h2>
-        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
-          import React, { useState, useEffect } from 'react-native';
-          import { View, Text } from 'react-native';
+        <section data-auto-animate>
+          <h2 class="fragment fade-in" style="color: white;">Exemplo Básico do useEffect</h2>
+          
+          <div class="example-box fragment fade-up" style="margin-bottom: 20px;">
+            <p style="color: white;" class="fragment fade-right">
+              👨‍💻 Vamos criar um componente simples que:
+            </p>
+            <ul style="color: white;">
+              <li class="fragment fade-right">✨ Começa com uma mensagem de carregamento</li>
+              <li class="fragment fade-right">🔄 Usa useEffect para atualizar a mensagem</li>
+              <li class="fragment fade-right">📱 Mostra a mensagem na tela</li>
+            </ul>
+          </div>
+        </section>
 
-          const MensagemBoasVindas = () => {
-            const [mensagem, setMensagem] = useState('Carregando...');
+        <section data-auto-animate>
+          <pre data-id="code-animation"><code class="language-jsx" data-trim data-line-numbers >
+import React, { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
 
-            useEffect(() => {
-              // Este código roda quando o componente aparece
-              setMensagem('Bem-vindo ao App!');
-            }, []); // Array vazio = roda apenas uma vez
+const MensagemBoasVindas = () => {
+  const [mensagem, setMensagem] = useState('Carregando...');
+...
+};</code></pre>
+        </section>
 
-            return (
-              &lt;View style={{ padding: 20 }}&gt;
-                &lt;Text style={{ fontSize: 20 }}&gt;
-                  {mensagem}
-                &lt;/Text&gt;
-              &lt;/View&gt;
-            );
-          };
-        </code></pre>
-      </section>
+        <section data-auto-animate>
+          <pre data-id="code-animation" ><code class="language-jsx" data-trim data-line-numbers>
+import React, { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
 
+const MensagemBoasVindas = () => {
+  const [mensagem, setMensagem] = useState('Carregando...');
+
+  useEffect(() => {
+    // Este código roda quando o componente aparece
+    setMensagem('Bem-vindo ao App!');
+  }, []); // Array vazio = roda apenas uma vez
+...
+};</code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <pre data-id="code-animation" style="height: 65vh;"><code class="language-jsx" data-trim data-line-numbers>
+import React, { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
+
+const MensagemBoasVindas = () => {
+  const [mensagem, setMensagem] = useState('Carregando...');
+
+  useEffect(() => {
+    // Este código roda quando o componente aparece
+    setMensagem('Bem-vindo ao App!');
+  }, []); // Array vazio = roda apenas uma vez
+
+  return (
+    &lt;View style={{ padding: 20 }}&gt;
+      &lt;Text style={{ fontSize: 20 }}&gt;
+        {mensagem}
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};</code></pre>
+        </section>
+
+
+        <section data-auto-animate>
+          <h2 style="color: white;">Demonstração Visual</h2>
+          
+          <div class="fragment fade-up" style="display: flex; justify-content: center; align-items: center; height: 400px;">
+            <div style="background: #2c3e50; padding: 20px; border-radius: 15px; width: 300px;">
+              <div style="background: #34495e; padding: 40px; border-radius: 10px; text-align: center;">
+                <p style="color: #bdc3c7; font-size: 24px;" data-fragment-index="1">Carregando...</p>
+                <p style="color: #2ecc71; font-size: 24px;" data-fragment-index="2">Bem-vindo ao App! 👋</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="fragment fade-up" style="margin-top: 30px;">
+            <p style="color: white; text-align: center;">
+              ⚡ O useEffect automaticamente atualiza a mensagem quando o componente é montado!
+            </p>
+          </div>
+        </section>
+
+        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+        style="padding: 20px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+            <!-- Coluna 2: Embed do Expo Snack -->
+            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                <div data-snack-id="@natorjunior/useeffect1" data-snack-platform="web"
+                    data-snack-preview="true" data-snack-theme="light"
+                    style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                </div>
+                <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+        </div>
+    </section>
+  </section>
+  <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
       <!-- Slide 4: Primeira Atividade Prática - Muito Simples -->
       <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
         <h2 style="color: white;">Atividade 1: Mensagem do Dia</h2>
@@ -130,6 +441,8 @@
             <li class="fragment fade-right">1. Comece com a mensagem "Carregando..."</li>
             <li class="fragment fade-right">2. Use useEffect para mudar para "Bom dia!" após 2 segundos</li>
             <li class="fragment fade-right">3. Adicione um emoji ☀️ no final da mensagem</li>
+            <li class="fragment fade-right">4. Use o setTimeout para contagem </li>
+            
           </ul>
         </div>
       </section>
@@ -137,8 +450,8 @@
       <!-- Slide 5: Solução da Primeira Atividade -->
       <section data-background-color="#2c3e50">
         <h2 style="color: white;">Solução: Mensagem do Dia</h2>
-        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
-          import React, { useState, useEffect } from 'react-native';
+        <pre class="fragment fade-up" style="height: 75vh;"><code class="language-jsx" data-trim data-line-numbers="1|5|7-12|9-11|16|-|">
+          import React, { useState, useEffect } from 'react';
           import { View, Text, StyleSheet } from 'react-native';
 
           const MensagemDoDia = () => {
@@ -169,7 +482,33 @@
             },
           });
         </code></pre>
+        
       </section>
+
+      <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+      style="padding: 20px;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+          <!-- Coluna 2: Embed do Expo Snack -->
+          <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+              <div data-snack-id="@natorjunior/usereffect2" data-snack-platform="web"
+                  data-snack-preview="true" data-snack-theme="light"
+                  style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+              </div>
+              <script async src="https://snack.expo.dev/embed.js"></script>
+          </div>
+      </div>
+    </section>
+  </section>
+
+
+
+
+
+
+
+
+
 
       <!-- Slide 6: useEffect com Dependências - Conceito Básico -->
       <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
@@ -372,7 +711,7 @@
 
       <!-- Continue com os exemplos mais avançados que já existiam, mas agora depois de ter construído uma base sólida -->
       <!-- Slide 4: Exemplo Prático - Contador com useEffect -->
-      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+      <!-- <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
         <section>
           <h2 style="color: white;">Exemplo: Contador com useEffect</h2>
           <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
@@ -425,10 +764,10 @@
             });
           </code></pre>
         </section>
-      </section>
+      </section> -->
 
       <!-- Slide 5: Ciclo de Vida com useEffect -->
-      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+      <!-- <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
         <section>
           <h2 style="color: white;">Ciclo de Vida com useEffect</h2>
           <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
@@ -472,10 +811,10 @@
             </div>
           </div>
         </section>
-      </section>
+      </section> -->
 
       <!-- Slide 6: Casos de Uso Comuns em React Native -->
-      <section data-background-color="#34495e">
+      <!-- <section data-background-color="#34495e">
         <section>
           <h2 style="color: white;">Casos de Uso em React Native</h2>
           <div class="r-stack">
@@ -536,10 +875,10 @@
             </div>
           </div>
         </section>
-      </section>
+      </section> -->
 
       <!-- Slide 7: Exemplo Prático - Monitor de Conexão -->
-      <section>
+      <!-- <section>
         <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
           <h2 style="color: white;">Monitor de Conexão</h2>
           <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
@@ -594,10 +933,10 @@
             });
           </code></pre>
         </section>
-      </section>
+      </section> -->
 
       <!-- Slide 8: Atividade Prática -->
-      <section>
+      <!-- <section>
         <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
           <h2 style="color: white;">Atividade: Cronômetro de Treino</h2>
           <div style="margin: 20px; color: white;">
@@ -744,10 +1083,10 @@
             });
           </code></pre>
         </section>
-      </section>
+      </section> -->
 
       <!-- Slide 9: Dicas e Boas Práticas -->
-      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+      <!-- <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
         <h2 style="color: white;">Dicas e Boas Práticas</h2>
         <div class="example-box">
           <ul style="color: white; font-size: 1.1em;">
@@ -758,10 +1097,10 @@
             <li class="fragment fade-right">✅ Use APIs nativas com moderação</li>
           </ul>
         </div>
-      </section>
+      </section> -->
 
       <!-- Slide 10: Conclusão -->
-      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+      <!-- <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
         <h2 style="color: white;">Conclusão</h2>
         <div class="example-box fragment fade-up">
           <ul style="color: white; font-size: 1.1em;">
@@ -771,7 +1110,7 @@
             <li>Essencial para aplicativos React Native robustos</li>
           </ul>
         </div>
-      </section>
+      </section> -->
 
     </div>
   </div>
@@ -796,6 +1135,7 @@
       width: 1200,
       height: 800,
       hash: true,
+      
       respondToHashChanges: true,
       // Configuração do menu
       menu: {
