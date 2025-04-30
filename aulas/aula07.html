@@ -373,7 +373,6 @@ const ListaDeTarefas = () => {
 
           </div>
         </section>
-        
 
 
 
@@ -383,10 +382,11 @@ const ListaDeTarefas = () => {
 
 
 
-      <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
-        <br><br><br>
-        <div style="text-align: center;">
-          <div style="
+
+        <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+          <br><br><br>
+          <div style="text-align: center;">
+            <div style="
           background: rgba(255, 255, 255, 0.1);
           padding: 40px;
           border-radius: 20px;
@@ -395,17 +395,17 @@ const ListaDeTarefas = () => {
           border: 2px solid rgba(255, 255, 255, 0.1);
           margin: 20px;
         ">
-        
-            <h1 style="
+
+              <h1 style="
             color: white;
             font-size: 2.5em;
             margin-bottom: 30px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
           ">Ampliando os Exemplos🎯</h1>
+            </div>
           </div>
-        </div>
-        </li>
-      </section>
+          </li>
+        </section>
 
 
         <!-- Frame: Exemplo de Prop Drilling -->
@@ -520,7 +520,7 @@ const ListaDeTarefas = () => {
             </h2>
 
             <div>
-              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1|3-7|5|10|12-15|14">
+              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1|3-7|5|10|11|13-18">
       const Comments = ({ userPreferences }) => {
         return (
           &lt;View&gt;
@@ -586,7 +586,7 @@ const ListaDeTarefas = () => {
           <h2 style="color: white;">Por que usar Context? 🎯</h2>
           <div class="concept-box">
             <h3 style="color: white;">Antes do Context - Passo 1:</h3>
-            <pre><code class="language-jsx" data-trim data-line-numbers="1-7">
+            <pre data-id="code-animation-4"><code class="language-jsx" data-trim data-line-numbers="1-7" >
 // Componente Pai
 const App = () => {
   const [theme, setTheme] = useState('light');
@@ -601,7 +601,7 @@ const App = () => {
           <h2 style="color: white;">Por que usar Context? 🎯</h2>
           <div class="concept-box">
             <h3 style="color: white;">Antes do Context - Passo 2:</h3>
-            <pre><code class="language-jsx" data-trim data-line-numbers="4-6">
+            <pre data-id="code-animation-4"><code class="language-jsx" data-trim data-line-numbers >
 // Componente Pai
 const App = () => {
   const [theme, setTheme] = useState('light');
@@ -617,7 +617,7 @@ const App = () => {
           <h2 style="color: white;">Por que usar Context? 🎯</h2>
           <div class="concept-box">
             <h3 style="color: white;">Antes do Context - Passo 3:</h3>
-            <pre><code class="language-jsx" data-trim data-line-numbers="4-7">
+            <pre data-id="code-animation-4"><code class="language-jsx" data-trim data-line-numbers="4-7">
 // Componente Pai
 const App = () => {
   const [theme, setTheme] = useState('light');
@@ -634,7 +634,7 @@ const App = () => {
           <h2 style="color: white;">Por que usar Context? 🎯</h2>
           <div class="concept-box">
             <h3 style="color: white;">Antes do Context - Passo 4:</h3>
-            <pre><code class="language-jsx" data-trim data-line-numbers="1-16">
+            <pre  data-id="code-animation-4"><code class="language-jsx" data-trim data-line-numbers="1-16">
 // Componente Pai
 const App = () => {
   const [theme, setTheme] = useState('light');
@@ -658,7 +658,7 @@ const Main = ({ theme }) => {
           <h2 style="color: white;">Por que usar Context? 🎯</h2>
           <div class="concept-box">
             <h3 style="color: white;">Antes do Context - Resultado Final:</h3>
-            <pre><code class="language-jsx" data-trim data-line-numbers="1-25">
+            <pre data-id="code-animation-4"><code class="language-jsx" data-trim data-line-numbers="1-25">
 // Componente Pai
 const App = () => {
   const [theme, setTheme] = useState('light');
@@ -688,7 +688,25 @@ const Content = ({ theme }) => {
               através de vários níveis</p>
           </div>
         </section>
+        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+          style="padding: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+            <!-- Coluna 2: Embed do Expo Snack -->
+            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+              <div data-snack-id="@natorjunior/aula07-ex2" data-snack-platform="web" data-snack-preview="true"
+                data-snack-theme="light"
+                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+              </div>
+              <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+          </div>
+        </section>
       </section>
+
+
+
+
 
       <!-- Slide 4: Com Context -->
       <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
