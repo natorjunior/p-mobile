@@ -19,7 +19,8 @@
   <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
 
   <style>
-    .reveal h1, .reveal h2 {
+    .reveal h1,
+    .reveal h2 {
       color: #0056b3;
     }
 
@@ -35,7 +36,7 @@
     }
 
     .step-box {
-      background: rgba(0,123,255,0.1);
+      background: rgba(0, 123, 255, 0.1);
       padding: 20px;
       border-radius: 10px;
       margin: 15px;
@@ -43,7 +44,7 @@
     }
 
     .concept-box {
-      background: rgba(40,167,69,0.1);
+      background: rgba(40, 167, 69, 0.1);
       padding: 20px;
       border-radius: 10px;
       margin: 15px;
@@ -51,11 +52,11 @@
     }
 
     .example-box {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       padding: 20px;
       border-radius: 10px;
       margin: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
@@ -77,6 +78,495 @@
         </h6>
         <h1>🌐</h1>
       </section>
+
+
+
+      <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+        <div style="text-align: center;">
+          <div style="
+          background: rgba(255, 255, 255, 0.1);
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(255, 255, 255, 0.1);
+          margin: 20px;
+        ">
+            <h1 style="
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+          ">Objetivos da Aula 🎯</h1>
+
+            <ul style="
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            color: white;
+            font-size: 1.2em;
+          ">
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>✨</span>
+                Entender o Context API
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>🔄</span>
+                Resolver o problema do prop drilling
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>⚡</span>
+                Implementar gerenciamento de estado global
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>🛠️</span>
+                Criar um projeto prático
+              </li>
+            </ul>
+          </div>
+        </div>
+        </li>
+      </section>
+
+      <section>
+        <!-- Frame: Entendendo o problema -->
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <div style="
+          background: rgba(255, 255, 255, 0.1);
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(255, 255, 255, 0.1);
+        ">
+            <h2 style="
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+          ">Entendendo o problema! 🤔</h2>
+
+            <div class="fragment fade-up">
+              <p style="
+              color: white;
+              font-size: 1.3em;
+              text-align: center;
+              line-height: 1.6;
+            ">
+                Como compartilhar dados entre componentes<br>
+                sem passar props manualmente por vários níveis?
+              </p>
+            </div>
+          </div>
+        </section>
+
+
+
+
+        <!-- Frame: Relembrando Props -->
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <div style="
+          background: rgba(255, 255, 255, 0.1);
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(255, 255, 255, 0.1);
+        ">
+            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              Relembrando Props 🔄
+            </h2>
+
+            <div>
+              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+// Componente Pai
+const ListaDeTarefas = () => {
+  const tarefas = []; //o começo
+...</code></pre>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- Frame: Relembrando Props -->
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <div style="
+          background: rgba(255, 255, 255, 0.1);
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(255, 255, 255, 0.1);
+        ">
+            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              Relembrando Props 🔄
+            </h2>
+
+            <div>
+              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+      // Componente Pai
+      const ListaDeTarefas = () => {
+        const tarefas = [
+          { id: 1, texto: "Estudar React", concluida: false },
+          { id: 2, texto: "Fazer exercícios", concluida: true }
+        ]; // Incluindo valores na lista
+        ...</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- Frame: Relembrando Props -->
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <div style="
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+  ">
+            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              Relembrando Props 🔄
+            </h2>
+
+            <div>
+              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+// Componente Pai
+const ListaDeTarefas = () => {
+  const tarefas = [
+    { id: 1, texto: "Estudar React", concluida: false },
+    { id: 2, texto: "Fazer exercícios", concluida: true }
+  ];
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.titulo}&gt;Minhas Tarefas&lt;/Text&gt;
+      &lt;ExibirTarefa tarefas={tarefas} /&gt;
+    &lt;/View&gt;
+  );
+};</code></pre>
+            </div>
+          </div>
+
+        </section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <div style="
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+          ">
+            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              Relembrando Props 🔄
+            </h2>
+
+            <div>
+              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1-15|16|17|20-24|16-28">
+        // Componente Pai
+        const ListaDeTarefas = () => {
+          const tarefas = [
+            { id: 1, texto: "Estudar React", concluida: false },
+            { id: 2, texto: "Fazer exercícios", concluida: true }
+          ];
+  
+          return (
+            &lt;View style={styles.container}&gt;
+              &lt;Text style={styles.titulo}&gt;Minhas Tarefas&lt;/Text&gt;
+              &lt;ExibirTarefa tarefas={tarefas} /&gt;
+            &lt;/View&gt;
+          );
+        };
+  
+        // Componente Filho
+        const ExibirTarefa = (props) => {
+          return (
+            &lt;View&gt;
+              {props.tarefas.map(tarefa => (
+                &lt;Text key={tarefa.id}&gt;
+                  {tarefa.concluida ? '✅' : '⭕'} {tarefa.texto}
+                &lt;/Text&gt;
+              ))}
+            &lt;/View&gt;
+          );
+        };</code></pre>
+            </div>
+
+            <ul style="color: white; text-align: left;">
+              <li class="fragment fade-up">Props são somente leitura</li>
+              <li class="fragment fade-up">Passam dados de cima para baixo</li>
+              <li class="fragment fade-up">São imutáveis no componente filho</li>
+            </ul>
+          </div>
+        </section>
+
+
+
+
+
+        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+          style="padding: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+            <!-- Coluna 2: Embed do Expo Snack -->
+            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+              <div data-snack-id="@natorjunior/aula07-ex1" data-snack-platform="web" data-snack-preview="true"
+                data-snack-theme="light"
+                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+              </div>
+              <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+          </div>
+        </section>
+
+        <!-- Frame: Relembrando Props -->
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <div style="
+          background: rgba(255, 255, 255, 0.1);
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(255, 255, 255, 0.1);
+        ">
+            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              Props 🔄
+            </h2>
+
+            <div>
+              <pre data-id="code-animation-4"><code class="language-jsx" data-trim data-line-numbers>
+      // Componente Pai
+      const ListaDeTarefas = () => {
+        const tarefas = [
+          { id: 1, texto: "Estudar React", concluida: false },
+          { id: 2, texto: "Fazer exercícios", concluida: true }
+        ];
+
+        return (
+          &lt;View style={styles.container}&gt;
+            &lt;Text style={styles.titulo}&gt;Minhas Tarefas&lt;/Text&gt;
+            &lt;ExibirTarefa tarefas={tarefas} /&gt;
+          &lt;/View&gt;
+        );
+      };
+
+      // Componente Filho
+      const ExibirTarefa = (props) => {
+        return (
+          &lt;View&gt;
+            {props.tarefas.map(tarefa => (
+              &lt;Tarefa key={tarefa.id} tarefa={tarefa} /&gt;
+            ))}
+          &lt;/View&gt;
+        );
+      };
+
+      // Componente Neto
+      const Tarefa = ({ tarefa }) => {
+        return (
+          &lt;Text&gt;
+            {tarefa.concluida ? '✅' : '⭕'} {tarefa.texto}
+          &lt;/Text&gt;
+        );
+      };</code></pre>
+            </div>
+
+          </div>
+        </section>
+        
+
+
+
+
+
+
+
+
+
+      <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+        <br><br><br>
+        <div style="text-align: center;">
+          <div style="
+          background: rgba(255, 255, 255, 0.1);
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(255, 255, 255, 0.1);
+          margin: 20px;
+        ">
+        
+            <h1 style="
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+          ">Ampliando os Exemplos🎯</h1>
+          </div>
+        </div>
+        </li>
+      </section>
+
+
+        <!-- Frame: Exemplo de Prop Drilling -->
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <div style="""
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+          ">
+            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              Exemplo de Prop Drilling 🔄
+            </h2>
+
+            <div>
+              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+      // Componente Pai
+      const App = () => {
+        const userPreferences = {
+          fontSize: 16,
+          isDarkMode: true,
+          language: 'pt'
+        };</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <div style="
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+          ">
+            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              Exemplo de Prop Drilling 🔄
+            </h2>
+
+            <div>
+              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1|3-7|11|12|13|12">
+      // Componente Pai
+      const App = () => {
+        const userPreferences = {
+          fontSize: 16,
+          isDarkMode: true,
+          language: 'pt'
+        };
+
+        return (
+          &lt;View&gt;
+            &lt;Header userPreferences={userPreferences} /&gt;
+            &lt;MainContent userPreferences={userPreferences} /&gt;
+            &lt;Footer userPreferences={userPreferences} /&gt;
+          &lt;/View&gt;
+        );
+      };</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <div style="
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+          ">
+            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              Exemplo de Prop Drilling 🔄
+            </h2>
+
+            <div>
+              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1|3-7|5|10|12-15|14">
+      const MainContent = ({ userPreferences }) => {
+        return (
+          &lt;View&gt;
+            &lt;Sidebar userPreferences={userPreferences} /&gt;
+            &lt;Content userPreferences={userPreferences} /&gt;
+          &lt;/View&gt;
+        );
+      };
+
+      const Content = ({ userPreferences }) => {
+        return (
+          &lt;View&gt;
+            &lt;Article userPreferences={userPreferences} /&gt;
+            &lt;Comments userPreferences={userPreferences} /&gt;
+          &lt;/View&gt;
+        );
+      };</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <div style="
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+          ">
+            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              Exemplo de Prop Drilling 🔄
+            </h2>
+
+            <div>
+              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1|3-7|5|10|12-15|14">
+      const Comments = ({ userPreferences }) => {
+        return (
+          &lt;View&gt;
+            &lt;CommentList userPreferences={userPreferences} /&gt;
+            &lt;CommentForm userPreferences={userPreferences} /&gt;
+          &lt;/View&gt;
+        );
+      };
+
+      const CommentForm = ({ userPreferences }) => {
+        const { fontSize, isDarkMode, language } = userPreferences;
+        return (
+          &lt;View style={{ 
+            backgroundColor: isDarkMode ? '#333' : '#fff'
+          }}&gt;
+            &lt;TextInput style={{ fontSize: fontSize }} /&gt;
+            &lt;Text&gt;{language === 'pt' ? 'Enviar' : 'Submit'}&lt;/Text&gt;
+          &lt;/View&gt;
+        );
+      };</code></pre>
+            </div>
+
+            <ul style="color: white; text-align: left;">
+              <li class="fragment fade-up">Observe como userPreferences é passado por vários níveis</li>
+              <li class="fragment fade-up">Cada componente intermediário precisa receber e passar adiante</li>
+              <li class="fragment fade-up">Isso é o prop drilling!</li>
+            </ul>
+          </div>
+        </section>
+      </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <!-- Slide 2: O que é Context API? -->
       <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
@@ -194,7 +684,8 @@ const Content = ({ theme }) => {
     &lt;/Text&gt;
   );
 };</code></pre>
-            <p class="fragment fade-in" style="color: white;">👆 Observe o problema do "prop drilling" - passando props através de vários níveis</p>
+            <p class="fragment fade-in" style="color: white;">👆 Observe o problema do "prop drilling" - passando props
+              através de vários níveis</p>
           </div>
         </section>
       </section>
