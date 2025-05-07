@@ -12,8 +12,20 @@
     "link": "./aulas/aula04.html"
   },
   {
-    "titulo": "Aula 5 - Aula 05 - Hooks no React Native",
+    "titulo": "Aula 5- Hooks no React Native",
     "link": "./aulas/aula05.html"
+  },
+  {
+    "titulo": "Aula 6- useEffect e Ciclo de Vida",
+    "link": "./aulas/aula06.html"
+  },
+  {
+    "titulo": "Aula 7- useContext e Context API",
+    "link": "./aulas/aula07.html"
+  },
+  {
+    "titulo": "Aula 8- Aula 08 - Flatlist, Stack Navigation e Workshop Parte 1",
+    "link": "./aulas/aula08.html"
   }
 ]
   
