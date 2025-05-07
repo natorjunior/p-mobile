@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 08 - Flatlist</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+  <link rel="stylesheet" href="aula05-materials/style.css">
+
+  <!-- Menu plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css"> -->
+    <link rel="stylesheet" href="aula04-materials/style.css">
+    <link rel="stylesheet" href="css/workshop.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+  <style>
+    .reveal h1,
+    .reveal h2 {
+      color: #0056b3;
+    }
+
+    .reveal pre code {
+      font-size: 1em;
+      background: #222;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .reveal p {
+      font-size: 1.1em;
+    }
+
+    .step-box {
+      background: rgba(0, 123, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px;
+      border: 2px solid #0056b3;
+    }
+
+    .concept-box {
+      background: rgba(40, 167, 69, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px;
+      border: 2px solid #28a745;
+    }
+
+    .example-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Slide 1: Título -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <br><br><br><br>
+        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+          Programação para Dispositivos Móveis
+        </h4>
+        <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+          Aula 08 - FlatList e Navigation em React Native
+        </h6>
+        <h1>📱</h1>
+      </section>
+
+      <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+        <div style="text-align: center;">
+          <div style="
+          background: rgba(255, 255, 255, 0.1);
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(255, 255, 255, 0.1);
+          margin: 20px;
+        ">
+            <h1 style="
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+          ">Objetivos da Aula 🎯</h1>
+
+            <ul style="
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            color: white;
+            font-size: 1.2em;
+          ">
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>📱</span>
+                Entender e implementar FlatList
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>🧭</span>
+                Configurar React Navigation
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>✨</span>
+                Implementar Stack Navigation
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>🔄</span>
+                Navegar entre telas
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>⚡</span>
+                Passar parâmetros entre telas
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção FlatList -->
+      <section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">FlatList em React Native 📋</h2>
+          <div class="concept-box">
+            <h3 style="color: white;">O que é FlatList?</h3>
+            <ul style="color: white;">
+              <li class="fragment fade-right">Componente otimizado para listas longas</li>
+              <li class="fragment fade-right">Renderização sob demanda</li>
+              <li class="fragment fade-right">Melhor performance que ScrollView</li>
+              <li class="fragment fade-right">Recursos avançados de lista</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <h2 style="color: white;">Propriedades Principais da FlatList</h2>
+          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+import { FlatList, View, Text } from 'react-native';
+
+export default function App() {
+  const dados = [
+    { id: '1', titulo: 'Item 1' },
+    { id: '2', titulo: 'Item 2' },
+    { id: '3', titulo: 'Item 3' },
+  ];
+...</code></pre>
+        </section>
+
+
+
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <h2 style="color: white;">Propriedades Principais da FlatList</h2>
+          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+import { FlatList, View, Text } from 'react-native';
+
+export default function App() {
+  const dados = [
+    { id: '1', titulo: 'Item 1' },
+    { id: '2', titulo: 'Item 2' },
+    { id: '3', titulo: 'Item 3' },
+  ];
+
+  const renderItem = ({ item }) => (
+    &lt;View style={styles.item}&gt;
+      &lt;Text&gt;{item.titulo}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+...</code></pre>
+        </section>
+
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <h2 style="color: white;">Propriedades Principais da FlatList</h2>
+          <pre data-id="code-animation-3" style="height: 70vh;"><code class="language-jsx" data-trim data-line-numbers>
+import { FlatList, View, Text } from 'react-native';
+
+
+export default function App() {
+  const dados = [
+    { id: '1', titulo: 'Item 1' },
+    { id: '2', titulo: 'Item 2' },
+    { id: '3', titulo: 'Item 3' },
+  ];
+
+  const renderItem = ({ item }) => (
+    &lt;View style={styles.item}&gt;
+      &lt;Text&gt;{item.titulo}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+
+  return (
+    &lt;FlatList
+      data={dados}
+      renderItem={renderItem} 
+      keyExtractor={item => item.id}
+    /&gt;
+  );
+};</code></pre>
+        </section>
+
+
+<section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+  style="padding: 20px;">
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+    <!-- Coluna 2: Embed do Expo Snack -->
+    <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+      <div data-snack-id="@natorjunior/flatlist01" data-snack-platform="web" data-snack-preview="true"
+        data-snack-theme="light"
+        style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+      </div>
+      <script async src="https://snack.expo.dev/embed.js"></script>
+    </div>
+  </div>
+</section>
+
+      </section>
+
+      <!-- Seção Navigation -->
+      <section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">React Navigation 🧭</h2>
+          <div class="concept-box">
+            <h6 style="color: white;">Configuração Inicial</h6>
+            <pre><code class="language-bash" data-trim>
+# Instalação
+npm install @react-navigation/native
+npm install @react-navigation/stack
+npm install react-native-screens react-native-safe-area-context</code></pre>
+          </div>
+
+          <div class="concept-box">
+            <h6 style="color: white;">Usando o Snack</h6>
+            <pre><code class="language-bash" data-trim>
+              {
+                "dependencies": {
+                  "react-native-paper": "4.9.2",
+                  "@expo/vector-icons": "^14.0.2",
+                  "@react-navigation/native": "^6.1.18",
+                  "@react-navigation/stack": "^6.4.1",
+                  "react-native-screens": "~4.4.0",
+                  "react-native-safe-area-context": "4.12.0",
+                  "react-native-gesture-handler": "~2.20.2"
+                }
+              }</code></pre>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <h2 style="color: white;">Stack Navigator</h2>
+          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers >
+// App.js
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+</code></pre>
+        </section>
+
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)"  data-auto-animate>
+          <h2 style="color: white;">Stack Navigator</h2>
+          <pre data-id="code-animation-3" style="height: 70vh;"><code class="language-jsx" data-trim data-line-numbers>
+// App.js
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+const App = () => {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Stack.Navigator&gt;
+        &lt;Stack.Screen 
+          name="Home" 
+          component={HomeScreen}
+          options={{ title: 'Página Inicial' }}
+        /&gt;
+        &lt;Stack.Screen 
+          name="Details" 
+          component={DetailsScreen}
+          options={{ title: 'Detalhes' }}
+        /&gt;
+      &lt;/Stack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+};</code></pre>
+        </section>
+
+
+
+
+
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <h2 style="color: white;">Navegação entre Telas</h2>
+          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+// HomeScreen.js
+const HomeScreen = ({ navigation }) => {
+  return (
+    &lt;View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}&gt;
+      &lt;Button
+        title="Ir para Detalhes"
+        onPress={() => navigation.navigate('Details', {
+          itemId: 86,
+          otherParam: 'qualquer coisa',
+        })}
+      /&gt;
+    &lt;/View&gt;
+  );
+};
+</code></pre>
+        </section>
+
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
+          <h2 style="color: white;">Navegação entre Telas</h2>
+          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+
+// DetailsScreen.js
+const DetailsScreen = ({ route, navigation }) => {
+  const { itemId, otherParam } = route.params;
+
+  return (
+    &lt;View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}&gt;
+      &lt;Text&gt;Detalhes do Item: {itemId}&lt;/Text&gt;
+      &lt;Text&gt;Outro Parâmetro: {otherParam}&lt;/Text&gt;
+      &lt;Button
+        title="Voltar"
+        onPress={() => navigation.goBack()}
+      /&gt;
+    &lt;/View&gt;
+  );
+};</code></pre>
+        </section>
+
+
+
+        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+        style="padding: 20px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+      
+          <!-- Coluna 2: Embed do Expo Snack -->
+          <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+            <div data-snack-id="@natorjunior/flatlist02" data-snack-platform="web" data-snack-preview="true"
+              data-snack-theme="light"
+              style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+            </div>
+            <script async src="https://snack.expo.dev/embed.js"></script>
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+
+
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Customização do Header</h2>
+          <pre style="height: 75vh;"><code class="language-jsx" data-trim data-line-numbers>
+&lt;Stack.Navigator
+  screenOptions={{
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  }}
+&gt;
+  &lt;Stack.Screen
+    name="Home"
+    component={HomeScreen}
+    options={{
+      title: 'Meu App',
+      headerRight: () => (
+        &lt;Button
+          onPress={() => alert('Menu')}
+          title="Menu"
+          color="#fff"
+        /&gt;
+      ),
+    }}
+  /&gt;
+&lt;/Stack.Navigator&gt;</code></pre>
+        </section>
+        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+        style="padding: 20px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+      
+          <!-- Coluna 2: Embed do Expo Snack -->
+          <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+            <div data-snack-id="@natorjunior/stacknav01" data-snack-platform="web" data-snack-preview="true"
+              data-snack-theme="light"
+              style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+            </div>
+            <script async src="https://snack.expo.dev/embed.js"></script>
+          </div>
+        </div>
+      </section>
+      </section>
+
+
+
+
+            <!-- Slide 1: Título do Workshop -->
+            <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+              <br><br><br>
+              <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                  Workshop Prático
+              </h4>
+              <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                  🚀 Construindo um Chat em Tempo Real
+              </h2>
+              <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
+                  Com MQTT e React Native
+              </p>
+              <p style="color: white; font-size: .8em; font-weight: 300; margin-top: 40px;">
+                  Prof. Msc. Nator Junior Carvalho da Costa
+              </p>
+          </section>
+
+          <!-- Slide 2: Roadmap do Workshop -->
+          <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+              <h2 style="color: white;">🗺️ Nossa Jornada de Hoje</h2>
+              <div class="workshop-step">
+                  <ul style="color: white; font-size: 1.2em;">
+                      <li class="fragment fade-right">1️⃣ Entendendo MQTT na Prática</li>
+                      <li class="fragment fade-right">2️⃣ Configurando Nosso Ambiente</li>
+                      <li class="fragment fade-right">3️⃣ Criando a Interface do Chat</li>
+                      <li class="fragment fade-right">4️⃣ Implementando a Comunicação</li>
+                      <li class="fragment fade-right">5️⃣ Testando em Tempo Real</li>
+                  </ul>
+              </div>
+          </section>
+
+
+
+            <!-- Etapa 1: Entendendo MQTT -->
+            <section>
+              <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                  <h2 style="color: white;">📱 Etapa 1: MQTT na Prática</h2>
+                  <div class="workshop-step">
+                      <p style="color: white; font-size: 1.2em;">
+                          Imagine um grupo de WhatsApp, mas mais leve e rápido! 🚀
+                      </p>
+                      <ul style="color: white; font-size: 1.1em;">
+                          <li class="fragment fade-right">📨 Alguém envia uma mensagem (Publisher)</li>
+                          <li class="fragment fade-right">📬 O servidor MQTT distribui (Broker)</li>
+                          <li class="fragment fade-right">📱 Todos recebem instantaneamente (Subscribers)</li>
+                      </ul>
+                  </div>
+              </section>
+
+              <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                  <h2 style="color: white;">📡 Introdução ao MQTT</h2>
+                  <p style="color: white; font-size: 1.2em; font-weight: 300;">
+                      <br><br>
+                      Protocolo leve de mensagens assíncronas usado em IoT, sistemas distribuídos e comunicação em
+                      tempo real.
+                  </p>
+              </section>
+
+              <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                  <h2 style="color: white;">🔹 Como funciona?</h2>
+                  <ul style="color: white; font-size: 1.em;">
+                      <li>📌 Um <b>cliente</b> publica mensagens em um <b>tópico</b></li>
+                      <li>📌 Outros <b>clientes subscrevem</b> esse tópico e recebem as mensagens</li>
+                      <li>📌 Um <b>broker</b> gerencia a comunicação</li>
+                  </ul>
+              </section>
+
+              <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                  <div id="controls">
+                      <label for="topicInput" style="color: white; font-size: 1.em; font-weight: 300;">Assunto da
+                          Mensagem:</label>
+                      <input type="text" id="topicInput" value="financeiro/pagamentos">
+                      <button id="publishButton">Enviar Mensagem</button>
+                  </div>
+                  <div id="container" style="color: white; font-size: 0.9em; font-weight: 300;">
+                      <svg id="lines-svg"></svg>
+                      <div id="publisher" class="node" data-tooltip="Remetente: Envia a mensagem."
+                          style="color: white; font-size: 0.6em; font-weight: 300;">
+                          Remetente
+                      </div>
+                      <div id="broker" class="node"
+                          data-tooltip="Central de Correspondência: Recebe e encaminha a mensagem."
+                          style="color: white; font-size: 0.6em; font-weight: 300;">
+                          Central de Correspondência (BROKER)
+                      </div>
+                      <div id="subscriber1" class="node" data-tooltip="Financeiro: Inscrito em 'financeiro/#'."
+                          style="color: white; font-size: 0.6em; font-weight: 300;">
+                          Financeiro
+                          <div class="subscription" style="color: #222;">financeiro/#</div>
+                      </div>
+                      <div id="subscriber2" class="node"
+                          data-tooltip="Pagamentos: Inscrito em 'financeiro/pagamentos'."
+                          style="color: white; font-size: 0.6em; font-weight: 300;">
+                          Pagamentos
+                          <div class="subscription" style="color: #222;">financeiro/pagamentos</div>
+                      </div>
+                      <div id="subscriber3" class="node" data-tooltip="Recursos Humanos: Inscrito em 'rh/#'."
+                          style="color: white; font-size: 0.6em; font-weight: 300;">
+                          Recursos Humanos
+                          <div class="subscription" style="color: #222;">rh/#</div>
+                      </div>
+                      <div id="message" class="message"></div>
+                  </div>
+              </section>
+
+          </section>
+
+          <section>
+            <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                <h2 style="color: white;">⚙️ Etapa 2: Preparando o Ambiente</h2>
+                <div class="workshop-step">
+                    <h3 style="color: white;">Vamos precisar de:</h3>
+                    <ul style="color: white; font-size: 1.1em;">
+                        <li class="fragment fade-right">📱 Expo instalado</li>
+                        <li class="fragment fade-right">📦 Biblioteca MQTT</li>
+                        <li class="fragment fade-right">🎨 React Native Paper</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-background-color="#2c3e50">
+                <h3 style="color: white;">🛠️ Criando o Projeto</h3>
+                <pre><code class="language-bash" data-trim data-line-numbers>
+                    # Crie um novo projeto Expo
+                    npx create-expo-app chat-mqtt
+                    cd chat-mqtt
+
+                    # Instale as dependências
+                    npm install @react-navigation/native @react-navigation/stack
+                    npm install paho-mqtt
+                    npm install react-native-paper
+                </code></pre>
+                <div class="practical-exercise fragment fade-up">
+                    <p>👩‍💻 Sua vez! Crie o projeto e instale as dependências</p>
+                </div>
+            </section>
+
+
+  <!-- Slide 1: Título do Workshop -->
+  <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+    <br><br><br>
+    <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
+        Exemplo simples de um chat em tempo real usando MQTT
+    </p>
+</section>
+
+
+<!-- Slide 1: Configuração MQTT -->
+<section
+  data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+  data-auto-animate
+>
+  <h2 style="color: white;">Configuração MQTT</h2>
+  <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1|2|4|5|6|7|10|11">
+import React, { useState, useEffect } from 'react';
+import Paho from 'paho-mqtt';
+
+const BROKER    = 'broker.hivemq.com';
+const PORT      = 8000;
+const TOPICO    = 'chat/teste';
+const CLIENT_ID = `client-${Math.random().toString(36).slice(2)}`;
+
+export default function App() {
+  const [mensagem, setMensagem] = useState('Aguardando mensagem');
+  </code></pre>
+</section>
+
+<!-- Slide 2: Conexão e Inscrição -->
+<section
+  data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+  data-auto-animate
+>
+  <h2 style="color: white;">Conexão e Inscrição</h2>
+  <pre style="height: 75vh;" data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="9|12-26|11|12-26|13|15-17|19-21|28-32">
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, SafeAreaView } from 'react-native';
+import Paho from 'paho-mqtt';
+
+const BROKER    = 'broker.hivemq.com';
+const PORT      = 8000;
+const TOPICO    = 'chat/teste';
+const CLIENT_ID = `client-${Math.random().toString(36).slice(2)}`;
+
+export default function App() {
+  const [mensagem, setMensagem] = useState('Aguardando mensagem');
+  useEffect(() => {
+    const cliente = new Paho.Client(BROKER, PORT, CLIENT_ID);
+
+    cliente.onMessageArrived = (msg) => {
+      setMensagem(msg.payloadString);
+    };
+
+    cliente.connect({
+      onSuccess: () => cliente.subscribe(TOPICO),
+    });
+
+    return () => {
+      if (cliente.isConnected()) cliente.disconnect();
+    };
+  }, []);
+
+  return (
+    &lt;SafeAreaView style={estilos.container}&gt;
+      &lt;Text style={estilos.texto}&gt;{mensagem}&lt;/Text&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+
+const estilos = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  texto: {
+    fontSize: 18,
+    color: '#333',
+  },
+});
+  </code></pre>
+</section>
+
+
+  <!-- Slide 1: Título do Workshop -->
+  <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+    <br><br><br>
+    <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
+        Acesse o link abaixo e reproduza na sua máquina<br>
+        https://notepad.acilab.com.br/chat01
+    </p>
+</section>
+
+
+  <!-- Slide 1: Título do Workshop -->
+  <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+    <br><br><br>
+    <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
+        Com FlatList
+    </p>
+</section>
+
+
+<!-- Slide 1: Configuração MQTT -->
+<section
+  data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+  data-auto-animate
+>
+  <h2 style="color: white;">Configuração MQTT</h2>
+  <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1|2|4|5|6|7|10|11">
+import React, { useState, useEffect } from 'react';
+import Paho from 'paho-mqtt';
+
+const BROKER    = 'broker.hivemq.com';
+const PORT      = 8000;
+const TOPICO    = 'chat/teste';
+const CLIENT_ID = `client-${Math.random().toString(36).slice(2)}`;
+
+export default function App() {
+  const [mensagem, setMensagem] = useState('Aguardando mensagem');
+  const [lista, setLista]     = useState([]);
+  </code></pre>
+</section>
+
+<!-- Slide 2: Conexão e Inscrição -->
+<section
+  data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+  data-auto-animate
+>
+  <h2 style="color: white;">Conexão e Inscrição</h2>
+  <pre style="height: 75vh;" data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="9|12-29|14|16-20|17|18-20|23-25|32-45">
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, SafeAreaView } from 'react-native';
+import Paho from 'paho-mqtt';
+
+const BROKER    = 'broker.hivemq.com';
+const PORT      = 8000;
+const TOPICO    = 'chat/teste';
+const CLIENT_ID = `client-${Math.random().toString(36).slice(2)}`;
+
+export default function App() {
+  const [mensagem, setMensagem] = useState('Aguardando mensagem');
+  const [lista, setLista]     = useState([]);
+  useEffect(() => {
+    const cliente = new Paho.Client(BROKER, PORT, CLIENT_ID);
+
+    cliente.onMessageArrived = (msg) => {
+      setMensagem(msg.payloadString);
+      setLista(prev =>
+        [...prev, { id: Math.random().toString(36).slice(2), texto: msg.payloadString }]
+      );
+    };
+
+    cliente.connect({
+      onSuccess: () => cliente.subscribe(TOPICO),
+    });
+
+    return () => {
+      if (cliente.isConnected()) cliente.disconnect();
+    };
+  }, []);
+
+  return (
+    &lt;SafeAreaView style={estilos.container}&gt;
+      &lt;Text style={estilos.texto}&gt;{mensagem}&lt;/Text&gt;
+      &lt;View style={{ marginTop: 20 }}&gt;
+        &lt;FlatList
+          data={lista}
+          keyExtractor={item =&gt; item.id}
+          renderItem={({ item }) =&gt;
+            &lt;Text style={estilos.texto}&gt;{item.texto}&lt;/Text&gt;
+          }
+        /&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+
+const estilos = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  texto: {
+    fontSize: 18,
+    color: '#333',
+  },
+});
+  </code></pre>
+</section>
+
+<!-- Slide 1: Título do Workshop -->
+<section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+  <br><br><br>
+  <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
+      Acesse o link abaixo e reproduza na sua máquina<br>
+      https://notepad.acilab.com.br/chat02
+  </p>
+</section>
+
+
+
+<!-- Slide 1: Título do Workshop -->
+<section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+  <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
+      Agora é sua vez!<br>
+      Modifique o código e implemente uma alteração para que as mensagens sejam recebidas assim:<br>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+        <!-- Coluna 2: Embed do Expo Snack -->
+        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+          <div data-snack-id="@natorjunior/mqtt" data-snack-platform="web" data-snack-preview="true"
+            data-snack-theme="light"
+            style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+          </div>
+          <script async src="https://snack.expo.dev/embed.js"></script>
+        </div>
+      </div>
+  </p>
+</section>
+<section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+style="padding: 20px;">
+<div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+  <!-- Coluna 2: Embed do Expo Snack -->
+  <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+    <div data-snack-id="@natorjunior/mqtt" data-snack-platform="web" data-snack-preview="true"
+      data-snack-theme="light"
+      style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+    </div>
+    <script async src="https://snack.expo.dev/embed.js"></script>
+  </div>
+</div>
+</section>
+
+
+            </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script src="./aula04-materials/script.js"></script>
+
+  <script>
+    Reveal.initialize({
+      center: false,
+      controls: true,
+      progress: true,
+      slideNumber: true,
+      history: true,
+      transition: 'convex',
+      plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
+      markdown: {
+        smartypants: true
+      },
+      width: 1200,
+      height: 800,
+      hash: true,
+      respondToHashChanges: true,
+      menu: {
+        side: 'left',
+        width: 300,
+        numbers: true,
+        titleSelector: 'h1, h2, h3, h4, h5, h6'
+      }
+    });
+  </script>
+</body>
+
+</html>
