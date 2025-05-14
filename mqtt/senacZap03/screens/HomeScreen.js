@@ -1,22 +1,35 @@
-import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, SafeAreaView, Text, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const contacts = [
-  { id: '1', name: 'Ana', lastMessage: 'Oi, tudo bem?', time: '10:30' },
-  { id: '2', name: 'Bruno', lastMessage: 'Vamos sair hoje?', time: '09:45' },
-  { id: '3', name: 'Carla', lastMessage: 'Te mando o arquivo depois', time: '08:20' },
-  { id: '4', name: 'Diego', lastMessage: 'Haha, boa!', time: 'Ontem' },
-  { id: '5', name: 'Elisa', lastMessage: 'Obrigada pelo convite!', time: 'Ontem' },
+  { id: '1', name: 'Ana', lastMessage: 'Oi, tudo bem?', time: '10:30', active: true },
+  { id: '2', name: 'Bruno', lastMessage: 'Vamos sair hoje?', time: '09:45', active: true },
+  { id: '3', name: 'Carla', lastMessage: 'Te mando o arquivo depois', time: '08:20', active: true },
+  { id: '4', name: 'Diego', lastMessage: 'Haha, boa!', time: 'Ontem', active: true },
+  { id: '5', name: 'Elisa', lastMessage: 'Obrigada pelo convite!', time: 'Ontem', active: true },
 ];
 
 export default function HomeScreen() {
   const navigation = useNavigation();
+  const [selectedContact, setSelectedContact] = useState(null);
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
+  // Seleciona somente uma vez na montagem
+  useEffect(() => {
+    const random = contacts[Math.floor(Math.random() * contacts.length)];
+    setSelectedContact(random);
+  }, []);
+
+  const renderItem = ({ item }) => {
+    if (!item.active) return null;
+
+    return (<TouchableOpacity
       style={styles.contactItem}
-      onPress={() => navigation.navigate('Chat', { contactName: item.name, topic: `chat/${item.name.toLowerCase()}` })}
+      onPress={() => navigation.navigate('Chat', {
+        contactName: item.name,
+        meuTopico: selectedContact?.name,
+        topic: `chat/${item.name.toLowerCase()}`
+      })}
     >
       <Image
         source={{ uri: `https://gravatar.com/avatar/${item.id}39f74bce6f87b83613c040798359ce22?s=400&d=robohash&r=x` }}
@@ -28,10 +41,29 @@ export default function HomeScreen() {
       </View>
       <Text style={styles.time}>{item.time}</Text>
     </TouchableOpacity>
-  );
+    )
+  };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+
+      {selectedContact && (
+        <TouchableOpacity
+          style={styles.selectedContainer}
+          onPress={() => navigation.navigate('Chat', {
+            contactName: selectedContact.name,
+            meuTopico: selectedContact.name,
+            topic: `chat/${selectedContact.name.toLowerCase()}`
+          })}
+        >
+          
+          <Image
+            source={{ uri: `https://gravatar.com/avatar/${selectedContact.id}39f74bce6f87b83613c040798359ce22?s=400&d=robohash&r=x` }}
+            style={styles.avatarTiny}
+          />
+          <Text style={styles.selectedName}>{selectedContact.name}</Text>
+        </TouchableOpacity>
+      )}
       <FlatList
         data={contacts}
         renderItem={renderItem}
@@ -39,7 +71,8 @@ export default function HomeScreen() {
         style={styles.flatList}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
-    </View>
+
+    </SafeAreaView>
   );
 }
 
@@ -47,17 +80,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F7F7F7',
-  },
-  header: {
-    backgroundColor: '#075E54',
-    padding: 15,
-    paddingTop: 40,
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#FFF',
   },
   flatList: {
     flex: 1,
@@ -84,6 +106,12 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginRight: 15,
   },
+  avatarTiny: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    marginRight: 8,
+  },
   contactInfo: {
     flex: 1,
   },
@@ -101,5 +129,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
   },
+  selectedContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  selectedName: {
+    fontSize: 14,
+    color: '#075E54',
+    fontWeight: '600',
+  },
 });
-

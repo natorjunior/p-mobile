@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, FlatList, SafeAreaView, TextInput, TouchableOpa
 import Paho from 'paho-mqtt';
 
 export default function ChatScreen({ route }) {
-  const { topic } = route.params;
+  const { topic, meuTopico } = route.params;
   const [mensagens, setMensagens] = useState([]);
   const [textoInput, setTextoInput] = useState('');
   const [cliente, setCliente] = useState(null);
 
   useEffect(() => {
-    const mqttClient = new Paho.Client('broker.hivemq.com', 8000, `client-${Math.random().toString(36).slice(2)}`);
+    const mqttClient = new Paho.Client('mqtt.acilab.com.br', 443, '/mqtt',`client-${Math.random().toString(36).slice(2)}`);
     mqttClient.onMessageArrived = (msg) => {
       setMensagens((prev) => [
         ...prev,
@@ -22,8 +22,9 @@ export default function ChatScreen({ route }) {
       ]);
     };
     mqttClient.connect({
+       useSSL: true,
       onSuccess: () => {
-        mqttClient.subscribe(topic);
+        mqttClient.subscribe("chat/"+meuTopico.toLowerCase());
         setCliente(mqttClient);
       },
       onFailure: (erro) => console.error('Erro:', erro),
