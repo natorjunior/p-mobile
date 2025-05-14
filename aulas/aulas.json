@@ -26,6 +26,10 @@
   {
     "titulo": "Aula 8 - Flatlist, Stack Navigation e Workshop Parte 1",
     "link": "./aulas/aula08.html"
+  },
+  {
+    "titulo": "Aula 9 - Tab, Drawer Navigation, axios e Workshop Parte 2",
+    "link": "./aulas/aula09.html"
   }
 ]
   
