@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 10 - Storage e SQLite</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+  <link rel="stylesheet" href="aula05-materials/style.css">
+
+  <!-- Menu plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
+  <link rel="stylesheet" href="aula04-materials/style.css">
+  <link rel="stylesheet" href="css/workshop.css">
+
+  <style>
+    .reveal h1,
+    .reveal h2 {
+      color: #0056b3;
+      transition: color 0.3s ease;
+    }
+
+    .reveal pre code {
+      font-size: 1em;
+      background: #222;
+      border-radius: 8px;
+      padding: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .reveal pre code:hover {
+      transform: scale(1.01);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .reveal p {
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+
+    .step-box {
+      background: rgba(0, 123, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px;
+      border: 2px solid #0056b3;
+      transition: all 0.3s ease;
+    }
+
+    .step-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .concept-box {
+      background: rgba(40, 167, 69, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px;
+      border: 2px solid #28a745;
+      transition: all 0.3s ease;
+    }
+
+    .concept-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .example-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .example-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .fragment.visible {
+      transition: all 0.5s ease;
+    }
+
+    .fragment.fade-right.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .fragment.fade-right:not(.visible) {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Slide 1: Título -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <br><br><br><br>
+        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+          Programação para Dispositivos Móveis
+        </h4>
+        <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+          Aula 10 - Storage e SQLite em React Native
+        </h6>
+        <h1>📱</h1>
+      </section>
+
+      <!-- Slide 2: Objetivos -->
+      <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+        <div style="text-align: center;">
+          <div style="
+          background: rgba(255, 255, 255, 0.1);
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(255, 255, 255, 0.1);
+          margin: 20px;
+        ">
+            <h1 style="color: white; font-size: 2.5em; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+              Objetivos da Aula 🎯
+            </h1>
+
+            <ul style="list-style: none; padding: 0; text-align: left; color: white; font-size: 1.2em;">
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>💾</span>
+                Entender AsyncStorage
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>🗄️</span>
+                Implementar SQLite
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>📱</span>
+                Criar um CRUD completo
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>🔄</span>
+                Gerenciar dados persistentes
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção AsyncStorage -->
+      <section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">AsyncStorage 💾</h2>
+          <div class="concept-box">
+            <h3 style="color: white;">O que é AsyncStorage?</h3>
+            <ul style="color: white;">
+              <li class="fragment fade-right">Sistema de armazenamento assíncrono e não criptografado</li>
+              <li class="fragment fade-right">Similar ao localStorage do navegador</li>
+              <li class="fragment fade-right">Persiste dados simples no dispositivo</li>
+              <li class="fragment fade-right">Funciona com pares chave-valor</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Instalação e Configuração</h2>
+          <div class="concept-box">
+            <h6 style="color: white;">Instalando AsyncStorage</h6>
+            <pre><code class="language-bash">npm install @react-native-async-storage/async-storage</code></pre>
+          </div>
+          <div class="example-box">
+            <h6 style="color: white;">Importando</h6>
+            <pre><code class="language-javascript">import AsyncStorage from '@react-native-async-storage/async-storage';</code></pre>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Operações Básicas</h2>
+          <pre><code class="language-javascript">// Salvando dados
+const storeData = async (key, value) => {
+  try {
+    await AsyncStorage.setItem(key, JSON.stringify(value));
+    console.log('Dados salvos com sucesso!');
+  } catch (error) {
+    console.error('Erro ao salvar:', error);
+  }
+};
+
+// Recuperando dados
+const getData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    return value != null ? JSON.parse(value) : null;
+  } catch (error) {
+    console.error('Erro ao recuperar:', error);
+    return null;
+  }
+};
+
+// Removendo dados
+const removeData = async (key) => {
+  try {
+    await AsyncStorage.removeItem(key);
+    console.log('Dados removidos com sucesso!');
+  } catch (error) {
+    console.error('Erro ao remover:', error);
+  }
+};</code></pre>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Exemplo Prático: Lista de Tarefas</h2>
+          <pre><code class="language-jsx">{`
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, FlatList } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export default function TodoApp() {
+  const [task, setTask] = useState('');
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  const loadTasks = async () => {
+    try {
+      const storedTasks = await AsyncStorage.getItem('tasks');
+      if (storedTasks !== null) {
+        setTasks(JSON.parse(storedTasks));
+      }
+    } catch (error) {
+      console.error('Erro ao carregar tarefas:', error);
+    }
+  };
+
+  const addTask = async () => {
+    if (task.trim().length === 0) return;
+
+    const newTasks = [...tasks, { id: Date.now().toString(), text: task }];
+    setTasks(newTasks);
+    setTask('');
+
+    try {
+      await AsyncStorage.setItem('tasks', JSON.stringify(newTasks));
+    } catch (error) {
+      console.error('Erro ao salvar tarefa:', error);
+    }
+  };
+
+  const removeTask = async (id) => {
+    const newTasks = tasks.filter(task => task.id !== id);
+    setTasks(newTasks);
+
+    try {
+      await AsyncStorage.setItem('tasks', JSON.stringify(newTasks));
+    } catch (error) {
+      console.error('Erro ao remover tarefa:', error);
+    }
+  };
+
+  return (
+    <View style={{ padding: 20 }}>
+      <TextInput
+        value={task}
+        onChangeText={setTask}
+        placeholder="Nova tarefa"
+        style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
+      />
+      <Button title="Adicionar" onPress={addTask} />
+
+      <FlatList
+        data={tasks}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
+            <Text>{item.text}</Text>
+            <Button title="Remover" onPress={() => removeTask(item.id)} color="red" />
+          </View>
+        )}
+      />
+    </View>
+  );
+}`}</code></pre>
+        </section>
+
+        <!-- Exemplo Prático AsyncStorage -->
+        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+          style="padding: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+              <div data-snack-id="@natorjunior/async-storage-example" data-snack-platform="web" data-snack-preview="true"
+                data-snack-theme="light"
+                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+              </div>
+              <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Seção Secure Store -->
+      <section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Secure Store 🔒</h2>
+          <div class="concept-box">
+            <h3 style="color: white;">Por que usar Secure Store?</h3>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <ul style="color: white; flex: 1;">
+                <li class="fragment fade-right">Armazenamento criptografado de dados sensíveis</li>
+                <li class="fragment fade-right">Ideal para senhas, tokens e informações pessoais</li>
+                <li class="fragment fade-right">Utiliza o Keychain no iOS e o EncryptedSharedPreferences no Android</li>
+                <li class="fragment fade-right">Mais seguro que o AsyncStorage para dados confidenciais</li>
+              </ul>
+              <div class="fragment fade-left" style="flex: 1; text-align: center; margin-left: 20px;">
+                <img src="https://docs.expo.dev/static/images/sdk/secure-store.png" alt="Secure Store Icon" style="width: 150px; margin-bottom: 10px;">
+                <p style="color: white; font-size: 0.9em;">Proteção nativa das plataformas</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Configuração do Secure Store</h2>
+          <div class="step-box">
+            <h6 style="color: white;">Passo 1: Instalação</h6>
+            <pre><code class="language-bash">expo install expo-secure-store</code></pre>
+          </div>
+          <div class="step-box">
+            <h6 style="color: white;">Passo 2: Importação</h6>
+            <pre><code class="language-javascript">import * as SecureStore from 'expo-secure-store';</code></pre>
+          </div>
+          <div class="fragment fade-up example-box">
+            <h6 style="color: white;">Boas Práticas:</h6>
+            <ul style="color: white;">
+              <li>Não armazene dados muito grandes (limite de 2KB)</li>
+              <li>Use para informações sensíveis apenas</li>
+              <li>Mantenha as chaves consistentes em toda a aplicação</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Operações Básicas</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="step-box fragment fade-right">
+              <h6 style="color: white;">Salvando Dados</h6>
+              <pre><code class="language-javascript">const saveSecureData = async (key, value) => {
+  try {
+    await SecureStore.setItemAsync(key, value);
+    console.log('Dados salvos com segurança!');
+  } catch (error) {
+    console.error('Erro ao salvar:', error);
+  }
+};</code></pre>
+            </div>
+            <div class="step-box fragment fade-left">
+              <h6 style="color: white;">Recuperando Dados</h6>
+              <pre><code class="language-javascript">const getSecureData = async (key) => {
+  try {
+    const value = await SecureStore.getItemAsync(key);
+    return value;
+  } catch (error) {
+    console.error('Erro:', error);
+    return null;
+  }
+};</code></pre>
+            </div>
+          </div>
+          <div class="step-box fragment fade-up" style="margin-top: 20px;">
+            <h6 style="color: white;">Removendo Dados</h6>
+            <pre><code class="language-javascript">const removeSecureData = async (key) => {
+  try {
+    await SecureStore.deleteItemAsync(key);
+    console.log('Dados removidos!');
+  } catch (error) {
+    console.error('Erro:', error);
+  }
+};</code></pre>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Exemplo Interativo: Login Seguro</h2>
+          <div style="display: flex; justify-content: space-between; gap: 20px;">
+            <div style="flex: 1;" class="fragment fade-right">
+              <div data-snack-id="@natorjunior/secure-store-example" data-snack-platform="web" data-snack-preview="true"
+                data-snack-theme="light"
+                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+              </div>
+              <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+            <div style="flex: 1;" class="fragment fade-left">
+              <div class="concept-box">
+                <h3 style="color: white;">Funcionalidades:</h3>
+                <ul style="color: white;">
+                  <li>Login com usuário e senha</li>
+                  <li>Armazenamento seguro do token</li>
+                  <li>Verificação de status do login</li>
+                  <li>Logout com limpeza dos dados</li>
+                </ul>
+              </div>
+              <div class="example-box" style="margin-top: 20px;">
+                <h3 style="color: white;">Experimente:</h3>
+                <ol style="color: white;">
+                  <li>Faça login com qualquer usuário/senha</li>
+                  <li>Verifique o status do login</li>
+                  <li>Tente fazer logout</li>
+                  <li>Verifique novamente o status</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Seção SQLite -->
+      <section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">SQLite em React Native 🗄️</h2>
+          <div class="concept-box">
+            <h3 style="color: white;">Por que usar SQLite?</h3>
+            <ul style="color: white;">
+              <li class="fragment fade-right">Banco de dados relacional completo</li>
+              <li class="fragment fade-right">Armazenamento estruturado</li>
+              <li class="fragment fade-right">Suporte a consultas SQL</li>
+              <li class="fragment fade-right">Ideal para dados complexos</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Configuração do SQLite</h2>
+          <div class="concept-box">
+            <h6 style="color: white;">Instalação</h6>
+            <pre><code class="language-bash">expo install expo-sqlite</code></pre>
+          </div>
+          <div class="example-box">
+            <h6 style="color: white;">Importação e Inicialização</h6>
+            <pre><code class="language-javascript">import * as SQLite from 'expo-sqlite';
+
+const db = SQLite.openDatabase('minhaDB.db');</code></pre>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Operações CRUD Básicas</h2>
+          <pre><code class="language-javascript">// Criar tabela
+const createTable = () => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, descricao TEXT);'
+    );
+  });
+};
+
+// Inserir item
+const addItem = (nome, descricao) => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'INSERT INTO items (nome, descricao) VALUES (?, ?);',
+      [nome, descricao],
+      (_, result) => {
+        console.log('Item adicionado com sucesso!');
+      },
+      (_, error) => {
+        console.error('Erro ao adicionar item:', error);
+      }
+    );
+  });
+};
+
+// Buscar todos os itens
+const getItems = (callback) => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'SELECT * FROM items;',
+      [],
+      (_, { rows: { _array } }) => {
+        callback(_array);
+      }
+    );
+  });
+};
+
+// Atualizar item
+const updateItem = (id, nome, descricao) => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'UPDATE items SET nome = ?, descricao = ? WHERE id = ?;',
+      [nome, descricao, id]
+    );
+  });
+};
+
+// Deletar item
+const deleteItem = (id) => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'DELETE FROM items WHERE id = ?;',
+      [id]
+    );
+  });
+};</code></pre>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Exemplo Completo: Gerenciador de Contatos</h2>
+          <pre><code class="language-jsx">import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import * as SQLite from 'expo-sqlite';
+
+const db = SQLite.openDatabase('contatos.db');
+
+export default function ContatosApp() {
+  const [nome, setNome] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [contatos, setContatos] = useState([]);
+
+  useEffect(() => {
+    criarTabela();
+    carregarContatos();
+  }, []);
+
+  const criarTabela = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS contatos (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, telefone TEXT);'
+      );
+    });
+  };
+
+  const carregarContatos = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM contatos;',
+        [],
+        (_, { rows: { _array } }) => setContatos(_array)
+      );
+    });
+  };
+
+  const adicionarContato = () => {
+    if (nome === '' || telefone === '') return;
+
+    db.transaction(tx => {
+      tx.executeSql(
+        'INSERT INTO contatos (nome, telefone) VALUES (?, ?);',
+        [nome, telefone],
+        (_, result) => {
+          setNome('');
+          setTelefone('');
+          carregarContatos();
+        }
+      );
+    });
+  };
+
+  const deletarContato = (id) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'DELETE FROM contatos WHERE id = ?;',
+        [id],
+        (_, result) => {
+          carregarContatos();
+        }
+      );
+    });
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Gerenciador de Contatos</Text>
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Nome"
+        value={nome}
+        onChangeText={setNome}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Telefone"
+        value={telefone}
+        onChangeText={setTelefone}
+        keyboardType="phone-pad"
+      />
+      
+      <Button title="Adicionar Contato" onPress={adicionarContato} />
+
+      <FlatList
+        data={contatos}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.contatoItem}>
+            <View>
+              <Text style={styles.contatoNome}>{item.nome}</Text>
+              <Text>{item.telefone}</Text>
+            </View>
+            <Button
+              title="Deletar"
+              onPress={() => deletarContato(item.id)}
+              color="red"
+            />
+          </View>
+        )}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  contatoItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  contatoNome: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});</code></pre>
+        </section>
+
+        <!-- Exemplo Prático SQLite -->
+        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+          style="padding: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+              <div data-snack-id="@natorjunior/sqlite-example" data-snack-platform="web" data-snack-preview="true"
+                data-snack-theme="light"
+                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+              </div>
+              <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Seção Atividades Práticas -->
+      <section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Atividades Práticas 💻</h2>
+          
+          <div class="concept-box">
+            <h3 style="color: white;">Atividade 1: Lista de Compras com AsyncStorage</h3>
+            <p style="color: white;">Desenvolva um aplicativo que:</p>
+            <ul style="color: white;">
+              <li>Permita adicionar itens à lista de compras</li>
+              <li>Salve os itens usando AsyncStorage</li>
+              <li>Permita marcar itens como comprados</li>
+              <li>Implemente função de remover itens</li>
+              <li>Mostre o total de itens e itens comprados</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <div class="concept-box">
+            <h3 style="color: white;">Atividade 2: Agenda de Tarefas com SQLite</h3>
+            <p style="color: white;">Crie um aplicativo de agenda que:</p>
+            <ul style="color: white;">
+              <li>Use SQLite para armazenar as tarefas</li>
+              <li>Permita criar, editar e excluir tarefas</li>
+              <li>Adicione data e prioridade às tarefas</li>
+              <li>Implemente filtros por data e prioridade</li>
+              <li>Mostre estatísticas de tarefas concluídas</li>
+            </ul>
+          </div>
+        </section>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script src="./aula04-materials/script.js"></script>
+
+  <script>
+    Reveal.initialize({
+      center: false,
+      controls: true,
+      progress: true,
+      slideNumber: true,
+      history: true,
+      transition: 'convex',
+      plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
+      markdown: {
+        smartypants: true
+      },
+      width: 1200,
+      height: 800,
+      hash: true,
+      respondToHashChanges: true,
+      menu: {
+        side: 'left',
+        width: 300,
+        numbers: true,
+        titleSelector: 'h1, h2, h3, h4, h5, h6'
+      }
+    });
+  </script>
+</body>
+
+</html>
