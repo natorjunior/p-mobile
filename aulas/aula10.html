@@ -340,215 +340,89 @@ const db = SQLite.openDatabase('minhaDB.db');</code></pre>
         <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
           <h2 style="color: white;">Operações CRUD Básicas</h2>
           <pre><code class="language-javascript">// Criar tabela
-const createTable = () => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, descricao TEXT);'
-    );
-  });
+import { openDatabaseAsync } from 'expo-sqlite';
+
+let db;
+
+export const initDB = async () => {
+  try {
+    db = await openDatabaseAsync('users.db');
+    await db.execAsync(`
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        age INTEGER NOT NULL
+      );
+    `);
+    console.log('Banco de dados inicializado com sucesso');
+  } catch (error) {
+    console.error('Erro ao inicializar o banco de dados:', error);
+    throw error;
+  }
 };
 
-// Inserir item
-const addItem = (nome, descricao) => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'INSERT INTO items (nome, descricao) VALUES (?, ?);',
-      [nome, descricao],
-      (_, result) => {
-        console.log('Item adicionado com sucesso!');
-      },
-      (_, error) => {
-        console.error('Erro ao adicionar item:', error);
-      }
-    );
-  });
+export const insertUser = async (name, age) => {
+  if (!db) {
+    throw new Error('Database not initialized. Call initDB() first.');
+  }
+  try {
+    await db.runAsync('INSERT INTO users (name, age) VALUES (?, ?);', [name, age]);
+    console.log('Usuário inserido com sucesso');
+  } catch (error) {
+    console.error('Erro ao inserir usuário:', error);
+    throw error;
+  }
 };
 
-// Buscar todos os itens
-const getItems = (callback) => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'SELECT * FROM items;',
-      [],
-      (_, { rows: { _array } }) => {
-        callback(_array);
-      }
-    );
-  });
+export const fetchUsers = async () => {
+  if (!db) {
+    throw new Error('Database not initialized. Call initDB() first.');
+  }
+  try {
+    const result = await db.getAllAsync('SELECT * FROM users;');
+    return result;
+  } catch (error) {
+    console.error('Erro ao buscar usuários:', error);
+    throw error;
+  }
 };
 
-// Atualizar item
-const updateItem = (id, nome, descricao) => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'UPDATE items SET nome = ?, descricao = ? WHERE id = ?;',
-      [nome, descricao, id]
-    );
-  });
+export const updateUser = async (id, name, age) => {
+  if (!db) {
+    throw new Error('Database not initialized. Call initDB() first.');
+  }
+  try {
+    await db.runAsync('UPDATE users SET name = ?, age = ? WHERE id = ?;', [name, age, id]);
+    console.log('Usuário atualizado com sucesso');
+  } catch (error) {
+    console.error('Erro ao atualizar usuário:', error);
+    throw error;
+  }
 };
 
-// Deletar item
-const deleteItem = (id) => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'DELETE FROM items WHERE id = ?;',
-      [id]
-    );
-  });
+export const deleteUser = async (id) => {
+  if (!db) {
+    throw new Error('Database not initialized. Call initDB() first.');
+  }
+  try {
+    await db.runAsync('DELETE FROM users WHERE id = ?;', [id]);
+    console.log('Usuário deletado com sucesso');
+  } catch (error) {
+    console.error('Erro ao deletar usuário:', error);
+    throw error;
+  }
 };</code></pre>
         </section>
 
         <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Exemplo Completo: Gerenciador de Contatos</h2>
-          <pre><code class="language-jsx">import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
-import * as SQLite from 'expo-sqlite';
+          <h2 style="color: white;">Exemplo Prático</h2>
+          <div class="example-box">
+            <h6 style="color: white;">Exemplo de CRUD com SQLite</h6>
 
-const db = SQLite.openDatabase('contatos.db');
-
-export default function ContatosApp() {
-  const [nome, setNome] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [contatos, setContatos] = useState([]);
-
-  useEffect(() => {
-    criarTabela();
-    carregarContatos();
-  }, []);
-
-  const criarTabela = () => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS contatos (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, telefone TEXT);'
-      );
-    });
-  };
-
-  const carregarContatos = () => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'SELECT * FROM contatos;',
-        [],
-        (_, { rows: { _array } }) => setContatos(_array)
-      );
-    });
-  };
-
-  const adicionarContato = () => {
-    if (nome === '' || telefone === '') return;
-
-    db.transaction(tx => {
-      tx.executeSql(
-        'INSERT INTO contatos (nome, telefone) VALUES (?, ?);',
-        [nome, telefone],
-        (_, result) => {
-          setNome('');
-          setTelefone('');
-          carregarContatos();
-        }
-      );
-    });
-  };
-
-  const deletarContato = (id) => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'DELETE FROM contatos WHERE id = ?;',
-        [id],
-        (_, result) => {
-          carregarContatos();
-        }
-      );
-    });
-  };
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Gerenciador de Contatos</Text>
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Nome"
-        value={nome}
-        onChangeText={setNome}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Telefone"
-        value={telefone}
-        onChangeText={setTelefone}
-        keyboardType="phone-pad"
-      />
-      
-      <Button title="Adicionar Contato" onPress={adicionarContato} />
-
-      <FlatList
-        data={contatos}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.contatoItem}>
-            <View>
-              <Text style={styles.contatoNome}>{item.nome}</Text>
-              <Text>{item.telefone}</Text>
-            </View>
-            <Button
-              title="Deletar"
-              onPress={() => deletarContato(item.id)}
-              color="red"
-            />
-          </View>
-        )}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-  },
-  contatoItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  contatoNome: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});</code></pre>
-        </section>
-
-        <!-- Exemplo Prático SQLite -->
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/sqlite-example" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
           </div>
-        </section>
+          </section>
+
+
       </section>
 
       <!-- Seção Atividades Práticas -->
@@ -567,6 +441,11 @@ const styles = StyleSheet.create({
             </ul>
           </div>
 
+        </section>
+
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Atividades Práticas 💻</h2>
           <div class="concept-box" style="margin-top: 20px;">
             <h3 style="color: white;">Atividade 2: SQLite Básico</h3>
             <p style="color: white;">Desenvolva um aplicativo que:</p>
