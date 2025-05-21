@@ -217,98 +217,12 @@ const removeData = async (key) => {
   } catch (error) {
     console.error('Erro ao remover:', error);
   }
-};</code></pre>
+};
+
+</code></pre>
         </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Exemplo Prático: Lista de Tarefas</h2>
-          <pre><code class="language-jsx">{`
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function TodoApp() {
-  const [task, setTask] = useState('');
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    loadTasks();
-  }, []);
-
-  const loadTasks = async () => {
-    try {
-      const storedTasks = await AsyncStorage.getItem('tasks');
-      if (storedTasks !== null) {
-        setTasks(JSON.parse(storedTasks));
-      }
-    } catch (error) {
-      console.error('Erro ao carregar tarefas:', error);
-    }
-  };
-
-  const addTask = async () => {
-    if (task.trim().length === 0) return;
-
-    const newTasks = [...tasks, { id: Date.now().toString(), text: task }];
-    setTasks(newTasks);
-    setTask('');
-
-    try {
-      await AsyncStorage.setItem('tasks', JSON.stringify(newTasks));
-    } catch (error) {
-      console.error('Erro ao salvar tarefa:', error);
-    }
-  };
-
-  const removeTask = async (id) => {
-    const newTasks = tasks.filter(task => task.id !== id);
-    setTasks(newTasks);
-
-    try {
-      await AsyncStorage.setItem('tasks', JSON.stringify(newTasks));
-    } catch (error) {
-      console.error('Erro ao remover tarefa:', error);
-    }
-  };
-
-  return (
-    <View style={{ padding: 20 }}>
-      <TextInput
-        value={task}
-        onChangeText={setTask}
-        placeholder="Nova tarefa"
-        style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-      />
-      <Button title="Adicionar" onPress={addTask} />
-
-      <FlatList
-        data={tasks}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-            <Text>{item.text}</Text>
-            <Button title="Remover" onPress={() => removeTask(item.id)} color="red" />
-          </View>
-        )}
-      />
-    </View>
-  );
-}`}</code></pre>
-        </section>
-
-        <!-- Exemplo Prático AsyncStorage -->
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/async-storage-example" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
-          </div>
-        </section>
       </section>
 
       <!-- Seção Secure Store -->
@@ -325,7 +239,7 @@ export default function TodoApp() {
                 <li class="fragment fade-right">Mais seguro que o AsyncStorage para dados confidenciais</li>
               </ul>
               <div class="fragment fade-left" style="flex: 1; text-align: center; margin-left: 20px;">
-                <img src="https://docs.expo.dev/static/images/sdk/secure-store.png" alt="Secure Store Icon" style="width: 150px; margin-bottom: 10px;">
+                <!-- <img src="https://docs.expo.dev/static/images/sdk/secure-store.png" alt="Secure Store Icon" style="width: 150px; margin-bottom: 10px;"> -->
                 <p style="color: white; font-size: 0.9em;">Proteção nativa das plataformas</p>
               </div>
             </div>
@@ -392,38 +306,6 @@ export default function TodoApp() {
           </div>
         </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Exemplo Interativo: Login Seguro</h2>
-          <div style="display: flex; justify-content: space-between; gap: 20px;">
-            <div style="flex: 1;" class="fragment fade-right">
-              <div data-snack-id="@natorjunior/secure-store-example" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
-            <div style="flex: 1;" class="fragment fade-left">
-              <div class="concept-box">
-                <h3 style="color: white;">Funcionalidades:</h3>
-                <ul style="color: white;">
-                  <li>Login com usuário e senha</li>
-                  <li>Armazenamento seguro do token</li>
-                  <li>Verificação de status do login</li>
-                  <li>Logout com limpeza dos dados</li>
-                </ul>
-              </div>
-              <div class="example-box" style="margin-top: 20px;">
-                <h3 style="color: white;">Experimente:</h3>
-                <ol style="color: white;">
-                  <li>Faça login com qualquer usuário/senha</li>
-                  <li>Verifique o status do login</li>
-                  <li>Tente fazer logout</li>
-                  <li>Verifique novamente o status</li>
-                </ol>
-              </div>
-            </div>
-          </div>
-        </section>
       </section>
 
       <!-- Seção SQLite -->
@@ -675,37 +557,33 @@ const styles = StyleSheet.create({
           <h2 style="color: white;">Atividades Práticas 💻</h2>
           
           <div class="concept-box">
-            <h3 style="color: white;">Atividade 1: Lista de Compras com AsyncStorage</h3>
-            <p style="color: white;">Desenvolva um aplicativo que:</p>
+            <h3 style="color: white;">Atividade 1: AsyncStorage Básico</h3>
+            <p style="color: white;">Crie um aplicativo simples que:</p>
             <ul style="color: white;">
-              <li>Permita adicionar itens à lista de compras</li>
-              <li>Salve os itens usando AsyncStorage</li>
-              <li>Permita marcar itens como comprados</li>
-              <li>Implemente função de remover itens</li>
-              <li>Mostre o total de itens e itens comprados</li>
+              <li>Tenha um campo de texto para o usuário digitar seu nome</li>
+              <li>Um botão para salvar o nome usando AsyncStorage</li>
+              <li>Um botão para recuperar o último nome salvo</li>
+              <li>Um texto que mostra o nome recuperado</li>
             </ul>
           </div>
-        </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <div class="concept-box">
-            <h3 style="color: white;">Atividade 2: Agenda de Tarefas com SQLite</h3>
-            <p style="color: white;">Crie um aplicativo de agenda que:</p>
+          <div class="concept-box" style="margin-top: 20px;">
+            <h3 style="color: white;">Atividade 2: SQLite Básico</h3>
+            <p style="color: white;">Desenvolva um aplicativo que:</p>
             <ul style="color: white;">
-              <li>Use SQLite para armazenar as tarefas</li>
-              <li>Permita criar, editar e excluir tarefas</li>
-              <li>Adicione data e prioridade às tarefas</li>
-              <li>Implemente filtros por data e prioridade</li>
-              <li>Mostre estatísticas de tarefas concluídas</li>
+              <li>Crie uma tabela 'notas' com campos: id, titulo e conteudo</li>
+              <li>Permita adicionar uma nova nota</li>
+              <li>Mostre todas as notas salvas em uma lista</li>
+              <li>Tenha um botão para deletar uma nota</li>
             </ul>
           </div>
         </section>
       </section>
 
+      </div>
     </div>
-  </div>
 
-  <!-- Scripts Reveal.js -->
+    <!-- Scripts Reveal.js -->
   <script src="dist/reveal.js"></script>
   <script src="plugin/markdown/markdown.js"></script>
   <script src="plugin/highlight/highlight.js"></script>
