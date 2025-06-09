@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula 11 - Padrões Arquiteturais e de Projeto</title>
+  <title>Aula 11 - MVC, OO, Service e Repository</title>
 
   <!-- Reveal.js -->
   <link rel="stylesheet" href="./dist/reveal.css">
@@ -38,7 +38,7 @@
           Prof. Msc. Nator Junior Carvalho da Costa
         </p>
         <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-          Aula 11 - Padrões Arquiteturais e de Projeto em React Native
+          Aula 11 - MVC, Orientação a Objetos, Service e Repository
         </h6>
         <h1>🏗️</h1>
       </section>
@@ -62,211 +62,424 @@
             <ul style="list-style: none; padding: 0; text-align: left; color: white; font-size: 1.2em;">
               <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
                 <span>🏛️</span>
-                Compreender padrões arquiteturais
+                Compreender os conceitos de Orientação a Objetos
               </li>
               <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
                 <span>🎨</span>
-                Explorar padrões de projeto comuns
+                Implementar classes e objetos em JavaScript
               </li>
               <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
                 <span>📱</span>
-                Implementar MVC e MVVM em React Native
+                Aplicar o padrão MVC em React Native
+              </li>
+              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
+                <span>🗄️</span>
+                Usar padrões Service e Repository
               </li>
               <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
                 <span>🔄</span>
-                Aplicar padrões de componentes
+                Criar aplicações bem estruturadas e testáveis
               </li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- Seção Padrões Arquiteturais -->
+      <!-- Seção Orientação a Objetos -->
       <section>
         <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Padrões Arquiteturais 🏛️</h2>
+          <h2 style="color: white;">Orientação a Objetos em JavaScript 🎯</h2>
           <div class="concept-box">
-            <h3 style="color: white;">O que são Padrões Arquiteturais?</h3>
+            <h3 style="color: white;">Conceitos Fundamentais</h3>
             <ul style="color: white;">
-              <li class="fragment fade-right">Soluções reutilizáveis para problemas comuns de arquitetura</li>
-              <li class="fragment fade-right">Organizam a estrutura geral do sistema</li>
-              <li class="fragment fade-right">Definem responsabilidades e relacionamentos</li>
-              <li class="fragment fade-right">Facilitam a manutenção e escalabilidade</li>
+              <li class="fragment fade-right">Classes e Objetos</li>
+              <li class="fragment fade-right">Encapsulamento</li>
+              <li class="fragment fade-right">Herança</li>
+              <li class="fragment fade-right">Polimorfismo</li>
             </ul>
           </div>
         </section>
 
         <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">MVC (Model-View-Controller)</h2>
-          <pre><code class="language-javascript">// Model
-class UserModel {
-  constructor(name, email) {
-    this.name = name;
+          <h2 style="color: white;">Classes em JavaScript</h2>
+          <pre><code class="language-javascript">// Definindo uma classe
+class Usuario {
+  constructor(nome, email) {
+    this.nome = nome;
     this.email = email;
+    this.ativo = true;
+  }
+
+  // Método público
+  ativar() {
+    this.ativo = true;
+    console.log(`${this.nome} foi ativado!`);
+  }
+
+  desativar() {
+    this.ativo = false;
+    console.log(`${this.nome} foi desativado!`);
+  }
+
+  // Método getter
+  get status() {
+    return this.ativo ? 'Ativo' : 'Inativo';
+  }
+
+  // Método setter
+  set novoEmail(email) {
+    if (email.includes('@')) {
+      this.email = email;
+    } else {
+      console.log('Email inválido!');
+    }
   }
 }
 
-// Controller
-class UserController {
+// Usando a classe
+const usuario = new Usuario('João', 'joao@email.com');
+console.log(usuario.status); // Ativo
+usuario.novoEmail = 'joao.silva@email.com';</code></pre>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Herança e Polimorfismo</h2>
+          <pre><code class="language-javascript">// Classe base
+class Animal {
+  constructor(nome) {
+    this.nome = nome;
+  }
+
+  falar() {
+    console.log(`${this.nome} faz um som`);
+  }
+}
+
+// Herança
+class Cachorro extends Animal {
+  constructor(nome, raca) {
+    super(nome); // Chama o construtor da classe pai
+    this.raca = raca;
+  }
+
+  // Polimorfismo - sobrescrevendo o método
+  falar() {
+    console.log(`${this.nome} late: Au au!`);
+  }
+
+  buscar() {
+    console.log(`${this.nome} busca a bolinha`);
+  }
+}
+
+class Gato extends Animal {
+  falar() {
+    console.log(`${this.nome} mia: Miau!`);
+  }
+}
+
+// Uso
+const rex = new Cachorro('Rex', 'Labrador');
+const mimi = new Gato('Mimi');
+
+rex.falar(); // Rex late: Au au!
+mimi.falar(); // Mimi mia: Miau!</code></pre>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Encapsulamento com Propriedades Privadas</h2>
+          <pre><code class="language-javascript">class ContaBancaria {
+  // Propriedade privada (ES2022)
+  #saldo = 0;
+  #numeroConta;
+
+  constructor(numeroConta) {
+    this.#numeroConta = numeroConta;
+  }
+
+  // Métodos públicos para acessar propriedades privadas
+  depositar(valor) {
+    if (valor > 0) {
+      this.#saldo += valor;
+      console.log(`Depósito de R$ ${valor} realizado`);
+    }
+  }
+
+  sacar(valor) {
+    if (valor > 0 && valor <= this.#saldo) {
+      this.#saldo -= valor;
+      console.log(`Saque de R$ ${valor} realizado`);
+    } else {
+      console.log('Saldo insuficiente');
+    }
+  }
+
+  get saldoAtual() {
+    return this.#saldo;
+  }
+
+  get numeroConta() {
+    return this.#numeroConta;
+  }
+}
+
+const conta = new ContaBancaria('12345-6');
+conta.depositar(1000);
+console.log(conta.saldoAtual); // 1000
+// conta.#saldo; // Erro! Propriedade privada</code></pre>
+        </section>
+      </section>
+
+      <!-- Seção MVC -->
+      <section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Padrão MVC 🏛️</h2>
+          <div class="concept-box">
+            <h3 style="color: white;">O que é MVC?</h3>
+            <ul style="color: white;">
+              <li class="fragment fade-right"><strong>Model:</strong> Gerencia dados e lógica de negócios</li>
+              <li class="fragment fade-right"><strong>View:</strong> Interface do usuário e apresentação</li>
+              <li class="fragment fade-right"><strong>Controller:</strong> Coordena Model e View</li>
+              <li class="fragment fade-right">Separação clara de responsabilidades</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Model - Gerenciando Dados</h2>
+          <pre><code class="language-javascript">// Model para um sistema de tarefas
+class TaskModel {
+  constructor(id, titulo, descricao, concluida = false) {
+    this.id = id;
+    this.titulo = titulo;
+    this.descricao = descricao;
+    this.concluida = concluida;
+    this.criadaEm = new Date();
+  }
+
+  marcarConcluida() {
+    this.concluida = true;
+  }
+
+  marcarPendente() {
+    this.concluida = false;
+  }
+
+  atualizar(titulo, descricao) {
+    this.titulo = titulo;
+    this.descricao = descricao;
+  }
+}
+
+// Model para gerenciar a lista de tarefas
+class TaskListModel {
+  constructor() {
+    this.tarefas = [];
+    this.proximoId = 1;
+  }
+
+  adicionarTarefa(titulo, descricao) {
+    const novaTarefa = new TaskModel(this.proximoId++, titulo, descricao);
+    this.tarefas.push(novaTarefa);
+    return novaTarefa;
+  }
+
+  removerTarefa(id) {
+    this.tarefas = this.tarefas.filter(tarefa => tarefa.id !== id);
+  }
+
+  buscarTarefa(id) {
+    return this.tarefas.find(tarefa => tarefa.id === id);
+  }
+
+  obterTarefas() {
+    return this.tarefas;
+  }
+}</code></pre>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Controller - Coordenando as Ações</h2>
+          <pre><code class="language-javascript">// Controller para gerenciar tarefas
+class TaskController {
   constructor(model) {
     this.model = model;
+    this.observers = [];
   }
 
-  updateUserData(name, email) {
-    this.model.name = name;
-    this.model.email = email;
+  // Adicionar observador para notificar mudanças
+  adicionarObserver(observer) {
+    this.observers.push(observer);
   }
-}
 
-// View (React Native Component)
-const UserView = ({ user, controller }) => {
-  return (
-    <View>
-      <Text>Nome: {user.name}</Text>
-      <Text>Email: {user.email}</Text>
-      <Button
-        title="Atualizar"
-        onPress={() => controller.updateUserData('Novo Nome', 'novo@email.com')}
-      />
-    </View>
-  );
-};</code></pre>
-        </section>
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">MVVM (Model-View-ViewModel)</h2>
-          <pre><code class="language-javascript">// Model
-class UserModel {
-  constructor(name, email) {
-    this.name = name;
-    this.email = email;
+  // Notificar todos os observadores
+  notificarObservers() {
+    this.observers.forEach(observer => observer.update());
   }
-}
 
-// ViewModel
-const useUserViewModel = (initialUser) => {
-  const [user, setUser] = useState(initialUser);
-
-  const updateUser = (name, email) => {
-    setUser(new UserModel(name, email));
-  };
-
-  return {
-    user,
-    updateUser,
-  };
-};
-
-// View
-const UserView = () => {
-  const { user, updateUser } = useUserViewModel(
-    new UserModel('João', 'joao@email.com')
-  );
-
-  return (
-    <View>
-      <Text>Nome: {user.name}</Text>
-      <Text>Email: {user.email}</Text>
-      <Button
-        title="Atualizar"
-        onPress={() => updateUser('Novo Nome', 'novo@email.com')}
-      />
-    </View>
-  );
-};</code></pre>
-        </section>
-
-        <!-- Seção Padrões de Projeto -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Padrões de Projeto 🎨</h2>
-          <div class="concept-box">
-            <h3 style="color: white;">Padrões Comuns em React Native</h3>
-            <ul style="color: white;">
-              <li class="fragment fade-right">Higher-Order Components (HOC)</li>
-              <li class="fragment fade-right">Render Props</li>
-              <li class="fragment fade-right">Container/Presentational</li>
-              <li class="fragment fade-right">Provider Pattern</li>
-            </ul>
-          </div>
-        </section>
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Higher-Order Component (HOC)</h2>
-          <pre><code class="language-javascript">// HOC para adicionar funcionalidade de loading
-const withLoading = (WrappedComponent) => {
-  return function WithLoading({ isLoading, ...props }) {
-    if (isLoading) {
-      return (
-        <View style={styles.center}>
-          <ActivityIndicator size="large" />
-        </View>
-      );
+  // Ações do controller
+  criarTarefa(titulo, descricao) {
+    try {
+      const novaTarefa = this.model.adicionarTarefa(titulo, descricao);
+      this.notificarObservers();
+      return novaTarefa;
+    } catch (error) {
+      console.error('Erro ao criar tarefa:', error);
     }
-    return <WrappedComponent {...props} />;
-  };
-};
+  }
 
-// Uso do HOC
-const UserList = ({ users }) => {
-  return (
-    <FlatList
-      data={users}
-      renderItem={({ item }) => <UserCard user={item} />}
-    />
-  );
-};
+  excluirTarefa(id) {
+    try {
+      this.model.removerTarefa(id);
+      this.notificarObservers();
+    } catch (error) {
+      console.error('Erro ao excluir tarefa:', error);
+    }
+  }
 
-// Componente aprimorado com loading
-const UserListWithLoading = withLoading(UserList);</code></pre>
+  alternarStatusTarefa(id) {
+    try {
+      const tarefa = this.model.buscarTarefa(id);
+      if (tarefa) {
+        tarefa.concluida ? tarefa.marcarPendente() : tarefa.marcarConcluida();
+        this.notificarObservers();
+      }
+    } catch (error) {
+      console.error('Erro ao alterar status:', error);
+    }
+  }
+
+  obterTodasTarefas() {
+    return this.model.obterTarefas();
+  }
+}</code></pre>
         </section>
 
         <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Provider Pattern</h2>
-          <pre><code class="language-javascript">// Criando um contexto
-const ThemeContext = React.createContext();
+          <h2 style="color: white;">View - Interface em React Native</h2>
+          <pre><code class="language-javascript">import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 
-// Provider Component
-const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light');
+// View Component
+const TaskView = ({ controller }) => {
+  const [tarefas, setTarefas] = useState([]);
+  const [titulo, setTitulo] = useState('');
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+  // Observer pattern - atualiza quando há mudanças
+  useEffect(() => {
+    const observer = {
+      update: () => {
+        setTarefas(controller.obterTodasTarefas());
+      }
+    };
+    
+    controller.adicionarObserver(observer);
+    setTarefas(controller.obterTodasTarefas());
+  }, [controller]);
+
+  const adicionarTarefa = () => {
+    if (titulo.trim()) {
+      controller.criarTarefa(titulo, '');
+      setTitulo('');
+    }
   };
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+  const renderTarefa = ({ item }) => (
+    <View style={styles.tarefaContainer}>
+      <TouchableOpacity
+        onPress={() => controller.alternarStatusTarefa(item.id)}
+        style={[styles.tarefa, item.concluida && styles.tarefaConcluida]}
+      >
+        <Text style={[styles.titulo, item.concluida && styles.textoConcluido]}>
+          {item.titulo}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => controller.excluirTarefa(item.id)}
+        style={styles.botaoExcluir}
+      >
+        <Text style={styles.textoExcluir}>✕</Text>
+      </TouchableOpacity>
+    </View>
   );
-};
 
-// Hook personalizado para usar o tema
-const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme deve ser usado dentro de um ThemeProvider');
-  }
-  return context;
-};
-
-// Uso no componente
-const ThemedButton = () => {
-  const { theme, toggleTheme } = useTheme();
-  
   return (
-    <TouchableOpacity
-      style={[
-        styles.button,
-        { backgroundColor: theme === 'light' ? '#fff' : '#000' }
-      ]}
-      onPress={toggleTheme}
-    >
-      <Text style={{ color: theme === 'light' ? '#000' : '#fff' }}>
-        Alternar Tema
-      </Text>
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <Text style={styles.cabecalho}>Lista de Tarefas</Text>
+      <FlatList
+        data={tarefas}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderTarefa}
+      />
+    </View>
   );
 };</code></pre>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Integrando MVC em React Native</h2>
+          <pre><code class="language-javascript">// App.js - Integrando tudo
+import React from 'react';
+import { SafeAreaView } from 'react-native';
+
+// Importar nossas classes
+import { TaskListModel, TaskController } from './models/TaskModel';
+import TaskView from './views/TaskView';
+
+const App = () => {
+  // Criar instâncias do Model e Controller
+  const taskModel = new TaskListModel();
+  const taskController = new TaskController(taskModel);
+
+  // Adicionar algumas tarefas de exemplo
+  taskController.criarTarefa('Estudar React Native', 'Revisar conceitos de MVC');
+  taskController.criarTarefa('Fazer exercícios', 'Praticar orientação a objetos');
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <TaskView controller={taskController} />
+    </SafeAreaView>
+  );
+};
+
+export default App;
+
+// Estilos
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
+  },
+  cabecalho: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  tarefaContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  tarefa: {
+    flex: 1,
+    padding: 15,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    elevation: 2,
+  },
+  tarefaConcluida: {
+    backgroundColor: '#e8f5e8',
+  },
+  titulo: {
+    fontSize: 16,
+  },
+  textoConcluido: {
+    textDecorationLine: 'line-through',
+    color: '#888',
+  },
+});</code></pre>
         </section>
 
         <!-- Seção Atividades Práticas -->
@@ -274,28 +487,339 @@ const ThemedButton = () => {
           <h2 style="color: white;">Atividades Práticas 💻</h2>
           
           <div class="concept-box">
-            <h3 style="color: white;">Atividade 1: Refatoração com MVVM</h3>
-            <p style="color: white;">Refatore um aplicativo existente para usar MVVM:</p>
+            <h3 style="color: white;">Atividade 1: Sistema de Biblioteca com Arquitetura Completa</h3>
+            <p style="color: white;">Crie um sistema de biblioteca usando OO + MVC + Service + Repository:</p>
             <ul style="color: white;">
-              <li>Separe a lógica de negócios em ViewModels</li>
-              <li>Implemente estados usando Hooks</li>
-              <li>Crie componentes reutilizáveis</li>
-              <li>Aplique o padrão Container/Presentational</li>
-              <li>Adicione testes unitários para a lógica de negócios</li>
+              <li><strong>Models:</strong> Classes Livro, Autor, Emprestimo</li>
+              <li><strong>Repository:</strong> Persistência com AsyncStorage</li>
+              <li><strong>Service:</strong> Lógica de negócio para empréstimos</li>
+              <li><strong>Controller:</strong> Coordenação das operações</li>
+              <li><strong>View:</strong> Interface React Native completa</li>
             </ul>
           </div>
         </section>
 
         <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
           <div class="concept-box">
-            <h3 style="color: white;">Atividade 2: Gerenciamento de Tema Global</h3>
-            <p style="color: white;">Crie um sistema de temas usando Context API:</p>
+            <h3 style="color: white;">Atividade 2: App de Contatos com Arquitetura em Camadas</h3>
+            <p style="color: white;">Desenvolva um aplicativo de contatos seguindo todos os padrões:</p>
             <ul style="color: white;">
-              <li>Implemente um ThemeProvider</li>
-              <li>Crie hooks personalizados para o tema</li>
-              <li>Adicione suporte a múltiplos temas</li>
-              <li>Persista a preferência do usuário</li>
-              <li>Aplique animações nas transições de tema</li>
+              <li><strong>Repository:</strong> Interface para diferentes fontes de dados</li>
+              <li><strong>Service:</strong> Validações e regras de negócio</li>
+              <li><strong>Controller:</strong> Gerenciamento de estado e ações</li>
+              <li><strong>View:</strong> Componentes React Native organizados</li>
+              <li>Implemente busca, filtros e favoritos</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <div class="concept-box">
+            <h3 style="color: white;">Atividade 3: E-commerce com Padrões Avançados</h3>
+            <p style="color: white;">Crie um app de e-commerce aplicando todos os conceitos:</p>
+            <ul style="color: white;">
+              <li><strong>Models:</strong> Produto, Categoria, Carrinho, Pedido</li>
+              <li><strong>Repositories:</strong> API REST e cache local</li>
+              <li><strong>Services:</strong> Cálculos de preço, validações</li>
+              <li><strong>Controllers:</strong> Gestão de carrinho e pedidos</li>
+              <li>Implementar carrinho de compras e checkout</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <div class="concept-box">
+            <h3 style="color: white;">Atividade 4: Sistema de Tarefas Completo</h3>
+            <p style="color: white;">Expandir o exemplo da aula com recursos avançados:</p>
+            <ul style="color: white;">
+              <li>Adicionar categorias e prioridades</li>
+              <li>Implementar notificações e lembretes</li>
+              <li>Sincronização com servidor (mock)</li>
+              <li>Relatórios e estatísticas avançadas</li>
+              <li>Testes unitários para todas as camadas</li>
+            </ul>
+          </div>
+        </section>
+      </section>
+
+      <!-- Seção Service e Repository -->
+      <section>
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Padrões Service e Repository 🗄️</h2>
+          <div class="concept-box">
+            <h3 style="color: white;">O que são Service e Repository?</h3>
+            <ul style="color: white;">
+              <li class="fragment fade-right"><strong>Repository:</strong> Abstrai o acesso aos dados</li>
+              <li class="fragment fade-right"><strong>Service:</strong> Contém a lógica de negócios</li>
+              <li class="fragment fade-right">Separa responsabilidades de persistência e negócio</li>
+              <li class="fragment fade-right">Facilita testes e manutenção</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Repository Pattern</h2>
+          <pre><code class="language-javascript">// Interface do Repository (conceitual)
+class ITaskRepository {
+  async save(task) { throw new Error("Método deve ser implementado"); }
+  async findById(id) { throw new Error("Método deve ser implementado"); }
+  async findAll() { throw new Error("Método deve ser implementado"); }
+  async delete(id) { throw new Error("Método deve ser implementado"); }
+}
+
+// Implementação para AsyncStorage
+class AsyncStorageTaskRepository extends ITaskRepository {
+  constructor() {
+    super();
+    this.storageKey = '@tasks';
+  }
+
+  async save(task) {
+    try {
+      const tasks = await this.findAll();
+      const existingIndex = tasks.findIndex(t => t.id === task.id);
+      
+      if (existingIndex >= 0) {
+        tasks[existingIndex] = task;
+      } else {
+        tasks.push(task);
+      }
+      
+      await AsyncStorage.setItem(this.storageKey, JSON.stringify(tasks));
+      return task;
+    } catch (error) {
+      throw new Error(`Erro ao salvar tarefa: ${error.message}`);
+    }
+  }
+
+  async findById(id) {
+    try {
+      const tasks = await this.findAll();
+      return tasks.find(task => task.id === id) || null;
+    } catch (error) {
+      throw new Error(`Erro ao buscar tarefa: ${error.message}`);
+    }
+  }
+
+  async findAll() {
+    try {
+      const tasksJson = await AsyncStorage.getItem(this.storageKey);
+      return tasksJson ? JSON.parse(tasksJson) : [];
+    } catch (error) {
+      throw new Error(`Erro ao carregar tarefas: ${error.message}`);
+    }
+  }
+
+  async delete(id) {
+    try {
+      const tasks = await this.findAll();
+      const filteredTasks = tasks.filter(task => task.id !== id);
+      await AsyncStorage.setItem(this.storageKey, JSON.stringify(filteredTasks));
+      return true;
+    } catch (error) {
+      throw new Error(`Erro ao deletar tarefa: ${error.message}`);
+    }
+  }
+}</code></pre>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Service Pattern</h2>
+          <pre><code class="language-javascript">// Service para lógica de negócios
+class TaskService {
+  constructor(taskRepository) {
+    this.taskRepository = taskRepository;
+    this.nextId = 1;
+  }
+
+  async criarTarefa(titulo, descricao) {
+    // Validações de negócio
+    if (!titulo || titulo.trim().length === 0) {
+      throw new Error('Título é obrigatório');
+    }
+
+    if (titulo.length > 100) {
+      throw new Error('Título deve ter no máximo 100 caracteres');
+    }
+
+    // Criar nova tarefa
+    const novaTarefa = new TaskModel(
+      this.nextId++,
+      titulo.trim(),
+      descricao.trim()
+    );
+
+    // Salvar através do repository
+    return await this.taskRepository.save(novaTarefa);
+  }
+
+  async obterTarefas() {
+    return await this.taskRepository.findAll();
+  }
+
+  async obterTarefaPorId(id) {
+    const tarefa = await this.taskRepository.findById(id);
+    if (!tarefa) {
+      throw new Error('Tarefa não encontrada');
+    }
+    return tarefa;
+  }
+
+  async alternarStatusTarefa(id) {
+    const tarefa = await this.obterTarefaPorId(id);
+    
+    // Lógica de negócio para alternar status
+    if (tarefa.concluida) {
+      tarefa.marcarPendente();
+    } else {
+      tarefa.marcarConcluida();
+    }
+
+    return await this.taskRepository.save(tarefa);
+  }
+
+  async excluirTarefa(id) {
+    // Verificar se a tarefa existe antes de excluir
+    await this.obterTarefaPorId(id);
+    return await this.taskRepository.delete(id);
+  }
+
+  async obterEstatisticas() {
+    const tarefas = await this.obterTarefas();
+    
+    return {
+      total: tarefas.length,
+      concluidas: tarefas.filter(t => t.concluida).length,
+      pendentes: tarefas.filter(t => !t.concluida).length,
+      percentualConclusao: tarefas.length > 0 
+        ? Math.round((tarefas.filter(t => t.concluida).length / tarefas.length) * 100)
+        : 0
+    };
+  }
+}</code></pre>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Integração com Controller</h2>
+          <pre><code class="language-javascript">// Controller atualizado para usar Service
+class TaskController {
+  constructor(taskService) {
+    this.taskService = taskService;
+    this.observers = [];
+  }
+
+  adicionarObserver(observer) {
+    this.observers.push(observer);
+  }
+
+  notificarObservers() {
+    this.observers.forEach(observer => observer.update());
+  }
+
+  async criarTarefa(titulo, descricao) {
+    try {
+      const novaTarefa = await this.taskService.criarTarefa(titulo, descricao);
+      this.notificarObservers();
+      return novaTarefa;
+    } catch (error) {
+      console.error('Erro ao criar tarefa:', error.message);
+      throw error;
+    }
+  }
+
+  async excluirTarefa(id) {
+    try {
+      await this.taskService.excluirTarefa(id);
+      this.notificarObservers();
+    } catch (error) {
+      console.error('Erro ao excluir tarefa:', error.message);
+      throw error;
+    }
+  }
+
+  async alternarStatusTarefa(id) {
+    try {
+      await this.taskService.alternarStatusTarefa(id);
+      this.notificarObservers();
+    } catch (error) {
+      console.error('Erro ao alterar status:', error.message);
+      throw error;
+    }
+  }
+
+  async obterTodasTarefas() {
+    try {
+      return await this.taskService.obterTarefas();
+    } catch (error) {
+      console.error('Erro ao carregar tarefas:', error.message);
+      return [];
+    }
+  }
+
+  async obterEstatisticas() {
+    try {
+      return await this.taskService.obterEstatisticas();
+    } catch (error) {
+      console.error('Erro ao obter estatísticas:', error.message);
+      return { total: 0, concluidas: 0, pendentes: 0, percentualConclusao: 0 };
+    }
+  }
+}</code></pre>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Configuração Completa da Arquitetura</h2>
+          <pre><code class="language-javascript">// App.js - Configuração completa
+import React from 'react';
+import { SafeAreaView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Importar classes
+import { TaskModel } from './models/TaskModel';
+import { AsyncStorageTaskRepository } from './repositories/TaskRepository';
+import { TaskService } from './services/TaskService';
+import { TaskController } from './controllers/TaskController';
+import TaskView from './views/TaskView';
+
+const App = () => {
+  // Configurar a arquitetura
+  const taskRepository = new AsyncStorageTaskRepository();
+  const taskService = new TaskService(taskRepository);
+  const taskController = new TaskController(taskService);
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <TaskView controller={taskController} />
+    </SafeAreaView>
+  );
+};
+
+export default App;
+
+// Estrutura de pastas recomendada:
+// /models
+//   TaskModel.js
+// /repositories
+//   TaskRepository.js
+// /services
+//   TaskService.js
+// /controllers
+//   TaskController.js
+// /views
+//   TaskView.js
+// App.js</code></pre>
+        </section>
+
+        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 style="color: white;">Vantagens da Arquitetura Completa</h2>
+          <div class="concept-box">
+            <h3 style="color: white;">Benefícios</h3>
+            <ul style="color: white;">
+              <li class="fragment fade-right"><strong>Separação de Responsabilidades:</strong> Cada camada tem uma função específica</li>
+              <li class="fragment fade-right"><strong>Testabilidade:</strong> Fácil criação de testes unitários</li>
+              <li class="fragment fade-right"><strong>Flexibilidade:</strong> Troca de implementações sem afetar outras camadas</li>
+              <li class="fragment fade-right"><strong>Manutenibilidade:</strong> Código organizado e fácil de entender</li>
+              <li class="fragment fade-right"><strong>Reutilização:</strong> Services podem ser usados em diferentes controllers</li>
             </ul>
           </div>
         </section>
