@@ -30,6 +30,18 @@
   {
     "titulo": "Aula 9 - Tab, Drawer Navigation, axios e Workshop Parte 2",
     "link": "./aulas/aula09.html"
+  },
+  {
+    "titulo": "Aula 10 - Storage e SQLite em React Native",
+    "link": "./aulas/aula10.html"
+  },
+  {
+    "titulo": "Aula 11 - MVC, Orientação a Objetos, Service e Repository",
+    "link": "./aulas/aula11.html"
+  },
+  {
+    "titulo": "Aula 12 - Revisão Geral: React Native",
+    "link": "./aulas/aula12-revisao.html"
   }
 ]
   

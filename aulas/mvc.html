@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVC Tradicional e com Service e Repository</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .slide-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 700px;
+            background-color: #fff;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .slide-header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            padding: 40px;
+            gap: 40px;
+        }
+
+        .text-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .text-section h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+
+        .text-section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #34495e;
+        }
+
+        .text-section ul {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .text-section li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.05em;
+            color: #34495e;
+        }
+
+        .text-section li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .text-section ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .text-section li {
+            margin-bottom: 10px;
+        }
+        .diagram-section {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ecf0f1;
+        }
+        .diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .block {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+            width: 120px;
+            position: relative;
+        }
+        .block::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top: 10px solid #3498db;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+        .block:last-child::after {
+            content: none;
+        }
+        .db-block {
+            background-color: #2ecc71;
+        }
+        .label {
+            position: absolute;
+            font-size: 12px;
+            color: #2c3e50;
+        }
+        .label-right {
+            right: -60px;
+        }
+        .label-left {
+            left: -60px;
+        }
+        .nav-buttons {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+        }
+        .nav-buttons button {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .nav-buttons button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        @media (max-width: 768px) {
+            .slide {
+                flex-direction: column;
+            }
+            .text-section, .diagram-section {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: MVC Tradicional -->
+        <div class="slide active" id="slide1">
+            <div class="text-section">
+                <h1>MVC Tradicional</h1>
+                <h3>Definição</h3>
+                <p>O padrão <strong>MVC</strong> (Model-View-Controller) organiza o código em três camadas, separando a lógica de dados, interface do usuário e controle.</p>
+                <h3>Componentes</h3>
+                <ul>
+                    <li><strong>View</strong>: Interface do usuário, exibe os dados.</li>
+                    <li><strong>Controller</strong>: Coordena interações entre View e Model.</li>
+                    <li><strong>Model</strong>: Representa os dados e a lógica de negócios.</li>
+                </ul>
+                <h3>Benefícios</h3>
+                <ul>
+                    <li>Separação de responsabilidades</li>
+                    <li>Facilita manutenção</li>
+                    <li>Suporta reuso de código</li>
+                </ul>
+            </div>
+            <div class="diagram-section">
+                <div class="diagram">
+                    <div class="block">View</div>
+                    <div class="label label-right">Entradas</div>
+                    <div class="block">Controller</div>
+                    <div class="label label-left">Atualiza</div>
+                    <div class="block">Model</div>
+                    <div class="label label-right" style="top: 140px;">Manipula</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: MVC com Service e Repository -->
+        <div class="slide" id="slide2">
+            <div class="text-section">
+                <h1>MVC com Service e Repository</h1>
+                <h3>Definição</h3>
+                <p>Extensão do MVC que adiciona <strong>Service</strong> para lógica de negócios e <strong>Repository</strong> para acesso a dados, aumentando a modularidade.</p>
+                <h3>Componentes</h3>
+                <ul>
+                    <li><strong>View</strong>: Interface do usuário.</li>
+                    <li><strong>Controller</strong>: Coordena interações.</li>
+                    <li><strong>Service</strong>: Lógica de negócios.</li>
+                    <li><strong>Repository</strong>: Acesso a dados.</li>
+                    <li><strong>Model</strong>: Entidades de dados.</li>
+                </ul>
+                <h3>Benefícios</h3>
+                <ul>
+                    <li>Separação avançada de responsabilidades</li>
+                    <li>Maior manutenibilidade</li>
+                    <li>Facilita testes unitários</li>
+                    <li>Flexibilidade na persistência</li>
+                </ul>
+            </div>
+            <div class="diagram-section">
+                <div class="diagram">
+                    <div class="block">View</div>
+                    <div class="label label-right">Entradas</div>
+                    <div class="block">Controller</div>
+                    <div class="label label-left">Atualiza</div>
+                    <div class="block">Service</div>
+                    <div class="label label-right">Chama</div>
+                    <div class="block">Repository</div>
+                    <div class="label label-left">Acessa/Retorna</div>
+                    <div class="block db-block">Banco de Dados</div>
+                    <div class="label label-right" style="top: 320px;">Retorna</div>
+                    <div class="block" style="position: absolute; left: -100px; top: 280px;">Model</div>
+                    <div class="label label-left" style="top: 300px; left: -160px;">Usado por</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botões de Navegação -->
+        <div class="nav-buttons">
+            <button onclick="showSlide(1)" id="prevBtn" disabled>Anterior</button>
+            <button onclick="showSlide(2)" id="nextBtn">Próximo</button>
+        </div>
+    </div>
+
+    <script>
+        function showSlide(slideNumber) {
+            document.getElementById('slide1').classList.remove('active');
+            document.getElementById('slide2').classList.remove('active');
+            document.getElementById(`slide${slideNumber}`).classList.add('active');
+            
+            document.getElementById('prevBtn').disabled = slideNumber === 1;
+            document.getElementById('nextBtn').disabled = slideNumber === 2;
+        }
+    </script>
+</body>
+</html>
