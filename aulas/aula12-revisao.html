@@ -1246,7 +1246,7 @@ export default function App() {
                         </ul>
                     </div>
                 </section>
-            </section> -->
+            </section>
 
             <!-- SEÇÃO 7: RESUMO FINAL -->
             <section>
@@ -1366,19 +1366,19 @@ export default function App() {
                         </p>
                     </div>
                 </section>
+<!-- Questão 1 -->
+<section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+  <h5 style="margin-bottom: 8px;">📝 Questão 1 - Hooks e Estado em React Native</h5>
+  <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
 
-                <!-- Questão 1 -->
-                <section data-background="#f8f9fa">
-                    <h2>📝 Questão 1 - Hooks e Estado</h2>
-                    <div class="quiz-box" style="padding: 15px; margin: 10px 0;">
-                        <p style="font-size: 0.8em; text-align: justify; margin-bottom: 12px;">
-                            Um desenvolvedor React Native precisa implementar um componente que exibe uma lista de produtos 
-                            obtidos de uma API. O componente deve mostrar um indicador de carregamento enquanto os dados 
-                            estão sendo buscados e tratar possíveis erros de conexão.
-                        </p>
-                        
-                        <div style="background: #f5f5f5; padding: 8px; border-radius: 5px; margin: 8px 0;">
-                            <pre style="font-size: 0.6em; margin: 0;"><code>
+    <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+      Em React Native, o uso do <code>useEffect</code> é essencial para ações como a busca de dados ao montar o componente. 
+      Também é fundamental controlar o estado de carregamento e tratar erros da requisição, evitando falhas visuais ou travamentos na aplicação. 
+      O código abaixo implementa esse fluxo com boas práticas.
+    </p>
+
+    <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+      <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
 useEffect(() => {
   setLoading(true);
   fetch('https://api.exemplo.com/produtos')
@@ -1386,186 +1386,549 @@ useEffect(() => {
     .then(data => setProdutos(data))
     .catch(error => setErro(error.message))
     .finally(() => setLoading(false));
-}, []); // Array vazio
+}, []);
+      </code></pre>
+    </div>
+
+    <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Analise as afirmativas:</strong></p>
+    <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+      <p style="margin: 2px 0;">I. O array vazio faz com que o <code>useEffect</code> execute apenas uma vez.</p>
+      <p style="margin: 2px 0;">II. O <code>setLoading(true)</code> deve vir antes da requisição.</p>
+      <p style="margin: 2px 0;">III. O <code>.finally()</code> garante que <code>setLoading(false)</code> seja sempre executado.</p>
+      <p style="margin: 2px 0;">IV. Sem tratamento de erro, a aplicação pode apresentar falhas graves.</p>
+    </div>
+
+    <p style="font-size: 0.75em; margin-top: 10px;"><strong>Assinale a alternativa correta:</strong></p>
+    <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+      <li>A) I, II e IV, apenas.</li>
+      <li>B) I, III e IV, apenas.</li>
+      <li>C) II, III e IV, apenas.</li>
+      <li>D) I, II e III, apenas.</li>
+      <li>E) I, II, III e IV.</li>
+    </ul>
+
+    <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+      <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: E) I, II, III e IV.</strong>
+      <p style="font-size: 0.65em; margin: 2px 0;">
+        Todas as afirmativas estão corretas e seguem boas práticas com hooks.
+      </p>
+    </div>
+  </div>
+</section>
+
+                <!-- Questão 2 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 2 - Arrow Functions e Contexto</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Em JavaScript ES6+, as arrow functions têm comportamento diferente das funções tradicionais 
+                            em relação ao contexto (this). Considere o código abaixo implementado em um componente React Native:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+class MinhaClasse {
+  constructor() {
+    this.nome = 'React Native';
+    this.funcaoTradicional = function() { return this.nome; };
+    this.arrowFunction = () => { return this.nome; };
+  }
+  
+  metodoTeste() {
+    setTimeout(this.funcaoTradicional, 100);
+    setTimeout(this.arrowFunction, 100);
+  }
+}
                             </code></pre>
                         </div>
 
-                        <p style="font-size: 0.7em; margin-bottom: 8px;"><strong>Analise as afirmativas:</strong></p>
-                        <div style="font-size: 0.65em; text-align: left; line-height: 1.3;">
-                            <p style="margin: 3px 0;">I. O array vazio garante que o useEffect execute apenas uma vez</p>
-                            <p style="margin: 3px 0;">II. O setLoading(true) deve ser chamado antes da requisição</p>
-                            <p style="margin: 3px 0;">III. O .finally() garante que setLoading(false) execute sempre</p>
-                            <p style="margin: 3px 0;">IV. Sem tratamento de erro, a aplicação pode travar</p>
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Analise as afirmativas sobre arrow functions:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. Arrow functions não possuem seu próprio contexto <code>this</code>.</p>
+                            <p style="margin: 2px 0;">II. <code>this.arrowFunction</code> manterá o contexto da instância da classe.</p>
+                            <p style="margin: 2px 0;">III. <code>this.funcaoTradicional</code> perderá o contexto quando usada no setTimeout.</p>
+                            <p style="margin: 2px 0;">IV. Arrow functions são sempre mais performáticas que funções tradicionais.</p>
                         </div>
 
-                        <div class="fragment fade-in" style="margin-top: 10px; padding: 8px; background: #e8f5e8; border-radius: 5px;">
-                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta: Todas corretas (I, II, III, IV)</strong>
-                            <p style="font-size: 0.6em; margin: 3px 0;">
-                                Representam boas práticas essenciais no desenvolvimento React Native
-                            </p>
-                        </div>
-                    </div>
-                </section>
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Assinale a alternativa correta:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e III, apenas.</li>
+                            <li>B) I, II e IV, apenas.</li>
+                            <li>C) II, III e IV, apenas.</li>
+                            <li>D) I, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
 
-                <!-- Questão 2 -->
-                <section data-background="#f8f9fa">
-                    <h2>📝 Questão 2 - Navegação</h2>
-                    <div class="quiz-box" style="padding: 15px; margin: 10px 0;">
-                        <p style="font-size: 0.8em; text-align: justify; margin-bottom: 12px;">
-                            Uma empresa desenvolve um app de e-commerce com: Login, Lista de Produtos, Detalhes do Produto, 
-                            Carrinho e Perfil. O app deve permitir navegação hierárquica entre produtos e manter abas 
-                            principais sempre acessíveis.
-                        </p>
-
-                        <p style="font-size: 0.7em; margin-bottom: 8px;"><strong>Qual estrutura de navegação é mais adequada?</strong></p>
-                        
-                        <div style="font-size: 0.65em; text-align: left; line-height: 1.3;">
-                            <p style="margin: 3px 0;">A) Apenas Stack Navigator para todas as telas</p>
-                            <p style="margin: 3px 0;">B) Apenas Tab Navigator para todas as telas</p>
-                            <p style="margin: 3px 0;">C) Tab Navigator principal com Stack Navigators aninhados</p>
-                            <p style="margin: 3px 0;">D) Drawer Navigator com todas as telas no menu lateral</p>
-                            <p style="margin: 3px 0;">E) Stack Navigator principal com modais para secundárias</p>
-                        </div>
-
-                        <div class="fragment fade-in" style="margin-top: 10px; padding: 8px; background: #e8f5e8; border-radius: 5px;">
-                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta: C) Tab Navigator com Stack aninhados</strong>
-                            <p style="font-size: 0.6em; margin: 3px 0;">
-                                Permite abas sempre acessíveis com navegação hierárquica dentro de cada seção
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) I, II e III, apenas.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                IV é falsa: performance depende do contexto de uso, não há regra absoluta.
                             </p>
                         </div>
                     </div>
                 </section>
 
                 <!-- Questão 3 -->
-                <section data-background="#f8f9fa">
-                    <h2>📝 Questão 3 - Performance</h2>
-                    <div class="quiz-box" style="padding: 15px; margin: 10px 0;">
-                        <p style="font-size: 0.8em; text-align: justify; margin-bottom: 12px;">
-                            Um aplicativo React Native apresenta lentidão ao renderizar uma lista com mais de 1000 itens. 
-                            Cada item possui imagem, título, descrição e botões de ação.
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 3 - Operador Ternário e Renderização Condicional</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Em React Native, a renderização condicional é frequentemente implementada usando operadores ternários 
+                            e operadores lógicos. Analise o código JSX abaixo:
                         </p>
 
-                        <div style="background: #f5f5f5; padding: 8px; border-radius: 5px; margin: 8px 0;">
-                            <pre style="font-size: 0.6em; margin: 0;"><code>
-// Implementação atual
-&lt;ScrollView&gt;
-  {produtos.map(item => (
-    &lt;ProdutoCard key={item.id} produto={item} /&gt;
-  ))}
-&lt;/ScrollView&gt;
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+const usuario = { nome: 'João', idade: 25, premium: false };
+const lista = [];
+
+return (
+  &lt;View&gt;
+    {usuario.nome && &lt;Text&gt;Olá, {usuario.nome}&lt;/Text&gt;}
+    {usuario.idade >= 18 ? &lt;Button title="Entrar" /&gt; : &lt;Text&gt;Menor de idade&lt;/Text&gt;}
+    {usuario.premium ? &lt;Text&gt;Usuário Premium&lt;/Text&gt; : null}
+    {lista.length > 0 && &lt;FlatList data={lista} /&gt;}
+  &lt;/View&gt;
+);
                             </code></pre>
                         </div>
 
-                        <p style="font-size: 0.7em; margin-bottom: 8px;"><strong>Quais otimizações são recomendadas?</strong></p>
-                        <div style="font-size: 0.65em; text-align: left; line-height: 1.3;">
-                            <p style="margin: 3px 0;">I. Substituir ScrollView por FlatList com renderização lazy</p>
-                            <p style="margin: 3px 0;">II. Implementar getItemLayout para altura fixa</p>
-                            <p style="margin: 3px 0;">III. Usar React.memo no componente ProdutoCard</p>
-                            <p style="margin: 3px 0;">IV. Implementar paginação ou carregamento incremental</p>
-                            <p style="margin: 3px 0;">V. Adicionar keyExtractor customizado</p>
-                        </div>
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Qual será o resultado renderizado?</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) Apenas "Olá, João" e o botão "Entrar"</li>
+                            <li>B) "Olá, João", "Entrar" e "Usuário Premium"</li>
+                            <li>C) "Olá, João", "Entrar" e FlatList vazia</li>
+                            <li>D) Apenas "Olá, João" e "Menor de idade"</li>
+                            <li>E) Todos os elementos serão renderizados</li>
+                        </ul>
 
-                        <div class="fragment fade-in" style="margin-top: 10px; padding: 8px; background: #e8f5e8; border-radius: 5px;">
-                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta: Todas (I, II, III, IV, V)</strong>
-                            <p style="font-size: 0.6em; margin: 3px 0;">
-                                FlatList, memoização e paginação são essenciais para performance em listas grandes
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) Apenas "Olá, João" e o botão "Entrar"</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                usuario.nome é truthy, idade >= 18 é true, premium é false (não renderiza), lista vazia não renderiza FlatList.
                             </p>
                         </div>
                     </div>
                 </section>
 
                 <!-- Questão 4 -->
-                <section data-background="#f8f9fa">
-                    <h2>📝 Questão 4 - Estado Global</h2>
-                    <div class="quiz-box" style="padding: 15px; margin: 10px 0;">
-                        <p style="font-size: 0.8em; text-align: justify; margin-bottom: 12px;">
-                            Uma aplicação React Native possui múltiplas telas que precisam compartilhar informações 
-                            do usuário logado (nome, email, preferências). Atualmente, os dados são passados via 
-                            props através de 5 níveis de componentes, causando "prop drilling".
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 4 - Destructuring e Spread Operator</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            O destructuring e spread operator são recursos essenciais do JavaScript moderno, 
+                            muito utilizados em React Native para manipulação de props e estado:
                         </p>
 
-                        <div style="background: #f5f5f5; padding: 8px; border-radius: 5px; margin: 8px 0;">
-                            <pre style="font-size: 0.6em; margin: 0;"><code>
-// Situação atual - Prop Drilling
-App → Navigator → Screen → Container → Component → UserInfo
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+const usuario = { id: 1, nome: 'Ana', email: 'ana@email.com', idade: 30 };
+const novosDados = { idade: 31, cidade: 'São Paulo' };
+
+// Operação 1
+const { nome, email, ...resto } = usuario;
+
+// Operação 2  
+const usuarioAtualizado = { ...usuario, ...novosDados };
+
+// Operação 3
+const { idade: idadeUsuario = 25 } = usuario;
                             </code></pre>
                         </div>
 
-                        <p style="font-size: 0.7em; margin-bottom: 8px;"><strong>Qual solução é mais apropriada?</strong></p>
-                        <div style="font-size: 0.65em; text-align: left; line-height: 1.3;">
-                            <p style="margin: 3px 0;">A) useState no componente pai e passar via props</p>
-                            <p style="margin: 3px 0;">B) Context API com Provider/Consumer</p>
-                            <p style="margin: 3px 0;">C) AsyncStorage e buscar em cada componente</p>
-                            <p style="margin: 3px 0;">D) Variáveis globais JavaScript</p>
-                            <p style="margin: 3px 0;">E) Redux para gerenciamento de estado</p>
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Analise os resultados:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. <code>resto</code> conterá <code>{ id: 1, idade: 30 }</code></p>
+                            <p style="margin: 2px 0;">II. <code>usuarioAtualizado.idade</code> será 31</p>
+                            <p style="margin: 2px 0;">III. <code>idadeUsuario</code> será 30</p>
+                            <p style="margin: 2px 0;">IV. <code>usuarioAtualizado</code> terá a propriedade <code>cidade</code></p>
                         </div>
 
-                        <div class="fragment fade-in" style="margin-top: 10px; padding: 8px; background: #e8f5e8; border-radius: 5px;">
-                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta: B) Context API</strong>
-                            <p style="font-size: 0.6em; margin: 3px 0;">
-                                Para dados globais simples, Context API resolve prop drilling sem complexidade do Redux
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Estão corretas:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e III, apenas.</li>
+                            <li>B) I, II e IV, apenas.</li>
+                            <li>C) II, III e IV, apenas.</li>
+                            <li>D) I, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: E) I, II, III e IV.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                Todas as operações estão corretas conforme sintaxe do destructuring e spread.
                             </p>
                         </div>
                     </div>
                 </section>
 
                 <!-- Questão 5 -->
-                <section data-background="#f8f9fa">
-                    <h2>📝 Questão 5 - Segurança</h2>
-                    <div class="quiz-box" style="padding: 15px; margin: 10px 0;">
-                        <p style="font-size: 0.8em; text-align: justify; margin-bottom: 12px;">
-                            Um desenvolvedor implementa autenticação em um app React Native que precisa armazenar 
-                            tokens JWT e dados sensíveis. O app também consome APIs externas que requerem chaves de API.
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 5 - Array Methods e Functional Programming</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Os métodos de array como map, filter e reduce são fundamentais para manipulação de dados 
+                            em React Native. Considere o array de produtos abaixo:
                         </p>
 
-                        <div style="background: #f5f5f5; padding: 8px; border-radius: 5px; margin: 8px 0;">
-                            <pre style="font-size: 0.6em; margin: 0;"><code>
-// Implementação atual
-const API_KEY = "sk_live_1234567890abcdef"; // Hardcoded
-await AsyncStorage.setItem('jwt_token', token);
-await AsyncStorage.setItem('user_password', password);
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+const produtos = [
+  { id: 1, nome: 'Notebook', preco: 2500, categoria: 'eletrônicos' },
+  { id: 2, nome: 'Mouse', preco: 50, categoria: 'eletrônicos' },
+  { id: 3, nome: 'Livro', preco: 30, categoria: 'educação' },
+  { id: 4, nome: 'Teclado', preco: 150, categoria: 'eletrônicos' }
+];
+
+const resultado = produtos
+  .filter(p => p.categoria === 'eletrônicos')
+  .map(p => ({ ...p, precoComDesconto: p.preco * 0.9 }))
+  .reduce((total, p) => total + p.precoComDesconto, 0);
                             </code></pre>
                         </div>
 
-                        <p style="font-size: 0.7em; margin-bottom: 8px;"><strong>Analise as práticas de segurança:</strong></p>
-                        <div style="font-size: 0.65em; text-align: left; line-height: 1.3;">
-                            <p style="margin: 3px 0;">I. Chaves de API devem estar em variáveis de ambiente</p>
-                            <p style="margin: 3px 0;">II. Tokens JWT podem ser armazenados em AsyncStorage</p>
-                            <p style="margin: 3px 0;">III. Senhas nunca devem ser armazenadas localmente</p>
-                            <p style="margin: 3px 0;">IV. Dados sensíveis devem usar SecureStore/Keychain</p>
-                            <p style="margin: 3px 0;">V. Certificado pinning para APIs críticas</p>
-                        </div>
-
-                        <div class="fragment fade-in" style="margin-top: 10px; padding: 8px; background: #e8f5e8; border-radius: 5px;">
-                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta: I, III, IV e V corretas. II incorreta</strong>
-                            <p style="font-size: 0.6em; margin: 3px 0;">
-                                Tokens JWT devem usar SecureStore, não AsyncStorage para maior segurança
-                            </p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Resultado Final -->
-                <section data-background-gradient="radial-gradient(#8e24aa, #3f51b5)">
-                    <h2 style="color: white;">🎯 Avaliação Concluída</h2>
-                    <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px;">
-                        <h3 style="color: white; margin-bottom: 15px; font-size: 1.1em;">Competências Avaliadas</h3>
-                        <ul style="color: white; font-size: 0.8em; text-align: left; line-height: 1.4;">
-                            <li style="margin: 5px 0;">✅ <strong>Hooks e Estado:</strong> useState, useEffect, ciclo de vida</li>
-                            <li style="margin: 5px 0;">✅ <strong>Navegação:</strong> Stack, Tab, estruturas aninhadas</li>
-                            <li style="margin: 5px 0;">✅ <strong>Performance:</strong> FlatList, memoização, lazy loading</li>
-                            <li style="margin: 5px 0;">✅ <strong>Estado Global:</strong> Context API vs Redux, prop drilling</li>
-                            <li style="margin: 5px 0;">✅ <strong>Segurança:</strong> Storage seguro, proteção de dados</li>
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Qual será o valor de <code>resultado</code>?</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) 2700</li>
+                            <li>B) 2430</li>
+                            <li>C) 2500</li>
+                            <li>D) 2250</li>
+                            <li>E) 2070</li>
                         </ul>
-                        
-                        <div style="margin-top: 15px; padding: 12px; background: rgba(255, 255, 255, 0.1); border-radius: 10px;">
-                            <p style="color: white; font-size: 0.85em; margin: 0;">
-                                <strong>Parabéns!</strong> Você demonstrou conhecimento sólido nos fundamentos 
-                                essenciais para desenvolvimento profissional com React Native.
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: B) 2430</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                Eletrônicos: (2500 + 50 + 150) * 0.9 = 2700 * 0.9 = 2430
                             </p>
                         </div>
                     </div>
                 </section>
+
+                <!-- Questão 6 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 6 - Async/Await e Promises</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            O tratamento de operações assíncronas é crucial em React Native. Analise as implementações 
+                            equivalentes abaixo para buscar dados de uma API:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+// Implementação A - Promises
+function buscarDados() {
+  return fetch('/api/dados')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+}
+
+// Implementação B - Async/Await
+async function buscarDados() {
+  try {
+    const response = await fetch('/api/dados');
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Sobre essas implementações:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. Ambas são funcionalmente equivalentes</p>
+                            <p style="margin: 2px 0;">II. Async/await torna o código mais legível</p>
+                            <p style="margin: 2px 0;">III. Promises são mais performáticas que async/await</p>
+                            <p style="margin: 2px 0;">IV. Try/catch substitui o .catch() das promises</p>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Estão corretas:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e IV, apenas.</li>
+                            <li>B) I, II e III, apenas.</li>
+                            <li>C) II, III e IV, apenas.</li>
+                            <li>D) I, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) I, II e IV, apenas.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                III é falsa: performance é equivalente, async/await é syntactic sugar para promises.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 7 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 7 - Operadores Lógicos e Short-Circuit</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Os operadores lógicos em JavaScript têm comportamento de short-circuit evaluation. 
+                            Analise o código abaixo usado em um componente React Native:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+const usuario = null;
+const configuracoes = { tema: 'escuro' };
+const lista = [];
+
+const resultado1 = usuario && usuario.nome || 'Visitante';
+const resultado2 = configuracoes?.tema ?? 'claro';
+const resultado3 = lista.length && 'Lista preenchida';
+const resultado4 = '' || 'Texto padrão';
+const resultado5 = 0 ?? 'Zero é falsy mas não nullish';
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Quais são os valores corretos?</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) 'Visitante', 'escuro', false, 'Texto padrão', 0</li>
+                            <li>B) null, 'escuro', 0, 'Texto padrão', 'Zero é falsy mas não nullish'</li>
+                            <li>C) 'Visitante', 'claro', false, 'Texto padrão', 0</li>
+                            <li>D) undefined, 'escuro', 0, '', 0</li>
+                            <li>E) 'Visitante', 'escuro', 0, 'Texto padrão', 0</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: E) 'Visitante', 'escuro', 0, 'Texto padrão', 0</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                ?? (nullish coalescing) só considera null/undefined, não valores falsy como 0.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 8 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 8 - Template Literals e Interpolação</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Template literals oferecem uma forma elegante de construir strings em JavaScript. 
+                            Em React Native, são muito úteis para interpolação de valores e construção de textos dinâmicos:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+const produto = { nome: 'Smartphone', preco: 1200, desconto: 10 };
+const usuario = { nome: 'Carlos', vip: true };
+
+const mensagem1 = `Olá ${usuario.nome}${usuario.vip ? ' (VIP)' : ''}!`;
+
+const mensagem2 = `Produto: ${produto.nome}
+Preço: R$ ${produto.preco}
+Desconto: ${produto.desconto}%
+Total: R$ ${produto.preco * (1 - produto.desconto/100)}`;
+
+const cssClass = `produto ${produto.preco > 1000 ? 'caro' : 'barato'} ${usuario.vip ? 'vip-discount' : ''}`;
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Qual será o valor de <code>cssClass</code>?</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) "produto caro vip-discount"</li>
+                            <li>B) "produto barato vip-discount"</li>
+                            <li>C) "produto caro"</li>
+                            <li>D) "produto caro "</li>
+                            <li>E) "produto caro vip-discount "</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) "produto caro vip-discount"</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                preco > 1000 é true (1200), usuario.vip é true, resultando nas três classes.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 9 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 9 - Higher-Order Functions e Closures</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Higher-order functions e closures são conceitos importantes para criar código reutilizável 
+                            em React Native. Analise a implementação de um sistema de cache simples:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+function criarCache() {
+  const cache = {};
+  
+  return function(chave, valor) {
+    if (valor !== undefined) {
+      cache[chave] = valor;
+      return valor;
+    }
+    return cache[chave];
+  };
+}
+
+const meuCache = criarCache();
+meuCache('user1', { nome: 'João' });
+meuCache('user2', { nome: 'Maria' });
+
+const resultado1 = meuCache('user1');
+const resultado2 = meuCache('user3');
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Sobre este código:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. <code>resultado1</code> será <code>{ nome: 'João' }</code></p>
+                            <p style="margin: 2px 0;">II. <code>resultado2</code> será <code>undefined</code></p>
+                            <p style="margin: 2px 0;">III. A variável <code>cache</code> é privada e persiste entre chamadas</p>
+                            <p style="margin: 2px 0;">IV. Cada chamada de <code>criarCache()</code> cria um cache independente</p>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Estão corretas:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e III, apenas.</li>
+                            <li>B) I, II e IV, apenas.</li>
+                            <li>C) II, III e IV, apenas.</li>
+                            <li>D) I, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: E) I, II, III e IV.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                Todas as afirmativas demonstram corretamente o comportamento de closures.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 10 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 10 - Event Handling e Binding</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            O tratamento de eventos em React Native requer atenção ao contexto e binding. 
+                            Considere as diferentes abordagens para passar parâmetros em event handlers:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+function ListaItens({ itens }) {
+  const handleClick = (id, evento) => {
+    console.log('Clicou no item:', id);
+  };
+
+  return (
+    &lt;View&gt;
+      {itens.map(item => (
+        &lt;TouchableOpacity
+          key={item.id}
+          onPress={() => handleClick(item.id)}           // Opção A
+          onPress={handleClick.bind(null, item.id)}      // Opção B  
+          onPress={(e) => handleClick(item.id, e)}       // Opção C
+        &gt;
+          &lt;Text&gt;{item.nome}&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      ))}
+    &lt;/View&gt;
+  );
+}
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Sobre essas implementações:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. A Opção A cria uma nova função a cada render</p>
+                            <p style="margin: 2px 0;">II. A Opção B é mais performática que A</p>
+                            <p style="margin: 2px 0;">III. A Opção C permite acesso ao evento original</p>
+                            <p style="margin: 2px 0;">IV. Todas as três opções são funcionalmente equivalentes</p>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Estão corretas:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e III, apenas.</li>
+                            <li>B) I, II e IV, apenas.</li>
+                            <li>C) I, III e IV, apenas.</li>
+                            <li>D) II, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) I, II e III, apenas.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                IV é falsa: C permite acesso ao evento, diferenciando-se funcionalmente das outras.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 11 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 11 - Módulos ES6 e Import/Export</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            A modularização é fundamental em React Native. Analise as diferentes formas de 
+                            exportar e importar módulos em JavaScript ES6:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+// utils.js
+export const API_URL = 'https://api.exemplo.com';
+export function formatarData(data) { return data.toLocaleDateString(); }
+export default function conectarAPI(endpoint) { return fetch(API_URL + endpoint); }
+
+// helpers.js  
+const validarEmail = (email) => email.includes('@');
+const calcularIdade = (nascimento) => new Date().getFullYear() - nascimento;
+export { validarEmail, calcularIdade as idade };
+
+// main.js
+import conectarAPI, { API_URL, formatarData } from './utils';
+import { validarEmail, idade } from './helpers';
+import * as todosHelpers from './helpers';
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Sobre esses imports/exports:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. <code>conectarAPI</code> é importado como default export</p>
+                            <p style="margin: 2px 0;">II. <code>calcularIdade</code> é renomeado para <code>idade</code> no export</p>
+                            <p style="margin: 2px 0;">III. <code>todosHelpers.validarEmail</code> estará disponível</p>
+                            <p style="margin: 2px 0;">IV. Um módulo pode ter múltiplos default exports</p>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Estão corretas:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e III, apenas.</li>
+                            <li>B) I, II e IV, apenas.</li>
+                            <li>C) II, III e IV, apenas.</li>
+                            <li>D) I, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) I, II e III, apenas.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                IV é falsa: cada módulo pode ter apenas um default export.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
             </section>
 
             <!-- Slide Final -->
