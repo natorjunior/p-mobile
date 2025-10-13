@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "aula08-apis",
+    "slug": "aula08-apis",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android", "web"],
+  "sdkVersion": "54.0.0",
+    "updates": { "enabled": false },
+    "assetBundlePatterns": ["**/*"]
+  }
+}

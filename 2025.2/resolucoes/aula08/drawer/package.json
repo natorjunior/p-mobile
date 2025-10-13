@@ -1,0 +1,16 @@
+{
+  "name": "aula08-drawer",
+  "version": "1.0.0",
+  "private": true,
+  "main": "App.js",
+  "dependencies": {
+    "expo": "~51.0.0",
+    "react": "18.2.0",
+    "react-native": "0.74.1",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/drawer": "^6.6.12",
+    "react-native-screens": "~4.10.0",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-gesture-handler": "~2.24.0"
+  }
+}

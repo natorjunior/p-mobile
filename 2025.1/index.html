@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Programação Mobile</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Fonte personalizada */
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    /* Transição suave para sidebar móvel */
+    #sidebar {
+      transition: transform 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="relative">
+    <!-- Fundo em gradiente escuro -->
+    <div class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 py-8 px-4 md:py-12 text-center text-white">
+      <!-- Botão hambúrguer (mobile) -->
+      <button 
+        class="absolute left-4 top-6 md:hidden bg-gray-700 hover:bg-gray-600 p-2 rounded focus:outline-none"
+        onclick="toggleSidebar()" 
+        aria-label="Abrir Menu">
+        <span class="block w-6 h-0.5 bg-white mb-1"></span>
+        <span class="block w-6 h-0.5 bg-white mb-1"></span>
+        <span class="block w-6 h-0.5 bg-white"></span>
+      </button>
+      <h1 class="text-3xl md:text-4xl font-bold">Disciplina de Programação Mobile</h1>
+      <p class="text-lg md:text-xl mt-2 opacity-90">Aulas e materiais de estudo</p>
+    </div>
+    <!-- Wave (SVG) -->
+    <div class="w-full overflow-hidden leading-none text-white -mt-1">
+      <svg class="block w-full h-16 md:h-20" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path 
+          fill="#1F2937" 
+          fill-opacity="1" 
+          d="M0,224L24,213.3C48,203,96,181,144,192C192,203,240,245,288,234.7C336,224,384,160,432,154.7C480,149,528,203,576,218.7C624,235,672,213,720,181.3C768,149,816,107,864,85.3C912,64,960,64,1008,96C1056,128,1104,192,1152,224C1200,256,1248,288,1296,272C1344,256,1392,192,1416,160L1440,128L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"
+        />
+      </svg>
+    </div>
+  </header>
+
+  <!-- CONTAINER GERAL -->
+  <div class="flex flex-1">
+
+    <!-- SIDEBAR (fixa em telas md e retrátil em mobile) -->
+    <aside 
+      id="sidebar" 
+      class="fixed md:static inset-y-0 left-0 z-30 w-64 bg-gray-800 shadow-md border-r border-gray-700 transform -translate-x-full md:translate-x-0 p-6"
+    >
+      <!-- Seção Professor -->
+      <div class="mt-8">
+        <h2 class="text-xl font-semibold text-gray-100">Sobre</h2>
+        <div class="flex items-center my-4 space-x-4">
+          <img 
+            src="https://avatars.githubusercontent.com/u/51802728?v=4" 
+            alt="Foto do Professor" 
+            class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover shadow-md"
+          />
+          <div>
+            <h3 class="text-md md:text-lg font-semibold text-gray-200 leading-tight">
+              Prof. Msc. Nator Junior
+            </h3>
+            <p class="text-xs md:text-sm text-gray-400">
+              Mestre em Ciência da Computação,<br />
+              <strong>Algoritmos, Otimização e IA</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4 border-gray-700" />
+
+      <!-- Menu de Navegação -->
+      <nav>
+        <h2 class="text-xl font-semibold text-gray-100">Menu</h2>
+        <ul class="mt-3 space-y-2">
+          <li>
+            <a href="#" 
+               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors"
+            >
+              Início
+            </a>
+          </li>
+          <li>
+            <a href="#" 
+               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors"
+            >
+              Sobre
+            </a>
+          </li>
+          <li>
+            <a href="#" 
+               class="block py-2 px-3 rounded text-gray-300 hover:text-gray-900 hover:bg-green-400 transition-colors"
+            >
+              Contato
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- Obs.: Em telas md+ o main empurra 64px para direita (tamanho da sidebar) -->
+    <main class="flex-1 ml-0 md:ml-1 p-6 space-y-6">
+      
+      <!-- SOBRE A DISCIPLINA -->
+      <section class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-semibold text-gray-100 mb-4">Sobre a Disciplina</h2>
+        <p class="text-gray-300 leading-relaxed text-justify">
+          Nesta disciplina, você aprenderá os conceitos fundamentais de 
+          <span class="font-semibold text-gray-100">desenvolvimento de aplicativos móveis</span>. 
+          Exploraremos desde o ciclo de vida de um app até aspectos de design responsivo e boas práticas 
+          de programação para diferentes plataformas, como Android e iOS. Abordaremos também linguagens 
+          e frameworks modernos (por exemplo, Kotlin, Swift, React Native, Flutter), além de exemplos 
+          práticos para a construção de aplicativos reais. Nosso objetivo é capacitá-lo(a) a planejar, 
+          desenvolver e publicar soluções mobile eficientes e atraentes.
+        </p>
+      </section>
+
+      <!-- AULAS DISPONÍVEIS -->
+      <section class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-semibold text-gray-100 mb-4">Aulas Disponíveis</h2>
+        <ul id="aulas-list" class="space-y-3">
+          <!-- Conteúdo carregado via JavaScript -->
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <!-- RODAPÉ -->
+  <footer class="bg-gray-800 text-gray-400 text-center py-4 mt-8 border-t border-gray-700">
+    <p class="text-sm">
+      &copy; 2025 | Programação Mobile - Prof. Nator Junior. Todos os direitos reservados.
+    </p>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Toggle da sidebar em dispositivos móveis
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.toggle("-translate-x-full");
+    }
+    
+  document.addEventListener("DOMContentLoaded", async function() {
+    const listaAulas = document.getElementById("aulas-list");
+
+    try {
+
+      const response = await fetch('./aulas/aulas.json');
+      
+      // Verifica se deu tudo certo (HTTP 200)
+      if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`);
+      }
+      
+      // Lê o conteúdo como JSON
+      const aulas = await response.json();
+      
+      // Se não vier nada, mostra mensagem
+      if (!aulas || !Array.isArray(aulas) || aulas.length === 0) {
+        listaAulas.innerHTML = '<p class="text-gray-400 text-justify">Nenhuma aula disponível no momento.</p>';
+        return;
+      }
+
+      // Cria itens <li> para cada aula
+      aulas.forEach((aula, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <a href="${aula.link}" 
+             class="block p-4 bg-green-500 text-gray-900 rounded-lg hover:bg-green-400 transition-colors text-center font-semibold">
+            📱 ${aula.titulo || 'Aula ' + (index + 1)}
+          </a>
+        `;
+        listaAulas.appendChild(li);
+      });
+
+    } catch (error) {
+      console.error("Erro ao carregar aulas: ", error);
+      listaAulas.innerHTML = '<p class="text-red-500 text-justify">Erro ao carregar aulas.</p>';
+    }
+  });
+</script>
+
+</body>
+</html>
