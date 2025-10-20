@@ -1,73 +1,59 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula 09 - axios</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula 09 - Atividade Prática: Tab Navigation e APIs</title>
 
-  <!-- Reveal.js -->
-  <link rel="stylesheet" href="./dist/reveal.css">
-  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+  <!-- Reveal.js core & theme -->
+  <link rel="stylesheet" href="/lib/dist/reveal.css" />
+  <link rel="stylesheet" href="/lib/dist/theme/white.css" id="theme" />
 
-  <!-- Tema para código -->
-  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
-  <link rel="stylesheet" href="aula05-materials/style.css">
+  <!-- Highlight.js theme for code blocks -->
+  <link rel="stylesheet" href="/lib/plugin/highlight/atom-one-dark.css" />
 
-  <!-- Menu plugin -->
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css"> -->
-  <link rel="stylesheet" href="aula04-materials/style.css">
-  <link rel="stylesheet" href="css/workshop.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+  <!-- Menu plugin (CSS) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" />
+
   <style>
-    .reveal h1,
-    .reveal h2 {
-      color: #0056b3;
-    }
+    :root { --brand-1: #1e3c72; --brand-2: #2a5298; }
 
-    .reveal pre code {
-      font-size: 1em;
-      background: #222;
-      border-radius: 8px;
-      padding: 10px;
-    }
+    .reveal { background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%); }
+    .reveal section { background: transparent; }
 
-    .reveal p {
-      font-size: 1.1em;
-    }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 { color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,.45); }
+    .reveal p, .reveal li { color: #fff; }
 
-    .step-box {
-      background: rgba(0, 123, 255, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 15px;
-      border: 2px solid #0056b3;
-    }
+    /* Code blocks */
+    .reveal pre { max-height: 420px; overflow: auto; margin: 0; box-shadow: 0 4px 12px rgba(0,0,0,.3); }
+    .reveal pre code { font-size: .75em; padding: 16px; line-height: 1.5; background: #1e1e1e !important; border-radius: 8px; }
+    .reveal pre code.hljs { background: #1e1e1e !important; }
 
-    .concept-box {
-      background: rgba(40, 167, 69, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 15px;
-      border: 2px solid #28a745;
-    }
+    /* Utility boxes */
+    .box { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 10px; padding: 14px; margin: 10px 0; backdrop-filter: blur(8px); }
+    .box h4 { margin: 0 0 8px 0; font-size: .95em; color: #fff; }
+    .box ul, .box ol { margin: 8px 0 0 0; font-size: .9em; }
+    .box li { margin: 4px 0; }
 
-    .example-box {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+    .activity-box { background: rgba(249,115,22,.15); border-left: 4px solid #f97316; }
+    .code-box { background: transparent; border: none; padding: 0; }
+    .step-box { background: rgba(34,197,94,.15); border-left: 4px solid #22c55e; }
+    .concept-box { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 12px; padding: 16px; }
+    .warning-box { background: rgba(239,68,68,.15); border-left: 4px solid #ef4444; border-radius: 10px; padding: 14px; }
+
+    .reveal a { color: #93c5fd; }
+
+    /* Small helper for tiny code */
+    .code-small code { font-size: .72em !important; }
   </style>
 </head>
 
 <body>
   <div class="reveal">
     <div class="slides">
-      <!-- Slide 1: Título -->
+
+      <!-- Slide 1: Capa (estilo Aula 08) -->
       <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
         <br><br><br><br>
         <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
@@ -77,228 +63,117 @@
           Prof. Msc. Nator Junior Carvalho da Costa
         </p>
         <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-          Aula 09 - Navegação e APIs REST em React Native
+          Aula 09 - Tab Navigation e APIs REST em React Native
         </h6>
         <h1>📱</h1>
       </section>
 
-      <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
-        <div style="text-align: center;">
-          <div style="
-          background: rgba(255, 255, 255, 0.1);
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(10px);
-          border: 2px solid rgba(255, 255, 255, 0.1);
-          margin: 20px;
-        ">
-            <h1 style="
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-          ">Objetivos da Aula 🎯</h1>
-
-            <ul style="
-            list-style: none;
-            padding: 0;
-            text-align: left;
-            color: white;
-            font-size: 1.2em;
-          ">
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>🧭</span>
-                Configurar React Navigation
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>📚</span>
-                Implementar Stack Navigation
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>📱</span>
-                Implementar Tab Navigation
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>🗄️</span>
-                Implementar Drawer Navigation
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>🌐</span>
-                Trabalhar com APIs REST
-              </li>
+      <!-- Slide 2: Objetivos -->
+      <section>
+        <div style="text-align:center;">
+          <div style="background: rgba(255,255,255,.1); padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,.1); backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,.1); margin: 20px;">
+            <h1 style="color:white; font-size:2.4em; margin-bottom: 24px;">Objetivos da Aula</h1>
+            <ul style="list-style:none; padding:0; text-align:left; color:white; font-size:1.1em;">
+              <li class="fragment fade-up" style="margin: 10px 0;">→ Construir app completo com Tab Navigation</li>
+              <li class="fragment fade-up" style="margin: 10px 0;">→ Consumir múltiplas APIs REST</li>
+              <li class="fragment fade-up" style="margin: 10px 0;">→ Implementar FlatList com dados reais</li>
+              <li class="fragment fade-up" style="margin: 10px 0;">→ Gerenciar estados e loading</li>
+              <li class="fragment fade-up" style="margin: 10px 0;">→ Criar interface intuitiva</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- Seção Navigation -->
+      <!-- Slide 3: O que vamos construir -->
       <section>
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">React Navigation 🧭</h2>
-          <div class="concept-box">
-            <h6 style="color: white;">Configuração Inicial</h6>
-            <pre><code class="language-bash" data-trim>
-# Instalação
-npm install @react-navigation/native
-npm install @react-navigation/stack
-npm install react-native-screens react-native-safe-area-context</code></pre>
-          </div>
+        <h2>O que vamos construir?</h2>
+        <div class="concept-box">
+          <h3>InfoHub - App de Informações</h3>
+          <p>Um aplicativo com 2 abas que consome diferentes APIs:</p>
+          <ul>
+            <li class="fragment"><strong>Gatinhos:</strong> Fotos aleatórias de gatos (The Cat API)</li>
+            <li class="fragment"><strong>Cripto:</strong> Cotações de criptomoedas (CoinGecko)</li>
+          </ul>
+        </div>
+        <p class="fragment">Construção incremental passo a passo</p>
+      </section>
 
-          <div class="concept-box">
-            <h6 style="color: white;">Usando o Snack</h6>
-            <pre><code class="language-bash" data-trim>
-              {
-                "dependencies": {
-                  "react-native-paper": "4.9.2",
-                  "@expo/vector-icons": "^14.0.2",
-                  "@react-navigation/native": "^6.1.18",
-                  "@react-navigation/stack": "^6.4.1",
-                  "react-native-screens": "~4.4.0",
-                  "react-native-safe-area-context": "4.12.0",
-                  "react-native-gesture-handler": "~2.20.2"
-                }
-              }</code></pre>
-          </div>
-        </section>
+      <!-- Slide 4: Estrutura do Projeto -->
+      <section>
+        <h2>Estrutura do Projeto</h2>
+        <pre><code class="language-bash">infohub-app/
+├── App.js              # Configuração principal
+├── screens/
+│   ├── CatsScreen.js      # Tela de gatos
+│   └── CryptoScreen.js    # Tela de cripto
+├── package.json
+└── app.json</code></pre>
+        <p class="fragment">Vamos criar tudo do zero</p>
+      </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <h2 style="color: white;">Stack Navigator</h2>
-          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers >
-// App.js
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+      <!-- Slide 5: Passo 1 - Criar o projeto -->
+      <section>
+        <section>
+          <h2>Passo 1 - Criar o Projeto</h2>
+          <div class="box step-box">
+            <h4>Terminal</h4>
+            <pre><code class="language-bash"># Criar novo projeto
+npx create-expo-app infohub-app --template blank
 
-const Stack = createStackNavigator();
-</code></pre>
-        </section>
+# Entrar no diretório
+cd infohub-app
 
+# Instalar dependências de navegação
+npm install @react-navigation/native @react-navigation/bottom-tabs
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <h2 style="color: white;">Stack Navigator</h2>
-          <pre data-id="code-animation-3" style="height: 70vh;"><code class="language-jsx" data-trim data-line-numbers>
-// App.js
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+# Instalar dependências do Expo
+npx expo install react-native-screens react-native-safe-area-context
 
-const Stack = createStackNavigator();
-
-const App = () => {
-  return (
-    &lt;NavigationContainer&gt;
-      &lt;Stack.Navigator&gt;
-        &lt;Stack.Screen 
-          name="Home" 
-          component={HomeScreen}
-          options={{ title: 'Página Inicial' }}
-        /&gt;
-        &lt;Stack.Screen 
-          name="Details" 
-          component={DetailsScreen}
-          options={{ title: 'Detalhes' }}
-        /&gt;
-      &lt;/Stack.Navigator&gt;
-    &lt;/NavigationContainer&gt;
-  );
-};</code></pre>
-        </section>
-
-
-
-
-
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <h2 style="color: white;">Navegação entre Telas</h2>
-          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
-// HomeScreen.js
-const HomeScreen = ({ navigation }) => {
-  return (
-    &lt;View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}&gt;
-      &lt;Button
-        title="Ir para Detalhes"
-        onPress={() => navigation.navigate('Details', {
-          itemId: 86,
-          otherParam: 'qualquer coisa',
-        })}
-      /&gt;
-    &lt;/View&gt;
-  );
-};
-</code></pre>
-        </section>
-
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <h2 style="color: white;">Navegação entre Telas</h2>
-          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
-
-// DetailsScreen.js
-const DetailsScreen = ({ route, navigation }) => {
-  const { itemId, otherParam } = route.params;
-
-  return (
-    &lt;View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}&gt;
-      &lt;Text&gt;Detalhes do Item: {itemId}&lt;/Text&gt;
-      &lt;Text&gt;Outro Parâmetro: {otherParam}&lt;/Text&gt;
-      &lt;Button
-        title="Voltar"
-        onPress={() => navigation.goBack()}
-      /&gt;
-    &lt;/View&gt;
-  );
-};</code></pre>
-        </section>
-
-
-
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-            <!-- Coluna 2: Embed do Expo Snack -->
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/flatlist02" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
+# Estrutura
+mkdir screens
+touch screens/CatsScreen.js screens/CryptoScreen.js</code></pre>
           </div>
         </section>
-
-        <!-- Seção Tab Navigator -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">(Tab Navigator) 🗂️</h2>
-          <div class="concept-box">
-            <h6 style="color: white;">Instalação</h6>
-            <pre><code class="language-bash">npm install @react-navigation/bottom-tabs
-npm install react-native-gesture-handler react-native-reanimated</code></pre>
-          </div>
-          <div class="concept-box">
-            <h6 style="color: white;">Usando o Snack</h6>
-            <pre><code class="language-bash" data-trim>
-              {
-                "dependencies": {
-                  "@expo/vector-icons": "^14.1.0",
-                  "react-native-paper": "4.9.2",
-                  "react-native-screens": "~4.10.0",
-                  "@react-navigation/stack": "^6.4.1",
-                  "react-native-reanimated": "~3.17.4",
-                  "@react-navigation/native": "^6.1.18",
-                  "@react-navigation/bottom-tabs": "^6.5.12",
-                  "react-native-safe-area-context": "5.4.0",
-                  "react-native-gesture-handler": "~2.24.0"
-                }
-              }</code></pre>
-          </div>
+        <section>
+          <h2>Resultado</h2>
+          <p>Projeto criado e estruturado com as telas necessárias.</p>
         </section>
+      </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <h2 style="color: white;">Exemplo de Tab Navigator</h2>
-          <pre><code class="language-jsx">import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+      <!-- Slide 6: Passo 2 - Configurar Tab Navigation -->
+      <section>
+        <section data-auto-animate>
+          <h2>Passo 2 - App.js</h2>
+          <div class="box code-box">
+            <h4>Imports</h4>
+            <pre><code class="language-javascript" data-line-numbers>import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import CatsScreen from './screens/CatsScreen';
+import CryptoScreen from './screens/CryptoScreen';</code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h2>Passo 2 - App.js</h2>
+          <div class="box code-box">
+            <h4>Criar Tab Navigator</h4>
+            <pre><code class="language-javascript" data-line-numbers>import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import CatsScreen from './screens/CatsScreen';
+import CryptoScreen from './screens/CryptoScreen';
+
+const Tab = createBottomTabNavigator();</code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h2>Passo 2 - App.js</h2>
+          <div class="box code-box">
+            <h4>Estrutura do App</h4>
+            <pre><code class="language-javascript" data-line-numbers>import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import CatsScreen from './screens/CatsScreen';
+import CryptoScreen from './screens/CryptoScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -306,377 +181,479 @@ export default function App() {
   return (
     &lt;NavigationContainer&gt;
       &lt;Tab.Navigator&gt;
-        &lt;Tab.Screen name="Home" component={HomeScreen} /&gt;
-        &lt;Tab.Screen name="Settings" component={SettingsScreen} /&gt;
       &lt;/Tab.Navigator&gt;
     &lt;/NavigationContainer&gt;
   );
 }</code></pre>
-        </section>
-
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-            <!-- Coluna 2: Embed do Expo Snack -->
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/tab01" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
           </div>
         </section>
 
-
-        <!-- Seção Drawer Navigator -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">
-            (Drawer Navigator) 🗄️</h2>
-          <div class="concept-box">
-            <h6 style="color: white;">Instalação</h6>
-            <pre><code class="language-bash">npm install @react-navigation/drawer
-npm install react-native-gesture-handler react-native-reanimated</code></pre>
-          </div>
-          <h6 style="color: white;">Exemplo de Drawer Navigator</h6>
-          <pre><code class="language-jsx">import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
-const Drawer = createDrawerNavigator();
-
-export default function App() {
+        <section data-auto-animate>
+          <h2>Passo 2 - App.js</h2>
+          <div class="box code-box">
+            <h4>Adicionar Screens</h4>
+            <pre><code class="language-javascript" data-line-numbers>export default function App() {
   return (
     &lt;NavigationContainer&gt;
-      &lt;Drawer.Navigator&gt;
-        &lt;Drawer.Screen name="Home" component={HomeScreen} /&gt;
-        &lt;Drawer.Screen name="Profile" component={ProfileScreen} /&gt;
-      &lt;/Drawer.Navigator&gt;
+      &lt;Tab.Navigator&gt;
+        &lt;Tab.Screen 
+          name="Gatinhos" 
+          component={CatsScreen} 
+        /&gt;
+        &lt;Tab.Screen 
+          name="Cripto" 
+          component={CryptoScreen} 
+        /&gt;
+      &lt;/Tab.Navigator&gt;
     &lt;/NavigationContainer&gt;
   );
 }</code></pre>
+          </div>
         </section>
 
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-            <!-- Coluna 2: Embed do Expo Snack -->
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/drawer01" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
+        <section data-auto-animate>
+          <h2>Passo 2 - App.js</h2>
+          <div class="box code-box">
+            <h4>Configurar Estilos</h4>
+            <pre><code class="language-javascript" data-line-numbers>export default function App() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: '#3b82f6',
+          tabBarInactiveTintColor: '#9ca3af',
+          headerStyle: { backgroundColor: '#1e3c72' },
+          headerTintColor: '#fff',
+        }}
+      &gt;
+        &lt;Tab.Screen name="Gatinhos" component={CatsScreen} /&gt;
+        &lt;Tab.Screen name="Cripto" component={CryptoScreen} /&gt;
+      &lt;/Tab.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}</code></pre>
           </div>
         </section>
       </section>
 
-      <!-- Seção APIs REST -->
+      <!-- Slide 7: CatsScreen -->
       <section>
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">APIs REST em React Native 🌐</h2>
-          <div class="concept-box">
-            <h3 style="color: white;">O que é uma API REST?</h3>
-            <ul style="color: white;">
-              <li class="fragment fade-right">Interface para comunicação entre sistemas</li>
-              <li class="fragment fade-right">Baseada em requisições HTTP</li>
-              <li class="fragment fade-right">Retorna dados em formato JSON ou XML</li>
-              <li class="fragment fade-right">Métodos: GET, POST, PUT, DELETE</li>
-            </ul>
+        <section data-auto-animate>
+          <h2>Passo 3 - CatsScreen</h2>
+          <div class="box code-box">
+            <h4>Imports</h4>
+            <pre><code class="language-javascript" data-line-numbers>import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, Image, StyleSheet, 
+         ActivityIndicator, TouchableOpacity } from 'react-native';</code></pre>
           </div>
         </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Usando Fetch API</h2>
-          <pre><code class="language-jsx" data-trim data-line-numbers>
-const [dados, setDados] = useState([]);
-const [loading, setLoading] = useState(true);
+        <section data-auto-animate>
+          <h2>Passo 3 - CatsScreen</h2>
+          <div class="box code-box">
+            <h4>Estado</h4>
+            <pre><code class="language-javascript" data-line-numbers>import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, Image, StyleSheet, 
+         ActivityIndicator, TouchableOpacity } from 'react-native';
 
-useEffect(() => {
-  const fetchDados = async () => {
+export default function CatsScreen() {
+  const [cats, setCats] = useState([]);
+  const [loading, setLoading] = useState(true);
+}</code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h2>Passo 3 - CatsScreen</h2>
+          <div class="box code-box">
+            <h4>Fetch API</h4>
+            <pre><code class="language-javascript" data-line-numbers>export default function CatsScreen() {
+  const [cats, setCats] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchCats = async () =&gt; {
     try {
-      const response = await fetch('https://api.exemplo.com/dados');
-      const json = await response.json();
-      setDados(json);
+      setLoading(true);
+      const response = await fetch(
+        'https://api.thecatapi.com/v1/images/search?limit=20'
+      );
+      const data = await response.json();
+      setCats(data);
     } catch (error) {
       console.error('Erro:', error);
     } finally {
       setLoading(false);
     }
   };
-
-  fetchDados();
-}, []);</code></pre>
-        </section>
-
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/fetch01" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
+}</code></pre>
           </div>
         </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Usando Axios</h2>
-          <div class="concept-box">
-            <h6 style="color: white;">Instalação</h6>
-            <pre><code class="language-bash">npm install axios</code></pre>
-          </div>
-          <pre><code class="language-jsx" data-trim data-line-numbers>
-import axios from 'axios';
+        <section data-auto-animate>
+          <h2>Passo 3 - CatsScreen</h2>
+          <div class="box code-box">
+            <h4>useEffect</h4>
+            <pre><code class="language-javascript" data-line-numbers>export default function CatsScreen() {
+  const [cats, setCats] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const [dados, setDados] = useState([]);
-const [loading, setLoading] = useState(true);
+  useEffect(() =&gt; {
+    fetchCats();
+  }, []);
 
-useEffect(() => {
-  const fetchDados = async () => {
+  const fetchCats = async () =&gt; {
     try {
-      const response = await axios.get('https://api.exemplo.com/dados');
-      setDados(response.data);
+      setLoading(true);
+      const response = await fetch(
+        'https://api.thecatapi.com/v1/images/search?limit=20'
+      );
+      const data = await response.json();
+      setCats(data);
     } catch (error) {
       console.error('Erro:', error);
     } finally {
       setLoading(false);
     }
   };
-
-  fetchDados();
-}, []);</code></pre>
+}</code></pre>
+          </div>
         </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Exemplo Prático</h2>
-          <pre><code class="language-jsx" data-trim data-line-numbers>
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
-import axios from 'axios';
+        <section data-auto-animate>
+          <h2>Passo 3 - CatsScreen</h2>
+          <div class="box code-box">
+            <h4>Loading State</h4>
+            <pre><code class="language-javascript" data-line-numbers>  if (loading) {
+    return (
+      &lt;View style={styles.centered}&gt;
+        &lt;ActivityIndicator size="large" color="#3b82f6" /&gt;
+        &lt;Text style={{ color: '#fff' }}&gt;Carregando...&lt;/Text&gt;
+      &lt;/View&gt;
+    );
+  }</code></pre>
+          </div>
+        </section>
 
-export default function App() {
-  const [posts, setPosts] = useState([]);
+        <section data-auto-animate>
+          <h2>Passo 3 - CatsScreen</h2>
+          <div class="box code-box">
+            <h4>Render UI</h4>
+            <pre><code class="language-javascript" data-line-numbers>  return (
+    &lt;View style={styles.container}&gt;
+      &lt;TouchableOpacity 
+        style={styles.btn} 
+        onPress={fetchCats}
+      &gt;
+        &lt;Text style={styles.btnText}&gt;
+          Carregar Novos Gatos
+        &lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+
+      &lt;FlatList
+        data={cats}
+        numColumns={2}
+        keyExtractor={(item) =&gt; item.id}
+        renderItem={({ item }) =&gt; (
+          &lt;Image 
+            source={{ uri: item.url }} 
+            style={styles.image} 
+          /&gt;
+        )}
+      /&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h2>Passo 3 - CatsScreen</h2>
+          <div class="box code-box">
+            <h4>Estilos</h4>
+            <pre><code class="language-javascript" data-line-numbers>const styles = StyleSheet.create({
+  container: { 
+    flex: 1, 
+    backgroundColor: '#1e3c72' 
+  },
+  centered: { 
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center' 
+  },
+  btn: { 
+    backgroundColor: '#3b82f6', 
+    padding: 12, 
+    margin: 10, 
+    borderRadius: 8 
+  },
+  btnText: { 
+    color: '#fff', 
+    textAlign: 'center', 
+    fontWeight: 'bold' 
+  },
+  image: { 
+    width: '48%', 
+    height: 180, 
+    margin: '1%', 
+    borderRadius: 8 
+  },
+});</code></pre>
+          </div>
+        </section>
+      </section>
+
+      <!-- Slide 8: CryptoScreen -->
+      <section>
+        <section data-auto-animate>
+          <h2>Passo 4 - CryptoScreen</h2>
+          <div class="box code-box" data-id="crypto-step">
+            <h4>Imports e Estado</h4>
+            <pre><code class="language-javascript" data-line-numbers>import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+
+export default function CryptoScreen() {
+  const [cryptos, setCryptos] = useState([]);
+  const [loading, setLoading] = useState(true);
+}</code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h2>Passo 4 - CryptoScreen</h2>
+          <div class="box code-box" data-id="crypto-step">
+            <h4>Fetch com Auto-Atualização</h4>
+            <pre><code class="language-javascript" data-line-numbers>export default function CryptoScreen() {
+  const [cryptos, setCryptos] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
-      .then(response => {
-        setPosts(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error(error);
-        setLoading(false);
-      });
+    fetchCryptos();
+    const interval = setInterval(fetchCryptos, 30000);
+    return () => clearInterval(interval);
   }, []);
 
-  if (loading) {
+  const fetchCryptos = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=brl&order=market_cap_desc&per_page=15&page=1'
+      );
+      const data = await response.json();
+      setCryptos(data);
+    } catch (error) {
+      console.error('Erro:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+}</code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h2>Passo 4 - CryptoScreen</h2>
+          <div class="box code-box" data-id="crypto-step">
+            <h4>Renderizar Item (cabeçalho)</h4>
+            <pre><code class="language-javascript" data-line-numbers>  const renderCrypto = ({ item }) => {
+    const change = item.price_change_percentage_24h || 0;
+    const isPositive = change >= 0;
+
     return (
-      &lt;View style={{ flex: 1, justifyContent: 'center' }}&gt;
-        &lt;ActivityIndicator size="large" /&gt;
+      &lt;View style={styles.card}&gt;
+        &lt;View style={styles.header}&gt;
+          &lt;Text style={styles.name}&gt;{item.name}&lt;/Text&gt;
+          &lt;Text style={styles.symbol}&gt;{item.symbol.toUpperCase()}&lt;/Text&gt;
+        &lt;/View&gt;</code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h2>Passo 4 - CryptoScreen</h2>
+          <div class="box code-box" data-id="crypto-step">
+            <h4>Renderizar Item (preço e variação)</h4>
+            <pre><code class="language-javascript" data-line-numbers>        &lt;View style={styles.footer}&gt;
+          &lt;Text style={styles.price}&gt;
+            R$ {item.current_price.toLocaleString('pt-BR')}
+          &lt;/Text&gt;
+          &lt;Text style={{ color: isPositive ? '#22c55e' : '#ef4444', fontWeight: 'bold' }}&gt;
+            {isPositive ? '▲' : '▼'} {Math.abs(change).toFixed(1)}%
+          &lt;/Text&gt;
+        &lt;/View&gt;
       &lt;/View&gt;
     );
-  }
+  };</code></pre>
+          </div>
+        </section>
 
-  return (
-    &lt;FlatList
-      data={posts}
-      keyExtractor={item => item.id.toString()}
-      renderItem={({ item }) => (
-        &lt;View style={{ padding: 10, borderBottomWidth: 1 }}&gt;
-          &lt;Text style={{ fontSize: 18, fontWeight: 'bold' }}&gt;
-            {item.title}
-          &lt;/Text&gt;
-          &lt;Text&gt;{item.body}&lt;/Text&gt;
-        &lt;/View&gt;
-      )}
-    /&gt;
+        <section data-auto-animate>
+          <h2>Passo 4 - CryptoScreen</h2>
+          <div class="box code-box" data-id="crypto-step">
+            <h4>Estado de Carregamento</h4>
+            <pre><code class="language-javascript" data-line-numbers>  if (loading && cryptos.length === 0) {
+    return (
+      &lt;View style={styles.centered}&gt;
+        &lt;ActivityIndicator size="large" color="#3b82f6" /&gt;
+        &lt;Text style={{ color: '#fff' }}&gt;Carregando...&lt;/Text&gt;
+      &lt;/View&gt;
+    );
+  }</code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h2>Passo 4 - CryptoScreen</h2>
+          <div class="box code-box" data-id="crypto-step">
+            <h4>Render UI + Estilos</h4>
+            <pre><code class="language-javascript" data-line-numbers>  return (
+    &lt;View style={styles.container}&gt;
+      &lt;View style={styles.headerBar}&gt;
+        &lt;Text style={styles.title}&gt;Cotações&lt;/Text&gt;
+        &lt;TouchableOpacity onPress={fetchCryptos}&gt;
+          &lt;Text style={{ fontSize: 18 }}&gt;⟳&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+      &lt;FlatList
+        data={cryptos}
+        renderItem={renderCrypto}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.list}
+      /&gt;
+    &lt;/View&gt;
   );
-}</code></pre>
-        </section>
+}
 
-
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/fetch02" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#1e3c72' },
+  centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  headerBar: { flexDirection: 'row', justifyContent: 'space-between', padding: 12, borderBottomWidth: 1, borderBottomColor: '#3b82f6' },
+  title: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  list: { padding: 10 },
+  card: { backgroundColor: '#2a5298', borderRadius: 8, padding: 12, marginBottom: 10 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
+  name: { color: '#fff', fontWeight: 'bold' },
+  symbol: { fontSize: 12, color: '#93c5fd' },
+  footer: { flexDirection: 'row', justifyContent: 'space-between' },
+  price: { color: '#93c5fd', fontWeight: 'bold' },
+});</code></pre>
           </div>
         </section>
       </section>
 
-      <!-- Slide 1: Título do Workshop -->
-      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-        <br><br><br>
-        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-          Workshop Prático
-        </h4>
-        <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-          🚀 Construindo um Chat em Tempo Real
-        </h2>
-        <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-          Parte II
-        </p>
-        <p style="color: white; font-size: .8em; font-weight: 300; margin-top: 40px;">
-          Prof. Msc. Nator Junior Carvalho da Costa
-        </p>
-      </section>
+      <!-- Slide 10: Atividades (versão curta) -->
       <section>
-        <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
-          <h2 style="color: white;">⚙️ Etapa 2: Preparando o Ambiente</h2>
-          <div class="workshop-step">
-            <h3 style="color: white;">Vamos precisar de:</h3>
-            <ul style="color: white; font-size: 1.1em;">
-              <li class="fragment fade-right">📱 Expo instalado</li>
-              <li class="fragment fade-right">📦 Biblioteca MQTT</li>
-              <li class="fragment fade-right">🎨 React Native Paper</li>
+        <section>
+          <h2>Atividades Rápidas</h2>
+          <div class="box activity-box">
+            <p>Implemente mudanças simples em <strong>screens/CryptoScreen.js</strong></p>
+            <ul style="margin-top:8px;">
+              <li>1) Mostrar ícone de tendência no header (▲ se maioria positiva, ▼ se maioria negativa)</li>
             </ul>
           </div>
         </section>
 
-        <section data-background-color="#2c3e50">
-          <h3 style="color: white;">🛠️ Criando o Projeto</h3>
-          <pre><code class="language-bash" data-trim data-line-numbers>
-                    # Crie um novo projeto Expo
-                    npx create-expo-app chat-mqtt
-                    cd chat-mqtt
-
-                    # Instale as dependências
-                    npm install @react-navigation/native @react-navigation/stack
-                    npm install paho-mqtt
-                    npm install react-native-paper
-                </code></pre>
-          <div class="practical-exercise fragment fade-up">
-            <p>👩‍💻 Sua vez! Crie o projeto e instale as dependências</p>
+        <section>
+          <h2>2) Ícone de tendência no header</h2>
+          <div class="box step-box">
+            <ol>
+              <li>Crie uma função que calcule a média de <code>price_change_percentage_24h</code> (use 0 para nulos).</li>
+              <li>Se a média ≥ 0, mostre “▲”; caso contrário, “▼”.</li>
+              <li>Exiba esse ícone ao lado do título “Cotações”. Atualize quando a lista mudar.</li>
+            </ol>
           </div>
-        </section>
-        <!-- Slide 1: Título do Workshop -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <br><br><br>
-          <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            Acesse o link abaixo e reproduza na sua máquina<br>
-            https://notepad.acilab.com.br/senacZap01
-          </p>
-          <ul style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            <li>Configure o Projeto e Inicialize com o código base</li>
-          </ul>
-        </section>
-        <!-- Slide 1: Título do Workshop -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <br><br><br>
-          <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            Acesse o link abaixo e reproduza na sua máquina<br>
-            https://notepad.acilab.com.br/senacZap02
-          </p>
-          <ul style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            <li>Vamos Melhorar a HomeScreen.js (Básica)</li>
-          </ul>
-        </section>
-
-        <!-- Slide 1: Título do Workshop -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <br><br><br>
-          <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            Acesse o link abaixo e reproduza na sua máquina<br>
-            https://notepad.acilab.com.br/senacZap03
-          </p>
-          <ul style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            <li>Vamos Melhorar a ChatScreen.js</li>
-          </ul>
-        </section>
-
-
-        <!-- Slide 1: Título do Workshop -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <br><br><br>
-          <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            Acesse o link abaixo e reproduza na sua máquina<br>
-            https://notepad.acilab.com.br/senacZap04
-          </p>
-          <ul>
-            <li style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">Aplicativo final</li>
-          </ul>
+          <div class="box concept-box" style="margin-top:10px;">
+            <strong>Aceite:</strong> O ícone muda conforme os dados carregados (sem travar a UI).
+          </div>
         </section>
       </section>
 
-      <!-- Seção de Atividades Práticas -->
+      <!-- Slide 11: Testes -->
       <section>
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Atividades Práticas 💻</h2>
-          
-          <div class="concept-box">
-            <h3 style="color: white;">Atividade 1: Lista de Usuários com Fetch</h3>
-            <p style="color: white;">Crie um aplicativo que:</p>
-            <ul style="color: white;">
-              <li>Busque usuários da API: https://jsonplaceholder.typicode.com/users</li>
-              <li>Exiba nome, email e empresa em uma FlatList</li>
-              <li>Implemente um indicador de carregamento</li>
-              <li>Adicione tratamento de erros</li>
-            </ul>
-          </div>
-        </section>
+    <h2>Testando o App</h2>
+        <div class="box step-box">
+          <h4>Iniciar</h4>
+<pre><code class="language-bash">cd infohub-app
+npx expo start
 
+  # 'a' para Android | 'i' para iOS | QR Code para Expo Go</code></pre>
+        </div>
+        <div class="box activity-box" style="margin-top: 15px;">
+          <h4>Checklist</h4>
+          <ul style="font-size: .95em; margin: 0; padding-left: 20px;">
+            <li>Abas funcionando?</li>
+            <li>Dados carregando?</li>
+            <li>Gatos aparecendo?</li>
+            <li>Cotações atualizando?</li>
+          </ul>
+        </div>
+      </section>
 
-      <!-- Seção de Atividades Práticas -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Atividades Práticas 💻</h2>
-          <div class="concept-box">
-        <h3 style="color: white;">Atividade 2: Produtos com Axios</h3>
-        <p style="color: white;">Desenvolva um aplicativo que:</p>  
-        <ul style="color: white;">
-          <li>Use Axios para buscar produtos de: https://dummyjson.com/products</li>
-          <li>Implemente filtro por categoria de produto</li>
-          <li>Adicione busca por nome do produto</li>
-          <li>Exiba imagens e detalhes dos produtos em cards</li>
-          <li>Mostre indicador de carregamento durante as requisições</li>
-        </ul>
-          </div>
-        </section>
+      <!-- Slide 11: Conceitos -->
+      <section>
+        <h2>Conceitos Aprendidos</h2>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <div class="box code-box"><h4>useState</h4><p>Estado do componente</p></div>
+          <div class="box code-box"><h4>useEffect</h4><p>Efeitos e timers</p></div>
+          <div class="box code-box"><h4>async/await</h4><p>Assíncronas</p></div>
+          <div class="box code-box"><h4>fetch API</h4><p>Consumir REST</p></div>
+          <div class="box code-box"><h4>FlatList</h4><p>Listas performáticas</p></div>
+          <div class="box code-box"><h4>Tab Navigation</h4><p>Navegação por abas</p></div>
+        </div>
+      </section>
+
+      <!-- Slide 12: Próximos passos -->
+      <section>
+        <h2>Próximos Passos</h2>
+        <div class="box activity-box">
+          <h4>Desafios</h4>
+          <ul style="font-size: .95em; margin: 0; padding-left: 20px;">
+            <li>Adicionar pull-to-refresh</li>
+            <li>Tratamento de erros com Alert</li>
+            <li>Favoritos com AsyncStorage</li>
+            <li>3ª/4ª aba com outra API</li>
+            <li>Stack Navigator para detalhes</li>
+          </ul>
+        </div>
+        <div class="box step-box" style="margin-top: 15px;">
+          <h4>APIs Gratuitas</h4>
+         <p>Rick and Morty API • PokeAPI • OpenWeather • Dog CEO • NewsAPI • JSONPlaceholder</p>
+        </div>
+      </section>
+
+      <!-- Slide 13: Encerramento -->
+      <section>
+        <h1 style="color:white;">Parabéns!</h1>
+        <p style="color:white; font-size:1.2em;">Você criou um app completo com navegação por abas e consumo de APIs REST</p>
+        <div class="box" style="margin-top: 24px;">
+          <p style="margin:0;">🚀 Continue praticando!</p>
+        </div>
+        <br />
+        <p style="color: white; font-size: 1.1em;">Dúvidas? 🤔</p>
+      </section>
 
     </div>
   </div>
 
-
-
-  <!-- Scripts Reveal.js -->
-  <script src="dist/reveal.js"></script>
-  <script src="plugin/markdown/markdown.js"></script>
-  <script src="plugin/highlight/highlight.js"></script>
-  <script src="./aula04-materials/script.js"></script>
+  <!-- Reveal.js core & plugins (JS) -->
+  <script src="/lib/dist/reveal.js"></script>
+  <script src="/lib/plugin/notes/notes.js"></script>
+  <script src="/lib/plugin/markdown/markdown.js"></script>
+  <script src="/lib/plugin/highlight/highlight.js"></script>
+  <script src="/lib/plugin/zoom/zoom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
 
   <script>
+    // Inicialização do Reveal com plugins (inclui Menu)
     Reveal.initialize({
-      center: false,
-      controls: true,
-      progress: true,
-      slideNumber: true,
-      history: true,
-      transition: 'convex',
-      plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
-      markdown: {
-        smartypants: true
-      },
-      width: 1200,
-      height: 800,
       hash: true,
-      respondToHashChanges: true,
-      menu: {
-        side: 'left',
-        width: 300,
-        numbers: true,
-        titleSelector: 'h1, h2, h3, h4, h5, h6'
-      }
+      slideNumber: 'c/t',
+      transition: 'slide',
+      backgroundTransition: 'fade',
+      autoAnimate: true,
+      autoAnimateEasing: 'ease-in-out',
+      autoAnimateDuration: 0.5,
+      autoAnimateUnmatched: true,
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMenu],
+      menu: { themes: true, transitions: true }
     });
   </script>
 </body>

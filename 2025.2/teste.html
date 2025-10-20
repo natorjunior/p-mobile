@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula 09 – Tab Navigation e APIs (Cats & Crypto)</title>
+
+  <!-- Reveal.js core & theme -->
+  <link rel="stylesheet" href="/lib/dist/reveal.css" />
+  <link rel="stylesheet" href="/lib/dist/theme/white.css" id="theme" />
+
+  <!-- Highlight.js (tema escuro) -->
+  <link rel="stylesheet" href="/lib/plugin/highlight/atom-one-dark.css" />
+
+  <!-- Menu plugin (CSS) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" />
+
+  <style>
+    :root { --brand-1:#0f172a; --brand-2:#1e3a8a; --ink:#ffffff; --muted:#e5e7eb; --accent:#3b82f6; --ok:#22c55e; --bad:#ef4444; --code-bg:#0b1220; }
+
+    .reveal { background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%); }
+    .reveal section { background: transparent; }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 { color: var(--ink); text-shadow: 2px 2px 4px rgba(0,0,0,.45); }
+    .reveal p, .reveal li { color: var(--ink); }
+
+    /* Boxes */
+    .box { background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.18); border-radius: 12px; padding: 14px; margin: 12px 0; backdrop-filter: blur(8px); }
+    .activity-box { background: rgba(249,115,22,.18); border-left: 4px solid #f97316; }
+    .step-box { background: rgba(34,197,94,.18); border-left: 4px solid var(--ok); }
+    .code-box { background: rgba(2,6,23,.6); border-left: 4px solid var(--accent); }
+
+    /* Code blocks – fundo escuro explícito */
+    .reveal pre { max-height: 440px; overflow: auto; margin: 0; border-radius: 10px; }
+    .reveal pre code { display:block; background: var(--code-bg) !important; color: #e5e7eb; font-size: .82em; line-height: 1.5; padding: 16px; }
+    .code-small code { font-size: .72em !important; }
+
+    .reveal a { color: #93c5fd; }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- CAPA -->
+      <section data-auto-animate>
+        <h2>Programação para Dispositivos Móveis</h2>
+        <h1 style="margin-top:48px;">Tab Navigation + APIs</h1>
+        <h3 style="margin-top:36px; font-weight:300;">Aula 09 – Atividade Prática</h3>
+        <p style="margin-top:36px; opacity:.9;">Prof. Msc. Nator Junior Carvalho da Costa</p>
+      </section>
+
+      <!-- OBJETIVOS (sem emojis, 1 pontual) -->
+      <section data-auto-animate>
+        <h2>Objetivos da Aula</h2>
+        <div class="box">
+          <ul>
+            <li>Configurar navegação por abas (Tab Navigation)</li>
+            <li>Consumir APIs REST (The Cat API e CoinGecko)</li>
+            <li>Aplicar estados de carregamento e atualização</li>
+            <li>Escrever código de forma progressiva (iterativa)</li>
+            <li>Usar <code>data-auto-animate</code> para transições suaves</li>
+          </ul>
+        </div>
+        <p style="opacity:.9">Meta: app simples e funcional para consulta rápida ⚡</p>
+      </section>
+
+      <!-- ESTRUTURA DO PROJETO -->
+      <section data-auto-animate>
+        <h2>Estrutura do Projeto</h2>
+        <div class="box code-box">
+<pre><code class="language-bash">infohub-app/
+├── App.js
+├── screens/
+│   ├── CatsScreen.js
+│   └── CryptoScreen.js
+├── package.json
+└── app.json</code></pre>
+        </div>
+      </section>
+
+      <!-- PASSO 1: Setup -->
+      <section data-auto-animate>
+        <h2>Passo 1 – Setup</h2>
+        <div class="box step-box">
+<pre><code class="language-bash">npx create-expo-app infohub-app --template blank
+cd infohub-app
+
+npm install @react-navigation/native @react-navigation/bottom-tabs
+npx expo install react-native-screens react-native-safe-area-context
+
+mkdir screens
+ touch screens/CatsScreen.js screens/CryptoScreen.js</code></pre>
+        </div>
+      </section>
+
+      <!-- PASSO 2: App.js Progressivo (1/3) -->
+      <section data-auto-animate>
+        <h2>Passo 2 – Navegação (1/3)</h2>
+        <p>Estrutura inicial do <code>App.js</code></p>
+        <div class="box code-box">
+<pre><code class="language-javascript">import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import CatsScreen from './screens/CatsScreen';
+import CryptoScreen from './screens/CryptoScreen';
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Tab.Navigator&gt;
+        &lt;Tab.Screen name="Gatinhos" component={CatsScreen} /&gt;
+        &lt;Tab.Screen name="Cripto" component={CryptoScreen} /&gt;
+      &lt;/Tab.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- PASSO 2: App.js Progressivo (2/3) -->
+      <section data-auto-animate>
+        <h2>Passo 2 – Navegação (2/3)</h2>
+        <p>Opções visuais e cabeçalho</p>
+        <div class="box code-box">
+<pre><code class="language-javascript">export default function App() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: '#3b82f6',
+          tabBarInactiveTintColor: '#9ca3af',
+          headerStyle: { backgroundColor: '#0f172a' },
+          headerTintColor: '#fff',
+        }}
+      &gt;
+        &lt;Tab.Screen name="Gatinhos" component={CatsScreen} /&gt;
+        &lt;Tab.Screen name="Cripto" component={CryptoScreen} /&gt;
+      &lt;/Tab.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- PASSO 2: App.js Progressivo (3/3) -->
+      <section data-auto-animate>
+        <h2>Passo 2 – Navegação (3/3)</h2>
+        <p>Ícones simples (apenas dois, pontuais)</p>
+        <div class="box code-box">
+<pre><code class="language-javascript">&lt;Tab.Navigator screenOptions={{ headerStyle:{ backgroundColor:'#0f172a' }, headerTintColor:'#fff' }}&gt;
+  &lt;Tab.Screen name="Gatinhos" component={CatsScreen} options={{ tabBarIcon: () =&gt; '🐾' }} /&gt;
+  &lt;Tab.Screen name="Cripto" component={CryptoScreen} options={{ tabBarIcon: () =&gt; '₿' }} /&gt;
+&lt;/Tab.Navigator&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- CATS: progressivo 1/5 -->
+      <section data-auto-animate>
+        <h2>Cats – Estrutura (1/5)</h2>
+        <div class="box code-box">
+<pre><code class="language-javascript">import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+
+export default function CatsScreen() {
+  const [cats, setCats] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() =&gt; { fetchCats(); }, []);
+
+  const fetchCats = async () =&gt; {
+    // Implementaremos já já
+  };
+
+  return (&lt;View style={styles.container}&gt;&lt;Text style={styles.hint}&gt;Preparando tela...&lt;/Text&gt;&lt;/View&gt;);
+}
+
+const styles = StyleSheet.create({
+  container:{ flex:1, backgroundColor:'#0f172a', justifyContent:'center', alignItems:'center' },
+  hint:{ color:'#e5e7eb' }
+});</code></pre>
+        </div>
+      </section>
+
+      <!-- CATS: progressivo 2/5 -->
+      <section data-auto-animate>
+        <h2>Cats – Fetch básico (2/5)</h2>
+        <div class="box code-box">
+<pre><code class="language-javascript">const fetchCats = async () =&gt; {
+  try {
+    setLoading(true);
+    const res = await fetch('https://api.thecatapi.com/v1/images/search?limit=20');
+    const data = await res.json();
+    setCats(data);
+  } catch (e) { console.error('Erro:', e); }
+  finally { setLoading(false); }
+};</code></pre>
+        </div>
+      </section>
+
+      <!-- CATS: progressivo 3/5 -->
+      <section data-auto-animate>
+        <h2>Cats – Loading (3/5)</h2>
+        <div class="box code-box">
+<pre><code class="language-javascript">if (loading) {
+  return (
+    &lt;View style={[styles.container, {justifyContent:'center'}]}&gt;
+      &lt;ActivityIndicator size="large" color="#3b82f6" /&gt;
+      &lt;Text style={{ color:'#e5e7eb', marginTop:8 }}&gt;Carregando...&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- CATS: progressivo 4/5 -->
+      <section data-auto-animate>
+        <h2>Cats – Lista e ação (4/5)</h2>
+        <div class="box code-box code-small">
+<pre><code class="language-javascript">return (
+  &lt;View style={styles.container}&gt;
+    &lt;TouchableOpacity onPress={fetchCats} style={styles.reload}&gt;
+      &lt;Text style={styles.reloadText}&gt;Atualizar&lt;/Text&gt;
+    &lt;/TouchableOpacity&gt;
+    &lt;FlatList
+      data={cats}
+      keyExtractor={(item) =&gt; item.id}
+      numColumns={2}
+      contentContainerStyle={{ padding:6 }}
+      renderItem={({ item }) =&gt; (
+        &lt;Image source={{ uri:item.url }} style={styles.img} resizeMode="cover" /&gt;
+      )}
+    /&gt;
+  &lt;/View&gt;
+);
+
+// estilos adicionais
+reload:{ backgroundColor:'#3b82f6', padding:12, borderRadius:8, margin:10 },
+reloadText:{ color:'#fff', fontWeight:'600' },
+img:{ flex:1, height:180, margin:6, borderRadius:10, backgroundColor:'#111827' }</code></pre>
+        </div>
+      </section>
+
+      <!-- CATS: progressivo 5/5 -->
+      <section data-auto-animate>
+        <h2>Cats – Código completo (5/5)</h2>
+        <div class="box code-box code-small">
+<pre><code class="language-javascript">export default function CatsScreen() {
+  const [cats, setCats] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() =&gt; { fetchCats(); }, []);
+
+  const fetchCats = async () =&gt; {
+    try {
+      setLoading(true);
+      const res = await fetch('https://api.thecatapi.com/v1/images/search?limit=20');
+      const data = await res.json();
+      setCats(data);
+    } catch (e) { console.error('Erro:', e); }
+    finally { setLoading(false); }
+  };
+
+  if (loading) {
+    return (
+      &lt;View style={styles.centered}&gt;
+        &lt;ActivityIndicator size="large" color="#3b82f6" /&gt;
+        &lt;Text style={{ color:'#e5e7eb', marginTop:8 }}&gt;Carregando...&lt;/Text&gt;
+      &lt;/View&gt;
+    );
+  }
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;TouchableOpacity onPress={fetchCats} style={styles.reload}&gt;
+        &lt;Text style={styles.reloadText}&gt;Atualizar&lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+      &lt;FlatList data={cats} numColumns={2} keyExtractor={(it) =&gt; it.id}
+        contentContainerStyle={{ padding:6 }}
+        renderItem={({ item }) =&gt; (&lt;Image source={{ uri:item.url }} style={styles.img} /&gt;)} /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container:{ flex:1, backgroundColor:'#0f172a' },
+  centered:{ flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#0f172a' },
+  reload:{ backgroundColor:'#3b82f6', padding:12, borderRadius:8, margin:10, alignItems:'center' },
+  reloadText:{ color:'#fff', fontWeight:'600' },
+  img:{ flex:1, height:180, margin:6, borderRadius:10, backgroundColor:'#111827' },
+});</code></pre>
+        </div>
+      </section>
+
+      <!-- CRYPTO: progressivo 1/5 -->
+      <section data-auto-animate>
+        <h2>Crypto – Estrutura (1/5)</h2>
+        <div class="box code-box">
+<pre><code class="language-javascript">import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+
+export default function CryptoScreen() {
+  const [cryptos, setCryptos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() =&gt; { fetchCryptos(); }, []);
+
+  const fetchCryptos = async () =&gt; {
+    // Implementaremos já já
+  };
+
+  return (&lt;View style={styles.container}&gt;&lt;Text style={styles.hint}&gt;Preparando tela...&lt;/Text&gt;&lt;/View&gt;);
+}
+
+const styles = StyleSheet.create({
+  container:{ flex:1, backgroundColor:'#0f172a', justifyContent:'center', alignItems:'center' },
+  hint:{ color:'#e5e7eb' }
+});</code></pre>
+        </div>
+      </section>
+
+      <!-- CRYPTO: progressivo 2/5 -->
+      <section data-auto-animate>
+        <h2>Crypto – Fetch + atualização (2/5)</h2>
+        <div class="box code-box">
+<pre><code class="language-javascript">useEffect(() =&gt; {
+  fetchCryptos();
+  const id = setInterval(fetchCryptos, 30000); // 30s
+  return () =&gt; clearInterval(id);
+}, []);
+
+const fetchCryptos = async () =&gt; {
+  try {
+    setLoading(true);
+    const url = 'https://api.coingecko.com/api/v3/coins/markets' +
+      '?vs_currency=brl&order=market_cap_desc&per_page=20&page=1';
+    const res = await fetch(url);
+    const data = await res.json();
+    setCryptos(data);
+  } catch (e) { console.error('Erro:', e); }
+  finally { setLoading(false); }
+};</code></pre>
+        </div>
+      </section>
+
+      <!-- CRYPTO: progressivo 3/5 -->
+      <section data-auto-animate>
+        <h2>Crypto – Loading (3/5)</h2>
+        <div class="box code-box">
+<pre><code class="language-javascript">if (loading && cryptos.length === 0) {
+  return (
+    &lt;View style={{ flex:1, backgroundColor:'#0f172a', justifyContent:'center', alignItems:'center' }}&gt;
+      &lt;ActivityIndicator size="large" color="#3b82f6" /&gt;
+      &lt;Text style={{ color:'#e5e7eb', marginTop:8 }}&gt;Carregando cotações...&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- CRYPTO: progressivo 4/5 -->
+      <section data-auto-animate>
+        <h2>Crypto – Item e cores dinâmicas (4/5)</h2>
+        <div class="box code-box code-small">
+<pre><code class="language-javascript">const renderCrypto = ({ item }) =&gt; {
+  const change = item.price_change_percentage_24h ?? 0;
+  const positive = change &gt;= 0;
+  return (
+    &lt;View style={styles.card}&gt;
+      &lt;View style={styles.row}&gt;
+        &lt;Text style={styles.name}&gt;{item.name}&lt;/Text&gt;
+        &lt;Text style={styles.symbol}&gt;{item.symbol.toUpperCase()}&lt;/Text&gt;
+      &lt;/View&gt;
+      &lt;View style={styles.row}&gt;
+        &lt;Text style={styles.price}&gt;R$ {Number(item.current_price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}&lt;/Text&gt;
+        &lt;Text style={{ color: positive ? '#22c55e' : '#ef4444', fontWeight:'700' }}&gt;{positive ? '+' : '-'}{Math.abs(change).toFixed(2)}%&lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+};</code></pre>
+        </div>
+      </section>
+
+      <!-- CRYPTO: progressivo 5/5 -->
+      <section data-auto-animate>
+        <h2>Crypto – Código completo (5/5)</h2>
+        <div class="box code-box code-small">
+<pre><code class="language-javascript">export default function CryptoScreen() {
+  const [cryptos, setCryptos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() =&gt; {
+    fetchCryptos();
+    const id = setInterval(fetchCryptos, 30000);
+    return () =&gt; clearInterval(id);
+  }, []);
+
+  const fetchCryptos = async () =&gt; {
+    try {
+      setLoading(true);
+      const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=brl&order=market_cap_desc&per_page=20&page=1';
+      const res = await fetch(url);
+      const data = await res.json();
+      setCryptos(data);
+    } catch (e) { console.error('Erro:', e); }
+    finally { setLoading(false); }
+  };
+
+  if (loading && cryptos.length === 0) {
+    return (
+      &lt;View style={styles.centered}&gt;
+        &lt;ActivityIndicator size="large" color="#3b82f6" /&gt;
+        &lt;Text style={{ color:'#e5e7eb', marginTop:8 }}&gt;Carregando cotações...&lt;/Text&gt;
+      &lt;/View&gt;
+    );
+  }
+
+  const renderCrypto = ({ item }) =&gt; {
+    const change = item.price_change_percentage_24h ?? 0;
+    const positive = change &gt;= 0;
+    return (
+      &lt;View style={styles.card}&gt;
+        &lt;View style={styles.row}&gt;
+          &lt;Text style={styles.name}&gt;{item.name}&lt;/Text&gt;
+          &lt;Text style={styles.symbol}&gt;{item.symbol.toUpperCase()}&lt;/Text&gt;
+        &lt;/View&gt;
+        &lt;View style={styles.row}&gt;
+          &lt;Text style={styles.price}&gt;R$ {Number(item.current_price).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&lt;/Text&gt;
+          &lt;Text style={{ color: positive ? '#22c55e' : '#ef4444', fontWeight:'700' }}&gt;{positive ? '+' : '-'}{Math.abs(change).toFixed(2)}%&lt;/Text&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+    );
+  };
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;View style={styles.header}&gt;
+        &lt;Text style={styles.headerTitle}&gt;Cotações&lt;/Text&gt;
+        &lt;TouchableOpacity onPress={fetchCryptos}&gt;&lt;Text style={styles.refresh}&gt;Atualizar&lt;/Text&gt;&lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+      &lt;FlatList data={cryptos} keyExtractor={(it) =&gt; it.id} renderItem={renderCrypto} contentContainerStyle={{ padding:10 }} /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container:{ flex:1, backgroundColor:'#0f172a' },
+  centered:{ flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#0f172a' },
+  header:{ flexDirection:'row', justifyContent:'space-between', alignItems:'center', padding:12, borderBottomWidth:1, borderBottomColor:'#1f2937' },
+  headerTitle:{ color:'#e5e7eb', fontWeight:'700', fontSize:16 },
+  refresh:{ color:'#93c5fd', fontWeight:'600' },
+  card:{ backgroundColor:'#111827', borderRadius:10, padding:12, marginBottom:10 },
+  row:{ flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:6 },
+  name:{ color:'#e5e7eb', fontWeight:'700' },
+  symbol:{ color:'#9ca3af', fontSize:12 },
+  price:{ color:'#93c5fd', fontWeight:'700' }
+});</code></pre>
+        </div>
+      </section>
+
+      <!-- TESTE -->
+      <section data-auto-animate>
+        <h2>Teste Rápido</h2>
+        <div class="box step-box">
+<pre><code class="language-bash">cd infohub-app
+npx expo start
+# 'a' Android  |  'i' iOS  |  QR no Expo Go</code></pre>
+        </div>
+        <div class="box activity-box">
+          <ul>
+            <li>As duas abas estão visíveis?</li>
+            <li>Gatos carregam e atualizam?</li>
+            <li>Cotações atualizam a cada 30s?</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ENCERRAMENTO (emojis pontuais: 1) -->
+      <section data-auto-animate>
+        <h2>Encerramento</h2>
+        <p class="box">Você implementou um app com Tab Navigation, consumo de duas APIs e UX com auto-animate.</p>
+        <p style="opacity:.9">Continue evoluindo: pull-to-refresh, detalhes com Stack, cache com AsyncStorage.</p>
+        <p style="margin-top:16px;">Bons estudos 🚀</p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js core & plugins (JS) -->
+  <script src="/lib/dist/reveal.js"></script>
+  <script src="/lib/plugin/notes/notes.js"></script>
+  <script src="/lib/plugin/markdown/markdown.js"></script>
+  <script src="/lib/plugin/highlight/highlight.js"></script>
+  <script src="/lib/plugin/zoom/zoom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      transition: 'convex',
+      backgroundTransition: 'fade',
+      autoAnimate: true,
+      autoAnimateEasing: 'ease-in-out',
+      autoAnimateDuration: 0.5,
+      autoAnimateUnmatched: true,
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMenu],
+      menu: { themes: true, transitions: true }
+    });
+  </script>
+</body>
+</html>
