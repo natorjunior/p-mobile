@@ -6,5 +6,9 @@
   {
     "titulo": "Aula 09 - Projeto Prático InfoHub",
     "link": "./2025.2/aula09.html"
+  },
+  {
+    "titulo": "Aula 10 - Armazenamento Local com SQLite e AsyncStorage",
+    "link": "./2025.2/aula10.html"
   }
 ]
