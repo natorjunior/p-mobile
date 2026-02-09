@@ -54,6 +54,18 @@
   {
     "titulo": "Aula 14 - iOS com Swift (Fundamentos)",
     "link": "./2026.1/aulas/aula14-swift-ios.html"
+  },
+  {
+    "titulo": "Extra 1 - Android com Kotlin (Aprofundamento)",
+    "link": "./2026.1/aulas/extra1-android-kotlin.html"
+  },
+  {
+    "titulo": "Extra 2 - API REST com Node.js e Express",
+    "link": "./2026.1/aulas/extra2-api-rest.html"
+  },
+  {
+    "titulo": "Extra 3 - iOS com Swift (Aprofundamento)",
+    "link": "./2026.1/aulas/extra3-swift-ios.html"
   }
 ]
   

@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extra 2 - API REST com Node.js e Express</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+  <link rel="stylesheet" href="./css/extra2-api-rest.css">
+
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides"> 
+
+      <!-- ==================== SEÇÃO 1: INTRODUÇÃO ==================== -->
+
+      <!-- Título -->
+      <section data-background-gradient="linear-gradient(135deg, #333333 0%, #68a063 100%)">
+        <br><br>
+        <h4 style="color: white;">Programação para Dispositivos Móveis</h4>
+        <p style="color: rgba(255,255,255,0.8); font-size: .5em; font-weight: 300;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h2 style="color: white;">Extra 2 - API REST com Node.js</h2>
+        <div class="emoji-large">🌐</div>
+        <p style="color: rgba(255,255,255,0.9); font-size: 0.6em;">
+          API REST • HTTP • Express • CRUD • JSON
+        </p>
+      </section>
+
+      <!-- ==================== SEÇÃO: O QUE É UMA API ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #4285F4, #00BCD4)">
+        <h2 style="color: white;">🤔 O que é uma API?</h2>
+        <p style="color: rgba(255,255,255,0.9);">Application Programming Interface</p>
+      </section>
+
+      <!-- API - Analogia -->
+      <section>
+        <h3>🍽️ API é como um garçom</h3>
+        <div style="display:flex; justify-content:center; gap:40px; margin:30px 0;">
+          <div style="text-align:center;" class="fragment" data-fragment-index="1">
+            <div style="font-size:3.4em;">👤</div>
+            <strong>Você</strong><br>
+            <span style="font-size:.75em; color:#666;">Faz o pedido</span>
+          </div>
+          <div style="text-align:center; align-self:center;" class="fragment" data-fragment-index="2">
+            <div style="font-size:3em;">🤵</div>
+            <strong style="color: var(--node-green);">API</strong><br>
+            <span style="font-size:.75em; color:#666;">Leva e traz</span>
+          </div>
+          <div style="text-align:center;" class="fragment" data-fragment-index="3">
+            <div style="font-size:3.4em;">👨‍🍳</div>
+            <strong>Cozinha</strong><br>
+            <span style="font-size:.75em; color:#666;">Prepara o pedido</span>
+          </div>
+        </div>
+        <div class="info-box fragment" data-fragment-index="4" style="max-width:700px; margin:20px auto;">
+          <strong>API</strong> = uma interface que permite que dois sistemas se comuniquem.
+          O cliente faz uma <strong>requisição</strong> e recebe uma <strong>resposta</strong>.
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO: O QUE É REST ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #f6891f, #FFA726)">
+        <h2 style="color: white;">📐 O que é REST?</h2>
+        <p style="color: rgba(255,255,255,0.9);">Representational State Transfer</p>
+      </section>
+
+      <section>
+        <h3>📐 REST: Um padrão de comunicação</h3>
+        <div class="info-box" style="max-width:750px; margin:20px auto;">
+          <strong>REST</strong> é um conjunto de regras para criar APIs que usam o protocolo <strong>HTTP</strong>.
+        </div>
+        <div style="display:flex; justify-content:center; gap:30px; margin:25px 0; flex-wrap:wrap;">
+          <div class="fragment" style="text-align:center; padding:15px; background:#f5f5f5; border-radius:12px; min-width:140px;">
+            <div style="font-size:2em;">📦</div>
+            <strong style="font-size:.85em;">Recursos</strong><br>
+            <span style="font-size:.7em; color:#666;">/usuarios, /produtos</span>
+          </div>
+          <div class="fragment" style="text-align:center; padding:15px; background:#f5f5f5; border-radius:12px; min-width:140px;">
+            <div style="font-size:2em;">📝</div>
+            <strong style="font-size:.85em;">Verbos HTTP</strong><br>
+            <span style="font-size:.7em; color:#666;">GET, POST, PUT, DELETE</span>
+          </div>
+          <div class="fragment" style="text-align:center; padding:15px; background:#f5f5f5; border-radius:12px; min-width:140px;">
+            <div style="font-size:2em;">📄</div>
+            <strong style="font-size:.85em;">JSON</strong><br>
+            <span style="font-size:.7em; color:#666;">Formato de dados</span>
+          </div>
+          <div class="fragment" style="text-align:center; padding:15px; background:#f5f5f5; border-radius:12px; min-width:140px;">
+            <div style="font-size:2em;">🔢</div>
+            <strong style="font-size:.85em;">Status Codes</strong><br>
+            <span style="font-size:.7em; color:#666;">200, 404, 500...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO: MÉTODOS HTTP ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #7F52FF, #9B7FFF)">
+        <h2 style="color: white;">📝 Métodos HTTP</h2>
+        <p style="color: rgba(255,255,255,0.9);">GET • POST • PUT • DELETE</p>
+      </section>
+
+      <section>
+        <h3>📝 Os 4 verbos do CRUD</h3>
+        <div class="http-methods">
+          <div class="http-card get-card fragment">
+            <div style="font-size:2em;">📖</div>
+            <div class="method-name">GET</div>
+            <div class="method-desc">Buscar dados<br><strong>Read</strong></div>
+          </div>
+          <div class="http-card post-card fragment">
+            <div style="font-size:2em;">➕</div>
+            <div class="method-name">POST</div>
+            <div class="method-desc">Criar novo<br><strong>Create</strong></div>
+          </div>
+          <div class="http-card put-card fragment">
+            <div style="font-size:2em;">✏️</div>
+            <div class="method-name">PUT</div>
+            <div class="method-desc">Atualizar<br><strong>Update</strong></div>
+          </div>
+          <div class="http-card delete-card fragment">
+            <div style="font-size:2em;">🗑️</div>
+            <div class="method-name">DELETE</div>
+            <div class="method-desc">Remover<br><strong>Delete</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO: STATUS CODES ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🔢 Status Codes HTTP</h3>
+          <p style="font-size:.8em; color:#666;">Respostas do servidor</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔢 Status Codes HTTP</h3>
+          <div class="status-grid">
+            <div class="status-item success">
+              <span class="status-code">200</span>
+              OK — Sucesso
+            </div>
+            <div class="status-item success">
+              <span class="status-code">201</span>
+              Created — Criado
+            </div>
+            <div class="status-item success">
+              <span class="status-code">204</span>
+              No Content — Sem conteúdo
+            </div>
+            <div class="status-item client-error">
+              <span class="status-code">400</span>
+              Bad Request — Erro no pedido
+            </div>
+            <div class="status-item client-error">
+              <span class="status-code">404</span>
+              Not Found — Não encontrado
+            </div>
+            <div class="status-item client-error">
+              <span class="status-code">422</span>
+              Unprocessable — Dados inválidos
+            </div>
+            <div class="status-item server-error">
+              <span class="status-code">500</span>
+              Internal Error — Erro no servidor
+            </div>
+            <div class="status-item server-error">
+              <span class="status-code">502</span>
+              Bad Gateway — Gateway inválido
+            </div>
+            <div class="status-item server-error">
+              <span class="status-code">503</span>
+              Unavailable — Indisponível
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: JSON ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>📄 JSON: O formato dos dados</h3>
+          <p style="font-size:.8em; color:#666;">JavaScript Object Notation</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📄 JSON: Objeto simples</h3>
+          <pre data-id="code-animation"><code class="json" data-trim data-line-numbers>
+{
+    "nome": "Maria",
+    "idade": 25,
+    "email": "maria@email.com"
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📄 JSON: Array de objetos</h3>
+          <pre data-id="code-animation"><code class="json" data-trim data-line-numbers>
+[
+    {
+        "id": 1,
+        "nome": "Maria",
+        "idade": 25
+    },
+    {
+        "id": 2,
+        "nome": "João",
+        "idade": 30
+    }
+]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📄 JSON: Objeto aninhado</h3>
+          <pre data-id="code-animation"><code class="json" data-trim data-line-numbers>
+{
+    "id": 1,
+    "nome": "Maria",
+    "endereco": {
+        "rua": "Av. Brasil",
+        "numero": 100,
+        "cidade": "São Paulo"
+    },
+    "telefones": ["11999990000", "1133330000"]
+}
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: NODE.JS ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #333333, #68a063)">
+        <h2 style="color: white;">Parte 1</h2>
+        <h1 style="color: white;">Node.js + Express</h1>
+        <p style="color: rgba(255,255,255,0.9);">Criando nosso servidor</p>
+      </section>
+
+      <!-- O que é Node.js -->
+      <section>
+        <h3>🟢 O que é Node.js?</h3>
+        <div class="info-box" style="max-width:750px; margin:20px auto;">
+          <strong>Node.js</strong> permite executar JavaScript <strong>fora do navegador</strong>, direto no servidor.
+        </div>
+        <div style="display:flex; justify-content:center; gap:50px; margin:25px 0;">
+          <div class="fragment" style="text-align:center;">
+            <div style="font-size:3em;">🌐</div>
+            <strong>Navegador</strong><br>
+            <span style="font-size:.75em; color:#666;">JS no frontend</span>
+          </div>
+          <div style="align-self:center; font-size:2em;">→</div>
+          <div class="fragment" style="text-align:center;">
+            <div style="font-size:3em;">🖥️</div>
+            <strong style="color:var(--node-green);">Node.js</strong><br>
+            <span style="font-size:.75em; color:#666;">JS no backend</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- O que é Express -->
+      <section>
+        <h3>🚂 O que é Express?</h3>
+        <div class="info-box" style="max-width:750px; margin:20px auto;">
+          <strong>Express</strong> é um framework minimalista para Node.js que facilita criar servidores web e APIs REST.
+        </div>
+        <div style="display:flex; justify-content:center; gap:25px; margin:25px 0; flex-wrap:wrap;">
+          <div class="fragment" style="text-align:center; padding:15px; background:#f5f5f5; border-radius:12px;">
+            <div style="font-size:1.8em;">⚡</div>
+            <strong style="font-size:.8em;">Rápido</strong>
+          </div>
+          <div class="fragment" style="text-align:center; padding:15px; background:#f5f5f5; border-radius:12px;">
+            <div style="font-size:1.8em;">🧩</div>
+            <strong style="font-size:.8em;">Simples</strong>
+          </div>
+          <div class="fragment" style="text-align:center; padding:15px; background:#f5f5f5; border-radius:12px;">
+            <div style="font-size:1.8em;">📦</div>
+            <strong style="font-size:.8em;">Middlewares</strong>
+          </div>
+          <div class="fragment" style="text-align:center; padding:15px; background:#f5f5f5; border-radius:12px;">
+            <div style="font-size:1.8em;">🔗</div>
+            <strong style="font-size:.8em;">Rotas</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO: SETUP DO PROJETO ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🛠️ Configurando o Projeto</h3>
+          <p style="font-size:.8em; color:#666;">Primeiros passos</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛠️ Criando a pasta do projeto</h3>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+mkdir minha-api
+cd minha-api
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛠️ Inicializando o Node.js</h3>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+npm init -y
+          </code></pre>
+          <p style="font-size:.75em; color:#666;">Cria o arquivo <code>package.json</code></p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛠️ Instalando o Express</h3>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+npm install express
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛠️ Estrutura do projeto</h3>
+          <pre data-id="code-animation"><code class="text" data-trim data-line-numbers>
+minha-api/
+├── node_modules/
+├── package.json
+├── package-lock.json
+└── index.js          ← nosso servidor
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: PRIMEIRO SERVIDOR ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🚀 Primeiro Servidor</h3>
+          <p style="font-size:.8em; color:#666;">Hello World com Express</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Importando o Express</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express')
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Criando a aplicação</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express')
+const app = express()
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Definindo a porta</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express')
+const app = express()
+const PORT = 3000
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Criando a primeira rota</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express')
+const app = express()
+const PORT = 3000
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Iniciando o servidor</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express')
+const app = express()
+const PORT = 3000
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`)
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Rodando o servidor</h3>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+node index.js
+          </code></pre>
+          <div class="info-box" style="max-width:600px; margin:15px auto;">
+            Acesse <strong>http://localhost:3000</strong> no navegador e veja "Hello World!"
+          </div>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: RETORNANDO JSON ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>📄 Retornando JSON</h3>
+          <p style="font-size:.8em; color:#666;">Dados estruturados</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📄 res.send vs res.json</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Retorna texto simples
+app.get('/texto', (req, res) => {
+    res.send('Olá, mundo!')
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📄 Retornando um objeto JSON</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Retorna um objeto JSON
+app.get('/usuario', (req, res) => {
+    res.json({
+        nome: 'Maria',
+        idade: 25,
+        email: 'maria@email.com'
+    })
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📄 Retornando uma lista</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Retorna uma lista de objetos
+app.get('/usuarios', (req, res) => {
+    const usuarios = [
+        { id: 1, nome: 'Maria' },
+        { id: 2, nome: 'João' },
+        { id: 3, nome: 'Ana' }
+    ]
+    res.json(usuarios)
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📄 Com status code</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Retorna com status code específico
+app.get('/usuarios', (req, res) => {
+    const usuarios = [
+        { id: 1, nome: 'Maria' },
+        { id: 2, nome: 'João' },
+        { id: 3, nome: 'Ana' }
+    ]
+    res.status(200).json(usuarios)
+})
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: ROTAS E PARÂMETROS ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #4285F4, #7B68EE)">
+        <h2 style="color: white;">Parte 2</h2>
+        <h1 style="color: white;">Rotas e Parâmetros</h1>
+        <p style="color: rgba(255,255,255,0.9);">Caminhos dinâmicos</p>
+      </section>
+
+      <!-- Parâmetros de Rota -->
+      <section>
+        <section data-auto-animate>
+          <h3>🛤️ Parâmetros de Rota</h3>
+          <p style="font-size:.8em; color:#666;">Valores dinâmicos na URL</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛤️ O que é um parâmetro de rota?</h3>
+          <pre data-id="code-animation"><code class="text" data-trim data-line-numbers>
+GET /usuarios/1       ← busca usuário com id 1
+GET /usuarios/2       ← busca usuário com id 2
+GET /usuarios/42      ← busca usuário com id 42
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛤️ Usando :id na rota</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+app.get('/usuarios/:id', (req, res) => {
+    const id = req.params.id
+    res.json({ id: id, mensagem: `Buscando usuário ${id}` })
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛤️ Exemplo prático com dados</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const usuarios = [
+    { id: 1, nome: 'Maria' },
+    { id: 2, nome: 'João' },
+    { id: 3, nome: 'Ana' }
+]
+
+app.get('/usuarios/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const usuario = usuarios.find(u => u.id === id)
+
+    if (usuario) {
+        res.json(usuario)
+    } else {
+        res.status(404).json({ erro: 'Usuário não encontrado' })
+    }
+})
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Query Parameters -->
+      <section>
+        <section data-auto-animate>
+          <h3>🔍 Query Parameters</h3>
+          <p style="font-size:.8em; color:#666;">Filtros na URL</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔍 O que são query parameters?</h3>
+          <pre data-id="code-animation"><code class="text" data-trim data-line-numbers>
+GET /usuarios?nome=Maria
+GET /usuarios?idade=25
+GET /usuarios?nome=Maria&idade=25
+          </code></pre>
+          <p style="font-size:.75em; color:#666;">Usam <code>?chave=valor</code> e <code>&</code> para múltiplos</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔍 Usando req.query</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+app.get('/usuarios', (req, res) => {
+    const nome = req.query.nome
+
+    if (nome) {
+        const filtrados = usuarios.filter(u => 
+            u.nome.includes(nome)
+        )
+        res.json(filtrados)
+    } else {
+        res.json(usuarios)
+    }
+})
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: CRUD COMPLETO ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #68a063, #4caf50)">
+        <h2 style="color: white;">Parte 3</h2>
+        <h1 style="color: white;">CRUD Completo</h1>
+        <p style="color: rgba(255,255,255,0.9);">Create • Read • Update • Delete</p>
+      </section>
+
+      <!-- Middleware JSON -->
+      <section>
+        <section data-auto-animate>
+          <h3>⚙️ Configurando Middleware</h3>
+          <p style="font-size:.8em; color:#666;">Preparando para receber dados</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>⚙️ O que é Middleware?</h3>
+          <div class="info-box" style="max-width:700px; margin:20px auto;">
+            <strong>Middleware</strong> é uma função que executa <strong>antes</strong> da sua rota.
+            Funciona como um "filtro" que processa a requisição.
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>⚙️ express.json()</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express')
+const app = express()
+
+// Middleware para ler JSON do body
+app.use(express.json())
+          </code></pre>
+          <p style="font-size:.75em; color:#666;">Sem isso, <code>req.body</code> será <code>undefined</code>!</p>
+        </section>
+      </section>
+
+      <!-- GET - Listar todos -->
+      <section>
+        <section data-auto-animate>
+          <h3>📖 GET: Listar todos</h3>
+          <p style="font-size:.8em; color:#666;">Read - Buscar dados</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📖 Dados em memória</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+let usuarios = [
+    { id: 1, nome: 'Maria', email: 'maria@email.com' },
+    { id: 2, nome: 'João', email: 'joao@email.com' },
+    { id: 3, nome: 'Ana', email: 'ana@email.com' }
+]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📖 GET /usuarios</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Listar todos os usuários
+app.get('/usuarios', (req, res) => {
+    res.json(usuarios)
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📖 GET /usuarios/:id</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Buscar um usuário por ID
+app.get('/usuarios/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const usuario = usuarios.find(u => u.id === id)
+
+    if (!usuario) {
+        return res.status(404).json({ erro: 'Não encontrado' })
+    }
+
+    res.json(usuario)
+})
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- POST - Criar -->
+      <section>
+        <section data-auto-animate>
+          <h3>➕ POST: Criar novo</h3>
+          <p style="font-size:.8em; color:#666;">Create - Adicionar dados</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>➕ O que o cliente envia?</h3>
+          <pre data-id="code-animation"><code class="json" data-trim data-line-numbers>
+{
+    "nome": "Carlos",
+    "email": "carlos@email.com"
+}
+          </code></pre>
+          <p style="font-size:.75em; color:#666;">Enviado no <strong>body</strong> da requisição</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>➕ POST /usuarios</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Criar novo usuário
+app.post('/usuarios', (req, res) => {
+    const { nome, email } = req.body
+
+    const novo = {
+        id: usuarios.length + 1,
+        nome: nome,
+        email: email
+    }
+
+    usuarios.push(novo)
+    res.status(201).json(novo)
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>➕ POST com validação</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+app.post('/usuarios', (req, res) => {
+    const { nome, email } = req.body
+
+    if (!nome || !email) {
+        return res.status(400).json({ 
+            erro: 'Nome e email são obrigatórios' 
+        })
+    }
+
+    const novo = {
+        id: usuarios.length + 1,
+        nome,
+        email
+    }
+
+    usuarios.push(novo)
+    res.status(201).json(novo)
+})
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- PUT - Atualizar -->
+      <section>
+        <section data-auto-animate>
+          <h3>✏️ PUT: Atualizar</h3>
+          <p style="font-size:.8em; color:#666;">Update - Modificar dados</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✏️ O que o cliente envia?</h3>
+          <pre data-id="code-animation"><code class="text" data-trim data-line-numbers>
+PUT /usuarios/1
+
+Body:
+{
+    "nome": "Maria Silva",
+    "email": "maria.silva@email.com"
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✏️ PUT /usuarios/:id</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Atualizar usuário
+app.put('/usuarios/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const index = usuarios.findIndex(u => u.id === id)
+
+    if (index === -1) {
+        return res.status(404).json({ erro: 'Não encontrado' })
+    }
+
+    const { nome, email } = req.body
+
+    usuarios[index] = { 
+        id, 
+        nome: nome || usuarios[index].nome, 
+        email: email || usuarios[index].email 
+    }
+
+    res.json(usuarios[index])
+})
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- DELETE - Remover -->
+      <section>
+        <section data-auto-animate>
+          <h3>🗑️ DELETE: Remover</h3>
+          <p style="font-size:.8em; color:#666;">Delete - Apagar dados</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🗑️ Rota de exclusão</h3>
+          <pre data-id="code-animation"><code class="text" data-trim data-line-numbers>
+DELETE /usuarios/1     ← remove o usuário com id 1
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🗑️ DELETE /usuarios/:id</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Deletar usuário
+app.delete('/usuarios/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const index = usuarios.findIndex(u => u.id === id)
+
+    if (index === -1) {
+        return res.status(404).json({ erro: 'Não encontrado' })
+    }
+
+    usuarios.splice(index, 1)
+    res.status(204).send()
+})
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: CÓDIGO COMPLETO ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #f6891f, #ff9800)">
+        <h2 style="color: white;">Parte 4</h2>
+        <h1 style="color: white;">Código Completo</h1>
+        <p style="color: rgba(255,255,255,0.9);">API CRUD completa</p>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>📋 API Completa: index.js</h3>
+          <p style="font-size:.8em; color:#666;">Juntando tudo</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📋 Setup inicial</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="1-5">
+const express = require('express')
+const app = express()
+const PORT = 3000
+
+app.use(express.json())
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📋 Dados em memória</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="1-10">
+const express = require('express')
+const app = express()
+const PORT = 3000
+
+app.use(express.json())
+
+let usuarios = [
+    { id: 1, nome: 'Maria', email: 'maria@email.com' },
+    { id: 2, nome: 'João', email: 'joao@email.com' }
+]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📋 GET: Listar + Buscar</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="12-25">
+// GET - Listar todos
+app.get('/usuarios', (req, res) => {
+    res.json(usuarios)
+})
+
+// GET - Buscar por ID
+app.get('/usuarios/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const usuario = usuarios.find(u => u.id === id)
+
+    if (!usuario) {
+        return res.status(404).json({ erro: 'Não encontrado' })
+    }
+    res.json(usuario)
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📋 POST: Criar</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="27-40">
+// POST - Criar novo
+app.post('/usuarios', (req, res) => {
+    const { nome, email } = req.body
+
+    if (!nome || !email) {
+        return res.status(400).json({ 
+            erro: 'Nome e email são obrigatórios' 
+        })
+    }
+
+    const novo = { id: usuarios.length + 1, nome, email }
+    usuarios.push(novo)
+    res.status(201).json(novo)
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📋 PUT: Atualizar</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="42-56">
+// PUT - Atualizar
+app.put('/usuarios/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const index = usuarios.findIndex(u => u.id === id)
+
+    if (index === -1) {
+        return res.status(404).json({ erro: 'Não encontrado' })
+    }
+
+    const { nome, email } = req.body
+    usuarios[index] = { 
+        id, 
+        nome: nome || usuarios[index].nome, 
+        email: email || usuarios[index].email 
+    }
+    res.json(usuarios[index])
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📋 DELETE: Remover</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="58-68">
+// DELETE - Remover
+app.delete('/usuarios/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const index = usuarios.findIndex(u => u.id === id)
+
+    if (index === -1) {
+        return res.status(404).json({ erro: 'Não encontrado' })
+    }
+
+    usuarios.splice(index, 1)
+    res.status(204).send()
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📋 Iniciando o servidor</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="70-72">
+app.listen(PORT, () => {
+    console.log(`API rodando em http://localhost:${PORT}`)
+})
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: TESTANDO COM FERRAMENTAS ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #7F52FF, #9B7FFF)">
+        <h2 style="color: white;">Parte 5</h2>
+        <h1 style="color: white;">Testando a API</h1>
+        <p style="color: rgba(255,255,255,0.9);">Ferramentas e exemplos</p>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🧪 Ferramentas para testar</h3>
+          <p style="font-size:.8em; color:#666;">Como fazer requisições</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧪 Opções de ferramentas</h3>
+          <div style="display:flex; justify-content:center; gap:30px; margin:25px 0; flex-wrap:wrap;">
+            <div style="text-align:center; padding:20px; background:#f5f5f5; border-radius:12px; min-width:160px;">
+              <div style="font-size:2.5em;">🌐</div>
+              <strong>Navegador</strong><br>
+              <span style="font-size:.7em; color:#666;">Apenas GET</span>
+            </div>
+            <div style="text-align:center; padding:20px; background:#f5f5f5; border-radius:12px; min-width:160px;">
+              <div style="font-size:2.5em;">📮</div>
+              <strong>Postman</strong><br>
+              <span style="font-size:.7em; color:#666;">Interface gráfica</span>
+            </div>
+            <div style="text-align:center; padding:20px; background:#f5f5f5; border-radius:12px; min-width:160px;">
+              <div style="font-size:2.5em;">⚡</div>
+              <strong>Thunder Client</strong><br>
+              <span style="font-size:.7em; color:#666;">Extensão VS Code</span>
+            </div>
+            <div style="text-align:center; padding:20px; background:#e8f5e9; border-radius:12px; min-width:160px; border:2px solid var(--node-green);">
+              <div style="font-size:2.5em;">💻</div>
+              <strong style="color:var(--node-green);">curl</strong><br>
+              <span style="font-size:.7em; color:#666;">Terminal</span>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Testando com curl -->
+      <section>
+        <section data-auto-animate>
+          <h3>💻 Testando com curl</h3>
+          <p style="font-size:.8em; color:#666;">Comandos no terminal</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>💻 GET: Listar todos</h3>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+curl http://localhost:3000/usuarios
+          </code></pre>
+          <pre><code class="json" data-trim>
+[{"id":1,"nome":"Maria","email":"maria@email.com"},
+ {"id":2,"nome":"João","email":"joao@email.com"}]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>💻 GET: Buscar por ID</h3>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+curl http://localhost:3000/usuarios/1
+          </code></pre>
+          <pre><code class="json" data-trim>
+{"id":1,"nome":"Maria","email":"maria@email.com"}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>💻 POST: Criar usuário</h3>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+curl -X POST http://localhost:3000/usuarios \
+  -H "Content-Type: application/json" \
+  -d '{"nome": "Carlos", "email": "carlos@email.com"}'
+          </code></pre>
+          <pre><code class="json" data-trim>
+{"id":3,"nome":"Carlos","email":"carlos@email.com"}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>💻 PUT: Atualizar usuário</h3>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+curl -X PUT http://localhost:3000/usuarios/1 \
+  -H "Content-Type: application/json" \
+  -d '{"nome": "Maria Silva"}'
+          </code></pre>
+          <pre><code class="json" data-trim>
+{"id":1,"nome":"Maria Silva","email":"maria@email.com"}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>💻 DELETE: Remover usuário</h3>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+curl -X DELETE http://localhost:3000/usuarios/1
+          </code></pre>
+          <p style="font-size:.75em; color:#666;">Retorna status <strong>204 No Content</strong> (sem corpo)</p>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: BOAS PRÁTICAS ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #00BCD4, #00ACC1)">
+        <h2 style="color: white;">Parte 6</h2>
+        <h1 style="color: white;">Boas Práticas</h1>
+        <p style="color: rgba(255,255,255,0.9);">Padrões e convenções</p>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>✅ Boas Práticas em APIs REST</h3>
+          <p style="font-size:.8em; color:#666;">Convenções importantes</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Nomeação de rotas</h3>
+          <pre data-id="code-animation"><code class="text" data-trim data-line-numbers>
+✅ Correto:
+GET    /usuarios          → listar
+GET    /usuarios/1        → buscar por id
+POST   /usuarios          → criar
+PUT    /usuarios/1        → atualizar
+DELETE /usuarios/1        → remover
+
+❌ Errado:
+GET /getUsuarios
+GET /buscarUsuario/1
+POST /criarUsuario
+DELETE /deletarUsuario/1
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Use plural nos recursos</h3>
+          <pre data-id="code-animation"><code class="text" data-trim data-line-numbers>
+✅ /usuarios
+✅ /produtos
+✅ /pedidos
+
+❌ /usuario
+❌ /produto
+❌ /pedido
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Status codes corretos</h3>
+          <pre data-id="code-animation"><code class="text" data-trim data-line-numbers>
+GET    → 200 (OK)
+POST   → 201 (Created)
+PUT    → 200 (OK)
+DELETE → 204 (No Content)
+
+Erro no pedido  → 400 (Bad Request)
+Não encontrado  → 404 (Not Found)
+Erro no servidor → 500 (Internal Error)
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Sempre retorne JSON</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// ✅ Erro como JSON
+res.status(404).json({ 
+    erro: 'Usuário não encontrado' 
+})
+
+// ❌ Erro como texto
+res.status(404).send('Usuário não encontrado')
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: CORS ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🌍 CORS: Permitindo acesso externo</h3>
+          <p style="font-size:.8em; color:#666;">Cross-Origin Resource Sharing</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌍 O que é CORS?</h3>
+          <div class="info-box" style="max-width:700px; margin:20px auto;">
+            <strong>CORS</strong> permite que outros sites/apps acessem sua API.
+            Sem isso, o navegador bloqueia requisições de origens diferentes.
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌍 Instalando o CORS</h3>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+npm install cors
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌍 Usando o CORS</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express')
+const cors = require('cors')
+const app = express()
+
+app.use(cors())           // Permite todas as origens
+app.use(express.json())
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: ORGANIZANDO EM ARQUIVOS ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>📁 Organizando em arquivos</h3>
+          <p style="font-size:.8em; color:#666;">Separando responsabilidades</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📁 Estrutura organizada</h3>
+          <pre data-id="code-animation"><code class="text" data-trim data-line-numbers>
+minha-api/
+├── index.js              ← servidor principal
+├── routes/
+│   └── usuarios.js       ← rotas de usuários
+├── package.json
+└── node_modules/
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📁 routes/usuarios.js</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express')
+const router = express.Router()
+
+let usuarios = [
+    { id: 1, nome: 'Maria', email: 'maria@email.com' },
+    { id: 2, nome: 'João', email: 'joao@email.com' }
+]
+
+router.get('/', (req, res) => {
+    res.json(usuarios)
+})
+
+router.get('/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const usuario = usuarios.find(u => u.id === id)
+    if (!usuario) return res.status(404).json({ erro: 'Não encontrado' })
+    res.json(usuario)
+})
+
+module.exports = router
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📁 index.js (usando rotas)</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express')
+const cors = require('cors')
+const usuariosRoutes = require('./routes/usuarios')
+
+const app = express()
+
+app.use(cors())
+app.use(express.json())
+
+// Usa as rotas de usuários
+app.use('/usuarios', usuariosRoutes)
+
+app.listen(3000, () => {
+    console.log('API rodando em http://localhost:3000')
+})
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: MINI DESAFIO ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🧪 Mini Desafio</h3>
+          <p style="font-size:.8em; color:#666;">10 minutos</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧪 Desafio: API de Produtos</h3>
+          <div class="mini-exercise">
+            <p style="font-size:.85em; margin:0;">
+              Crie uma API REST para gerenciar <strong>Produtos</strong> com os campos:
+              <code>id</code>, <code>nome</code>, <code>preco</code> e <code>estoque</code>.
+            </p>
+            <br>
+            <p style="font-size:.8em; margin:0;">
+              Implemente: <strong>GET</strong> (listar todos), <strong>GET</strong> (por id),
+              <strong>POST</strong> (criar) e <strong>DELETE</strong> (remover).
+            </p>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Resolução: Setup</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express')
+const app = express()
+app.use(express.json())
+
+let produtos = [
+    { id: 1, nome: 'Mouse', preco: 79.90, estoque: 50 },
+    { id: 2, nome: 'Teclado', preco: 149.90, estoque: 30 }
+]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Resolução: GET</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+app.get('/produtos', (req, res) => {
+    res.json(produtos)
+})
+
+app.get('/produtos/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const produto = produtos.find(p => p.id === id)
+
+    if (!produto) {
+        return res.status(404).json({ erro: 'Produto não encontrado' })
+    }
+    res.json(produto)
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Resolução: POST</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+app.post('/produtos', (req, res) => {
+    const { nome, preco, estoque } = req.body
+
+    if (!nome || !preco) {
+        return res.status(400).json({ 
+            erro: 'Nome e preço são obrigatórios' 
+        })
+    }
+
+    const novo = {
+        id: produtos.length + 1,
+        nome,
+        preco,
+        estoque: estoque || 0
+    }
+
+    produtos.push(novo)
+    res.status(201).json(novo)
+})
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Resolução: DELETE</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+app.delete('/produtos/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const index = produtos.findIndex(p => p.id === id)
+
+    if (index === -1) {
+        return res.status(404).json({ 
+            erro: 'Produto não encontrado' 
+        })
+    }
+
+    produtos.splice(index, 1)
+    res.status(204).send()
+})
+
+app.listen(3000, () => {
+    console.log('API de Produtos rodando!')
+})
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: RESUMO ==================== -->
+
+      <section>
+        <h3>📝 Resumo das Rotas</h3>
+        <table style="font-size:.7em; margin:20px auto; border-collapse:collapse;">
+          <thead>
+            <tr style="background:var(--node-green); color:white;">
+              <th style="padding:10px 20px;">Método</th>
+              <th style="padding:10px 20px;">Rota</th>
+              <th style="padding:10px 20px;">Ação</th>
+              <th style="padding:10px 20px;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#e8f5e9;">
+              <td style="padding:8px 20px;"><strong>GET</strong></td>
+              <td style="padding:8px 20px;">/usuarios</td>
+              <td style="padding:8px 20px;">Listar todos</td>
+              <td style="padding:8px 20px;">200</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 20px;"><strong>GET</strong></td>
+              <td style="padding:8px 20px;">/usuarios/:id</td>
+              <td style="padding:8px 20px;">Buscar por ID</td>
+              <td style="padding:8px 20px;">200 / 404</td>
+            </tr>
+            <tr style="background:#e3f2fd;">
+              <td style="padding:8px 20px;"><strong>POST</strong></td>
+              <td style="padding:8px 20px;">/usuarios</td>
+              <td style="padding:8px 20px;">Criar novo</td>
+              <td style="padding:8px 20px;">201 / 400</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 20px;"><strong>PUT</strong></td>
+              <td style="padding:8px 20px;">/usuarios/:id</td>
+              <td style="padding:8px 20px;">Atualizar</td>
+              <td style="padding:8px 20px;">200 / 404</td>
+            </tr>
+            <tr style="background:#ffebee;">
+              <td style="padding:8px 20px;"><strong>DELETE</strong></td>
+              <td style="padding:8px 20px;">/usuarios/:id</td>
+              <td style="padding:8px 20px;">Remover</td>
+              <td style="padding:8px 20px;">204 / 404</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Fechamento -->
+      <section data-background-gradient="linear-gradient(135deg, #00C853, #68a063)">
+        <h2 style="color:#1A1A1A;">🏁 Fechamento API REST</h2>
+        <p style="color:#103d22; font-size:.9em;">
+          Você aprendeu: HTTP, REST, Express, CRUD, JSON, Status Codes, CORS e organização de rotas.
+        </p>
+        <div class="highlight-box" style="max-width:760px; margin:20px auto; background:linear-gradient(135deg,#1A1A1A,#2D2D2D);">
+          <p style="margin:0; font-size:.85em;">
+            Próximo passo: conectar essa API a um <strong>banco de dados</strong> (SQLite, MongoDB) e consumir no <strong>app mobile</strong>.
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="./dist/reveal.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+  <script src="./js/extra2-api-rest.js"></script>
+</body>
+</html>

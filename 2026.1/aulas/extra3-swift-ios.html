@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extra 3 - iOS com Swift (Aprofundamento)</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+  <link rel="stylesheet" href="./css/extra3-swift-ios.css">
+
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ==================== SEÇÃO 1: INTRODUÇÃO ==================== -->
+
+      <!-- Título -->
+      <section data-background-gradient="linear-gradient(135deg, #1A1A1A 0%, #F05138 100%)">
+        <br><br>
+        <h4 style="color: white;">Programação para Dispositivos Móveis</h4>
+        <p style="color: rgba(255,255,255,0.8); font-size: .5em; font-weight: 300;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h2 style="color: white;">Extra 3 - iOS com Swift</h2>
+        <div class="emoji-large">🍎</div>
+        <p style="color: rgba(255,255,255,0.9); font-size: 0.6em;">
+          Fundamentos • Sintaxe Swift • Coleções • Optionals
+        </p>
+      </section>
+
+      <!-- ==================== SEÇÃO: EVOLUÇÃO DAS APLICAÇÕES ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #F6891F, #FFA726)">
+        <h2 style="color: white;">📱 Evolução das Aplicações</h2>
+        <p style="color: rgba(255,255,255,0.9);">Desktop • Web • Mobile Nativo</p>
+      </section>
+
+      <!-- Timeline -->
+      <section>
+        <h3>A Jornada Tecnológica</h3>
+        <div class="timeline-container">
+          <div class="evolution-stage">
+            <div class="evolution-icon">💻</div>
+            <div class="stage-title">Desktop</div>
+            <div class="stage-description">
+              Aplicações para computadores<br>
+              Windows, Mac, Linux
+            </div>
+            <div class="stage-bar" style="width: 80px;"></div>
+            <div class="era-marker desktop-era">Desktop</div>
+          </div>
+
+          <div class="evolution-arrow">⟹</div>
+
+          <div class="evolution-stage">
+            <div class="evolution-icon">🌐</div>
+            <div class="stage-title">Web</div>
+            <div class="stage-description">
+              Aplicações no navegador<br>
+              HTML, CSS, JavaScript
+            </div>
+            <div class="stage-bar" style="width: 100px;"></div>
+            <div class="era-marker web-era">Web</div>
+          </div>
+
+          <div class="evolution-arrow">⟹</div>
+
+          <div class="evolution-stage">
+            <div class="evolution-icon">📱</div>
+            <div class="stage-title">Mobile Nativo</div>
+            <div class="stage-description">
+              Aplicações para dispositivos Móveis<br>
+              iOS (Swift), Android (Kotlin)
+            </div>
+            <div class="stage-bar" style="width: 120px; background: linear-gradient(90deg, var(--swift-orange), var(--ios-blue));"></div>
+            <div class="era-marker mobile-era">Mobile</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO: ARQUITETURA ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #4285F4, #00BCD4)">
+        <h2 style="color: white;">🏗️ Arquitetura de Aplicações</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Cliente-Servidor • Três Camadas</p>
+      </section>
+
+      <section>
+        <h3>🤔 O que é Cliente-Servidor?</h3>
+        <div class="highlight-box" style="max-width:700px; margin:25px auto; text-align:left;">
+          <p style="margin:0; font-size:.95em;">
+            É um modelo onde o <strong>cliente</strong> (app, navegador) faz pedidos e o <strong>servidor</strong> responde com dados ou ações.
+          </p>
+        </div>
+        <div style="display:flex; justify-content:center; gap:60px; margin:22px 0 12px;">
+          <div style="text-align:center;" class="fragment" data-fragment-index="1">
+            <div style="font-size:3.4em;">📱</div>
+            <strong>Cliente</strong><br>
+            <span style="font-size:.75em; color:#666;">Pede informações</span>
+          </div>
+          <div style="text-align:center; align-self:center;" class="fragment" data-fragment-index="2">
+            <div style="font-size:2.5em;">↔️</div>
+            <span style="font-size:.7em; color:var(--ios-blue); font-weight:700;">Internet</span>
+          </div>
+          <div style="text-align:center;" class="fragment" data-fragment-index="3">
+            <div style="font-size:3.4em;">🖥️</div>
+            <strong>Servidor</strong><br>
+            <span style="font-size:.75em; color:#666;">Processa e responde</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Simulação Animada -->
+      <section>
+        <h3 style="margin-bottom:8px;">🔗 Cliente-Servidor — Simulação</h3>
+        <p style="font-size:.7em; color:#666; margin:0 0 6px;">Clique no botão do iPhone e acompanhe a requisição percorrendo o sistema!</p>
+
+        <div class="seq-canvas" id="seqCanvas">
+          <div class="seq-entity e-client">
+            <div class="e-icon">📱</div>
+            <div class="e-name">Cliente</div>
+            <div class="e-sub">App iOS</div>
+          </div>
+
+          <div class="seq-lifeline ll-client"></div>
+          <div class="seq-lifeline ll-server"></div>
+          <div class="seq-lifeline ll-db"></div>
+
+          <div class="seq-phone" id="seqPhone">
+            <div class="seq-phone-frame">
+              <div class="seq-phone-screen">
+                <div class="ph-bar">📋 Meu App</div>
+                <div class="ph-item">👤 Buscar usuário #42</div>
+                <button id="seqSendBtn" type="button">🔍 Buscar Dados</button>
+                <div class="seq-phone-result" id="seqPhoneResult"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="seq-server-box" id="seqServerBox">
+            <div class="seq-server-inner">
+              <div class="sv-icon">🖥️</div>
+              <div class="sv-status" id="seqSvStatus">💤 Aguardando</div>
+              <div id="seqServerLog"></div>
+            </div>
+          </div>
+
+          <div class="seq-db-box" id="seqDbBox">
+            <div class="seq-db-inner">
+              <div class="db-icon">🗄️</div>
+              <div class="db-rows">
+                <div class="db-row"><strong>id:42</strong> Maria Silva</div>
+                <div class="db-row">id:43 João Costa</div>
+                <div class="db-row">id:44 Ana Souza</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="seq-packet pkt-request"  id="pkt1"><div class="pkt-body">📨 GET /usuarios/42</div></div>
+          <div class="seq-packet pkt-query"    id="pkt2"><div class="pkt-body">🔍 SELECT * WHERE id=42</div></div>
+          <div class="seq-packet pkt-dbresult" id="pkt3"><div class="pkt-body">📦 {Maria, 42}</div></div>
+          <div class="seq-packet pkt-response" id="pkt4"><div class="pkt-body">✅ 200 OK — JSON</div></div>
+
+          <div class="seq-steps">
+            <div class="seq-step-pill" id="ss1">① Clique</div>
+            <div class="seq-step-pill" id="ss2">② Request HTTP</div>
+            <div class="seq-step-pill" id="ss3">③ Query SQL</div>
+            <div class="seq-step-pill" id="ss4">④ Resultado BD</div>
+            <div class="seq-step-pill" id="ss5">⑤ Response JSON</div>
+            <div class="seq-step-pill" id="ss6">⑥ Exibe na tela</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO: SWIFT INTERATIVO ==================== -->
+
+      <section data-cs-swift>
+
+        <section data-auto-animate>
+          <p style="font-size:.8em; color:#666;">Iniciando...</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>👨‍💻 O que está acontecendo aqui?</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+func main() {
+    var variavel1 = 10.0
+}
+          </code></pre>
+          <p style="font-size:.8em; color:#666;">Iniciando...</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>👨‍💻 Swift: A Linguagem Oficial do iOS</h3>
+          <p style="font-size:.8em; color:#666;">Declarando variáveis</p>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+var variavel1 = 10.0  // Variável mutável do tipo Double
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>👨‍💻 Swift: A Linguagem Oficial do iOS</h3>
+          <p style="font-size:.8em; color:#666;">Adicionando segunda variável</p>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+var variavel1 = 10.0  // Variável mutável do tipo Double
+var variavel2 = 20.0
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>👨‍💻 Swift: A Linguagem Oficial do iOS</h3>
+          <p style="font-size:.8em; color:#666;">Executando operação e exibindo resultado</p>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+var variavel1 = 10.0  // Variável mutável do tipo Double
+var variavel2 = 20.0
+print(variavel1 + variavel2)  // Imprime 30.0
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <p style="font-size:.8em; color:#666;">Outro Exemplo...</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>Estruturas Condicionais</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers="1-9|3,6,8">
+var variavel1 = 10.0
+var variavel2 = 20.0
+if variavel1 < variavel2 {
+    print("Variável 1 é menor que Variável 2")
+
+} else {
+    print("Variável 1 é maior ou igual a Variável 2")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>O que está acontecendo aqui?</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+var variavel1 = 10.0
+var variavel2 = 20.0
+if variavel1 < variavel2 {
+    print("Variável 1 é menor que Variável 2")
+
+} else {
+    print("Variável 1 é maior ou igual a Variável 2")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <p style="font-size:.8em; color:#666;">Outro Exemplo...</p>
+        </section>
+
+        <!-- Calculadora com Classe -->
+        <section data-auto-animate>
+          <h3>🧮 Criando uma Classe: Calculadora</h3>
+          <p style="font-size:.8em; color:#666;">Estruturando com classes</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧮 Definindo a Classe</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers="1-3">
+class Calculadora {
+    
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧮 Adicionando Propriedades</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers="1-7">
+class Calculadora {
+    var resultado: Double = 0.0
+    
+    init(valor: Double = 0.0) {
+        resultado = valor
+    }
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧮 Método de Soma</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers="1-11">
+class Calculadora {
+    var resultado: Double = 0.0
+    
+    init(valor: Double = 0.0) {
+        resultado = valor
+    }
+    
+    func somar(_ valor: Double) {
+        resultado += valor
+    }
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧮 Método de Multiplicação</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers="1-15">
+class Calculadora {
+    var resultado: Double = 0.0
+    
+    init(valor: Double = 0.0) {
+        resultado = valor
+    }
+    
+    func somar(_ valor: Double) {
+        resultado += valor
+    }
+    
+    func multiplicar(_ valor: Double) {
+        resultado *= valor
+    }
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧮 Método para Obter Resultado</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers="1-20|16-18">
+class Calculadora {
+    var resultado: Double = 0.0
+    
+    init(valor: Double = 0.0) {
+        resultado = valor
+    }
+    
+    func somar(_ valor: Double) {
+        resultado += valor
+    }
+    
+    func multiplicar(_ valor: Double) {
+        resultado *= valor
+    }
+    
+    func obter() -> Double {
+        return resultado
+    }
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧮 Usando a Calculadora</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers="19-23">
+let calc = Calculadora(valor: 10.0)
+calc.somar(5.0)
+calc.multiplicar(2.0)
+
+print("Resultado: \(calc.obter())")  // 30.0
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>Resultado Final</h3>
+          <div class="info-box">
+            <strong>Calculadora(10.0)</strong> → somar(5.0) → multiplicar(2.0) = <strong>30.0</strong>
+          </div>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: CÓDIGO PRÁTICO ==================== -->
+
+      <section>
+        <h3>💻 Na Prática: Cadastro de Usuário</h3>
+        <div class="code-comparison">
+          <div>
+            <span class="badge badge-swiftui">🎨 Tela (SwiftUI)</span>
+            <pre><code class="swift" data-trim data-noescape>
+struct RegistroView: View {
+    @StateObject var vm = RegistroVM()
+    @State private var nome = ""
+    
+    var body: some View {
+        VStack {
+            TextField("Nome", text: $nome)
+                .textFieldStyle(.roundedBorder)
+            
+            Button("Cadastrar") {
+                vm.salvarUsuario(nome: nome)
+            }
+        }
+        .padding()
+    }
+}
+            </code></pre>
+          </div>
+          <div>
+            <span class="badge badge-swift">⚙️ Lógica (ViewModel)</span>
+            <pre><code class="swift" data-trim data-noescape>
+class RegistroVM: ObservableObject {
+    let repo: UsuarioRepo
+    
+    init(repo: UsuarioRepo = .init()) {
+        self.repo = repo
+    }
+    
+    func salvarUsuario(nome: String) {
+        guard !nome.isEmpty else { return }
+        
+        let user = Usuario(
+            nome: nome,
+            data: Date()
+        )
+        repo.salvar(user)
+    }
+}
+            </code></pre>
+          </div>
+        </div>
+        <div class="info-box fragment" style="margin-top:15px; font-size:.85em;">
+          <strong>📌 Observe:</strong> A tela só sabe <em>chamar</em> o ViewModel. O ViewModel só sabe <em>chamar</em> o Repository. Ninguém faz tudo sozinho!
+        </div>
+      </section>
+
+      <!-- Swift vs Objective-C -->
+      <section>
+        <h3>🧓 Por que Swift e não Objective-C?</h3>
+        <div class="code-comparison">
+          <div>
+            <span class="badge badge-swift">Swift</span>
+            <pre><code class="swift" data-trim data-noescape>
+// Struct de dados em poucas linhas!
+struct Pessoa {
+    let nome: String
+    let idade: Int
+}
+
+// Optionals (null safety)
+let nome: String? = nil
+print(nome?.count ?? 0)
+
+// Extensões
+extension String {
+    func grito() -> String {
+        return self.uppercased() + "!"
+    }
+}
+print("olá".grito()) // "OLÁ!"
+            </code></pre>
+          </div>
+          <div>
+            <span class="badge" style="background: #438EFF; color: white;">Objective-C</span>
+            <pre><code class="objectivec" data-trim data-noescape>
+// Muito mais código...
+@interface Pessoa : NSObject
+@property NSString *nome;
+@property NSInteger idade;
+@end
+
+@implementation Pessoa
+// getters, setters, init,
+// isEqual, hash, description...
+// +60 linhas de código!
+@end
+
+// Crash com nil! 💥
+NSString *nome = nil;
+NSLog(@"%lu", nome.length);
+            </code></pre>
+          </div>
+        </div>
+        <p class="fragment" style="font-size: 0.8em;">Swift é mais <strong>seguro</strong>, <strong>conciso</strong> e <strong>moderno</strong>! 🚀</p>
+      </section>
+
+      <!-- ==================== SEÇÃO 2: FUNDAMENTOS SWIFT ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #F05138, #FD6D24)">
+        <h2 style="color: white;">Parte 1</h2>
+        <h1 style="color: white;">Fundamentos do Swift</h1>
+        <p style="color: rgba(255,255,255,0.9);">Variáveis • Tipos • Coleções</p>
+      </section>
+
+      <!-- Variáveis: let vs var -->
+      <section>
+        <section data-auto-animate>
+          <h3>📦 Variáveis: <code>let</code> vs <code>var</code></h3>
+          <p style="font-size:.8em; color:#666;">Imutável vs Mutável</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📦 Variáveis: <code>let</code> vs <code>var</code></h3>
+          <div class="code-comparison">
+            <div>
+              <span class="badge badge-swift">let - Imutável</span>
+              <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let pi = 3.14159
+pi = 3.14  // ❌ ERRO!
+              </code></pre>
+            </div>
+            <div>
+              <span class="badge badge-swift">var - Mutável</span>
+              <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+var nome = "Maria"
+nome = "Silva"  // ✅ OK
+              </code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>⚠️ Regra de ouro</h3>
+          <div class="warning-box fragment">
+            <strong>Sempre use <code>let</code> por padrão!</strong>
+            Use <code>var</code> apenas quando realmente precisar alterar o valor.
+          </div>
+        </section>
+      </section>
+
+      <!-- Tipos e Inferência -->
+      <section>
+        <section data-auto-animate>
+          <h3>🔢 Tipos e Inferência de Tipo</h3>
+          <p style="font-size:.8em; color:#666;">Automático vs Explícito</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔢 Tipos e Inferência de Tipo</h3>
+          <div class="code-comparison">
+            <div>
+              <span class="badge badge-swift">Inferência automática</span>
+              <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let idade = 21          // Int
+let altura = 1.75       // Double
+let nome = "Ana"        // String
+              </code></pre>
+            </div>
+            <div>
+              <span class="badge badge-swift">Tipo explícito</span>
+              <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let idade: Int = 21
+let altura: Double = 1.75
+let nome: String = "Ana"
+              </code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>💡 Dica Prática</h3>
+          <div class="info-box fragment">
+            Use tipo explícito quando melhora a leitura pública da API; no código interno, inferência costuma bastar.
+          </div>
+        </section>
+      </section>
+
+      <!-- Strings e Interpolação -->
+      <section>
+        <section data-auto-animate>
+          <h3>🧵 Strings e Interpolação</h3>
+          <p style="font-size:.8em; color:#666;">Construindo textos</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧵 Strings e Interpolação</h3>
+          <div class="code-comparison">
+            <div>
+              <span class="badge badge-swift">Interpolação</span>
+              <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let nome = "Carlos"
+let idade = 30
+let msg = "Olá, \(nome)! Você tem \(idade) anos."
+              </code></pre>
+            </div>
+            <div>
+              <span class="badge badge-swift">Multiline String</span>
+              <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let json = """
+{
+  "nome": "Carlos",
+  "idade": 30
+}
+"""
+              </code></pre>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- ==================== CONTROLE DE FLUXO ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🌿 Controle de Fluxo: <code>if</code> e <code>switch</code></h3>
+          <p style="font-size:.8em; color:#666;">Decisões no código</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 if: Simples</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let idade = 18
+
+if idade >= 18 {
+    print("Maior de idade")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 if/else: Duas opções</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let temperatura = 25
+
+if temperatura > 30 {
+    print("Muito quente!")
+} else {
+    print("Temperatura ok")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 if/else if/else: Múltiplas opções</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let nota = 7
+
+if nota >= 9 {
+    print("Excelente!")
+} else if nota >= 7 {
+    print("Bom!")
+} else if nota >= 5 {
+    print("Precisa melhorar")
+} else {
+    print("Reprovado")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 Operador ternário</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let idade = 16
+let status = idade >= 18 
+    ? "Maior de idade" 
+    : "Menor de idade"
+
+print(status)
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 switch: Simples e elegante</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let dia = 3
+
+switch dia {
+case 1: print("Segunda")
+case 2: print("Terça")
+case 3: print("Quarta")
+default: print("Outro dia")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 switch com múltiplos valores</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let mes = 12
+
+switch mes {
+case 12, 1, 2: print("Verão")
+case 3, 4, 5: print("Outono")
+case 6, 7, 8: print("Inverno")
+default: print("Primavera")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 switch com ranges</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let idade = 25
+
+let categoria: String
+switch idade {
+case 0..<13:  categoria = "Criança"
+case 13..<18: categoria = "Adolescente"
+case 18..<60: categoria = "Adulto"
+default:      categoria = "Idoso"
+}
+
+print(categoria)  // Adulto
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== REPETIÇÃO (LOOPS) ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🔁 Repetição com Loops</h3>
+          <p style="font-size:.8em; color:#666;">Loops e iterações</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 for-in: Intervalo fechado</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+for i in 1...5 {
+    print(i)
+}
+// Saída: 1 2 3 4 5
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 for-in: Intervalo aberto</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+for i in 1..<5 {
+    print(i)
+}
+// Saída: 1 2 3 4
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 for-in: Ordem decrescente</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+for i in (1...5).reversed() {
+    print(i)
+}
+// Saída: 5 4 3 2 1
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 for-in: Com stride (passo)</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+for i in stride(from: 1, through: 10, by: 2) {
+    print(i)
+}
+// Saída: 1 3 5 7 9
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 for-in: Iterando em array</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let nomes = ["Ana", "Bruno", "Carlos"]
+
+for nome in nomes {
+    print("Olá, \(nome)!")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 while: Contador</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+var contador = 1
+
+while contador <= 5 {
+    print("Contagem: \(contador)")
+    contador += 1
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 while: Com condição complexa</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+var numero = 10
+
+while numero > 0 {
+    print(numero)
+    numero -= 2
+}
+// Saída: 10 8 6 4 2
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 repeat-while: Executa primeiro</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+var tentativa = 1
+
+repeat {
+    print("Tentativa #\(tentativa)")
+    tentativa += 1
+} while tentativa <= 3
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 break: Sair do loop</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+for i in 1...10 {
+    if i == 5 {
+        break  // Sai do loop
+    }
+    print(i)
+}
+// Saída: 1 2 3 4
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 continue: Pula iteração</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+for i in 1...5 {
+    if i == 3 {
+        continue  // Pula para próxima
+    }
+    print(i)
+}
+// Saída: 1 2 4 5
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== FUNÇÕES ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🧩 Funções em Swift</h3>
+          <p style="font-size:.8em; color:#666;">Organizando código reutilizável</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Função simples</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+func saudacao(nome: String) {
+    print("Olá, \(nome)!")
+}
+
+saudacao(nome: "Ana")  // Olá, Ana!
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Função com retorno</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+func dobro(n: Int) -> Int {
+    return n * 2
+}
+
+let resultado = dobro(n: 5)
+print(resultado)  // 10
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Retorno implícito (1 expressão)</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+func dobro(_ n: Int) -> Int { n * 2 }
+func ehPar(_ n: Int) -> Bool { n % 2 == 0 }
+
+print(dobro(7))   // 14
+print(ehPar(10))  // true
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Parâmetro padrão</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+func saudacao(nome: String, emoji: String = "👋") {
+    print("Olá, \(nome) \(emoji)")
+}
+
+saudacao(nome: "Maria")                  // Olá, Maria 👋
+saudacao(nome: "João", emoji: "😊")     // Olá, João 😊
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Múltiplos parâmetros</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+func somar(_ a: Int, _ b: Int) -> Int {
+    return a + b
+}
+
+func subtrair(_ a: Int, _ b: Int) -> Int { a - b }
+
+print(somar(10, 5))      // 15
+print(subtrair(10, 5))   // 5
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Sem parâmetros</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+func obterHora() -> String {
+    return "14:30"
+}
+
+func asarBolo() {
+    print("Bolo está pronto! 🎂")
+}
+
+print(obterHora())  // 14:30
+asarBolo()           // Bolo está pronto! 🎂
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Retornando Bool</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+func ehMaiorDeIdade(_ idade: Int) -> Bool {
+    return idade >= 18
+}
+
+func ehPositivo(_ n: Int) -> Bool { n > 0 }
+
+print(ehMaiorDeIdade(20))  // true
+print(ehPositivo(-3))      // false
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== COLEÇÕES ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>📚 Coleções: <code>map</code>, <code>filter</code>, <code>reduce</code></h3>
+          <p style="font-size:.8em; color:#666;">Transformando dados</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 Criando arrays</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let numeros = [1, 2, 3, 4, 5]
+let nomes = ["Ana", "Bruno", "Carlos"]
+let vazia: [String] = []
+
+print(numeros)    // [1, 2, 3, 4, 5]
+print(nomes[0])   // Ana
+print(vazia)      // []
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 Acessando elementos</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let frutas = ["Maçã", "Banana", "Laranja"]
+
+print(frutas[0])       // Maçã
+print(frutas.first!)   // Maçã
+print(frutas.last!)    // Laranja
+print(frutas.count)    // 3
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 map: Transformar</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let numeros = [1, 2, 3, 4, 5]
+
+let dobrados = numeros.map { $0 * 2 }
+print(dobrados)  // [2, 4, 6, 8, 10]
+
+let nomes = ["ana", "bruno"]
+let maiusculos = nomes.map { $0.uppercased() }
+print(maiusculos)  // ["ANA", "BRUNO"]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 filter: Selecionar</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let numeros = [1, 2, 3, 4, 5, 6]
+
+let pares = numeros.filter { $0 % 2 == 0 }
+print(pares)  // [2, 4, 6]
+
+let maiores = numeros.filter { $0 > 3 }
+print(maiores)  // [4, 5, 6]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 reduce: Somar valores</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let numeros = [10, 20, 30, 40]
+
+let total = numeros.reduce(0, +)
+print(total)  // 100
+
+let precos = [100.0, 200.0, 50.0]
+let totalGasto = precos.reduce(0, +)
+print(totalGasto)  // 350.0
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 Outras operações úteis</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let numeros = [1, 2, 3, 4, 5]
+
+let max = numeros.max()!           // 5
+let min = numeros.min()!           // 1
+let reverso = numeros.reversed()   // [5, 4, 3, 2, 1]
+let contém = numeros.contains(3)   // true
+
+print("Max: \(max), Min: \(min), Contém 3: \(contém)")
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 Encadeando operações</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+let resultado = numeros
+    .filter { $0 % 2 == 0 }       // [2, 4, 6, 8, 10]
+    .map { $0 * 10 }              // [20, 40, 60, 80, 100]
+    .reduce(0, +)                 // 300
+
+print(resultado)  // 300
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== OPTIONALS ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🛡️ Optionals</h3>
+          <p style="font-size:.8em; color:#666;">Segurança contra nil</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛡️ Optionals em Swift</h3>
+          <div class="code-comparison">
+            <div>
+              <span class="badge badge-swift">Tipos opcionais</span>
+              <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+var email: String? = nil
+
+// Optional chaining
+print(email?.count)
+
+// Nil coalescing
+let tamanho = email?.count ?? 0
+              </code></pre>
+            </div>
+            <div>
+              <span class="badge badge-swift">if let + guard</span>
+              <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+func enviarEmail(_ email: String?) {
+    if let email = email {
+        print("Enviando para \(email)")
+    } else {
+        print("Email não informado")
+    }
+}
+              </code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛡️ guard let: Saída antecipada</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+func processarUsuario(nome: String?, idade: Int?) {
+    guard let nome = nome else {
+        print("Nome é obrigatório")
+        return
+    }
+    
+    guard let idade = idade else {
+        print("Idade é obrigatória")
+        return
+    }
+    
+    print("\(nome) tem \(idade) anos")
+}
+
+processarUsuario(nome: "Ana", idade: 25)   // Ana tem 25 anos
+processarUsuario(nome: nil, idade: 25)     // Nome é obrigatório
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== STRUCTS ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🏷️ Structs</h3>
+          <p style="font-size:.8em; color:#666;">Modelos de dados simples</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🏷️ Structs em Swift</h3>
+          <div class="code-comparison">
+            <div>
+              <span class="badge badge-swift">Definição</span>
+              <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+struct Aluno {
+    let nome: String
+    var media: Double
+}
+
+var a1 = Aluno(nome: "Lia", media: 8.5)
+              </code></pre>
+            </div>
+            <div>
+              <span class="badge badge-swift">Operações</span>
+              <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+var a2 = a1
+a2.media = 9.0
+
+print(a1.media)  // 8.5 (cópia!)
+print(a2.media)  // 9.0
+
+// Structs são value types
+print(a1.nome)   // Lia
+              </code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🏷️ Struct com Codable</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+struct Usuario: Codable {
+    let id: Int
+    let nome: String
+    let email: String
+}
+
+// Decodificar JSON automaticamente!
+let jsonData = """
+{"id": 1, "nome": "Maria", "email": "maria@email.com"}
+""".data(using: .utf8)!
+
+let usuario = try JSONDecoder().decode(Usuario.self, from: jsonData)
+print(usuario.nome)  // Maria
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== ENUMS ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🎯 Enums</h3>
+          <p style="font-size:.8em; color:#666;">Tipos seguros</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🎯 Enum simples</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+enum Cor {
+    case vermelho
+    case verde
+    case azul
+}
+
+let minhaCor = Cor.verde
+print(minhaCor)  // verde
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🎯 Enum com switch</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+enum StatusPedido {
+    case pendente
+    case enviado
+    case entregue
+    case cancelado
+}
+
+let status = StatusPedido.enviado
+
+switch status {
+case .pendente:  print("⏳ Aguardando")
+case .enviado:   print("📦 A caminho")
+case .entregue:  print("✅ Chegou!")
+case .cancelado: print("❌ Cancelado")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🎯 Enum com valores associados</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+enum Resultado {
+    case sucesso(dados: String)
+    case erro(mensagem: String)
+}
+
+let resposta = Resultado.sucesso(dados: "Usuário criado!")
+
+switch resposta {
+case .sucesso(let dados):
+    print("✅ \(dados)")
+case .erro(let mensagem):
+    print("❌ \(mensagem)")
+}
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== MINI DESAFIO ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🧪 Mini Desafio Swift</h3>
+          <p style="font-size:.8em; color:#666;">5 minutos</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧪 Mini Desafio</h3>
+          <div class="mini-exercise">
+            <p style="font-size:.9em; margin:0;">
+              Dado um array de números, gere outro array contendo apenas os pares, elevados ao quadrado, ordenados de forma crescente.
+            </p>
+            <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let nums = [9, 2, 4, 7, 6, 1, 8]
+// TODO: resultado esperado -> [4, 16, 36, 64]
+            </code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Resolução</h3>
+          <pre data-id="code-animation"><code class="swift" data-trim data-line-numbers>
+let nums = [9, 2, 4, 7, 6, 1, 8]
+
+let resultado = nums
+    .filter { $0 % 2 == 0 }
+    .map { $0 * $0 }
+    .sorted()
+
+print(resultado)  // [4, 16, 36, 64]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <div class="info-box">
+            <strong>Resumo:</strong> <code>filter</code> (seleciona) → <code>map</code> (transforma) → <code>sorted</code> (ordena).
+          </div>
+        </section>
+      </section>
+
+      <!-- ==================== FECHAMENTO ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #007AFF, #5AC8FA)">
+        <h2 style="color:#fff;">🏁 Fechamento Swift</h2>
+        <p style="color:rgba(255,255,255,0.95); font-size:.9em;">
+          Você já cobre: variáveis, tipos, strings, fluxo, funções, coleções, optionals, structs e enums.
+        </p>
+        <div class="highlight-box" style="max-width:760px; margin:20px auto; background:linear-gradient(135deg,#1A1A1A,#2D2D2D);">
+          <p style="margin:0; font-size:.85em;">
+            Próximo passo natural: aplicar esses fundamentos em <strong>SwiftUI + ViewModel + API</strong>.
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="./dist/reveal.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+  <script src="./js/extra3-swift-ios.js"></script>
+</body>
+</html>

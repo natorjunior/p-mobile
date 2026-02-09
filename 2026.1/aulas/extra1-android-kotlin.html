@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula 13 - Android com Kotlin (Fundamentos)</title>
+  <title>Extra 1 - Android com Kotlin (Aprofundamento)</title>
 
   <!-- Reveal.js -->
   <link rel="stylesheet" href="./dist/reveal.css">
@@ -12,264 +12,8 @@
 
   <!-- Tema para código -->
   <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+  <link rel="stylesheet" href="./css/extra1-android-kotlin.css">
 
-  <style>
-    :root {
-      --kotlin-purple: #7F52FF;
-      --kotlin-orange: #F6891F;
-      --android-green: #3DDC84;
-      --android-dark: #1A1A1A;
-      --compose-blue: #4285F4;
-    }
-
-    .reveal h1,
-    .reveal h2,
-    .reveal h3 {
-      color: var(--kotlin-purple);
-    }
-
-    .reveal pre code {
-      font-size: 0.85em;
-      background: var(--android-dark);
-      border-radius: 12px;
-      padding: 16px;
-      max-height: 450px;
-    }
-
-    .reveal .slides section {
-      padding: 20px;
-    }
-
-    .emoji-large {
-      font-size: 3em;
-      margin: 10px;
-    }
-
-    .highlight-box {
-      background: linear-gradient(135deg, var(--kotlin-purple), #9B7FFF);
-      color: white;
-      padding: 20px;
-      border-radius: 12px;
-      margin: 15px 0;
-    }
-
-    .highlight-box-green {
-      background: linear-gradient(135deg, var(--android-green), #00C853);
-      color: #1A1A1A;
-      padding: 20px;
-      border-radius: 12px;
-      margin: 15px 0;
-    }
-
-    .info-box {
-      background: #E8F5E9;
-      border-left: 4px solid var(--android-green);
-      padding: 15px 20px;
-      border-radius: 0 8px 8px 0;
-      margin: 15px 0;
-      text-align: left;
-    }
-
-    .warning-box {
-      background: #FFF3E0;
-      border-left: 4px solid var(--kotlin-orange);
-      padding: 15px 20px;
-      border-radius: 0 8px 8px 0;
-      margin: 15px 0;
-      text-align: left;
-    }
-
-    .compare-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin: 20px 0;
-    }
-
-    .compare-card {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 12px;
-      border: 2px solid #e9ecef;
-    }
-
-    .compare-card h4 {
-      margin-top: 0;
-      color: var(--kotlin-purple);
-    }
-
-    .step-indicator {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    .step {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--android-green);
-      color: #1A1A1A;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    .step.inactive {
-      background: #ccc;
-    }
-
-    .feature-list {
-      text-align: left;
-      list-style: none;
-      padding: 0;
-    }
-
-    .feature-list li {
-      padding: 8px 0;
-      padding-left: 30px;
-      position: relative;
-    }
-
-    .feature-list li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: var(--android-green);
-      font-weight: bold;
-    }
-
-    .quiz-option {
-      background: #f0f0f0;
-      padding: 12px 20px;
-      margin: 8px 0;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-align: left;
-    }
-
-    .quiz-option:hover {
-      background: #e0e0e0;
-      transform: translateX(5px);
-    }
-
-    .code-comparison {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
-
-    .code-comparison pre {
-      margin: 0;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.7em;
-      font-weight: bold;
-      margin: 5px;
-    }
-
-    .badge-kotlin { background: var(--kotlin-purple); color: white; }
-    .badge-compose { background: var(--compose-blue); color: white; }
-    .badge-xml { background: var(--kotlin-orange); color: white; }
-
-    .phone-mockup {
-      background: linear-gradient(180deg, #1A1A1A 0%, #2D2D2D 100%);
-      border-radius: 30px;
-      padding: 10px;
-      max-width: 280px;
-      margin: 0 auto;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    }
-
-    .phone-screen {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      min-height: 200px;
-    }
-
-    .timeline {
-      display: flex;
-      justify-content: space-around;
-      padding: 20px 0;
-    }
-
-    .timeline-item {
-      text-align: center;
-      flex: 1;
-    }
-
-    .timeline-year {
-      background: var(--android-green);
-      color: #1A1A1A;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-weight: bold;
-    }
-
-    table.styled {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
-
-    table.styled th,
-    table.styled td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    table.styled th {
-      background: var(--kotlin-purple);
-      color: white;
-    }
-
-    table.styled tr:hover {
-      background: #f5f5f5;
-    }
-
-    .mini-exercise {
-      background: linear-gradient(135deg, var(--android-green), #00E676);
-      color: #1A1A1A;
-      padding: 25px;
-      border-radius: 16px;
-      margin: 20px 0;
-    }
-
-    .mini-exercise h4 {
-      margin-top: 0;
-      color: #1A1A1A;
-    }
-
-    .architecture-diagram {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .arch-layer {
-      background: linear-gradient(90deg, var(--kotlin-purple), var(--compose-blue));
-      color: white;
-      padding: 15px 40px;
-      border-radius: 8px;
-      width: 80%;
-      text-align: center;
-    }
-
-    .arch-arrow {
-      font-size: 1.5em;
-      color: var(--android-green);
-    }
-  </style>
 </head>
 
 <body>
@@ -285,10 +29,10 @@
         <p style="color: rgba(255,255,255,0.8); font-size: .5em; font-weight: 300;">
           Prof. Msc. Nator Junior Carvalho da Costa
         </p>
-        <h2 style="color: white;">Aula 13 - Android com Kotlin</h2>
+        <h2 style="color: white;">Extra 1 - Android com Kotlin</h2>
         <div class="emoji-large">🤖</div>
         <p style="color: rgba(255,255,255,0.9); font-size: 0.6em;">
-          Fundamentos • Jetpack Compose • XML Views • Projeto Prático
+          Fundamentos • Sintaxe Kotlin • Coleções • Null Safety
         </p>
       </section>
 
@@ -303,98 +47,6 @@
       <!-- Timeline Geral -->
       <section>
         <h3>A Jornada Tecnológica</h3>
-        <style>
-          .evolution-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            margin: 30px 0;
-            padding: 20px 0;
-          }
-
-          .evolution-stage {
-            text-align: center;
-            flex: 1;
-            position: relative;
-          }
-
-          .evolution-icon {
-            font-size: 4em;
-            margin-bottom: 15px;
-            transition: transform 0.3s ease;
-          }
-
-          .evolution-stage:hover .evolution-icon {
-            transform: scale(1.2) translateY(-10px);
-          }
-
-          .stage-title {
-            font-weight: bold;
-            color: var(--kotlin-purple);
-            margin-bottom: 8px;
-            font-size: 1.2em;
-          }
-
-          .stage-description {
-            font-size: 0.75em;
-            color: #555;
-            margin-bottom: 10px;
-            line-height: 1.4;
-            min-height: 60px;
-          }
-
-          .stage-bar {
-            height: 8px;
-            background: linear-gradient(90deg, var(--kotlin-purple), var(--compose-blue));
-            border-radius: 4px;
-            margin-bottom: 10px;
-          }
-
-          .evolution-arrow {
-            font-size: 1.5em;
-            color: var(--android-green);
-            margin: 0 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-
-          .timeline-container {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 0;
-            margin: 20px 0;
-          }
-
-          .timeline-container > * {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
-
-          .stage-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--kotlin-purple), var(--compose-blue));
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.75em;
-            font-weight: bold;
-            margin-top: 8px;
-            white-space: nowrap;
-          }
-
-          .era-marker {
-            font-size: 0.8em;
-            color: #888;
-            margin-top: 5px;
-          }
-
-          .desktop-era { color: #F57C00; }
-          .web-era { color: #1976D2; }
-          .mobile-era { color: var(--android-green); }
-        </style>
 
         <div class="timeline-container">
           <!-- Desktop -->
@@ -455,217 +107,6 @@
 
       <!-- ==================== SEÇÃO: ARQUITETURA DE APLICAÇÕES ==================== -->
 
-      <style>
-        /* === ESTILOS ARQUITETURA === */
-        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
-        @keyframes slideRight { 0%{transform:translateX(-30px);opacity:0} 100%{transform:translateX(0);opacity:1} }
-        @keyframes slideLeft  { 0%{transform:translateX(30px);opacity:0} 100%{transform:translateX(0);opacity:1} }
-        @keyframes fadeUp     { 0%{transform:translateY(20px);opacity:0} 100%{transform:translateY(0);opacity:1} }
-        @keyframes dataFlow   { 0%{left:-10%} 100%{left:110%} }
-        @keyframes shimmer    { 0%{left:-100%} 100%{left:100%} }
-
-        .cs-scene { display:flex; align-items:center; justify-content:center; gap:12px; margin:25px 0; }
-        .cs-node { text-align:center; padding:20px 18px; border-radius:16px; color:#fff; min-width:130px; 
-                    box-shadow:0 6px 20px rgba(0,0,0,.15); cursor:default; transition:all .3s; }
-        .cs-node:hover { transform:translateY(-8px) scale(1.04); box-shadow:0 12px 35px rgba(0,0,0,.25); }
-        .cs-node .icon { font-size:2.8em; }
-        .cs-node .label { font-weight:700; font-size:1em; margin-top:8px; }
-        .cs-node .desc  { font-size:.72em; opacity:.9; margin-top:4px; }
-
-        .cs-pipe { position:relative; width:100px; height:44px; display:flex; flex-direction:column; 
-                    align-items:center; justify-content:center; }
-        .cs-pipe .line { width:100%; height:3px; background:var(--android-green); border-radius:2px; position:relative; overflow:hidden; }
-        .cs-pipe .line::after { content:''; position:absolute; top:0; width:20px; height:100%; 
-                                 background:rgba(255,255,255,.7); border-radius:2px; animation:dataFlow 1.2s linear infinite; }
-        .cs-pipe .tag { font-size:.6em; font-weight:700; color:var(--android-green); margin-top:4px; }
-        .cs-pipe .dir { font-size:.55em; color:#999; }
-
-        .tier-stack { display:flex; flex-direction:column; align-items:center; gap:8px; margin:20px auto; max-width:520px; }
-        .tier-bar { width:100%; padding:18px 20px; border-radius:12px; color:#fff; display:flex; align-items:center; gap:15px;
-                    position:relative; overflow:hidden; cursor:default; transition:all .3s; }
-        .tier-bar:hover { transform:scale(1.03); box-shadow:0 8px 25px rgba(0,0,0,.25); }
-        .tier-bar::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
-                            background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent); animation:shimmer 2.5s infinite; }
-        .tier-bar .t-icon { font-size:2em; z-index:1; }
-        .tier-bar .t-info { z-index:1; text-align:left; }
-        .tier-bar .t-name { font-weight:700; font-size:.95em; }
-        .tier-bar .t-desc { font-size:.7em; opacity:.9; }
-        .tier-conn { color:var(--android-green); font-size:1.2em; }
-
-        .benefit-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:18px 0; }
-        .benefit-card { background:#f8f9fa; padding:16px; border-radius:10px; border-left:4px solid var(--kotlin-purple);
-                        text-align:left; transition:all .3s; cursor:default; }
-        .benefit-card:hover { transform:translateY(-4px); box-shadow:0 6px 18px rgba(0,0,0,.1); }
-        .benefit-card h4 { margin:0 0 6px; font-size:.85em; color:var(--kotlin-purple); }
-        .benefit-card p { margin:0; font-size:.72em; color:#555; line-height:1.4; }
-
-        .flow-demo { display:flex; align-items:stretch; gap:0; margin:20px auto; max-width:800px; }
-        .flow-step { flex:1; padding:14px 10px; text-align:center; position:relative; }
-        .flow-step .f-num { width:30px; height:30px; border-radius:50%; background:var(--android-green); color:#1A1A1A;
-                            display:inline-flex; align-items:center; justify-content:center; font-weight:700; font-size:.8em; }
-        .flow-step .f-txt { font-size:.7em; margin-top:6px; color:#333; line-height:1.3; }
-        .flow-step::after { content:'→'; position:absolute; right:-8px; top:50%; transform:translateY(-50%);
-                            color:var(--android-green); font-size:1.2em; font-weight:700; }
-        .flow-step:last-child::after { content:none; }
-
-        .cs-miniapp {
-          max-width: 960px;
-          margin: 14px auto 0;
-          padding: 12px;
-          border-radius: 14px;
-          background: linear-gradient(135deg, #f7fbff, #eef6ff);
-          border: 2px solid #d6e9ff;
-          box-shadow: 0 10px 24px rgba(66, 133, 244, 0.12);
-          text-align: left;
-        }
-
-        .cs-miniapp-head {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          margin-bottom: 10px;
-        }
-
-        .cs-miniapp-head p {
-          margin: 0;
-          font-size: 0.58em;
-          color: #334155;
-        }
-
-        .cs-server-pill {
-          font-size: 0.52em;
-          font-weight: 700;
-          background: #d1fae5;
-          color: #065f46;
-          border: 1px solid #10b981;
-          border-radius: 999px;
-          padding: 5px 10px;
-          white-space: nowrap;
-        }
-
-        .cs-mini-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-          margin-bottom: 10px;
-        }
-
-        .cs-mini-card {
-          background: #ffffff;
-          border: 1px solid #d8e7fa;
-          border-radius: 12px;
-          padding: 10px;
-        }
-
-        .cs-mini-card h4 {
-          margin: 0 0 6px;
-          font-size: 0.62em;
-          color: #334155;
-        }
-
-        .cs-mini-controls {
-          display: grid;
-          grid-template-columns: 90px 1fr auto;
-          gap: 6px;
-          margin-bottom: 6px;
-        }
-
-        .cs-mini-input, .cs-mini-select, .cs-mini-button {
-          border: 1px solid #cbd5e1;
-          border-radius: 8px;
-          padding: 6px 8px;
-          font-size: 0.52em;
-          font-family: inherit;
-        }
-
-        .cs-mini-select, .cs-mini-input {
-          background: #fff;
-        }
-
-        .cs-mini-button {
-          background: var(--android-green);
-          color: #0f172a;
-          font-weight: 700;
-          cursor: pointer;
-        }
-
-        .cs-mini-button:hover {
-          filter: brightness(0.97);
-        }
-
-        .cs-mini-button.secondary {
-          background: #e2e8f0;
-          color: #334155;
-          border-color: #cbd5e1;
-        }
-
-        .cs-mini-actions {
-          display: flex;
-          gap: 6px;
-          margin-bottom: 8px;
-        }
-
-        .cs-mini-code {
-          margin: 0;
-          border-radius: 8px;
-          background: #0f172a;
-          color: #e2e8f0;
-          font-size: 0.48em;
-          padding: 8px;
-          min-height: 66px;
-          overflow: auto;
-        }
-
-        .cs-mini-meta {
-          margin: 0 0 6px;
-          font-size: 0.5em;
-          color: #475569;
-        }
-
-        .cs-mini-messages {
-          margin-top: 6px;
-          display: flex;
-          flex-wrap: wrap;
-          gap: 5px;
-        }
-
-        .cs-msg-chip {
-          font-size: 0.48em;
-          background: #e0f2fe;
-          color: #0c4a6e;
-          border-radius: 999px;
-          padding: 2px 8px;
-          border: 1px solid #7dd3fc;
-        }
-
-        .cs-mini-log {
-          border: 1px solid #d8e7fa;
-          border-radius: 10px;
-          padding: 8px;
-          background: #ffffff;
-          min-height: 62px;
-          max-height: 110px;
-          overflow: auto;
-        }
-
-        .cs-mini-logline {
-          font-size: 0.48em;
-          color: #334155;
-          margin: 0 0 3px;
-          font-family: "Fira Code", "Consolas", monospace;
-        }
-
-        .cs-mini-logline.req { color: #1d4ed8; }
-        .cs-mini-logline.res { color: #065f46; }
-        .cs-mini-logline.err { color: #b91c1c; }
-
-        @media (max-width: 950px) {
-          .cs-mini-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      </style>
 
       <!-- Slide Título Arquitetura -->
       <section data-background-gradient="linear-gradient(135deg, #4285F4, #00BCD4)">
@@ -701,97 +142,9 @@
       
       </section>
       <section>
-        <h3 style="margin-bottom:8px;">🔗 Fluxo Cliente-Servidor — Simulação</h3>
+        <h3 style="margin-bottom:8px;">🔗 Cliente-Servidor — Simulação</h3>
         <p style="font-size:.7em; color:#666; margin:0 0 6px;">Clique no botão do celular e acompanhe a requisição percorrendo o sistema!</p>
 
-        <style>
-          /* === ANIMAÇÃO FLUXO CLIENTE-SERVIDOR === */
-          .seq-canvas { position:relative; width:100%; max-width:1000px; height:550px; margin:0 auto; user-select:none; padding:20px 0; }
-
-          /* ---- ENTIDADES (colunas do diagrama) ---- */
-          .seq-entity { position:absolute; top:10px; text-align:center; width:140px; z-index:3; }
-          .seq-entity .e-icon { font-size:2.6em; transition:transform .3s; }
-          .seq-entity .e-name { font-weight:700; font-size:.85em; margin-top:4px; }
-          .seq-entity .e-sub  { font-size:.62em; color:#888; }
-
-          .seq-entity.e-client  { left:15%; transform:translateX(-50%); }
-          .seq-entity.e-server  { left:50%; transform:translateX(-50%); }
-          .seq-entity.e-db      { left:85%; transform:translateX(-50%); }
-
-          /* Lifelines */
-          .seq-lifeline { position:absolute; top:75px; width:3px; height:380px; z-index:1; border-radius:2px; }
-          .ll-client { left:15%; transform:translateX(-50%); background:repeating-linear-gradient(180deg,#667EEA 0 6px,transparent 6px 12px); }
-          .ll-server { left:50%; transform:translateX(-50%); background:repeating-linear-gradient(180deg,#F5576C 0 6px,transparent 6px 12px); }
-          .ll-db     { left:85%; transform:translateX(-50%); background:repeating-linear-gradient(180deg,#4FACFE 0 6px,transparent 6px 12px); }
-
-          /* Status indicator boxes (activity bars) */
-          .seq-act { position:absolute; width:22px; border-radius:4px; z-index:2; opacity:0; transition:opacity .3s; }
-          .seq-act.visible { opacity:1; }
-          .act-client { left:calc(15% - 11px); background:#667EEA; }
-          .act-server { left:calc(50% - 11px); background:#F5576C; }
-          .act-db     { left:calc(85% - 11px); background:#4FACFE; }
-
-          /* ---- PACOTE animado ---- */
-          .seq-packet { position:absolute; z-index:10; opacity:0; transition:none; pointer-events:none; }
-          .seq-packet .pkt-body { padding:6px 14px; border-radius:20px; font-size:.65em; font-weight:700; color:#fff;
-                                   box-shadow:0 4px 16px rgba(0,0,0,.25); white-space:nowrap; }
-          .pkt-request  .pkt-body { background:linear-gradient(135deg,#667EEA,#764BA2); }
-          .pkt-query    .pkt-body { background:linear-gradient(135deg,#F5576C,#F093FB); }
-          .pkt-dbresult .pkt-body { background:linear-gradient(135deg,#4FACFE,#00F2FE); color:#1A1A1A; }
-          .pkt-response .pkt-body { background:linear-gradient(135deg,#00C853,#3DDC84); color:#1A1A1A; }
-
-          /* ---- BOTÃO NO CELULAR ---- */
-          .seq-phone { position:absolute; left:15%; transform:translateX(-50%); top:120px; width:240px; z-index:5; }
-          .seq-phone-frame { background:linear-gradient(180deg,#1A1A1A,#2D2D2D); border-radius:18px; padding:8px;
-                              box-shadow:0 8px 28px rgba(0,0,0,.4); }
-          .seq-phone-screen { background:#fff; border-radius:12px; padding:14px 12px; min-height:170px; }
-          .seq-phone-screen .ph-bar { background:var(--kotlin-purple); color:#fff; padding:6px; border-radius:5px;
-                                       text-align:center; font-size:.6em; font-weight:700; }
-          .seq-phone-screen .ph-item { font-size:.55em; padding:6px 0; border-bottom:1px solid #eee; color:#333; }
-          #seqSendBtn { display:block; width:100%; margin-top:8px; padding:9px; border:none; border-radius:6px;
-                        background:var(--android-green); color:#1A1A1A; font-weight:700; font-size:.68em;
-                        cursor:pointer; transition:all .2s; }
-          #seqSendBtn:hover:not(:disabled) { filter:brightness(.92); transform:scale(1.04); }
-          #seqSendBtn:disabled { opacity:.5; cursor:not-allowed; }
-
-          /* ---- SERVER BOX ---- */
-          .seq-server-box { position:absolute; left:50%; transform:translateX(-50%); top:120px; width:140px; z-index:5; }
-          .seq-server-inner { background:linear-gradient(135deg,#F5576C,#F093FB); border-radius:14px; padding:14px 10px;
-                               color:#fff; text-align:center; box-shadow:0 8px 28px rgba(245,87,108,.35);
-                               min-height:135px; display:flex; flex-direction:column; justify-content:center; }
-          .seq-server-inner .sv-icon { font-size:2.2em; }
-          .seq-server-inner .sv-status { font-size:.56em; margin-top:8px; padding:4px 10px; border-radius:10px;
-                                          background:rgba(255,255,255,.28); display:inline-block; }
-          #seqServerLog { font-size:.5em; margin-top:8px; color:rgba(255,255,255,.95); min-height:18px;
-                          font-family:'Fira Code',monospace; }
-
-          /* ---- DB BOX ---- */
-          .seq-db-box { position:absolute; left:85%; transform:translateX(-50%); top:120px; width:140px; z-index:5; }
-          .seq-db-inner { background:linear-gradient(135deg,#4FACFE,#00F2FE); border-radius:14px; padding:14px 10px;
-                           color:#1A1A1A; text-align:center; box-shadow:0 8px 28px rgba(79,172,254,.35);
-                           min-height:135px; display:flex; flex-direction:column; justify-content:center; }
-          .seq-db-inner .db-icon { font-size:2.2em; }
-          .seq-db-inner .db-rows { font-size:.52em; margin-top:8px; text-align:left; padding:0 6px; }
-          .seq-db-inner .db-row { padding:3px 0; border-bottom:1px solid rgba(0,0,0,.12); }
-
-          /* ---- STEP LOG na parte inferior ---- */
-          .seq-steps { position:absolute; bottom:20px; left:0; right:0; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
-          .seq-step-pill { padding:6px 13px; border-radius:8px; font-size:.57em; background:#e9ecef; color:#999;
-                           transition:all .4s; font-weight:600; }
-          .seq-step-pill.active { background:var(--android-green); color:#1A1A1A; transform:scale(1.1); }
-          .seq-step-pill.done   { background:#C8E6C9; color:#2E7D32; }
-
-          /* ---- GLOW nas entidades ---- */
-          .glow-client .seq-phone-frame { box-shadow:0 0 24px rgba(102,126,234,.8); }
-          .glow-server .seq-server-inner { box-shadow:0 0 24px rgba(245,87,108,.8); }
-          .glow-db .seq-db-inner { box-shadow:0 0 24px rgba(79,172,254,.8); }
-
-          /* ---- RESULTADO no celular ---- */
-          .seq-phone-result { font-size:.52em; margin-top:6px; padding:6px 8px; border-radius:5px;
-                               background:#E8F5E9; color:#2E7D32; font-family:'Fira Code',monospace;
-                               min-height:18px; opacity:0; transition:opacity .4s; word-break:break-all; line-height:1.3; }
-          .seq-phone-result.visible { opacity:1; }
-        </style>
 
         <div class="seq-canvas" id="seqCanvas">
           <!-- Entidades no topo -->
@@ -857,240 +210,249 @@
         </div>
       </section>
 
-      <!-- Slide: Diagrama Animado Cliente-Servidor -->
-      <section>
-        <h3>🔗 Arquitetura Cliente-Servidor</h3>
-        <div class="cs-scene">
-          <div class="cs-node" style="background:linear-gradient(135deg,#667EEA,#764BA2);">
-            <div class="icon">📱</div>
-            <div class="label">Cliente</div>
-            <div class="desc">App Android<br>Interface</div>
-          </div>
-          <div class="cs-pipe">
-            <div class="line"></div>
-            <div class="tag">REQUEST →</div>
-            <div class="dir">HTTP / JSON</div>
-          </div>
-          <div class="cs-node" style="background:linear-gradient(135deg,#F093FB,#F5576C);">
-            <div class="icon">🖥️</div>
-            <div class="label">Servidor</div>
-            <div class="desc">REST API<br>Lógica</div>
-          </div>
-          <div class="cs-pipe">
-            <div class="line"></div>
-            <div class="tag">QUERY →</div>
-            <div class="dir">SQL</div>
-          </div>
-          <div class="cs-node" style="background:linear-gradient(135deg,#4FACFE,#00F2FE); color:#1A1A1A;">
-            <div class="icon">🗄️</div>
-            <div class="label">Banco</div>
-            <div class="desc">MySQL<br>PostgreSQL</div>
-          </div>
-        </div>
 
-        <div class="flow-demo fragment">
-          <div class="flow-step">
-            <div class="f-num">1</div>
-            <div class="f-txt">Usuário clica<br>"Buscar"</div>
-          </div>
-          <div class="flow-step">
-            <div class="f-num">2</div>
-            <div class="f-txt">App envia<br>requisição HTTP</div>
-          </div>
-          <div class="flow-step">
-            <div class="f-num">3</div>
-            <div class="f-txt">Servidor processa<br>regras de negócio</div>
-          </div>
-          <div class="flow-step">
-            <div class="f-num">4</div>
-            <div class="f-txt">Consulta o<br>banco de dados</div>
-          </div>
-          <div class="flow-step">
-            <div class="f-num">5</div>
-            <div class="f-txt">Retorna JSON<br>para o app</div>
-          </div>
-        </div>
-      </section>
 
-      <!-- Slide: Exemplo Real de Request/Response -->
-      <section>
-        <h3>📡 Exemplo: Request e Response</h3>
-        <div class="code-comparison">
-          <div>
-            <span class="badge" style="background:#667EEA;color:#fff;">📱 Cliente envia</span>
-            <pre><code class="http" data-trim data-noescape>
-GET /api/usuarios/42
-Host: meuservidor.com
-Authorization: Bearer abc123
-Accept: application/json
-            </code></pre>
-          </div>
-          <div>
-            <span class="badge" style="background:#F5576C;color:#fff;">🖥️ Servidor responde</span>
-            <pre><code class="json" data-trim data-noescape>
-{
-  "id": 42,
-  "nome": "Maria Silva",
-  "email": "maria@email.com",
-  "status": "ativo"
+
+<section data-cs-kotlin>
+
+  <section data-auto-animate>
+    <p style="font-size:.8em; color:#666;">Iniciando...</p>
+  </section>
+
+
+  <section data-auto-animate>
+    <h3>👨‍💻 O que está acontecendo aqui ?</h3>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun main() {
+    var variavel1 = 10.0 
 }
-            </code></pre>
-          </div>
-        </div>
-        <div class="warning-box fragment" style="max-width:650px; margin:20px auto;">
-          <strong>⚠️ Importante:</strong> O cliente <strong>nunca</strong> acessa o banco diretamente! Sempre passa pelo servidor (segurança).
-        </div>
-      </section>
-      <!-- Slide: Intro Três Camadas -->
-      <!-- <section>
-        <h3>📚 Arquitetura de Três Camadas</h3>
-        <p style="font-size:.85em; color:#666;">Separando responsabilidades para código organizado</p>
+    </code></pre>
+    <p style="font-size:.8em; color:#666;">Iniciando...</p>
+  </section>
+  <!-- <section data-auto-animate>
+    <h3>👨‍💻 O que está acontecendo aqui ?</h3>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun main() {
+    var variavel1 = 10.0 
+}
+    </code></pre>
+  </section> -->
 
-        <div class="tier-stack">
-          <div class="tier-bar fragment" style="background:linear-gradient(135deg,#667EEA,#764BA2);">
-            <div class="t-icon">🎨</div>
-            <div class="t-info">
-              <div class="t-name">Camada de Apresentação</div>
-              <div class="t-desc">Telas, botões, layouts — o que o usuário vê e toca</div>
-            </div>
-          </div>
-          <div class="tier-conn fragment">⬇️ comunica</div>
-          <div class="tier-bar fragment" style="background:linear-gradient(135deg,#F093FB,#F5576C);">
-            <div class="t-icon">⚙️</div>
-            <div class="t-info">
-              <div class="t-name">Camada de Negócio</div>
-              <div class="t-desc">Regras, validações, processamento — a lógica da aplicação</div>
-            </div>
-          </div>
-          <div class="tier-conn fragment">⬇️ comunica</div>
-          <div class="tier-bar fragment" style="background:linear-gradient(135deg,#4FACFE,#00F2FE); color:#1A1A1A;">
-            <div class="t-icon">🗄️</div>
-            <div class="t-info">
-              <div class="t-name">Camada de Dados</div>
-              <div class="t-desc">Banco local, APIs externas, cache — onde tudo é guardado</div>
-            </div>
-          </div>
-        </div>
+  <section data-auto-animate>
+    <h3>👨‍💻 Kotlin: A Linguagem Oficial do Android</h3>
+    <p style="font-size:.8em; color:#666;">Declarando variáveis</p>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun main() {
+    var variavel1 = 10.0  // Variável mutável do tipo Double
+}
+    </code></pre>
+  </section>
+  <section data-auto-animate>
+    <h3>👨‍💻 Kotlin: A Linguagem Oficial do Android</h3>
+    <p style="font-size:.8em; color:#666;">Adicionando segunda variável</p>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun main() {
+    var variavel1 = 10.0  // Variável mutável do tipo Double
+    var variavel2 = 20.0
+}
+    </code></pre>
+  </section>
 
-        <div class="info-box fragment" style="max-width:600px; margin:15px auto;">
-          <strong>💡 Regra de ouro:</strong> Cada camada só conversa com a vizinha. A tela <strong>nunca</strong> acessa o banco diretamente!
-        </div>
-      </section> -->
+  <section data-auto-animate>
+    <h3>👨‍💻 Kotlin: A Linguagem Oficial do Android</h3>
+    <p style="font-size:.8em; color:#666;">Executando operação e exibindo resultado</p>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun main() {
+    var variavel1 = 10.0  // Variável mutável do tipo Double
+    var variavel2 = 20.0
+    println(variavel1 + variavel2)  // Imprime 30.0
+}
+    </code></pre>
+  </section>
+  <section data-auto-animate>
+    <p style="font-size:.8em; color:#666;">Outro Exemplo...</p>
+  </section>
 
-      <!-- Slide: Camada de Apresentação -->
-      <!-- <section>
-        <h3>🎨 Camada de Apresentação</h3>
-        <div style="display:flex; gap:25px; align-items:flex-start; margin-top:20px;">
-          <div style="flex:1;">
-            <div class="phone-mockup" style="max-width:200px;">
-              <div class="phone-screen" style="min-height:160px; font-size:.75em; padding:12px;">
-                <div style="background:var(--kotlin-purple); color:#fff; padding:8px; border-radius:6px; text-align:center; font-weight:700;">📋 Lista de Tarefas</div>
-                <div style="padding:6px 0; border-bottom:1px solid #eee;">✅ Estudar Kotlin</div>
-                <div style="padding:6px 0; border-bottom:1px solid #eee;">⬜ Criar primeiro app</div>
-                <div style="padding:6px 0;">⬜ Publicar na Play Store</div>
-                <div style="background:var(--android-green); color:#1A1A1A; padding:6px; border-radius:6px; text-align:center; margin-top:8px; font-weight:700;">+ Nova Tarefa</div>
-              </div>
-            </div>
-          </div>
-          <div style="flex:2;">
-            <ul class="feature-list">
-              <li>Tudo que o usuário <strong>vê e interage</strong></li>
-              <li>Telas, botões, listas, formulários</li>
-              <li>Jetpack Compose ou XML Views</li>
-              <li>Validação visual (campo vazio, formato)</li>
-              <li><strong>Não contém</strong> lógica de negócio</li>
-            </ul>
-            <div class="highlight-box fragment" style="padding:12px 16px; font-size:.8em;">
-              <strong>No Android:</strong> Activities, Fragments, Composables
-            </div>
-          </div>
-        </div>
-      </section> -->
+  <section data-auto-animate>
+    <h3>Estruturas Condicionais</h3>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers="1-10|4,7,9">
+fun main() {
+    var variavel1 = 10.0  // Variável mutável do tipo Double
+    var variavel2 = 20.0
+    if(variavel1 < variavel2){
+        println("Variável 1 é menor que Variável 2")
 
-      <!-- Slide: Camada de Negócio -->
-      <!-- <section>
-        <h3>⚙️ Camada de Negócio</h3>
-        <div style="display:flex; gap:25px; align-items:flex-start; margin-top:20px;">
-          <div style="flex:1;">
-            <div style="background:#2D2D2D; border-radius:12px; padding:15px; color:#ddd; font-family:monospace; font-size:.65em; line-height:1.6;">
-              <span style="color:#C792EA;">fun</span> <span style="color:#82AAFF;">adicionarTarefa</span>(texto) {<br>
-              &nbsp;&nbsp;<span style="color:#89DDFF;">if</span> (texto.isBlank())<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#F07178;">return</span> <span style="color:#C3E88D;">"Erro!"</span><br>
-              &nbsp;&nbsp;<span style="color:#89DDFF;">if</span> (tarefas.size >= <span style="color:#F78C6C;">50</span>)<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#F07178;">return</span> <span style="color:#C3E88D;">"Limite!"</span><br>
-              &nbsp;&nbsp;repo.<span style="color:#82AAFF;">salvar</span>(tarefa)<br>
-              }
-            </div>
-          </div>
-          <div style="flex:2;">
-            <ul class="feature-list">
-              <li>As <strong>regras</strong> da aplicação</li>
-              <li>Validações complexas e processamento</li>
-              <li>Decide <em>o que</em> fazer, não <em>como</em> mostrar</li>
-              <li>Independente de UI — pode mudar a tela sem alterar</li>
-              <li>Orquestra a comunicação entre apresentação e dados</li>
-            </ul>
-            <div class="highlight-box fragment" style="padding:12px 16px; font-size:.8em; background:linear-gradient(135deg,#F093FB,#F5576C);">
-              <strong>No Android:</strong> ViewModels, UseCases, Services
-            </div>
-          </div>
-        </div>
-      </section> -->
+    } else {
+        println("Variável 1 é maior ou igual a Variável 2")
+    }
+}
+    </code></pre>
+  </section>
 
-      <!-- Slide: Camada de Dados -->
-      <!-- <section>
-        <h3>🗄️ Camada de Dados</h3>
-        <div style="display:flex; gap:25px; align-items:flex-start; margin-top:20px;">
-          <div style="flex:1;">
-            <div style="background:#f0f8ff; border:2px solid #4FACFE; border-radius:12px; padding:15px; text-align:center;">
-              <div style="font-size:2.5em;">🗄️</div>
-              <div style="font-size:.75em; margin-top:8px;">
-                <div style="background:#4FACFE; color:#fff; padding:4px 8px; border-radius:4px; margin:3px 0; font-size:.9em;">📦 Room (SQLite local)</div>
-                <div style="background:#FF7043; color:#fff; padding:4px 8px; border-radius:4px; margin:3px 0; font-size:.9em;">🌐 Retrofit (API REST)</div>
-                <div style="background:#AB47BC; color:#fff; padding:4px 8px; border-radius:4px; margin:3px 0; font-size:.9em;">💾 SharedPreferences</div>
-              </div>
-            </div>
-          </div>
-          <div style="flex:2;">
-            <ul class="feature-list">
-              <li><strong>Onde</strong> e <strong>como</strong> os dados são armazenados</li>
-              <li>Banco local (SQLite/Room)</li>
-              <li>APIs remotas (Retrofit, Ktor)</li>
-              <li>Cache e preferências</li>
-              <li>A camada de negócio <strong>não sabe</strong> de onde vem o dado</li>
-            </ul>
-            <div class="highlight-box fragment" style="padding:12px 16px; font-size:.8em; background:linear-gradient(135deg,#4FACFE,#00BCD4);">
-              <strong>No Android:</strong> Repository, DAO (Room), DataSource, SharedPrefs
-            </div>
-          </div>
-        </div>
-      </section> -->
+  <section data-auto-animate>
+    <h3>O que está acontecendo aqui ?</h3>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun main() {
+    var variavel1 = 10.0  // Variável mutável do tipo Double
+    var variavel2 = 20.0
+    if(variavel1 < variavel2){
+        println("Variável 1 é menor que Variável 2")
 
-      <!-- Slide: Benefícios -->
-      <!-- <section>
-        <h3>✨ Por que separar em camadas?</h3>
-        <div class="benefit-grid" style="margin-top:25px;">
-          <div class="benefit-card fragment">
-            <h4>🎯 Organização</h4>
-            <p>Cada parte do código tem seu lugar. Fácil de encontrar e entender.</p>
-          </div>
-          <div class="benefit-card fragment">
-            <h4>🧪 Testabilidade</h4>
-            <p>Testa cada camada separadamente. Lógica sem precisar de tela!</p>
-          </div>
-          <div class="benefit-card fragment">
-            <h4>♻️ Reutilização</h4>
-            <p>Mesma lógica serve para app, web ou tablet. Muda só a interface.</p>
-          </div>
-          <div class="benefit-card fragment">
-            <h4>👥 Trabalho em Equipe</h4>
-            <p>Um cuida da tela, outro da lógica, outro do banco. Sem conflito!</p>
-          </div>
-        </div>
-        <div class="highlight-box-green fragment" style="max-width:600px; margin:20px auto; padding:14px; font-size:.85em;">
-          <strong>🚀 Resumo:</strong> Código separado = mais fácil de manter, testar, escalar e trabalhar em equipe!
-        </div>
-      </section> -->
+    } else {
+        println("Variável 1 é maior ou igual a Variável 2")
+    }
+}
+    </code></pre>
+  </section>
+
+
+  <section data-auto-animate>
+    <p style="font-size:.8em; color:#666;">Outro Exemplo...</p>
+  </section>
+
+  <section data-auto-animate>
+    <h3>🧮 Criando uma Classe: Calculadora</h3>
+    <p style="font-size:.8em; color:#666;">Estruturando com classes</p>
+  </section>
+
+  <section data-auto-animate>
+    <h3>🧮 Definindo a Classe</h3>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers="1-3">
+class Calculadora {
+    
+}
+    </code></pre>
+  </section>
+
+  <section data-auto-animate>
+    <h3>🧮 Adicionando Propriedades</h3>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers="1-7">
+class Calculadora {
+    var resultado: Double = 0.0
+    
+    constructor(valor: Double = 0.0) {
+        resultado = valor
+    }
+}
+    </code></pre>
+  </section>
+
+  <section data-auto-animate>
+    <h3>🧮 Método de Soma</h3>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers="1-11">
+class Calculadora {
+    var resultado: Double = 0.0
+    
+    constructor(valor: Double = 0.0) {
+        resultado = valor
+    }
+    
+    fun somar(valor: Double) {
+        resultado += valor
+    }
+}
+    </code></pre>
+  </section>
+
+  <section data-auto-animate>
+    <h3>🧮 Método de Multiplicação</h3>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers="1-15">
+class Calculadora {
+    var resultado: Double = 0.0
+    
+    constructor(valor: Double = 0.0) {
+        resultado = valor
+    }
+    
+    fun somar(valor: Double) {
+        resultado += valor
+    }
+    
+    fun multiplicar(valor: Double) {
+        resultado *= valor
+    }
+}
+    </code></pre>
+  </section>
+
+  <section data-auto-animate>
+    <h3>🧮 Método para Obter Resultado</h3>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers="1-20|16-18">
+class Calculadora {
+    var resultado: Double = 0.0
+    
+    constructor(valor: Double = 0.0) {
+        resultado = valor
+    }
+    
+    fun somar(valor: Double) {
+        resultado += valor
+    }
+    
+    fun multiplicar(valor: Double) {
+        resultado *= valor
+    }
+    
+    fun obter(): Double {
+        return resultado
+    }
+}
+    </code></pre>
+  </section>
+
+  <section data-auto-animate>
+    <h3>🧮 Usando a Calculadora</h3>
+    <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers="19-23">
+fun main() {
+    val calc = Calculadora(10.0)
+    calc.somar(5.0)
+    calc.multiplicar(2.0)
+    
+    println("Resultado: ${calc.obter()}")  // 30.0
+}
+    </code></pre>
+  </section>
+
+  <section data-auto-animate>
+    <h3>Resultado Final</h3>
+    <div class="info-box">
+      <strong>Calculadora(10.0)</strong> → somar(5.0) → multiplicar(2.0) = <strong>30.0</strong>
+    </div>
+  </section>
+</section>
+        
+
+<!-- <section>
+
+  <pre><code class="kotlin" data-line-numbers data-noescape>
+class Calculadora{
+    fun soma(a:Double, b:Double): Double{
+        return a+b
+    }
+}
+fun main() {
+    val calc:Calculadora = Calculadora();
+    var variavel1 = 10.0;
+    var variavel2 = 20.0;
+    println(calc.multi(variavel1,variavel2))
+}
+</code></pre>
+
+</section> -->
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <!-- Slide: Código Exemplo -->
       <section>
@@ -1194,45 +556,654 @@ System.out.println(nome.length());
 
       <!-- Variáveis: val vs var -->
       <section>
-        <h3>📦 Variáveis: <code>val</code> vs <code>var</code></h3>
-        <div class="code-comparison">
-          <div>
-            <span class="badge badge-kotlin">val - Imutável</span>
-            <pre><code class="kotlin" data-trim data-noescape>
-// NÃO pode ser reatribuída
+        <section data-auto-animate>
+          <h3>📦 Variáveis: <code>val</code> vs <code>var</code></h3>
+          <p style="font-size:.8em; color:#666;">Imutável vs Mutável</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📦 Variáveis: <code>val</code> vs <code>var</code></h3>
+          <div class="code-comparison">
+            <div>
+              <span class="badge badge-kotlin">val - Imutável</span>
+              <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
 val pi = 3.14159
 pi = 3.14  // ❌ ERRO!
-
-val cpf = "123.456.789-00"
-cpf = "000"  // ❌ ERRO!
-
-// Mas objetos podem mudar internamente
-val lista = mutableListOf(1, 2, 3)
-lista.add(4)  // ✅ OK
-            </code></pre>
-          </div>
-          <div>
-            <span class="badge badge-kotlin">var - Mutável</span>
-            <pre><code class="kotlin" data-trim data-noescape>
-// Pode ser reatribuída
+              </code></pre>
+            </div>
+            <div>
+              <span class="badge badge-kotlin">var - Mutável</span>
+              <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
 var nome = "Maria"
-nome = "Maria Silva"  // ✅ OK
-
-var contador = 0
-contador++  // ✅ OK
-contador = 100  // ✅ OK
-
-var cidade = "Recife"
-cidade = "São Paulo"  // ✅ OK
-            </code></pre>
+nome = "Silva"  // ✅ OK
+              </code></pre>
+            </div>
           </div>
-        </div>
-        <div class="warning-box fragment">
-          <strong>⚠️ Regra de ouro:</strong> Sempre use <code>val</code> por padrão. Use <code>var</code> apenas quando realmente precisar alterar o valor.
-        </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>⚠️ Regra de ouro</h3>
+          <div class="warning-box fragment">
+            <strong>Sempre use <code>val</code> por padrão!</strong>
+            Use <code>var</code> apenas quando realmente precisar alterar o valor.
+          </div>
+        </section>
       </section>
 
-    
+      <section>
+        <section data-auto-animate>
+          <h3>🔢 Tipos e Inferência de Tipo</h3>
+          <p style="font-size:.8em; color:#666;">Automático vs Explícito</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔢 Tipos e Inferência de Tipo</h3>
+          <div class="code-comparison">
+            <div>
+              <span class="badge badge-kotlin">Inferência automática</span>
+              <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val idade = 21          // Int
+val altura = 1.75       // Double
+val nome = "Ana"        // String
+              </code></pre>
+            </div>
+            <div>
+              <span class="badge badge-kotlin">Tipo explícito</span>
+              <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val idade: Int = 21
+val altura: Double = 1.75
+val nome: String = "Ana"
+              </code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>💡 Dica Prática</h3>
+          <div class="info-box fragment">
+            Use tipo explícito quando melhora a leitura pública da API; no código interno, inferência costuma bastar.
+          </div>
+        </section>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🧵 Strings e Templates</h3>
+          <p style="font-size:.8em; color:#666;">Interpolação de valores</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧵 Strings e Templates</h3>
+          <div class="code-comparison">
+            <div>
+              <span class="badge badge-kotlin">Interpolação</span>
+              <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val nome = "Carlos"
+val idade = 30
+val msg = "Olá, $nome! Você tem $idade anos."
+              </code></pre>
+            </div>
+            <div>
+              <span class="badge badge-kotlin">Multiline String</span>
+              <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val json = """
+{
+  "nome": "Carlos",
+  "idade": 30
+}
+""".trimIndent()
+              </code></pre>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🌿 Controle de Fluxo: <code>if</code> e <code>when</code></h3>
+          <p style="font-size:.8em; color:#666;">Decisões no código</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 if: Simples</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val idade = 18
+
+if (idade >= 18) {
+    println("Maior de idade")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 if/else: Duas opções</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val temperatura = 25
+
+if (temperatura > 30) {
+    println("Muito quente!")
+} else {
+    println("Temperatura ok")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 if/else if/else: Múltiplas opções</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val nota = 7
+
+if (nota >= 9) {
+    println("Excelente!")
+} else if (nota >= 7) {
+    println("Bom!")
+} else if (nota >= 5) {
+    println("Precisa melhorar")
+} else {
+    println("Reprovado")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 if como expressão</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val idade = 16
+val status = if (idade >= 18) 
+    "Maior de idade" 
+else 
+    "Menor de idade"
+
+println(status)
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 when: Simples e elegante</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val dia = 3
+
+when (dia) {
+    1 -> println("Segunda")
+    2 -> println("Terça")
+    3 -> println("Quarta")
+    else -> println("Outro dia")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 when com múltiplos valores</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val mes = 12
+
+when (mes) {
+    12, 1, 2 -> println("Verão")
+    3, 4, 5 -> println("Outono")
+    6, 7, 8 -> println("Inverno")
+    else -> println("Primavera")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🌿 when como expressão</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val idade = 25
+
+val categoria = when {
+    idade < 13 -> "Criança"
+    idade < 18 -> "Adolescente"
+    idade < 60 -> "Adulto"
+    else -> "Idoso"
+}
+
+println(categoria)  // Adulto
+          </code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🔁 Repetição com Ranges</h3>
+          <p style="font-size:.8em; color:#666;">Loops e iterações</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 for: Intervalo simples</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+for (i in 1..5) {
+    println(i)
+}
+// Saída: 1 2 3 4 5
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 for: Intervalo exclusivo</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+for (i in 1 until 5) {
+    println(i)
+}
+// Saída: 1 2 3 4
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 for: Ordem decrescente</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+for (i in 5 downTo 1) {
+    println(i)
+}
+// Saída: 5 4 3 2 1
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 for: Com passo (step)</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+for (i in 1..10 step 2) {
+    println(i)
+}
+// Saída: 1 3 5 7 9
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 for: Iterando em lista</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val nomes = listOf("Ana", "Bruno", "Carlos")
+
+for (nome in nomes) {
+    println("Olá, $nome!")
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 while: Contadora</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+var contador = 1
+
+while (contador <= 5) {
+    println("Contagem: $contador")
+    contador++
+}
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 while: Com condição complexa</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+var numero = 10
+
+while (numero > 0) {
+    println(numero)
+    numero -= 2
+}
+// Saída: 10 8 6 4 2
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 do-while: Executa primeiro</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+var tentativa = 1
+
+do {
+    println("Tentativa #$tentativa")
+    tentativa++
+} while (tentativa <= 3)
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 break: Sair do loop</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+for (i in 1..10) {
+    if (i == 5) {
+        break  // Sai do loop
+    }
+    println(i)
+}
+// Saída: 1 2 3 4
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔁 continue: Pula iteração</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+for (i in 1..5) {
+    if (i == 3) {
+        continue  // Pula para próxima
+    }
+    println(i)
+}
+// Saída: 1 2 4 5
+          </code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🧩 Funções em Kotlin</h3>
+          <p style="font-size:.8em; color:#666;">Organizando código reutilizável</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Função simples</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun saudacao(nome: String) {
+    println("Olá, $nome!")
+}
+
+saudacao("Ana")  // Olá, Ana!
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Função com retorno</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun dobro(n: Int): Int {
+    return n * 2
+}
+
+val resultado = dobro(5)
+println(resultado)  // 10
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Função de 1 linha</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun dobro(n: Int) = n * 2
+fun ehPar(n: Int) = n % 2 == 0
+
+println(dobro(7))   // 14
+println(ehPar(10))  // true
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Parâmetro padrão</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun saudacao(nome: String, emoji: String = "👋") {
+    println("Olá, $nome $emoji")
+}
+
+saudacao("Maria")              // Olá, Maria 👋
+saudacao("João", "😊")        // Olá, João 😊
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Múltiplos parâmetros</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun somar(a: Int, b: Int): Int {
+    return a + b
+}
+
+fun subtrair(a: Int, b: Int) = a - b
+
+println(somar(10, 5))      // 15
+println(subtrair(10, 5))   // 5
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Sem parâmetros</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun obterHora(): String {
+    return "14:30"
+}
+
+fun lacarBolo() {
+    println("Bolo está pronto! 🎂")
+}
+
+println(obterHora())  // 14:30
+lacarBolo()           // Bolo está pronto! 🎂
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧩 Retornando boolean</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun ehMaiorDeIdade(idade: Int): Boolean {
+    return idade >= 18
+}
+
+fun ehPrimo(n: Int) = n > 1 && n < 10
+
+println(ehMaiorDeIdade(20))  // true
+println(ehPrimo(5))          // true
+          </code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>📚 Coleções: <code>map</code>, <code>filter</code>, <code>sum</code></h3>
+          <p style="font-size:.8em; color:#666;">Transformando dados</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 Criando listas</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val numeros = listOf(1, 2, 3, 4, 5)
+val nomes = listOf("Ana", "Bruno", "Carlos")
+val vazia: List<String> = emptyList()
+
+println(numeros)    // [1, 2, 3, 4, 5]
+println(nomes[0])   // Ana
+println(vazia)      // []
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 Acessando elementos</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val frutas = listOf("Maçã", "Banana", "Laranja")
+
+println(frutas[0])       // Maçã
+println(frutas.first())  // Maçã
+println(frutas.last())   // Laranja
+println(frutas.size)     // 3
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 map: Transformar</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val numeros = listOf(1, 2, 3, 4, 5)
+
+val dobrados = numeros.map { it * 2 }
+println(dobrados)  // [2, 4, 6, 8, 10]
+
+val nomes = listOf("ana", "bruno")
+val maiusculos = nomes.map { it.uppercase() }
+println(maiusculos)  // [ANA, BRUNO]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 filter: Selecionar</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val numeros = listOf(1, 2, 3, 4, 5, 6)
+
+val pares = numeros.filter { it % 2 == 0 }
+println(pares)  // [2, 4, 6]
+
+val maiores = numeros.filter { it > 3 }
+println(maiores)  // [4, 5, 6]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 sum: Somar valores</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val numeros = listOf(10, 20, 30, 40)
+
+val total = numeros.sum()
+println(total)  // 100
+
+val precos = listOf(100.0, 200.0, 50.0)
+val totalGasto = precos.sum()
+println(totalGasto)  // 350.0
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 Outras operações úteis</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val numeros = listOf(1, 2, 3, 4, 5)
+
+val max = numeros.maxOrNull()      // 5
+val min = numeros.minOrNull()      // 1
+val media = numeros.average()      // 3.0
+val reverso = numeros.reversed()   // [5, 4, 3, 2, 1]
+
+println("Max: $max, Min: $min, Média: $media")
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📚 Encadeando operações</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val numeros = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+val resultado = numeros
+    .filter { it % 2 == 0 }      // [2, 4, 6, 8, 10]
+    .map { it * 10 }             // [20, 40, 60, 80, 100]
+    .sum()                       // 300
+
+println(resultado)  // 300
+          </code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🛡️ Null Safety</h3>
+          <p style="font-size:.8em; color:#666;">Evitando erros de nulo</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛡️ Null Safety em Kotlin</h3>
+          <div class="code-comparison">
+            <div>
+              <span class="badge badge-kotlin">Tipos anuláveis</span>
+              <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+var email: String? = null
+
+// Safe call
+println(email?.length)
+
+// Elvis operator
+val tamanho = email?.length ?: 0
+              </code></pre>
+            </div>
+            <div>
+              <span class="badge badge-kotlin">let + validação</span>
+              <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+fun enviarEmail(email: String?) {
+  email?.let {
+    println("Enviando para $it")
+  } ?: println("Email não informado")
+}
+              </code></pre>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🏷️ Data Classes</h3>
+          <p style="font-size:.8em; color:#666;">Modelos de dados simples</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🏷️ Data Classes</h3>
+          <div class="code-comparison">
+            <div>
+              <span class="badge badge-kotlin">Definição</span>
+              <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+data class Aluno(
+  val nome: String,
+  val media: Double
+)
+
+val a1 = Aluno("Lia", 8.5)
+              </code></pre>
+            </div>
+            <div>
+              <span class="badge badge-kotlin">Operações</span>
+              <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val a2 = a1.copy(media = 9.0)
+
+val (nome, media) = a2
+println("$nome tirou $media")
+
+// equals/hashCode/toString
+println(a1 == a2) // false
+              </code></pre>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🧪 Mini Desafio Kotlin</h3>
+          <p style="font-size:.8em; color:#666;">5 minutos</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧪 Mini Desafio</h3>
+          <div class="mini-exercise">
+            <p style="font-size:.9em; margin:0;">
+              Dada uma lista de números, gere outra lista contendo apenas os pares, elevados ao quadrado, ordenados de forma crescente.
+            </p>
+            <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val nums = listOf(9, 2, 4, 7, 6, 1, 8)
+// TODO: resultado esperado -> [4, 16, 36, 64]
+            </code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Resolução</h3>
+          <pre data-id="code-animation"><code class="kotlin" data-trim data-line-numbers>
+val nums = listOf(9, 2, 4, 7, 6, 1, 8)
+
+val resultado = nums
+  .filter { it % 2 == 0 }
+  .map { it * it }
+  .sorted()
+
+println(resultado)  // [4, 16, 36, 64]
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <div class="info-box">
+            <strong>Resumo:</strong> <code>filter</code> (seleciona) → <code>map</code> (transforma) → <code>sorted</code> (ordena).
+          </div>
+        </section>
+      </section>
+
+      <section data-background-gradient="linear-gradient(135deg, #00C853, #3DDC84)">
+        <h2 style="color:#1A1A1A;">🏁 Fechamento Kotlin</h2>
+        <p style="color:#103d22; font-size:.9em;">
+          Você já cobre: variáveis, tipos, strings, fluxo, funções, coleções, null safety e data class.
+        </p>
+        <div class="highlight-box" style="max-width:760px; margin:20px auto; background:linear-gradient(135deg,#1A1A1A,#2D2D2D);">
+          <p style="margin:0; font-size:.85em;">
+            Próximo passo natural: aplicar esses fundamentos em <strong>Jetpack Compose + ViewModel + API</strong>.
+          </p>
+        </div>
+      </section>
 
     </div>
   </div>
@@ -1240,179 +1211,6 @@ cidade = "São Paulo"  // ✅ OK
   <!-- Scripts Reveal.js -->
   <script src="./dist/reveal.js"></script>
   <script src="./plugin/highlight/highlight.js"></script>
-  <script>
-    Reveal.initialize({
-      controls: true,
-      progress: true,
-      slideNumber: 'c/t',
-      hash: true,
-      transition: 'slide',
-      transitionSpeed: 'default',
-      backgroundTransition: 'fade',
-      plugins: [RevealHighlight],
-      // Configurações adicionais
-      width: 1200,
-      height: 700,
-      margin: 0.1,
-    });
-
-    (function initClientServerMiniApp() {
-      const section = document.querySelector("[data-cs-miniapp]");
-      if (!section || section.dataset.bound === "true") return;
-      section.dataset.bound = "true";
-    })();
-
-    /* ========== ANIMAÇÃO DIAGRAMA DE SEQUÊNCIA ========== */
-    (function initSeqDiagram() {
-      const btn = document.getElementById("seqSendBtn");
-      if (!btn || btn.dataset.bound) return;
-      btn.dataset.bound = "1";
-
-      const canvas   = document.getElementById("seqCanvas");
-      const phone    = document.getElementById("seqPhone");
-      const svBox    = document.getElementById("seqServerBox");
-      const dbBox    = document.getElementById("seqDbBox");
-      const svStatus = document.getElementById("seqSvStatus");
-      const svLog    = document.getElementById("seqServerLog");
-      const phResult = document.getElementById("seqPhoneResult");
-
-      const pkt1 = document.getElementById("pkt1");
-      const pkt2 = document.getElementById("pkt2");
-      const pkt3 = document.getElementById("pkt3");
-      const pkt4 = document.getElementById("pkt4");
-
-      const steps = [
-        document.getElementById("ss1"),
-        document.getElementById("ss2"),
-        document.getElementById("ss3"),
-        document.getElementById("ss4"),
-        document.getElementById("ss5"),
-        document.getElementById("ss6"),
-      ];
-
-      /* posições em percentuais para responsividade */
-      const CX = { 
-        client: () => canvas.offsetWidth * 0.15,
-        server: () => canvas.offsetWidth * 0.50, 
-        db: () => canvas.offsetWidth * 0.85 
-      };
-      const PKT_Y = 280; /* altura Y do pacote animando */
-
-      function resetAll() {
-        [pkt1,pkt2,pkt3,pkt4].forEach(p => {
-          p.style.opacity = "0";
-          p.style.transition = "none";
-          p.style.left = "0px";
-          p.style.top = PKT_Y + "px";
-        });
-        steps.forEach(s => { s.className = "seq-step-pill"; });
-        canvas.classList.remove("glow-client","glow-server","glow-db");
-        svStatus.textContent = "💤 Aguardando";
-        svLog.textContent = "";
-        phResult.textContent = "";
-        phResult.classList.remove("visible");
-      }
-
-      function activateStep(idx) {
-        for (let i = 0; i < idx; i++) steps[i].className = "seq-step-pill done";
-        steps[idx].className = "seq-step-pill active";
-      }
-
-      function animatePacket(pkt, fromX, toX, y, duration) {
-        return new Promise(resolve => {
-          pkt.style.transition = "none";
-          pkt.style.left = fromX + "px";
-          pkt.style.top = y + "px";
-          pkt.style.opacity = "1";
-          /* force reflow */
-          void pkt.offsetWidth;
-          pkt.style.transition = "left " + duration + "ms cubic-bezier(.4,.0,.2,1), top " + duration + "ms ease";
-          pkt.style.left = toX + "px";
-          setTimeout(() => {
-            pkt.style.opacity = "0";
-            resolve();
-          }, duration);
-        });
-      }
-
-      function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-      let running = false;
-
-      async function runSequence() {
-        if (running) return;
-        running = true;
-        btn.disabled = true;
-        btn.textContent = "⏳ Processando...";
-        resetAll();
-        await sleep(300);
-
-        /* 1 — Clique */
-        activateStep(0);
-        canvas.classList.add("glow-client");
-        phone.querySelector(".e-icon,.seq-phone-frame").style.transform = "scale(1.02)";
-        await sleep(900);
-        canvas.classList.remove("glow-client");
-
-        /* 2 — Request HTTP: Client → Server */
-        activateStep(1);
-        await animatePacket(pkt1, CX.client(), CX.server() - 40, PKT_Y - 20, 1200);
-
-        /* 3 — Server recebe e processa */
-        canvas.classList.add("glow-server");
-        svStatus.textContent = "⚡ Processando...";
-        svLog.textContent = "Validando token...";
-        await sleep(600);
-        svLog.textContent = "Token OK ✓";
-        await sleep(500);
-
-        /* 4 — Query SQL: Server → DB */
-        activateStep(2);
-        svLog.textContent = "Consultando BD...";
-        await animatePacket(pkt2, CX.server(), CX.db() - 40, PKT_Y + 15, 1100);
-        canvas.classList.remove("glow-server");
-
-        /* 5 — BD processa */
-        canvas.classList.add("glow-db");
-        activateStep(3);
-        await sleep(1000);
-        canvas.classList.remove("glow-db");
-
-        /* 6 — Resultado BD: DB → Server */
-        await animatePacket(pkt3, CX.db() - 40, CX.server(), PKT_Y + 50, 1100);
-
-        /* 7 — Server monta response */
-        canvas.classList.add("glow-server");
-        svStatus.textContent = "📦 Montando JSON";
-        svLog.textContent = "Serializando...";
-        await sleep(700);
-        svLog.textContent = "JSON pronto ✓";
-        canvas.classList.remove("glow-server");
-
-        /* 8 — Response: Server → Client */
-        activateStep(4);
-        await animatePacket(pkt4, CX.server() - 40, CX.client(), PKT_Y + 80, 1200);
-
-        /* 9 — Exibe resultado no celular */
-        activateStep(5);
-        canvas.classList.add("glow-client");
-        svStatus.textContent = "✅ Concluído";
-        svLog.textContent = "200 OK (728ms)";
-        phResult.textContent = '{"id":42,"nome":"Maria Silva","email":"maria@email.com"}';
-        phResult.classList.add("visible");
-        await sleep(1500);
-        canvas.classList.remove("glow-client");
-
-        /* Todos concluídos */
-        steps.forEach(s => { s.className = "seq-step-pill done"; });
-
-        btn.disabled = false;
-        btn.textContent = "🔄 Buscar Novamente";
-        running = false;
-      }
-
-      btn.addEventListener("click", runSequence);
-    })();
-  </script>
+  <script src="./js/extra1-android-kotlin.js"></script>
 </body>
 </html>

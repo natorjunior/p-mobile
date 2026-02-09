@@ -1,15 +1,19 @@
 :root {
-  --kotlin-purple: #7f52ff;
-  --kotlin-orange: #f6891f;
-  --android-green: #3ddc84;
-  --android-dark: #1a1a1a;
-  --compose-blue: #4285f4;
+  --db-blue: #336791;
+  --db-dark: #1a1a1a;
+  --sequelize-blue: #2379bd;
+  --node-green: #68a063;
+  --express-yellow: #f0db4f;
+  --sql-orange: #f29111;
+  --success-green: #4caf50;
+  --error-red: #f44336;
+  --orm-purple: #7c4dff;
 }
 
 .reveal h1,
 .reveal h2,
 .reveal h3 {
-  color: var(--kotlin-purple);
+  color: var(--db-blue);
 }
 
 .emoji-large {
@@ -18,7 +22,7 @@
 }
 
 .highlight-box {
-  background: linear-gradient(135deg, var(--kotlin-purple), #9b7fff);
+  background: linear-gradient(135deg, var(--db-blue), var(--sequelize-blue));
   color: #fff;
   padding: 20px;
   border-radius: 12px;
@@ -26,8 +30,8 @@
 }
 
 .info-box {
-  background: #e8f5e9;
-  border-left: 4px solid var(--android-green);
+  background: #e3f2fd;
+  border-left: 4px solid var(--sequelize-blue);
   padding: 15px 20px;
   border-radius: 0 8px 8px 0;
   margin: 15px 0;
@@ -36,7 +40,7 @@
 
 .warning-box {
   background: #fff3e0;
-  border-left: 4px solid var(--kotlin-orange);
+  border-left: 4px solid var(--sql-orange);
   padding: 15px 20px;
   border-radius: 0 8px 8px 0;
   margin: 15px 0;
@@ -58,14 +62,29 @@
   margin: 5px;
 }
 
-.badge-kotlin {
-  background: var(--kotlin-purple);
+.badge-sql {
+  background: var(--sql-orange);
+  color: #fff;
+}
+
+.badge-orm {
+  background: var(--orm-purple);
+  color: #fff;
+}
+
+.badge-sequelize {
+  background: var(--sequelize-blue);
+  color: #fff;
+}
+
+.badge-node {
+  background: var(--node-green);
   color: #fff;
 }
 
 .mini-exercise {
-  background: linear-gradient(135deg, var(--android-green), #00e676);
-  color: #1a1a1a;
+  background: linear-gradient(135deg, var(--sequelize-blue), #29b6f6);
+  color: #fff;
   padding: 25px;
   border-radius: 16px;
   margin: 20px 0;
@@ -73,8 +92,10 @@
 
 .mini-exercise h4 {
   margin-top: 0;
-  color: #1a1a1a;
+  color: #fff;
 }
+
+/* ===== Timeline / Evolução ===== */
 
 .evolution-stage {
   text-align: center;
@@ -94,7 +115,7 @@
 
 .stage-title {
   font-weight: 700;
-  color: var(--kotlin-purple);
+  color: var(--db-blue);
   margin-bottom: 8px;
   font-size: 1.2em;
 }
@@ -109,14 +130,14 @@
 
 .stage-bar {
   height: 8px;
-  background: linear-gradient(90deg, var(--kotlin-purple), var(--compose-blue));
+  background: linear-gradient(90deg, var(--db-blue), var(--sequelize-blue));
   border-radius: 4px;
   margin-bottom: 10px;
 }
 
 .evolution-arrow {
   font-size: 1.5em;
-  color: var(--android-green);
+  color: var(--sequelize-blue);
   margin: 0 5px;
   display: flex;
   align-items: center;
@@ -143,17 +164,145 @@
   margin-top: 5px;
 }
 
-.desktop-era {
-  color: #f57c00;
+/* ===== Camadas DB ===== */
+
+.db-layers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 20px auto;
+  max-width: 500px;
 }
 
-.web-era {
-  color: #1976d2;
+.db-layer {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  font-size: .85em;
+  color: #fff;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.mobile-era {
-  color: var(--android-green);
+.db-layer:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
 }
+
+.db-layer.layer-app {
+  background: linear-gradient(135deg, var(--node-green), #81c784);
+}
+
+.db-layer.layer-orm {
+  background: linear-gradient(135deg, var(--orm-purple), #b388ff);
+}
+
+.db-layer.layer-db {
+  background: linear-gradient(135deg, var(--db-blue), #4fc3f7);
+}
+
+.db-layer-arrow {
+  font-size: 1.2em;
+  color: var(--db-blue);
+}
+
+/* ===== CRUD Cards ===== */
+
+.crud-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.crud-card {
+  padding: 20px 12px;
+  border-radius: 12px;
+  text-align: center;
+  color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+
+.crud-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.crud-card .crud-letter {
+  font-size: 2em;
+  font-weight: 800;
+  display: block;
+}
+
+.crud-card .crud-name {
+  font-size: .85em;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.crud-card .crud-sql {
+  font-size: .65em;
+  margin-top: 6px;
+  opacity: .85;
+  font-family: 'Fira Code', monospace;
+}
+
+.crud-card.card-create {
+  background: linear-gradient(135deg, var(--success-green), #66bb6a);
+}
+
+.crud-card.card-read {
+  background: linear-gradient(135deg, var(--sequelize-blue), #29b6f6);
+}
+
+.crud-card.card-update {
+  background: linear-gradient(135deg, var(--sql-orange), #ffb74d);
+}
+
+.crud-card.card-delete {
+  background: linear-gradient(135deg, var(--error-red), #ef5350);
+}
+
+/* ===== Tipo de dados visual ===== */
+
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.type-item {
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  background: #f5f5f5;
+  border: 2px solid #e0e0e0;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.type-item:hover {
+  border-color: var(--sequelize-blue);
+  transform: translateY(-2px);
+}
+
+.type-item .type-name {
+  font-weight: 700;
+  color: var(--db-blue);
+  font-size: .9em;
+}
+
+.type-item .type-desc {
+  font-size: .7em;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* ===== Diagrama de Sequência (Reutilizado) ===== */
 
 .seq-canvas {
   position: relative;
@@ -173,25 +322,10 @@
   z-index: 3;
 }
 
-.seq-entity .e-icon {
-  font-size: 2.6em;
-}
-
-.seq-entity .e-name {
-  font-weight: 700;
-  font-size: 0.85em;
-  margin-top: 4px;
-}
-
-.seq-entity .e-sub {
-  font-size: 0.62em;
-  color: #888;
-}
-
-.seq-entity.e-client {
-  left: 15%;
-  transform: translateX(-50%);
-}
+.seq-entity .e-icon { font-size: 2.6em; }
+.seq-entity .e-name { font-weight: 700; font-size: 0.85em; margin-top: 4px; }
+.seq-entity .e-sub  { font-size: 0.62em; color: #888; }
+.seq-entity.e-client { left: 15%; transform: translateX(-50%); }
 
 .seq-lifeline {
   position: absolute;
@@ -205,19 +339,19 @@
 .ll-client {
   left: 15%;
   transform: translateX(-50%);
-  background: repeating-linear-gradient(180deg, #667eea 0 6px, transparent 6px 12px);
+  background: repeating-linear-gradient(180deg, var(--node-green) 0 6px, transparent 6px 12px);
 }
 
 .ll-server {
   left: 50%;
   transform: translateX(-50%);
-  background: repeating-linear-gradient(180deg, #f5576c 0 6px, transparent 6px 12px);
+  background: repeating-linear-gradient(180deg, var(--orm-purple) 0 6px, transparent 6px 12px);
 }
 
 .ll-db {
   left: 85%;
   transform: translateX(-50%);
-  background: repeating-linear-gradient(180deg, #4facfe 0 6px, transparent 6px 12px);
+  background: repeating-linear-gradient(180deg, var(--db-blue) 0 6px, transparent 6px 12px);
 }
 
 .seq-packet {
@@ -238,23 +372,10 @@
   white-space: nowrap;
 }
 
-.pkt-request .pkt-body {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-}
-
-.pkt-query .pkt-body {
-  background: linear-gradient(135deg, #f5576c, #f093fb);
-}
-
-.pkt-dbresult .pkt-body {
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
-  color: #1a1a1a;
-}
-
-.pkt-response .pkt-body {
-  background: linear-gradient(135deg, #00c853, #3ddc84);
-  color: #1a1a1a;
-}
+.pkt-request  .pkt-body { background: linear-gradient(135deg, var(--node-green), #81c784); }
+.pkt-query    .pkt-body { background: linear-gradient(135deg, var(--orm-purple), #b388ff); }
+.pkt-dbresult .pkt-body { background: linear-gradient(135deg, var(--db-blue), #4fc3f7); color: #fff; }
+.pkt-response .pkt-body { background: linear-gradient(135deg, var(--success-green), #66bb6a); }
 
 .seq-phone {
   position: absolute;
@@ -280,7 +401,7 @@
 }
 
 .seq-phone-screen .ph-bar {
-  background: var(--kotlin-purple);
+  background: var(--node-green);
   color: #fff;
   padding: 6px;
   border-radius: 5px;
@@ -303,8 +424,8 @@
   padding: 9px;
   border: none;
   border-radius: 6px;
-  background: var(--android-green);
-  color: #1a1a1a;
+  background: var(--sequelize-blue);
+  color: #fff;
   font-weight: 700;
   font-size: 0.68em;
   cursor: pointer;
@@ -331,22 +452,19 @@
 }
 
 .seq-server-inner {
-  background: linear-gradient(135deg, #f5576c, #f093fb);
+  background: linear-gradient(135deg, var(--orm-purple), #b388ff);
   border-radius: 14px;
   padding: 14px 10px;
   color: #fff;
   text-align: center;
-  box-shadow: 0 8px 28px rgba(245, 87, 108, 0.35);
+  box-shadow: 0 8px 28px rgba(124, 77, 255, 0.35);
   min-height: 135px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.seq-server-inner .sv-icon {
-  font-size: 2.2em;
-}
-
+.seq-server-inner .sv-icon  { font-size: 2.2em; }
 .seq-server-inner .sv-status {
   font-size: 0.56em;
   margin-top: 8px;
@@ -374,22 +492,19 @@
 }
 
 .seq-db-inner {
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  background: linear-gradient(135deg, var(--db-blue), #4fc3f7);
   border-radius: 14px;
   padding: 14px 10px;
-  color: #1a1a1a;
+  color: #fff;
   text-align: center;
-  box-shadow: 0 8px 28px rgba(79, 172, 254, 0.35);
+  box-shadow: 0 8px 28px rgba(51, 103, 145, 0.35);
   min-height: 135px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.seq-db-inner .db-icon {
-  font-size: 2.2em;
-}
-
+.seq-db-inner .db-icon { font-size: 2.2em; }
 .seq-db-inner .db-rows {
   font-size: 0.52em;
   margin-top: 8px;
@@ -399,7 +514,7 @@
 
 .seq-db-inner .db-row {
   padding: 3px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .seq-steps {
@@ -424,26 +539,26 @@
 }
 
 .seq-step-pill.active {
-  background: var(--android-green);
-  color: #1a1a1a;
+  background: var(--sequelize-blue);
+  color: #fff;
   transform: scale(1.1);
 }
 
 .seq-step-pill.done {
-  background: #c8e6c9;
-  color: #2e7d32;
+  background: #bbdefb;
+  color: #1565c0;
 }
 
 .glow-client .seq-phone-frame {
-  box-shadow: 0 0 24px rgba(102, 126, 234, 0.8);
+  box-shadow: 0 0 24px rgba(104, 160, 99, 0.8);
 }
 
 .glow-server .seq-server-inner {
-  box-shadow: 0 0 24px rgba(245, 87, 108, 0.8);
+  box-shadow: 0 0 24px rgba(124, 77, 255, 0.8);
 }
 
 .glow-db .seq-db-inner {
-  box-shadow: 0 0 24px rgba(79, 172, 254, 0.8);
+  box-shadow: 0 0 24px rgba(51, 103, 145, 0.8);
 }
 
 .seq-phone-result {
@@ -451,8 +566,8 @@
   margin-top: 6px;
   padding: 6px 8px;
   border-radius: 5px;
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: #e3f2fd;
+  color: var(--sequelize-blue);
   font-family: "Fira Code", monospace;
   min-height: 18px;
   opacity: 0;
@@ -467,6 +582,12 @@
 
 @media (max-width: 1024px) {
   .code-comparison {
+    grid-template-columns: 1fr;
+  }
+  .crud-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .type-grid {
     grid-template-columns: 1fr;
   }
 }

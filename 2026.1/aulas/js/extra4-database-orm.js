@@ -77,11 +77,7 @@ Reveal.initialize({
       pkt.style.opacity = "1";
       void pkt.offsetWidth;
       pkt.style.transition =
-        "left " +
-        duration +
-        "ms cubic-bezier(.4,.0,.2,1), top " +
-        duration +
-        "ms ease";
+        "left " + duration + "ms cubic-bezier(.4,.0,.2,1), top " + duration + "ms ease";
       pkt.style.left = toX + "px";
       setTimeout(() => {
         pkt.style.opacity = "0";
@@ -116,13 +112,13 @@ Reveal.initialize({
 
     canvas.classList.add("glow-server");
     svStatus.textContent = "⚡ Processando...";
-    svLog.textContent = "Validando token...";
+    svLog.textContent = "ORM: findByPk(42)";
     await sleep(600);
-    svLog.textContent = "Token OK ✓";
+    svLog.textContent = "Gerando SQL...";
     await sleep(500);
 
     activateStep(2);
-    svLog.textContent = "Consultando BD...";
+    svLog.textContent = "SELECT * WHERE id=42";
     await animatePacket(pkt2, cx.server(), cx.db() - 40, packetY + 15, 1100);
     canvas.classList.remove("glow-server");
 
@@ -134,10 +130,10 @@ Reveal.initialize({
     await animatePacket(pkt3, cx.db() - 40, cx.server(), packetY + 50, 1100);
 
     canvas.classList.add("glow-server");
-    svStatus.textContent = "📦 Montando JSON";
-    svLog.textContent = "Serializando...";
+    svStatus.textContent = "📦 Mapeando objeto";
+    svLog.textContent = "Row → Model instance";
     await sleep(700);
-    svLog.textContent = "JSON pronto ✓";
+    svLog.textContent = "JSON.stringify ✓";
     canvas.classList.remove("glow-server");
 
     activateStep(4);
@@ -146,7 +142,7 @@ Reveal.initialize({
     activateStep(5);
     canvas.classList.add("glow-client");
     svStatus.textContent = "✅ Concluído";
-    svLog.textContent = "200 OK (728ms)";
+    svLog.textContent = "200 OK (312ms)";
     phResult.textContent = '{"id":42,"nome":"Maria Silva","email":"maria@email.com"}';
     phResult.classList.add("visible");
     await sleep(1500);

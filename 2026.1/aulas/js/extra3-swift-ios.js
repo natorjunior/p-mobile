@@ -135,7 +135,7 @@ Reveal.initialize({
 
     canvas.classList.add("glow-server");
     svStatus.textContent = "📦 Montando JSON";
-    svLog.textContent = "Serializando...";
+    svLog.textContent = "Codable encoding...";
     await sleep(700);
     svLog.textContent = "JSON pronto ✓";
     canvas.classList.remove("glow-server");
