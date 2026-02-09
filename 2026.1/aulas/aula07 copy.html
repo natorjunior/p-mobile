@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 07 - useContext e Context API</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+  <link rel="stylesheet" href="aula05-materials/style.css">
+
+  <!-- Menu plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
+
+  <style>
+    .reveal h1, .reveal h2 {
+      color: #0056b3;
+    }
+
+    .reveal pre code {
+      font-size: 1em;
+      background: #222;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .reveal p {
+      font-size: 1.1em;
+    }
+
+    .step-box {
+      background: rgba(0,123,255,0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px;
+      border: 2px solid #0056b3;
+    }
+
+    .concept-box {
+      background: rgba(40,167,69,0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px;
+      border: 2px solid #28a745;
+    }
+
+    .example-box {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Slide 1: Título -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <br><br><br><br>
+        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+          Programação para Dispositivos Móveis
+        </h4>
+        <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+          Aula 07 - useContext e Context API em React Native
+        </h6>
+        <h1>🌐</h1>
+      </section>
+
+      <!-- Slide 2: O que é Context API? -->
+      <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+        <div class="concept-box">
+          <h2 style="color: white;">O que é Context API? 🤔</h2>
+          <ul style="color: white;">
+            <li class="fragment fade-right">Forma de compartilhar dados entre componentes</li>
+            <li class="fragment fade-right">Evita "prop drilling" (passar props em vários níveis)</li>
+            <li class="fragment fade-right">Ideal para dados globais: temas, usuário logado, idioma</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 3: Por que usar Context? -->
+      <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+        <h2 style="color: white;">Por que usar Context? 🎯</h2>
+        <div class="concept-box">
+          <h3 style="color: white;">Antes do Context:</h3>
+          <pre><code class="language-jsx" data-trim data-line-numbers>
+// Componente Pai
+const App = () => {
+  const [theme, setTheme] = useState('light');
+  return (
+    &lt;Header theme={theme} /&gt;
+    &lt;Main theme={theme} /&gt;
+    &lt;Footer theme={theme} /&gt;
+  );
+};
+
+// Componente Filho
+const Main = ({ theme }) => {
+  return (
+    &lt;Content theme={theme} /&gt;
+  );
+};
+
+// Componente Neto
+const Content = ({ theme }) => {
+  return (
+    &lt;Text style={{ color: theme === 'light' ? '#000' : '#fff' }}&gt;
+      Conteúdo
+    &lt;/Text&gt;
+  );
+};</code></pre>
+        </div>
+      </section>
+
+      <!-- Slide 4: Com Context -->
+      <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+        <h2 style="color: white;">Com Context API 🎉</h2>
+        <div class="concept-box">
+          <pre><code class="language-jsx" data-trim data-line-numbers>
+// ThemeContext.js
+const ThemeContext = createContext();
+
+// App.js
+const App = () => {
+  const [theme, setTheme] = useState('light');
+  return (
+    &lt;ThemeContext.Provider value={{ theme, setTheme }}&gt;
+      &lt;Header /&gt;
+      &lt;Main /&gt;
+      &lt;Footer /&gt;
+    &lt;/ThemeContext.Provider&gt;
+  );
+};
+
+// Qualquer componente filho
+const Content = () => {
+  const { theme } = useContext(ThemeContext);
+  return (
+    &lt;Text style={{ color: theme === 'light' ? '#000' : '#fff' }}&gt;
+      Conteúdo
+    &lt;/Text&gt;
+  );
+};</code></pre>
+        </div>
+      </section>
+
+      <!-- Slide 5: Projeto Prático - Todo List com Temas -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">Projeto Prático: Todo List com Temas 📝</h2>
+        <div class="step-box">
+          <h3 style="color: white;">O que vamos criar:</h3>
+          <ul style="color: white;">
+            <li class="fragment fade-right">Lista de tarefas com tema customizável</li>
+            <li class="fragment fade-right">Adicionar e remover tarefas</li>
+            <li class="fragment fade-right">Alternar entre tema claro e escuro</li>
+            <li class="fragment fade-right">Usar Context para gerenciar estado global</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 6: Passo 1 - Criando os Contexts -->
+      <section data-background-color="#2c3e50">
+        <h2 style="color: white;">Passo 1: Criando os Contexts</h2>
+        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+// contexts/ThemeContext.js
+import { createContext } from 'react';
+
+export const ThemeContext = createContext();
+
+// contexts/TodoContext.js
+import { createContext } from 'react';
+
+export const TodoContext = createContext();</code></pre>
+      </section>
+
+      <!-- Slide 7: Passo 2 - Criando os Providers -->
+      <section data-background-color="#2c3e50">
+        <h2 style="color: white;">Passo 2: Criando os Providers</h2>
+        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+// App.js
+import React, { useState } from 'react';
+import { ThemeContext, TodoContext } from './contexts';
+
+const App = () => {
+  const [theme, setTheme] = useState('light');
+  const [todos, setTodos] = useState([]);
+
+  return (
+    &lt;ThemeContext.Provider value={{ theme, setTheme }}&gt;
+      &lt;TodoContext.Provider value={{ todos, setTodos }}&gt;
+        &lt;MainApp /&gt;
+      &lt;/TodoContext.Provider&gt;
+    &lt;/ThemeContext.Provider&gt;
+  );
+};</code></pre>
+      </section>
+
+      <!-- Slide 8: Passo 3 - Componente TodoInput -->
+      <section data-background-color="#2c3e50">
+        <h2 style="color: white;">Passo 3: Componente TodoInput</h2>
+        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+// components/TodoInput.js
+import React, { useState, useContext } from 'react';
+import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { TodoContext, ThemeContext } from '../contexts';
+
+const TodoInput = () => {
+  const [text, setText] = useState('');
+  const { todos, setTodos } = useContext(TodoContext);
+  const { theme } = useContext(ThemeContext);
+
+  const addTodo = () => {
+    if (text.trim()) {
+      setTodos([...todos, { id: Date.now(), text, completed: false }]);
+      setText('');
+    }
+  };
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;TextInput
+        style={[
+          styles.input,
+          { backgroundColor: theme === 'light' ? '#fff' : '#333',
+            color: theme === 'light' ? '#000' : '#fff' }
+        ]}
+        value={text}
+        onChangeText={setText}
+        placeholder="Nova tarefa..."
+        placeholderTextColor={theme === 'light' ? '#666' : '#999'}
+      /&gt;
+      &lt;Button title="Adicionar" onPress={addTodo} /&gt;
+    &lt;/View&gt;
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    flexDirection: 'row',
+  },
+  input: {
+    flex: 1,
+    marginRight: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+});</code></pre>
+      </section>
+
+      <!-- Slide 9: Passo 4 - Componente TodoList -->
+      <section data-background-color="#2c3e50">
+        <h2 style="color: white;">Passo 4: Componente TodoList</h2>
+        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+// components/TodoList.js
+import React, { useContext } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { TodoContext, ThemeContext } from '../contexts';
+
+const TodoList = () => {
+  const { todos, setTodos } = useContext(TodoContext);
+  const { theme } = useContext(ThemeContext);
+
+  const toggleTodo = (id) => {
+    setTodos(todos.map(todo =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    ));
+  };
+
+  const deleteTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+
+  return (
+    &lt;View style={styles.container}&gt;
+      {todos.map(todo => (
+        &lt;TouchableOpacity
+          key={todo.id}
+          style={[
+            styles.todoItem,
+            { backgroundColor: theme === 'light' ? '#f8f8f8' : '#333' }
+          ]}
+          onPress={() => toggleTodo(todo.id)}
+          onLongPress={() => deleteTodo(todo.id)}
+        &gt;
+          &lt;Text style={[
+            styles.todoText,
+            { 
+              color: theme === 'light' ? '#000' : '#fff',
+              textDecorationLine: todo.completed ? 'line-through' : 'none'
+            }
+          ]}&gt;
+            {todo.text}
+          &lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      ))}
+    &lt;/View&gt;
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  todoItem: {
+    padding: 15,
+    marginBottom: 10,
+    borderRadius: 5,
+    elevation: 2,
+  },
+  todoText: {
+    fontSize: 16,
+  },
+});</code></pre>
+      </section>
+
+      <!-- Slide 10: Passo 5 - Componente ThemeToggle -->
+      <section data-background-color="#2c3e50">
+        <h2 style="color: white;">Passo 5: Componente ThemeToggle</h2>
+        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+// components/ThemeToggle.js
+import React, { useContext } from 'react';
+import { View, Switch, Text, StyleSheet } from 'react-native';
+import { ThemeContext } from '../contexts';
+
+const ThemeToggle = () => {
+  const { theme, setTheme } = useContext(ThemeContext);
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={{ color: theme === 'light' ? '#000' : '#fff' }}&gt;
+        {theme === 'light' ? '☀️' : '🌙'}
+      &lt;/Text&gt;
+      &lt;Switch
+        value={theme === 'dark'}
+        onValueChange={(value) => setTheme(value ? 'dark' : 'light')}
+      /&gt;
+    &lt;/View&gt;
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: 20,
+  },
+});</code></pre>
+      </section>
+
+      <!-- Slide 11: Passo 6 - Juntando Tudo -->
+      <section data-background-color="#2c3e50">
+        <h2 style="color: white;">Passo 6: Juntando Tudo</h2>
+        <pre class="fragment fade-up"><code class="language-jsx" data-trim data-line-numbers>
+// MainApp.js
+import React, { useContext } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { ThemeContext } from './contexts';
+import { TodoInput, TodoList, ThemeToggle } from './components';
+
+const MainApp = () => {
+  const { theme } = useContext(ThemeContext);
+
+  return (
+    &lt;View style={[
+      styles.container,
+      { backgroundColor: theme === 'light' ? '#fff' : '#121212' }
+    ]}&gt;
+      &lt;ThemeToggle /&gt;
+      &lt;TodoInput /&gt;
+      &lt;TodoList /&gt;
+    &lt;/View&gt;
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});</code></pre>
+      </section>
+
+      <!-- Slide 12: Como Usar -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">Como Usar o App 📱</h2>
+        <div class="step-box">
+          <ul style="color: white;">
+            <li class="fragment fade-right">1. Adicione tarefas digitando e clicando em "Adicionar"</li>
+            <li class="fragment fade-right">2. Toque em uma tarefa para marcá-la como concluída</li>
+            <li class="fragment fade-right">3. Pressione e segure uma tarefa para excluí-la</li>
+            <li class="fragment fade-right">4. Use o switch para alternar entre temas claro/escuro</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 13: Benefícios do Context -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">Benefícios do Context 🎯</h2>
+        <div class="concept-box">
+          <ul style="color: white;">
+            <li class="fragment fade-right">Código mais limpo e organizado</li>
+            <li class="fragment fade-right">Evita prop drilling</li>
+            <li class="fragment fade-right">Estado global facilmente acessível</li>
+            <li class="fragment fade-right">Separação clara de responsabilidades</li>
+            <li class="fragment fade-right">Facilita manutenção e escalabilidade</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 14: Considerações Finais -->
+      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <h2 style="color: white;">Considerações Finais 🤔</h2>
+        <div class="concept-box">
+          <ul style="color: white;">
+            <li class="fragment fade-right">Use Context para estado global</li>
+            <li class="fragment fade-right">Evite criar muitos contextos</li>
+            <li class="fragment fade-right">Combine com outros hooks quando necessário</li>
+            <li class="fragment fade-right">Considere performance em apps grandes</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      center: false,
+      controls: true,
+      progress: true,
+      slideNumber: true,
+      history: true,
+      transition: 'convex',
+      plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
+      markdown: {
+        smartypants: true
+      },
+      width: 1200,
+      height: 800,
+      hash: true,
+      respondToHashChanges: true,
+      menu: {
+        side: 'left',
+        width: 300,
+        numbers: true,
+        titleSelector: 'h1, h2, h3, h4, h5, h6'
+      }
+    });
+  </script>
+</body>
+
+</html>

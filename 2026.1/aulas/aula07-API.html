@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 04</title>
+
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="./dist/reveal.css">
+    <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+    <!-- Tema para código -->
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+    <!-- <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css"> -->
+    <link rel="stylesheet" href="aula04-materials/style.css">
+    <link rel="stylesheet" href="css/workshop.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+
+
+    <!-- Menu plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <link href=" https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css " rel="stylesheet">
+
+    <style>
+        .reveal h1,
+        .reveal h2 {
+            color: #0056b3;
+        }
+
+        .reveal pre code {
+            font-size: 1em;
+            background: #222;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .reveal p {
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Título do Workshop -->
+            <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <br><br><br>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    Workshop Prático
+                </h4>
+                <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    🚀 Construindo um Chat em Tempo Real
+                </h2>
+                <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
+                    Com MQTT e React Native
+                </p>
+                <p style="color: white; font-size: .8em; font-weight: 300; margin-top: 40px;">
+                    Prof. Msc. Nator Junior Carvalho da Costa
+                </p>
+            </section>
+
+            <!-- Slide 2: Roadmap do Workshop -->
+            <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <h2 style="color: white;">🗺️ Nossa Jornada de Hoje</h2>
+                <div class="workshop-step">
+                    <ul style="color: white; font-size: 1.2em;">
+                        <li class="fragment fade-right">1️⃣ Entendendo MQTT na Prática</li>
+                        <li class="fragment fade-right">2️⃣ Configurando Nosso Ambiente</li>
+                        <li class="fragment fade-right">3️⃣ Criando a Interface do Chat</li>
+                        <li class="fragment fade-right">4️⃣ Implementando a Comunicação</li>
+                        <li class="fragment fade-right">5️⃣ Testando em Tempo Real</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Etapa 1: Entendendo MQTT -->
+            <section>
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">📱 Etapa 1: MQTT na Prática</h2>
+                    <div class="workshop-step">
+                        <p style="color: white; font-size: 1.2em;">
+                            Imagine um grupo de WhatsApp, mas mais leve e rápido! 🚀
+                        </p>
+                        <ul style="color: white; font-size: 1.1em;">
+                            <li class="fragment fade-right">📨 Alguém envia uma mensagem (Publisher)</li>
+                            <li class="fragment fade-right">📬 O servidor MQTT distribui (Broker)</li>
+                            <li class="fragment fade-right">📱 Todos recebem instantaneamente (Subscribers)</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">📡 Introdução ao MQTT</h2>
+                    <p style="color: white; font-size: 1.2em; font-weight: 300;">
+                        <br><br>
+                        Protocolo leve de mensagens assíncronas usado em IoT, sistemas distribuídos e comunicação em
+                        tempo real.
+                    </p>
+                </section>
+
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">🔹 Como funciona?</h2>
+                    <ul style="color: white; font-size: 1.em;">
+                        <li>📌 Um <b>cliente</b> publica mensagens em um <b>tópico</b></li>
+                        <li>📌 Outros <b>clientes subscrevem</b> esse tópico e recebem as mensagens</li>
+                        <li>📌 Um <b>broker</b> gerencia a comunicação</li>
+                    </ul>
+                </section>
+
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <div id="controls">
+                        <label for="topicInput" style="color: white; font-size: 1.em; font-weight: 300;">Assunto da
+                            Mensagem:</label>
+                        <input type="text" id="topicInput" value="financeiro/pagamentos">
+                        <button id="publishButton">Enviar Mensagem</button>
+                    </div>
+                    <div id="container" style="color: white; font-size: 0.9em; font-weight: 300;">
+                        <svg id="lines-svg"></svg>
+                        <div id="publisher" class="node" data-tooltip="Remetente: Envia a mensagem."
+                            style="color: white; font-size: 0.6em; font-weight: 300;">
+                            Remetente
+                        </div>
+                        <div id="broker" class="node"
+                            data-tooltip="Central de Correspondência: Recebe e encaminha a mensagem."
+                            style="color: white; font-size: 0.6em; font-weight: 300;">
+                            Central de Correspondência (BROKER)
+                        </div>
+                        <div id="subscriber1" class="node" data-tooltip="Financeiro: Inscrito em 'financeiro/#'."
+                            style="color: white; font-size: 0.6em; font-weight: 300;">
+                            Financeiro
+                            <div class="subscription" style="color: #222;">financeiro/#</div>
+                        </div>
+                        <div id="subscriber2" class="node"
+                            data-tooltip="Pagamentos: Inscrito em 'financeiro/pagamentos'."
+                            style="color: white; font-size: 0.6em; font-weight: 300;">
+                            Pagamentos
+                            <div class="subscription" style="color: #222;">financeiro/pagamentos</div>
+                        </div>
+                        <div id="subscriber3" class="node" data-tooltip="Recursos Humanos: Inscrito em 'rh/#'."
+                            style="color: white; font-size: 0.6em; font-weight: 300;">
+                            Recursos Humanos
+                            <div class="subscription" style="color: #222;">rh/#</div>
+                        </div>
+                        <div id="message" class="message"></div>
+                    </div>
+                </section>
+
+                <!-- Mini Exercício 1 -->
+                <section data-background-color="#2c3e50" data-auto-animate>
+                    <h3 style="color: white;">🎯 Mini Desafio 1</h3>
+                    <div class="practical-exercise">
+                        <p style="color: white;">Teste sua compreensão:</p>
+                        <ol style="color: white;">
+                            <li>Abra o console do navegador (F12)</li>
+                            <li>Modifique o tópico para "chat/test"</li>
+                            <li>Envie uma mensagem e observe o padrão</li>
+                        </ol>
+                        <div class="fragment fade-up">
+                            <p style="color: white;">💡 Dica: Observe como o broker gerencia as mensagens!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Solução do Mini Desafio 1 -->
+                <section data-background-color="#2c3e50">
+                    <h3 style="color: white;">✨ Solução: Mini Desafio 1</h3>
+                    <div class="solution-box">
+                        <pre><code class="language-javascript" data-trim data-line-numbers>
+                        const client = mqtt.connect('wss://test.mosquitto.org:8081');
+                        
+                        // Subscrever ao tópico de teste
+                        client.subscribe('chat/test');
+                        
+                        // Publicar uma mensagem
+                        client.publish('chat/test', JSON.stringify({
+                            user: 'Aluno',
+                            message: 'Olá, mundo!',
+                            timestamp: new Date()
+                        }));
+                        </code></pre>
+                        <div class="fragment fade-up">
+                            <p style="color: white;">🔍 O que aprendemos:</p>
+                            <ul style="color: white;">
+                                <li>Como conectar ao broker MQTT</li>
+                                <li>Como subscrever a um tópico</li>
+                                <li>Como publicar mensagens</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Diagrama Animado do MQTT -->
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h3 style="color: white;">🔄 Fluxo de Mensagens MQTT</h3>
+                    <div class="mqtt-flow-diagram">
+                        <canvas id="mqttCanvas" width="800" height="400"></canvas>
+                    </div>
+                    <script>
+                        // Adiciona animação do fluxo MQTT
+                        const canvas = document.getElementById('mqttCanvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        function drawMQTTFlow() {
+                            // Animação do fluxo de mensagens
+                            // ... (código da animação)
+                        }
+                    </script>
+                </section>
+            </section>
+
+            <!-- Etapa 2: Configuração do Ambiente -->
+            <section>
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">⚙️ Etapa 2: Preparando o Ambiente</h2>
+                    <div class="workshop-step">
+                        <h3 style="color: white;">Vamos precisar de:</h3>
+                        <ul style="color: white; font-size: 1.1em;">
+                            <li class="fragment fade-right">📱 Expo instalado</li>
+                            <li class="fragment fade-right">📦 Biblioteca MQTT</li>
+                            <li class="fragment fade-right">🎨 React Native Paper</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background-color="#2c3e50">
+                    <h3 style="color: white;">🛠️ Criando o Projeto</h3>
+                    <pre><code class="language-bash" data-trim data-line-numbers>
+                        # Crie um novo projeto Expo
+                        npx create-expo-app chat-mqtt
+                        cd chat-mqtt
+
+                        # Instale as dependências
+                        npm install @react-navigation/native @react-navigation/stack
+                        npm install react-native-mqtt
+                        npm install react-native-paper
+                    </code></pre>
+                    <div class="practical-exercise fragment fade-up">
+                        <p>👩‍💻 Sua vez! Crie o projeto e instale as dependências</p>
+                    </div>
+                </section>
+
+                <!-- Mini Exercício 2 -->
+                <section data-background-color="#2c3e50" data-auto-animate>
+                    <h3 style="color: white;">🎯 Mini Desafio 2</h3>
+                    <div class="practical-exercise">
+                        <p style="color: white;">Modifique o código do ChatScreen:</p>
+                        <ol style="color: white;">
+                            <li>Adicione um campo para o nome do usuário</li>
+                            <li>Inclua timestamp nas mensagens</li>
+                            <li>Ordene as mensagens por data</li>
+                        </ol>
+                        <div class="fragment fade-up">
+                            <p style="color: white;">💡 Dica: Use o objeto Date para o timestamp!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Solução do Mini Desafio 2 -->
+                <section data-background-color="#2c3e50">
+                    <h3 style="color: white;">✨ Solução: Mini Desafio 2</h3>
+                    <div class="solution-box">
+                        <pre><code class="language-jsx" data-trim data-line-numbers>
+                        export default function ChatScreen() {
+                          const [username, setUsername] = useState('');
+                          const [messages, setMessages] = useState([]);
+                          
+                          // Ordenar mensagens por data
+                          const sortedMessages = useMemo(() => {
+                            return [...messages].sort((a, b) => 
+                              new Date(a.timestamp) - new Date(b.timestamp)
+                            );
+                          }, [messages]);
+                          
+                          return (
+                            &lt;View style={styles.container}&gt;
+                              &lt;TextInput
+                                value={username}
+                                onChangeText={setUsername}
+                                placeholder="Seu nome..."
+                                style={styles.input}
+                              /&gt;
+                              &lt;FlatList
+                                data={sortedMessages}
+                                renderItem={({ item }) => (
+                                  &lt;MessageBubble 
+                                    message={item}
+                                    timestamp={new Date(item.timestamp).toLocaleTimeString()}
+                                  /&gt;
+                                )}
+                              /&gt;
+                            &lt;/View&gt;
+                          );
+                        }
+                        </code></pre>
+                        <div class="fragment fade-up">
+                            <p style="color: white;">🎯 Conceitos importantes:</p>
+                            <ul style="color: white;">
+                                <li>Gerenciamento de estado com useState</li>
+                                <li>Otimização com useMemo</li>
+                                <li>Formatação de data e hora</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Etapa 3: Interface do Chat -->
+            <section>
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">🎨 Etapa 3: Interface do Chat</h2>
+                    <div class="workshop-step">
+                        <p style="color: white;">Vamos criar uma interface amigável com:</p>
+                        <ul style="color: white; font-size: 1.1em;">
+                            <li class="fragment fade-right">📝 Campo para digitar mensagens</li>
+                            <li class="fragment fade-right">👤 Nome do usuário</li>
+                            <li class="fragment fade-right">💬 Lista de mensagens</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background-color="#2c3e50">
+                    <h3 style="color: white;">📱 Componente ChatScreen</h3>
+                    <pre><code class="language-jsx" data-trim data-line-numbers>
+                        import React, { useState } from 'react';
+                        import { View, FlatList } from 'react-native';
+                        import { TextInput, Button, Card, Title } from 'react-native-paper';
+
+                        export default function ChatScreen() {
+                          const [message, setMessage] = useState('');
+                          const [messages, setMessages] = useState([]);
+
+                          const sendMessage = () => {
+                            if (message.trim()) {
+                              // Vamos implementar isso na próxima etapa!
+                              setMessage('');
+                            }
+                          };
+
+                          return (
+                            &lt;View style={{ flex: 1, padding: 16 }}&gt;
+                              &lt;FlatList
+                                data={messages}
+                                renderItem={({ item }) => (
+                                  &lt;Card style={{ marginVertical: 4 }}&gt;
+                                    &lt;Card.Content&gt;
+                                      &lt;Title&gt;{item.user}&lt;/Title&gt;
+                                      &lt;Text&gt;{item.text}&lt;/Text&gt;
+                                    &lt;/Card.Content&gt;
+                                  &lt;/Card&gt;
+                                )}
+                              /&gt;
+                              &lt;View style={{ flexDirection: 'row', padding: 8 }}&gt;
+                                &lt;TextInput
+                                  value={message}
+                                  onChangeText={setMessage}
+                                  placeholder="Digite sua mensagem..."
+                                  style={{ flex: 1, marginRight: 8 }}
+                                /&gt;
+                                &lt;Button onPress={sendMessage}&gt;Enviar&lt;/Button&gt;
+                              &lt;/View&gt;
+                            &lt;/View&gt;
+                          );
+                        }
+                    </code></pre>
+                </section>
+
+                <!-- Mini Exercício 3 -->
+                <section data-background-color="#2c3e50" data-auto-animate>
+                    <h3 style="color: white;">🎯 Mini Desafio 3</h3>
+                    <div class="practical-exercise">
+                        <p style="color: white;">Implemente recursos extras:</p>
+                        <ol style="color: white;">
+                            <li>Indicador de "digitando..."</li>
+                            <li>Status de conexão</li>
+                            <li>Som ao receber mensagem</li>
+                        </ol>
+                        <div class="fragment fade-up">
+                            <p style="color: white;">💡 Dica: Use tópicos diferentes para cada funcionalidade!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Solução do Mini Desafio 3 -->
+                <section data-background-color="#2c3e50">
+                    <h3 style="color: white;">✨ Solução: Mini Desafio 3</h3>
+                    <div class="solution-box">
+                        <pre><code class="language-jsx" data-trim data-line-numbers>
+                        export default function ChatScreen() {
+                          const [isTyping, setIsTyping] = useState(false);
+                          const [whoIsTyping, setWhoIsTyping] = useState([]);
+                          const soundRef = useRef(new Audio('/message.mp3'));
+                          
+                          useEffect(() => {
+                            // Tópico para status de digitação
+                            client.subscribe('chat/sala1/typing');
+                            
+                            let typingTimeout;
+                            const onChangeText = (text) => {
+                              setMessage(text);
+                              // Avisar outros usuários que está digitando
+                              client.publish('chat/sala1/typing', JSON.stringify({
+                                user: username,
+                                typing: true
+                              }));
+                              
+                              // Limpar timeout anterior
+                              clearTimeout(typingTimeout);
+                              typingTimeout = setTimeout(() => {
+                                client.publish('chat/sala1/typing', JSON.stringify({
+                                  user: username,
+                                  typing: false
+                                }));
+                              }, 1000);
+                            };
+                            
+                            // Ouvir eventos de digitação
+                            client.onMessageArrived = (message) => {
+                              if (message.topic === 'chat/sala1/typing') {
+                                const data = JSON.parse(message.payloadString);
+                                if (data.typing) {
+                                  setWhoIsTyping(prev => [...new Set([...prev, data.user])]);
+                                } else {
+                                  setWhoIsTyping(prev => prev.filter(u => u !== data.user));
+                                }
+                              } else {
+                                // Tocar som ao receber mensagem
+                                soundRef.current.play();
+                                const messageData = JSON.parse(message.payloadString);
+                                setMessages(prev => [...prev, messageData]);
+                              }
+                            };
+                          }, []);
+                          
+                          return (
+                            &lt;View style={styles.container}&gt;
+                              {/* ...existing code... */}
+                              
+                              {whoIsTyping.length > 0 && (
+                                &lt;Text style={styles.typingIndicator}&gt;
+                                  {whoIsTyping.join(', ')} {whoIsTyping.length === 1 ? 'está' : 'estão'} digitando...
+                                &lt;/Text&gt;
+                              )}
+                              
+                              {/* Status de conexão */}
+                              &lt;View style={styles.statusBar}&gt;
+                                &lt;View style={[
+                                  styles.statusDot,
+                                  { backgroundColor: connected ? '#2ecc71' : '#e74c3c' }
+                                ]} /&gt;
+                                &lt;Text style={styles.statusText}&gt;
+                                  {connected ? 'Conectado' : 'Desconectado'}
+                                &lt;/Text&gt;
+                              &lt;/View&gt;
+                            &lt;/View&gt;
+                          );
+                        }
+
+                        const styles = StyleSheet.create({
+                          typingIndicator: {
+                            fontSize: 12,
+                            color: '#666',
+                            fontStyle: 'italic',
+                            marginBottom: 8
+                          },
+                          statusBar: {
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 8,
+                            backgroundColor: 'rgba(0,0,0,0.1)',
+                            borderRadius: 4
+                          },
+                          statusDot: {
+                            width: 8,
+                            height: 8,
+                            borderRadius: 4,
+                            marginRight: 6
+                          },
+                          statusText: {
+                            fontSize: 12,
+                            color: '#666'
+                          }
+                        });
+                        </code></pre>
+                        <div class="fragment fade-up">
+                            <p style="color: white;">🔍 Conceitos aplicados:</p>
+                            <ul style="color: white;">
+                                <li>Múltiplos tópicos MQTT para diferentes funcionalidades</li>
+                                <li>Gestão de timeouts para status de digitação</li>
+                                <li>Reprodução de áudio em React Native</li>
+                                <li>Feedback visual de status de conexão</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Demonstração ao Vivo -->
+                <section data-background-color="#2c3e50">
+                    <h3 style="color: white;">🎮 Demonstração Interativa</h3>
+                    <div class="demo-container">
+                        <div class="chat-demo">
+                            <div class="typing-indicator"></div>
+                            <div class="messages-container"></div>
+                            <div class="input-container">
+                                <input type="text" placeholder="Digite sua mensagem..." />
+                                <button class="send-button">Enviar</button>
+                            </div>
+                            <div class="connection-status">
+                                <span class="status-dot"></span>
+                                <span class="status-text">Conectado</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Etapa 4: Implementação MQTT -->
+            <section>
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">🔌 Etapa 4: Conectando ao MQTT</h2>
+                    <div class="workshop-step">
+                        <p style="color: white;">Vamos implementar:</p>
+                        <ul style="color: white; font-size: 1.1em;">
+                            <li class="fragment fade-right">🔗 Conexão com o broker</li>
+                            <li class="fragment fade-right">📤 Envio de mensagens</li>
+                            <li class="fragment fade-right">📥 Recebimento de mensagens</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background-color="#2c3e50">
+                    <h3 style="color: white;">🔗 Configurando o MQTT</h3>
+                    <pre><code class="language-javascript" data-trim data-line-numbers>
+                        // services/mqtt.js
+                        import init from 'react_native_mqtt';
+                        import AsyncStorage from '@react-native-async-storage/async-storage';
+
+                        init({
+                          size: 10000,
+                          storageBackend: AsyncStorage,
+                          defaultExpires: 1000 * 3600 * 24,
+                          enableCache: true,
+                        });
+
+                        const options = {
+                          host: 'test.mosquitto.org',
+                          port: 8081,
+                          path: '/mqtt',
+                          protocol: 'ws',
+                        };
+
+                        export const client = new Paho.MQTT.Client(
+                          options.host,
+                          options.port,
+                          options.path,
+                          `mqtt_${Math.random().toString(16).slice(2, 8)}`
+                        );
+
+                        export const connectClient = () => {
+                          return new Promise((resolve, reject) => {
+                            client.connect({
+                              onSuccess: () => resolve(),
+                              onFailure: (err) => reject(err),
+                              useSSL: true,
+                            });
+                          });
+                        };
+                    </code></pre>
+                </section>
+
+                <section data-background-color="#2c3e50">
+                    <h3 style="color: white;">📱 Integrando MQTT no Chat</h3>
+                    <pre><code class="language-jsx" data-trim data-line-numbers>
+                        // Importações adicionais no ChatScreen
+                        import { client, connectClient } from '../services/mqtt';
+                        
+                        export default function ChatScreen() {
+                          // ...estados existentes...
+                          const [connected, setConnected] = useState(false);
+                          
+                          useEffect(() => {
+                            // Conectar ao MQTT quando o componente montar
+                            connectClient()
+                              .then(() => {
+                                setConnected(true);
+                                // Inscrever no tópico do chat
+                                client.subscribe('chat/sala1');
+                                
+                                // Configurar receptor de mensagens
+                                client.onMessageArrived = (message) => {
+                                  const messageData = JSON.parse(message.payloadString);
+                                  setMessages(prev => [...prev, messageData]);
+                                };
+                              })
+                              .catch(console.error);
+                              
+                            // Limpar quando o componente desmontar
+                            return () => {
+                              if (client.isConnected()) {
+                                client.disconnect();
+                              }
+                            };
+                          }, []);
+                          
+                          const sendMessage = () => {
+                            if (message.trim() && connected) {
+                              const messageData = {
+                                user: 'Usuário',
+                                text: message,
+                                timestamp: new Date().toISOString()
+                              };
+                              
+                              client.publish('chat/sala1', 
+                                JSON.stringify(messageData)
+                              );
+                              
+                              setMessage('');
+                            }
+                          };
+                          
+                          // ...resto do componente...
+                        }
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Etapa 5: Testando em Tempo Real -->
+            <section>
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">🧪 Etapa 5: Hora do Teste!</h2>
+                    <div class="workshop-step">
+                        <p style="color: white;">Vamos testar nosso chat:</p>
+                        <ul style="color: white; font-size: 1.1em;">
+                            <li class="fragment fade-right">1. Abra em dois dispositivos</li>
+                            <li class="fragment fade-right">2. Envie mensagens</li>
+                            <li class="fragment fade-right">3. Veja a mágica acontecer! ✨</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">🎯 Desafios Extra!</h2>
+                    <div class="challenge-box">
+                        <p style="color: white;">Tente implementar:</p>
+                        <ul style="color: white; font-size: 1.1em;">
+                            <li class="fragment fade-right">👤 Nome de usuário personalizável</li>
+                            <li class="fragment fade-right">🕒 Indicador "Digitando..."</li>
+                            <li class="fragment fade-right">📲 Notificações push</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Exemplos de Uso Real -->
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">🌟 Casos de Uso no Mundo Real</h2>
+                    <div class="workshop-step">
+                        <ul style="color: white; font-size: 1.1em;">
+                            <li class="fragment fade-right">📱 Apps de Delivery</li>
+                            <li class="fragment fade-right">🚗 Rastreamento de Veículos</li>
+                            <li class="fragment fade-right">🏠 Casa Inteligente</li>
+                            <li class="fragment fade-right">📊 Monitoramento Industrial</li>
+                        </ul>
+                        <div class="fragment fade-up">
+                            <p style="color: white; font-style: italic; margin-top: 20px;">
+                                "MQTT é usado por grandes empresas como Facebook Messenger!"
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Dicas para Produção -->
+                <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
+                    <h2 style="color: white;">🚀 Dicas para Produção</h2>
+                    <div class="workshop-step">
+                        <ul style="color: white; font-size: 1.1em;">
+                            <li class="fragment fade-right">🔒 Use SSL/TLS para segurança</li>
+                            <li class="fragment fade-right">📊 Implemente retry com backoff</li>
+                            <li class="fragment fade-right">💾 Armazene mensagens offline</li>
+                            <li class="fragment fade-right">🔋 Otimize uso de bateria</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Seção de Teste ao Vivo -->
+                <section data-background-color="#2c3e50">
+                    <h3 style="color: white;">💻 Teste ao Vivo</h3>
+                    <div id="live-chat" class="live-chat">
+                        <div id="chat-messages" class="chat-messages">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="message-input" class="message-input" placeholder="Digite sua mensagem...">
+                            <button onclick="sendTestMessage()" class="send-button">Enviar</button>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Conclusão -->
+            <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <h2 style="color: white;">🎉 Parabéns!</h2>
+                <div class="workshop-step">
+                    <p style="color: white; font-size: 1.2em;">Você construiu um chat em tempo real!</p>
+                    <ul style="color: white; font-size: 1.1em;">
+                        <li class="fragment fade-right">✅ Aprendeu sobre MQTT</li>
+                        <li class="fragment fade-right">✅ Criou uma interface em React Native</li>
+                        <li class="fragment fade-right">✅ Implementou comunicação em tempo real</li>
+                    </ul>
+                    <div class="fragment fade-up">
+                        <p style="color: white; font-size: 1.2em; margin-top: 20px;">
+                            🚀 Próximos passos:
+                        </p>
+                        <ul style="color: white; font-size: 1.1em;">
+                            <li>📱 Adicione mais funcionalidades</li>
+                            <li>🔒 Implemente autenticação</li>
+                            <li>📦 Publique na Play Store/App Store</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Adicione o script para o chat de teste -->
+            <script>
+                function sendTestMessage() {
+                    const input = document.getElementById('message-input');
+                    const message = input.value.trim();
+                    if (message) {
+                        const messageData = {
+                            user: 'Teste_' + Math.floor(Math.random() * 100),
+                            text: message,
+                            timestamp: new Date().toISOString()
+                        };
+                        client.publish('workshop/chat-test', JSON.stringify(messageData));
+                        input.value = '';
+                    }
+                }
+
+                const client = mqtt.connect('wss://test.mosquitto.org:8081', {
+                    reconnectPeriod: 1000,
+                    connectTimeout: 5000
+                });
+
+                let reconnectCount = 0;
+                const MAX_RECONNECT = 3;
+
+                client.on('connect', () => {
+                    const terminal = document.getElementById("terminal");
+                    terminal.innerHTML += '<span style="color: #2ecc71">✅ Conectado ao MQTT Broker</span>\n';
+                    client.subscribe('workshop/em-sala');
+                    reconnectCount = 0;
+                });
+
+                client.on('error', (error) => {
+                    const terminal = document.getElementById("terminal");
+                    terminal.innerHTML += `<span style="color: #e74c3c">❌ Erro: ${error.message}</span>\n`;
+                });
+
+                client.on('reconnect', () => {
+                    reconnectCount++;
+                    const terminal = document.getElementById("terminal");
+                    if (reconnectCount <= MAX_RECONNECT) {
+                        terminal.innerHTML += `<span style="color: #f1c40f">🔄 Tentando reconectar (${reconnectCount}/${MAX_RECONNECT})...</span>\n`;
+                    } else {
+                        terminal.innerHTML += '<span style="color: #e74c3c">❌ Máximo de tentativas atingido. Por favor, recarregue a página.</span>\n';
+                    }
+                });
+
+                client.on('message', (topic, message) => {
+                    const terminal = document.getElementById("terminal");
+                    const messageData = JSON.parse(message.toString());
+                    terminal.innerHTML += `<span style="color: #3498db">📩 ${messageData.user}: ${messageData.text}</span>\n`;
+                    terminal.scrollTop = terminal.scrollHeight;
+                });
+
+                function sendMessage() {
+                    const terminal = document.getElementById("terminal");
+                    const messageInput = document.getElementById('message-input');
+                    const message = messageInput.value.trim();
+                    
+                    if (message && client.connected) {
+                        const messageData = {
+                            user: `Aluno_${Math.floor(Math.random() * 100)}`,
+                            text: message,
+                            timestamp: new Date().toISOString()
+                        };
+                        
+                        client.publish('workshop/em-sala', JSON.stringify(messageData));
+                        terminal.innerHTML += `<span style="color: #2ecc71">📤 Mensagem enviada!</span>\n`;
+                        messageInput.value = '';
+                    } else if (!client.connected) {
+                        terminal.innerHTML += '<span style="color: #e74c3c">❌ Não conectado ao broker. Aguarde...</span>\n';
+                    }
+                    
+                    terminal.scrollTop = terminal.scrollHeight;
+                }
+
+                document.getElementById('message-input')?.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        sendMessage();
+                    }
+                });
+
+                client.subscribe('workshop/chat-test');
+
+                function logTerminal(texto, type = 'default') {
+                    const terminal = document.getElementById("terminal");
+                    const messageClass = type === 'success' ? 'status-success' : 
+                                       type === 'error' ? 'status-error' :
+                                       type === 'warning' ? 'status-warning' : '';
+                    
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `status-message ${messageClass} message-animation`;
+                    messageDiv.innerHTML = texto;
+                    terminal.appendChild(messageDiv);
+                    terminal.scrollTop = terminal.scrollHeight;
+                }
+            </script>
+        </div>
+    </div>
+
+    <!-- Scripts Reveal.js -->
+    <script src="./dist/reveal.js"></script>
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+
+    <script src="./aula04-materials/script.js"></script>
+
+    <script>
+
+        Reveal.initialize({
+
+            center: false,
+            controls: true,
+            progress: true,
+
+            slideNumber: true,
+            history: true,
+            transition: 'convex',
+            plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
+            markdown: {
+                smartypants: true,
+            }
+        });
+
+    </script>
+</body>
+
+</html>

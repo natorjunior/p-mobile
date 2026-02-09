@@ -10,5 +10,10 @@
   {
     "titulo": "Aula 10 - Armazenamento Local com SQLite e AsyncStorage",
     "link": "./2025.2/aula10.html"
+  },
+  {
+    "titulo": "Aula 11 - projeto biblioteca de livros",
+    "link": "./2025.2/aula11-projeto.html"
   }
+
 ]

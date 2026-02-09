@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 14 - iOS com Swift (Fundamentos)</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+
+  <style>
+    :root {
+      --swift-orange: #F05138;
+      --ios-blue: #007AFF;
+      --ios-dark: #1C1C1E;
+      --ios-gray: #8E8E93;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3 {
+      color: var(--swift-orange);
+    }
+
+    .reveal pre code {
+      font-size: 0.85em;
+      background: var(--ios-dark);
+      border-radius: 12px;
+      padding: 16px;
+      max-height: 450px;
+    }
+
+    .reveal .slides section {
+      padding: 20px;
+    }
+
+    .emoji-large {
+      font-size: 3em;
+      margin: 10px;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #F05138, #FF6F61);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+    }
+
+    .info-box {
+      background: #E8F4FD;
+      border-left: 4px solid var(--ios-blue);
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .warning-box {
+      background: #FFF3CD;
+      border-left: 4px solid #FFC107;
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .compare-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px solid #e9ecef;
+    }
+
+    .compare-card h4 {
+      margin-top: 0;
+      color: var(--ios-blue);
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .step {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--ios-blue);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .step.inactive {
+      background: #ccc;
+    }
+
+    .feature-list {
+      text-align: left;
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      padding: 8px 0;
+      padding-left: 30px;
+      position: relative;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #34C759;
+      font-weight: bold;
+    }
+
+    .quiz-option {
+      background: #f0f0f0;
+      padding: 12px 20px;
+      margin: 8px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+    }
+
+    .quiz-option:hover {
+      background: #e0e0e0;
+      transform: translateX(5px);
+    }
+
+    .code-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .code-comparison pre {
+      margin: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7em;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    .badge-swift { background: #F05138; color: white; }
+    .badge-swiftui { background: #007AFF; color: white; }
+    .badge-uikit { background: #5856D6; color: white; }
+
+    .phone-mockup {
+      background: linear-gradient(180deg, #1C1C1E 0%, #2C2C2E 100%);
+      border-radius: 30px;
+      padding: 10px;
+      max-width: 280px;
+      margin: 0 auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .phone-screen {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      min-height: 200px;
+    }
+
+    .timeline {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 0;
+    }
+
+    .timeline-item {
+      text-align: center;
+      flex: 1;
+    }
+
+    .timeline-year {
+      background: var(--swift-orange);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    table.styled {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table.styled th,
+    table.styled td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table.styled th {
+      background: var(--ios-blue);
+      color: white;
+    }
+
+    table.styled tr:hover {
+      background: #f5f5f5;
+    }
+
+    .mini-exercise {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 25px;
+      border-radius: 16px;
+      margin: 20px 0;
+    }
+
+    .mini-exercise h4 {
+      margin-top: 0;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ==================== SEÇÃO 1: INTRODUÇÃO ==================== -->
+      
+      <!-- Título -->
+      <section data-background-gradient="linear-gradient(135deg, #1C1C1E 0%, #F05138 100%)">
+        <br><br>
+        <h4 style="color: white;">Programação para Dispositivos Móveis</h4>
+        <p style="color: rgba(255,255,255,0.8); font-size: .5em; font-weight: 300;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h2 style="color: white;">Aula 14 - iOS com Swift</h2>
+        <div class="emoji-large">🍎</div>
+        <p style="color: rgba(255,255,255,0.9); font-size: 0.6em;">
+          Fundamentos • SwiftUI • UIKit • Projeto Prático
+        </p>
+      </section>
+
+      <!-- Agenda da Aula -->
+      <section>
+        <h3>📋 O que vamos aprender hoje?</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+          <div class="fragment" data-fragment-index="1">
+            <div class="compare-card">
+              <h4>🎯 Parte 1</h4>
+              <ul class="feature-list">
+                <li>Ecossistema Apple</li>
+                <li>Fundamentos do Swift</li>
+                <li>Variáveis e Tipos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="fragment" data-fragment-index="2">
+            <div class="compare-card">
+              <h4>🎯 Parte 2</h4>
+              <ul class="feature-list">
+                <li>Structs vs Classes</li>
+                <li>Optionals</li>
+                <li>Funções e Closures</li>
+              </ul>
+            </div>
+          </div>
+          <div class="fragment" data-fragment-index="3">
+            <div class="compare-card">
+              <h4>🎯 Parte 3</h4>
+              <ul class="feature-list">
+                <li>Introdução ao SwiftUI</li>
+                <li>State e Binding</li>
+                <li>Componentes de UI</li>
+              </ul>
+            </div>
+          </div>
+          <div class="fragment" data-fragment-index="4">
+            <div class="compare-card">
+              <h4>🎯 Parte 4</h4>
+              <ul class="feature-list">
+                <li>UIKit (alternativa)</li>
+                <li>Projeto: Lista de Tarefas</li>
+                <li>Exercícios Práticos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Por que iOS? -->
+      <section>
+        <h3>🚀 Por que desenvolver para iOS?</h3>
+        <div class="compare-grid">
+          <div class="fragment">
+            <div class="highlight-box">
+              <h4 style="margin-top: 0;">💰 Mercado Lucrativo</h4>
+              <p style="font-size: 0.8em;">Usuários iOS gastam 2x mais em apps que usuários Android</p>
+            </div>
+          </div>
+          <div class="fragment">
+            <div class="highlight-box">
+              <h4 style="margin-top: 0;">🎯 Menos Fragmentação</h4>
+              <p style="font-size: 0.8em;">Poucos dispositivos = testes mais simples</p>
+            </div>
+          </div>
+          <div class="fragment">
+            <div class="highlight-box">
+              <h4 style="margin-top: 0;">🛡️ Segurança</h4>
+              <p style="font-size: 0.8em;">App Store rigorosa = mais confiança dos usuários</p>
+            </div>
+          </div>
+          <div class="fragment">
+            <div class="highlight-box">
+              <h4 style="margin-top: 0;">⚡ Swift Moderno</h4>
+              <p style="font-size: 0.8em;">Linguagem segura, rápida e expressiva</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ecossistema Apple -->
+      <section>
+        <h3>🍏 Ecossistema de Desenvolvimento Apple</h3>
+        <div class="timeline">
+          <div class="timeline-item fragment">
+            <span class="timeline-year">Xcode</span>
+            <p style="font-size: 0.7em;">IDE oficial da Apple</p>
+          </div>
+          <div class="timeline-item fragment">
+            <span class="timeline-year">Swift</span>
+            <p style="font-size: 0.7em;">Linguagem moderna</p>
+          </div>
+          <div class="timeline-item fragment">
+            <span class="timeline-year">SwiftUI</span>
+            <p style="font-size: 0.7em;">Framework declarativo</p>
+          </div>
+          <div class="timeline-item fragment">
+            <span class="timeline-year">UIKit</span>
+            <p style="font-size: 0.7em;">Framework imperativo</p>
+          </div>
+        </div>
+        <div class="info-box fragment">
+          <strong>💡 Dica:</strong> SwiftUI é o futuro, mas UIKit ainda é muito usado em apps legados e em funcionalidades avançadas.
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO 2: FUNDAMENTOS SWIFT ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #F05138, #FF6F61)">
+        <h2 style="color: white;">Parte 1</h2>
+        <h1 style="color: white;">Fundamentos do Swift</h1>
+        <p style="color: rgba(255,255,255,0.9);">Variáveis • Tipos • Coleções</p>
+      </section>
+
+      <!-- Variáveis: var vs let -->
+      <section>
+        <h3>📦 Variáveis: <code>var</code> vs <code>let</code></h3>
+        <div class="code-comparison">
+          <div>
+            <span class="badge badge-swift">var - Mutável</span>
+            <pre><code class="swift" data-trim data-noescape>
+// Pode ser alterada
+var nome = "Maria"
+nome = "Maria Silva"  // ✅ OK
+
+var idade = 25
+idade = 26           // ✅ OK
+            </code></pre>
+          </div>
+          <div>
+            <span class="badge badge-swift">let - Imutável</span>
+            <pre><code class="swift" data-trim data-noescape>
+// NÃO pode ser alterada
+let pi = 3.14159
+pi = 3.14  // ❌ ERRO!
+
+let cpf = "123.456.789-00"
+cpf = "000"  // ❌ ERRO!
+            </code></pre>
+          </div>
+        </div>
+        <div class="warning-box fragment">
+          <strong>⚠️ Regra de ouro:</strong> Sempre use <code>let</code> por padrão. Use <code>var</code> apenas quando realmente precisar alterar o valor.
+        </div>
+      </section>
+
+      <!-- Type Inference e Type Annotation -->
+      <section>
+        <h3>🏷️ Tipos em Swift</h3>
+        <pre><code class="swift" data-trim data-noescape>
+// 📌 Type Inference (Swift deduz o tipo automaticamente)
+let nome = "João"           // String
+let idade = 30              // Int
+let altura = 1.75           // Double
+let ativo = true            // Bool
+
+// 📌 Type Annotation (você define o tipo explicitamente)
+let peso: Double = 70       // Explicitamente Double
+let codigo: String = "A001"
+let quantidade: Int = 100
+
+// 📌 Conversão de tipos
+let numero = 42
+let texto = String(numero)  // "42"
+let decimal = Double(numero) // 42.0
+        </code></pre>
+        <div class="fragment">
+          <table class="styled" style="font-size: 0.7em;">
+            <tr>
+              <th>Tipo</th><th>Exemplo</th><th>Descrição</th>
+            </tr>
+            <tr><td>Int</td><td>42, -10</td><td>Números inteiros</td></tr>
+            <tr><td>Double</td><td>3.14, -0.5</td><td>Números decimais</td></tr>
+            <tr><td>String</td><td>"Olá"</td><td>Texto</td></tr>
+            <tr><td>Bool</td><td>true, false</td><td>Verdadeiro/Falso</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <!-- String Interpolation -->
+      <section>
+        <h3>📝 String Interpolation</h3>
+        <pre><code class="swift" data-trim data-noescape>
+let nome = "Ana"
+let idade = 22
+let curso = "ADS"
+
+// 🎯 Interpolação com \()
+let mensagem = "Olá, meu nome é \(nome)"
+print(mensagem)  // "Olá, meu nome é Ana"
+
+// 🎯 Expressões dentro da interpolação
+let apresentacao = "\(nome) tem \(idade) anos e estuda \(curso)"
+print(apresentacao)  // "Ana tem 22 anos e estuda ADS"
+
+// 🎯 Cálculos inline
+let nascimento = 2026 - idade
+print("\(nome) nasceu em \(nascimento)")  // "Ana nasceu em 2004"
+
+// 🎯 Strings multilinhas
+let bio = """
+Nome: \(nome)
+Idade: \(idade)
+Curso: \(curso)
+"""
+        </code></pre>
+      </section>
+
+      <!-- Coleções: Arrays -->
+      <section>
+        <h3>📚 Arrays (Listas)</h3>
+        <pre><code class="swift" data-trim data-noescape>
+// 📌 Criando arrays
+var frutas = ["🍎", "🍊", "🍋"]
+let numeros: [Int] = [1, 2, 3, 4, 5]
+var listaVazia: [String] = []
+
+// 📌 Acessando elementos
+print(frutas[0])        // "🍎"
+print(frutas.first)     // Optional("🍎")
+print(frutas.last)      // Optional("🍋")
+
+// 📌 Modificando
+frutas.append("🍇")           // Adiciona ao final
+frutas.insert("🍓", at: 1)    // Insere na posição 1
+frutas.remove(at: 0)          // Remove primeiro
+frutas[0] = "🥝"              // Altera elemento
+
+// 📌 Propriedades úteis
+print(frutas.count)      // Quantidade de elementos
+print(frutas.isEmpty)    // true se vazio
+print(frutas.contains("🍎"))  // true se contém
+        </code></pre>
+      </section>
+
+      <!-- Coleções: Dictionaries -->
+      <section>
+        <h3>📖 Dicionários</h3>
+        <pre><code class="swift" data-trim data-noescape>
+// 📌 Criando dicionários
+var aluno: [String: Any] = [
+    "nome": "Carlos",
+    "idade": 20,
+    "ativo": true
+]
+
+var notas: [String: Double] = [
+    "Prova 1": 8.5,
+    "Prova 2": 9.0,
+    "Trabalho": 10.0
+]
+
+// 📌 Acessando valores
+print(aluno["nome"])     // Optional("Carlos")
+print(notas["Prova 1"])  // Optional(8.5)
+
+// 📌 Modificando
+aluno["email"] = "carlos@email.com"  // Adiciona
+notas["Prova 1"] = 9.5               // Atualiza
+notas["Prova 3"] = nil               // Remove
+
+// 📌 Iterando
+for (chave, valor) in notas {
+    print("\(chave): \(valor)")
+}
+        </code></pre>
+      </section>
+
+      <!-- Quiz Interativo 1 -->
+      <section>
+        <h3>🧠 Quiz Rápido!</h3>
+        <p>Qual é a saída deste código?</p>
+        <pre><code class="swift" data-trim>
+let x = 10
+var y = x
+y = 20
+print(x)
+        </code></pre>
+        <div class="fragment">
+          <div class="quiz-option" style="background: #d4edda;">✅ <strong>10</strong> - Tipos básicos são copiados por valor!</div>
+        </div>
+        <div class="fragment">
+          <div class="info-box">
+            <strong>Explicação:</strong> Em Swift, tipos básicos (Int, String, Bool, etc.) são <em>value types</em>. 
+            Quando você faz <code>var y = x</code>, uma cópia independente é criada.
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO 3: STRUCTS E CLASSES ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #007AFF, #5856D6)">
+        <h2 style="color: white;">Parte 2</h2>
+        <h1 style="color: white;">Structs e Classes</h1>
+        <p style="color: rgba(255,255,255,0.9);">Modelando dados no Swift</p>
+      </section>
+
+      <!-- Struct -->
+      <section>
+        <h3>📦 Structs (Estruturas)</h3>
+        <pre><code class="swift" data-trim data-noescape>
+// 📌 Definindo uma struct
+struct Aluno {
+    var nome: String
+    var idade: Int
+    var curso: String
+    
+    // Método
+    func apresentar() -> String {
+        return "Sou \(nome), tenho \(idade) anos"
+    }
+    
+    // Método que modifica (precisa de mutating)
+    mutating func fazerAniversario() {
+        idade += 1
+    }
+}
+
+// 📌 Usando a struct
+var joao = Aluno(nome: "João", idade: 20, curso: "ADS")
+print(joao.apresentar())  // "Sou João, tenho 20 anos"
+
+joao.fazerAniversario()
+print(joao.idade)  // 21
+        </code></pre>
+        <div class="info-box fragment">
+          <strong>💡 Structs são VALUE TYPES:</strong> São copiadas quando atribuídas a outra variável.
+        </div>
+      </section>
+
+      <!-- Classes -->
+      <section>
+        <h3>🏛️ Classes</h3>
+        <pre><code class="swift" data-trim data-noescape>
+// 📌 Definindo uma classe
+class Professor {
+    var nome: String
+    var disciplina: String
+    
+    // Inicializador obrigatório
+    init(nome: String, disciplina: String) {
+        self.nome = nome
+        self.disciplina = disciplina
+    }
+    
+    func apresentar() -> String {
+        return "Prof. \(nome) - \(disciplina)"
+    }
+    
+    // Deinicializador (quando objeto é destruído)
+    deinit {
+        print("\(nome) foi removido da memória")
+    }
+}
+
+// 📌 Usando a classe
+let maria = Professor(nome: "Maria", disciplina: "iOS")
+print(maria.apresentar())
+        </code></pre>
+        <div class="warning-box fragment">
+          <strong>⚠️ Classes são REFERENCE TYPES:</strong> Variáveis apontam para o mesmo objeto na memória.
+        </div>
+      </section>
+
+      <!-- Struct vs Class Comparação -->
+      <section>
+        <h3>⚖️ Struct vs Class</h3>
+        <div class="compare-grid">
+          <div class="compare-card">
+            <h4>📦 Struct</h4>
+            <ul class="feature-list" style="font-size: 0.8em;">
+              <li>Value Type (copiado)</li>
+              <li>Inicializador automático</li>
+              <li>Sem herança</li>
+              <li>Mais rápido e seguro</li>
+              <li>Ideal para dados simples</li>
+            </ul>
+            <pre><code class="swift" data-trim style="font-size: 0.75em;">
+var a = Aluno(nome: "A", idade: 20)
+var b = a  // Cópia!
+b.nome = "B"
+print(a.nome)  // "A" ✅
+            </code></pre>
+          </div>
+          <div class="compare-card">
+            <h4>🏛️ Class</h4>
+            <ul class="feature-list" style="font-size: 0.8em;">
+              <li>Reference Type (referência)</li>
+              <li>Precisa de init()</li>
+              <li>Suporta herança</li>
+              <li>Tem deinit</li>
+              <li>Ideal para objetos complexos</li>
+            </ul>
+            <pre><code class="swift" data-trim style="font-size: 0.75em;">
+var a = Professor(nome: "A", disc: "iOS")
+var b = a  // Mesma referência!
+b.nome = "B"
+print(a.nome)  // "B" ⚠️
+            </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Optionals -->
+      <section>
+        <h3>❓ Optionals - O poder do nil seguro</h3>
+        <pre><code class="swift" data-trim data-noescape>
+// 📌 Optional = pode ter valor OU ser nil
+var email: String? = nil       // Não tem valor ainda
+var telefone: String? = "123"  // Tem valor
+
+// 📌 Unwrapping seguro com if let
+if let emailValido = email {
+    print("Email: \(emailValido)")
+} else {
+    print("Email não informado")
+}
+
+// 📌 Guard let (saída antecipada)
+func enviarEmail(para email: String?) {
+    guard let emailValido = email else {
+        print("Email inválido!")
+        return
+    }
+    print("Enviando para \(emailValido)")
+}
+
+// 📌 Nil coalescing (??)
+let nome: String? = nil
+let saudacao = "Olá, \(nome ?? "Visitante")"  // "Olá, Visitante"
+        </code></pre>
+      </section>
+
+      <!-- Optional Chaining -->
+      <section>
+        <h3>🔗 Optional Chaining</h3>
+        <pre><code class="swift" data-trim data-noescape>
+struct Endereco {
+    var rua: String
+    var numero: Int
+}
+
+struct Pessoa {
+    var nome: String
+    var endereco: Endereco?  // Pode não ter endereço
+}
+
+let joao = Pessoa(nome: "João", endereco: nil)
+let maria = Pessoa(
+    nome: "Maria", 
+    endereco: Endereco(rua: "Av. Brasil", numero: 100)
+)
+
+// 📌 Optional chaining com ?
+print(joao.endereco?.rua)   // nil (não causa erro!)
+print(maria.endereco?.rua)  // Optional("Av. Brasil")
+
+// 📌 Combinando com ?? 
+let ruaJoao = joao.endereco?.rua ?? "Não informado"
+print(ruaJoao)  // "Não informado"
+        </code></pre>
+        <div class="info-box fragment">
+          <strong>💡 Optionals previnem crashes!</strong> Ao invés de acessar nil e crashar, Swift te obriga a tratar o caso.
+        </div>
+      </section>
+
+      <!-- Funções -->
+      <section>
+        <h3>⚡ Funções em Swift</h3>
+        <pre><code class="swift" data-trim data-noescape>
+// 📌 Função simples
+func saudacao() {
+    print("Olá!")
+}
+
+// 📌 Com parâmetros e retorno
+func soma(a: Int, b: Int) -> Int {
+    return a + b
+}
+let resultado = soma(a: 5, b: 3)  // 8
+
+// 📌 Parâmetros nomeados (argument labels)
+func cumprimentar(pessoa nome: String, de cidade: String) {
+    print("Olá \(nome) de \(cidade)!")
+}
+cumprimentar(pessoa: "Ana", de: "Recife")
+
+// 📌 Valores padrão
+func exibir(mensagem: String, vezes: Int = 1) {
+    for _ in 1...vezes {
+        print(mensagem)
+    }
+}
+exibir(mensagem: "Oi")         // 1 vez
+exibir(mensagem: "Oi", vezes: 3)  // 3 vezes
+        </code></pre>
+      </section>
+
+      <!-- Closures -->
+      <section>
+        <h3>🎁 Closures (Funções Anônimas)</h3>
+        <pre><code class="swift" data-trim data-noescape>
+// 📌 Closure básica
+let saudacao = { (nome: String) -> String in
+    return "Olá, \(nome)!"
+}
+print(saudacao("João"))  // "Olá, João!"
+
+// 📌 Closure como parâmetro (muito usado em SwiftUI!)
+let numeros = [3, 1, 4, 1, 5, 9, 2, 6]
+
+// Ordenar com closure
+let ordenados = numeros.sorted { $0 < $1 }
+print(ordenados)  // [1, 1, 2, 3, 4, 5, 6, 9]
+
+// Map, Filter, Reduce
+let dobrados = numeros.map { $0 * 2 }           // [6, 2, 8, ...]
+let pares = numeros.filter { $0 % 2 == 0 }      // [4, 2, 6]
+let soma = numeros.reduce(0) { $0 + $1 }        // 31
+
+// 📌 Trailing closure syntax
+DispatchQueue.main.async {
+    print("Executando na main thread")
+}
+        </code></pre>
+      </section>
+
+      <!-- Mini Exercício -->
+      <section>
+        <div class="mini-exercise">
+          <h4>🏋️ Mini Exercício</h4>
+          <p>Crie uma struct <code>Produto</code> com:</p>
+          <ul style="text-align: left; font-size: 0.9em;">
+            <li><code>nome: String</code></li>
+            <li><code>preco: Double</code></li>
+            <li><code>quantidade: Int</code></li>
+            <li>Método <code>valorTotal()</code> que retorna preço × quantidade</li>
+          </ul>
+        </div>
+        <div class="fragment">
+          <pre><code class="swift" data-trim data-noescape>
+struct Produto {
+    var nome: String
+    var preco: Double
+    var quantidade: Int
+    
+    func valorTotal() -> Double {
+        return preco * Double(quantidade)
+    }
+}
+
+let notebook = Produto(nome: "MacBook", preco: 12000, quantidade: 2)
+print(notebook.valorTotal())  // 24000.0
+          </code></pre>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO 4: SWIFTUI ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #34C759, #30D158)">
+        <h2 style="color: white;">Parte 3</h2>
+        <h1 style="color: white;">SwiftUI</h1>
+        <p style="color: rgba(255,255,255,0.9);">Interfaces declarativas e modernas</p>
+      </section>
+
+      <!-- O que é SwiftUI -->
+      <section>
+        <h3>✨ O que é SwiftUI?</h3>
+        <div class="compare-grid">
+          <div>
+            <div class="highlight-box" style="background: linear-gradient(135deg, #34C759, #30D158);">
+              <h4 style="margin-top: 0;">Declarativo</h4>
+              <p style="font-size: 0.8em;">Você descreve <strong>O QUE</strong> quer ver, não COMO construir</p>
+            </div>
+            <div class="highlight-box" style="background: linear-gradient(135deg, #007AFF, #5AC8FA);">
+              <h4 style="margin-top: 0;">Reativo</h4>
+              <p style="font-size: 0.8em;">UI atualiza automaticamente quando dados mudam</p>
+            </div>
+          </div>
+          <div>
+            <div class="phone-mockup">
+              <div class="phone-screen" style="text-align: center;">
+                <h4 style="margin: 0;">👋 Olá!</h4>
+                <input type="text" placeholder="Seu nome" style="margin: 10px; padding: 8px; border-radius: 8px; border: 1px solid #ccc;">
+                <br>
+                <button style="background: #007AFF; color: white; border: none; padding: 10px 20px; border-radius: 8px;">Enviar</button>
+              </div>
+            </div>
+            <p style="font-size: 0.6em; color: #666;">Preview em tempo real no Xcode</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Primeira View -->
+      <section>
+        <h3>🎨 Sua Primeira View</h3>
+        <pre><code class="swift" data-trim data-noescape>
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Text("Olá, SwiftUI! 👋")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.blue)
+            
+            Text("Bem-vindo ao desenvolvimento iOS")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+        }
+        .padding()
+    }
+}
+
+// Preview para o Canvas do Xcode
+#Preview {
+    ContentView()
+}
+        </code></pre>
+        <div class="info-box fragment">
+          <strong>💡 Cada View é uma struct</strong> que implementa o protocolo <code>View</code> e tem uma propriedade <code>body</code>.
+        </div>
+      </section>
+
+      <!-- Componentes Básicos -->
+      <section>
+        <h3>🧩 Componentes Básicos do SwiftUI</h3>
+        <div class="compare-grid" style="font-size: 0.85em;">
+          <div>
+            <pre><code class="swift" data-trim data-noescape>
+// 📝 Textos
+Text("Título")
+    .font(.title)
+    .bold()
+
+Text("Subtítulo")
+    .font(.caption)
+    .foregroundColor(.secondary)
+
+// 🖼️ Imagens
+Image(systemName: "star.fill")
+    .foregroundColor(.yellow)
+    .font(.largeTitle)
+
+Image("foto-perfil")
+    .resizable()
+    .frame(width: 100, height: 100)
+    .clipShape(Circle())
+            </code></pre>
+          </div>
+          <div>
+            <pre><code class="swift" data-trim data-noescape>
+// 🔘 Botões
+Button("Clique aqui") {
+    print("Clicou!")
+}
+.buttonStyle(.borderedProminent)
+
+Button(action: { }) {
+    Label("Download", 
+          systemImage: "arrow.down")
+}
+
+// ✅ Toggle
+Toggle("Modo escuro", isOn: $isDark)
+
+// 🎚️ Slider
+Slider(value: $volume, in: 0...100)
+            </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Layouts: Stacks -->
+      <section>
+        <h3>📐 Layouts com Stacks</h3>
+        <pre><code class="swift" data-trim data-noescape>
+// 📌 VStack - Empilha verticalmente
+VStack(alignment: .leading, spacing: 10) {
+    Text("Item 1")
+    Text("Item 2")
+    Text("Item 3")
+}
+
+// 📌 HStack - Empilha horizontalmente
+HStack(spacing: 20) {
+    Image(systemName: "person")
+    Text("João Silva")
+    Spacer()  // Empurra para as bordas
+    Text("Online")
+}
+
+// 📌 ZStack - Sobrepõe elementos
+ZStack {
+    Color.blue  // Fundo
+    Text("Sobre o fundo")
+        .foregroundColor(.white)
+}
+        </code></pre>
+        <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px;" class="fragment">
+          <div style="text-align: center;">
+            <div style="background: #f0f0f0; padding: 10px; border-radius: 8px;">
+              <div>▫️</div><div>▫️</div><div>▫️</div>
+            </div>
+            <small>VStack</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: #f0f0f0; padding: 10px; border-radius: 8px; display: flex; gap: 5px;">
+              <div>▫️</div><div>▫️</div><div>▫️</div>
+            </div>
+            <small>HStack</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: #f0f0f0; padding: 10px; border-radius: 8px; position: relative; width: 60px; height: 40px;">
+              <div style="position: absolute; top: 5px; left: 5px;">▫️</div>
+              <div style="position: absolute; top: 15px; left: 20px;">▫️</div>
+            </div>
+            <small>ZStack</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- @State -->
+      <section>
+        <h3>🔄 @State - Gerenciando Estado</h3>
+        <pre><code class="swift" data-trim data-noescape>
+struct ContadorView: View {
+    @State private var contador = 0  // 👈 Estado reativo
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            Text("Contador: \(contador)")
+                .font(.largeTitle)
+            
+            HStack(spacing: 20) {
+                Button("−") {
+                    contador -= 1  // Muda o estado
+                }
+                .buttonStyle(.bordered)
+                
+                Button("+") {
+                    contador += 1  // UI atualiza automaticamente!
+                }
+                .buttonStyle(.borderedProminent)
+            }
+        }
+        .padding()
+    }
+}
+        </code></pre>
+        <div class="info-box fragment">
+          <strong>💡 @State</strong> marca uma propriedade como "fonte da verdade". Quando muda, SwiftUI re-renderiza a View automaticamente!
+        </div>
+      </section>
+
+      <!-- TextField e Binding -->
+      <section>
+        <h3>📝 TextField e @Binding</h3>
+        <pre><code class="swift" data-trim data-noescape>
+struct FormularioView: View {
+    @State private var nome = ""
+    @State private var email = ""
+    @State private var aceitouTermos = false
+    
+    var body: some View {
+        Form {
+            Section("Dados Pessoais") {
+                TextField("Nome completo", text: $nome)
+                TextField("E-mail", text: $email)
+                    .keyboardType(.emailAddress)
+                    .autocapitalization(.none)
+            }
+            
+            Section {
+                Toggle("Aceito os termos", isOn: $aceitouTermos)
+            }
+            
+            Section {
+                Button("Cadastrar") {
+                    print("Nome: \(nome), Email: \(email)")
+                }
+                .disabled(!aceitouTermos || nome.isEmpty)
+            }
+        }
+    }
+}
+        </code></pre>
+        <p class="fragment" style="font-size: 0.8em;">O <code>$</code> cria um <strong>Binding</strong>: ligação bidirecional entre a View e o State.</p>
+      </section>
+
+      <!-- Listas -->
+      <section>
+        <h3>📋 Listas Dinâmicas</h3>
+        <pre><code class="swift" data-trim data-noescape>
+struct Tarefa: Identifiable {
+    let id = UUID()
+    var titulo: String
+    var concluida: Bool
+}
+
+struct ListaTarefasView: View {
+    @State private var tarefas = [
+        Tarefa(titulo: "Estudar Swift", concluida: true),
+        Tarefa(titulo: "Criar app iOS", concluida: false),
+        Tarefa(titulo: "Publicar na App Store", concluida: false)
+    ]
+    
+    var body: some View {
+        NavigationStack {
+            List($tarefas) { $tarefa in
+                HStack {
+                    Image(systemName: tarefa.concluida ? 
+                          "checkmark.circle.fill" : "circle")
+                        .foregroundColor(tarefa.concluida ? .green : .gray)
+                        .onTapGesture { tarefa.concluida.toggle() }
+                    
+                    Text(tarefa.titulo)
+                        .strikethrough(tarefa.concluida)
+                }
+            }
+            .navigationTitle("Minhas Tarefas")
+        }
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- NavigationStack -->
+      <section>
+        <h3>🧭 Navegação entre Telas</h3>
+        <pre><code class="swift" data-trim data-noescape>
+struct HomeView: View {
+    var body: some View {
+        NavigationStack {
+            List {
+                NavigationLink("Perfil") {
+                    PerfilView()
+                }
+                NavigationLink("Configurações") {
+                    ConfigView()
+                }
+                NavigationLink("Sobre") {
+                    SobreView(versao: "1.0.0")
+                }
+            }
+            .navigationTitle("Menu")
+        }
+    }
+}
+
+struct PerfilView: View {
+    var body: some View {
+        Text("Tela de Perfil")
+            .navigationTitle("Perfil")
+    }
+}
+
+struct SobreView: View {
+    let versao: String
+    var body: some View {
+        Text("Versão: \(versao)")
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- Modifiers Chain -->
+      <section>
+        <h3>🎨 Modificadores Encadeados</h3>
+        <pre><code class="swift" data-trim data-noescape>
+Text("SwiftUI é incrível!")
+    .font(.title)                    // Tamanho da fonte
+    .fontWeight(.bold)               // Peso da fonte
+    .foregroundColor(.white)         // Cor do texto
+    .padding()                       // Espaçamento interno
+    .background(Color.blue)          // Cor de fundo
+    .cornerRadius(10)                // Bordas arredondadas
+    .shadow(radius: 5)               // Sombra
+    .padding(.horizontal, 20)        // Mais espaço lateral
+        </code></pre>
+        <div class="warning-box fragment">
+          <strong>⚠️ A ordem importa!</strong> Cada modificador cria uma nova View envolvendo a anterior.
+          <pre><code class="swift" style="font-size: 0.8em;">
+// Diferente:
+Text("A").padding().background(.red)   // Padding DENTRO do fundo
+Text("B").background(.red).padding()   // Padding FORA do fundo
+          </code></pre>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO 5: UIKIT ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #5856D6, #AF52DE)">
+        <h2 style="color: white;">Parte 4</h2>
+        <h1 style="color: white;">UIKit</h1>
+        <p style="color: rgba(255,255,255,0.9);">O framework clássico do iOS</p>
+      </section>
+
+      <!-- UIKit Overview -->
+      <section>
+        <h3>📱 UIKit - Quando usar?</h3>
+        <div class="compare-grid">
+          <div class="compare-card">
+            <h4>✅ Use UIKit quando:</h4>
+            <ul style="font-size: 0.8em; text-align: left;">
+              <li>Projeto legado existente</li>
+              <li>Precisa de controle pixel-perfect</li>
+              <li>Funcionalidades não disponíveis no SwiftUI</li>
+              <li>Suporte a iOS < 13</li>
+            </ul>
+          </div>
+          <div class="compare-card">
+            <h4>✅ Use SwiftUI quando:</h4>
+            <ul style="font-size: 0.8em; text-align: left;">
+              <li>Projeto novo</li>
+              <li>Prototipagem rápida</li>
+              <li>UI reativa e moderna</li>
+              <li>Multiplataforma Apple</li>
+            </ul>
+          </div>
+        </div>
+        <div class="info-box fragment">
+          <strong>💡 Na prática:</strong> Muitos apps usam os dois! SwiftUI pode incorporar views UIKit e vice-versa.
+        </div>
+      </section>
+
+      <!-- UIKit Básico -->
+      <section>
+        <h3>🏗️ UIKit Básico</h3>
+        <pre><code class="swift" data-trim data-noescape>
+import UIKit
+
+class ViewController: UIViewController {
+    
+    // Elementos de UI
+    let label = UILabel()
+    let button = UIButton(type: .system)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        
+        // Configurar Label
+        label.text = "Olá, UIKit!"
+        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.textAlignment = .center
+        
+        // Configurar Button
+        button.setTitle("Clique aqui", for: .normal)
+        button.addTarget(self, action: #selector(botaoClicado), 
+                         for: .touchUpInside)
+        
+        // Adicionar à view
+        setupLayout()
+    }
+    
+    @objc func botaoClicado() {
+        label.text = "Você clicou! 🎉"
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- Auto Layout -->
+      <section>
+        <h3>📐 Auto Layout (Constraints)</h3>
+        <pre><code class="swift" data-trim data-noescape>
+func setupLayout() {
+    // Desabilitar autoresizing mask
+    label.translatesAutoresizingMaskIntoConstraints = false
+    button.translatesAutoresizingMaskIntoConstraints = false
+    
+    // Adicionar subviews
+    view.addSubview(label)
+    view.addSubview(button)
+    
+    // Definir constraints
+    NSLayoutConstraint.activate([
+        // Label centralizada horizontalmente
+        label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor, 
+                                        constant: -50),
+        
+        // Button abaixo da label
+        button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        button.topAnchor.constraint(equalTo: label.bottomAnchor, 
+                                     constant: 20),
+        button.widthAnchor.constraint(equalToConstant: 200),
+        button.heightAnchor.constraint(equalToConstant: 44)
+    ])
+}
+        </code></pre>
+      </section>
+
+      <!-- UITableView -->
+      <section>
+        <h3>📋 UITableView - Listas no UIKit</h3>
+        <pre><code class="swift" data-trim data-noescape style="font-size: 0.8em;">
+class TarefasViewController: UITableViewController {
+    
+    var tarefas = ["Estudar Swift", "Criar app", "Publicar"]
+    
+    override func tableView(_ tableView: UITableView, 
+                           numberOfRowsInSection section: Int) -> Int {
+        return tarefas.count
+    }
+    
+    override func tableView(_ tableView: UITableView, 
+                           cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = tarefas[indexPath.row]
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, 
+                           didSelectRowAt indexPath: IndexPath) {
+        print("Selecionou: \(tarefas[indexPath.row])")
+    }
+}
+        </code></pre>
+        <p class="fragment" style="font-size: 0.8em;">Perceba como UIKit é mais verboso que SwiftUI! 📝</p>
+      </section>
+
+      <!-- ==================== SEÇÃO 6: PROJETO PRÁTICO ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #FF9500, #FF3B30)">
+        <h2 style="color: white;">🚀 Projeto Prático</h2>
+        <h1 style="color: white;">App de Lista de Tarefas</h1>
+        <p style="color: rgba(255,255,255,0.9);">Vamos criar juntos!</p>
+      </section>
+
+      <!-- Projeto: Estrutura -->
+      <section>
+        <h3>📁 Estrutura do Projeto</h3>
+        <div class="step-indicator">
+          <div class="step">1</div>
+          <div class="step inactive">2</div>
+          <div class="step inactive">3</div>
+          <div class="step inactive">4</div>
+        </div>
+        <pre><code class="swift" data-trim data-noescape>
+// 📌 Passo 1: Modelo de dados
+import Foundation
+
+struct Tarefa: Identifiable, Codable {
+    var id = UUID()
+    var titulo: String
+    var descricao: String
+    var concluida: Bool = false
+    var dataCriacao: Date = Date()
+    
+    // Formatar data
+    var dataFormatada: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter.string(from: dataCriacao)
+    }
+}
+        </code></pre>
+        <div class="info-box">
+          <strong>💡 Identifiable:</strong> Permite usar em listas. <strong>Codable:</strong> Permite salvar/carregar de JSON.
+        </div>
+      </section>
+
+      <!-- Projeto: ViewModel -->
+      <section>
+        <h3>🧠 ViewModel (Lógica de Negócio)</h3>
+        <div class="step-indicator">
+          <div class="step">1</div>
+          <div class="step">2</div>
+          <div class="step inactive">3</div>
+          <div class="step inactive">4</div>
+        </div>
+        <pre><code class="swift" data-trim data-noescape style="font-size: 0.85em;">
+// 📌 Passo 2: Gerenciador de tarefas
+import SwiftUI
+
+@Observable
+class TarefasViewModel {
+    var tarefas: [Tarefa] = []
+    var novaTarefa = ""
+    var novaDescricao = ""
+    
+    func adicionar() {
+        guard !novaTarefa.isEmpty else { return }
+        let tarefa = Tarefa(titulo: novaTarefa, descricao: novaDescricao)
+        tarefas.append(tarefa)
+        novaTarefa = ""
+        novaDescricao = ""
+    }
+    
+    func remover(at offsets: IndexSet) {
+        tarefas.remove(atOffsets: offsets)
+    }
+    
+    func alternarConclusao(_ tarefa: Tarefa) {
+        if let index = tarefas.firstIndex(where: { $0.id == tarefa.id }) {
+            tarefas[index].concluida.toggle()
+        }
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- Projeto: View Principal -->
+      <section>
+        <h3>📱 View Principal</h3>
+        <div class="step-indicator">
+          <div class="step">1</div>
+          <div class="step">2</div>
+          <div class="step">3</div>
+          <div class="step inactive">4</div>
+        </div>
+        <pre><code class="swift" data-trim data-noescape style="font-size: 0.75em;">
+// 📌 Passo 3: Interface principal
+struct TarefasView: View {
+    @State private var viewModel = TarefasViewModel()
+    @State private var mostrarForm = false
+    
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(viewModel.tarefas) { tarefa in
+                    TarefaRow(tarefa: tarefa) {
+                        viewModel.alternarConclusao(tarefa)
+                    }
+                }
+                .onDelete(perform: viewModel.remover)
+            }
+            .navigationTitle("📋 Minhas Tarefas")
+            .toolbar {
+                Button(action: { mostrarForm = true }) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title2)
+                }
+            }
+            .sheet(isPresented: $mostrarForm) {
+                NovaTarefaView(viewModel: viewModel, 
+                               isPresented: $mostrarForm)
+            }
+        }
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- Projeto: Componentes -->
+      <section>
+        <h3>🧩 Componentes Auxiliares</h3>
+        <div class="step-indicator">
+          <div class="step">1</div>
+          <div class="step">2</div>
+          <div class="step">3</div>
+          <div class="step">4</div>
+        </div>
+        <pre><code class="swift" data-trim data-noescape style="font-size: 0.75em;">
+// 📌 Passo 4: Row da tarefa
+struct TarefaRow: View {
+    let tarefa: Tarefa
+    let onToggle: () -> Void
+    
+    var body: some View {
+        HStack {
+            Button(action: onToggle) {
+                Image(systemName: tarefa.concluida ? 
+                      "checkmark.circle.fill" : "circle")
+                    .foregroundColor(tarefa.concluida ? .green : .gray)
+                    .font(.title2)
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(tarefa.titulo)
+                    .strikethrough(tarefa.concluida)
+                    .foregroundColor(tarefa.concluida ? .gray : .primary)
+                Text(tarefa.dataFormatada)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding(.vertical, 4)
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- Projeto: Form Adicionar -->
+      <section>
+        <h3>➕ Formulário de Nova Tarefa</h3>
+        <pre><code class="swift" data-trim data-noescape style="font-size: 0.8em;">
+struct NovaTarefaView: View {
+    @Bindable var viewModel: TarefasViewModel
+    @Binding var isPresented: Bool
+    
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("Detalhes") {
+                    TextField("Título da tarefa", text: $viewModel.novaTarefa)
+                    TextField("Descrição (opcional)", 
+                              text: $viewModel.novaDescricao)
+                }
+            }
+            .navigationTitle("Nova Tarefa")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancelar") { isPresented = false }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Salvar") {
+                        viewModel.adicionar()
+                        isPresented = false
+                    }
+                    .disabled(viewModel.novaTarefa.isEmpty)
+                }
+            }
+        }
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- ==================== SEÇÃO 7: EXERCÍCIOS ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #5856D6, #007AFF)">
+        <h2 style="color: white;">🏋️ Exercícios</h2>
+        <h1 style="color: white;">Hora de Praticar!</h1>
+      </section>
+
+      <!-- Exercício 1 -->
+      <section>
+        <h3>📝 Exercício 1 - Nível Básico</h3>
+        <div class="mini-exercise">
+          <h4>Calculadora de IMC</h4>
+          <p>Crie um app com SwiftUI que:</p>
+          <ol style="text-align: left; font-size: 0.9em;">
+            <li>Tenha campos para peso (kg) e altura (m)</li>
+            <li>Botão para calcular IMC</li>
+            <li>Exiba o resultado e a classificação</li>
+          </ol>
+          <p style="font-size: 0.8em;">Fórmula: IMC = peso / (altura × altura)</p>
+        </div>
+        <div class="fragment">
+          <div class="info-box">
+            <strong>💡 Dica:</strong> Use <code>@State</code> para peso, altura e resultado. 
+            Use <code>TextField</code> com <code>.keyboardType(.decimalPad)</code>
+          </div>
+        </div>
+      </section>
+
+      <!-- Exercício 2 -->
+      <section>
+        <h3>📝 Exercício 2 - Nível Intermediário</h3>
+        <div class="mini-exercise">
+          <h4>Lista de Contatos</h4>
+          <p>Crie um app que:</p>
+          <ol style="text-align: left; font-size: 0.9em;">
+            <li>Struct <code>Contato</code> com nome, telefone e email</li>
+            <li>Lista de contatos usando <code>List</code> e <code>NavigationStack</code></li>
+            <li>Tela de detalhes ao clicar em um contato</li>
+            <li>Botão para adicionar novo contato</li>
+          </ol>
+        </div>
+        <div class="fragment">
+          <div class="info-box">
+            <strong>💡 Dica:</strong> Use <code>NavigationLink</code> para navegar para detalhes.
+            Use <code>.sheet()</code> para o formulário de adicionar.
+          </div>
+        </div>
+      </section>
+
+      <!-- Exercício 3 -->
+      <section>
+        <h3>📝 Exercício 3 - Nível Avançado</h3>
+        <div class="mini-exercise">
+          <h4>App de Notas com Persistência</h4>
+          <p>Expanda o projeto de tarefas:</p>
+          <ol style="text-align: left; font-size: 0.9em;">
+            <li>Adicione categorias (Trabalho, Pessoal, Estudos)</li>
+            <li>Implemente filtros por categoria</li>
+            <li>Salve os dados usando <code>UserDefaults</code> ou <code>@AppStorage</code></li>
+            <li>Adicione busca com <code>.searchable()</code></li>
+          </ol>
+        </div>
+        <div class="fragment">
+          <pre><code class="swift" data-trim style="font-size: 0.8em;">
+// Dica para persistência com @AppStorage
+@AppStorage("tarefas") var tarefasData: Data = Data()
+
+// Salvar
+let encoder = JSONEncoder()
+tarefasData = try! encoder.encode(tarefas)
+
+// Carregar
+let decoder = JSONDecoder()
+tarefas = try! decoder.decode([Tarefa].self, from: tarefasData)
+          </code></pre>
+        </div>
+      </section>
+
+      <!-- Recursos e Links -->
+      <section>
+        <h3>📚 Recursos para Continuar Aprendendo</h3>
+        <div class="compare-grid">
+          <div class="compare-card">
+            <h4>🎓 Cursos Oficiais</h4>
+            <ul style="font-size: 0.8em; text-align: left;">
+              <li><a href="https://developer.apple.com/swift/" target="_blank">Swift.org</a></li>
+              <li><a href="https://developer.apple.com/tutorials/swiftui" target="_blank">Apple SwiftUI Tutorials</a></li>
+              <li><a href="https://developer.apple.com/documentation/" target="_blank">Apple Developer Docs</a></li>
+            </ul>
+          </div>
+          <div class="compare-card">
+            <h4>🎬 Comunidade</h4>
+            <ul style="font-size: 0.8em; text-align: left;">
+              <li>Hacking with Swift (Paul Hudson)</li>
+              <li>Sean Allen (YouTube)</li>
+              <li>r/iOSProgramming (Reddit)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="info-box fragment">
+          <strong>🎯 Próximo passo:</strong> Crie uma conta gratuita no 
+          <a href="https://developer.apple.com" target="_blank">Apple Developer</a> 
+          e explore o Xcode!
+        </div>
+      </section>
+
+      <!-- Resumo -->
+      <section>
+        <h3>📋 Resumo da Aula</h3>
+        <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+          <ul class="feature-list">
+            <li class="fragment"><strong>Swift</strong>: Linguagem moderna, segura e expressiva</li>
+            <li class="fragment"><strong>var vs let</strong>: Mutável vs Imutável (prefira let!)</li>
+            <li class="fragment"><strong>Structs</strong>: Value types, ideais para dados</li>
+            <li class="fragment"><strong>Optionals</strong>: Tratamento seguro de valores nulos</li>
+            <li class="fragment"><strong>SwiftUI</strong>: UI declarativa com @State e @Binding</li>
+            <li class="fragment"><strong>UIKit</strong>: Framework imperativo, mais controle</li>
+            <li class="fragment"><strong>Prática</strong>: A melhor forma de aprender é fazendo!</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Encerramento -->
+      <section data-background-gradient="linear-gradient(135deg, #1C1C1E 0%, #F05138 100%)">
+        <h2 style="color: white;">🍎 Parabéns!</h2>
+        <h3 style="color: rgba(255,255,255,0.9);">Você deu o primeiro passo no desenvolvimento iOS</h3>
+        <br>
+        <div style="color: white; font-size: 0.9em;">
+          <p>Dúvidas? Sugestões?</p>
+          <p style="font-size: 0.7em;">Prof. Nator Junior</p>
+        </div>
+        <br>
+        <div class="emoji-large">🚀📱✨</div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="./dist/reveal.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      slideNumber: 'c/t',
+      hash: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      plugins: [RevealHighlight],
+      // Configurações adicionais
+      width: 1200,
+      height: 700,
+      margin: 0.1,
+    });
+  </script>
+</body>
+</html>

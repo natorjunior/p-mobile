@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 13 - Android com Kotlin (Fundamentos)</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+
+  <style>
+    :root {
+      --kotlin-purple: #7F52FF;
+      --kotlin-orange: #F6891F;
+      --android-green: #3DDC84;
+      --android-dark: #1A1A1A;
+      --compose-blue: #4285F4;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3 {
+      color: var(--kotlin-purple);
+    }
+
+    .reveal pre code {
+      font-size: 0.85em;
+      background: var(--android-dark);
+      border-radius: 12px;
+      padding: 16px;
+      max-height: 450px;
+    }
+
+    .reveal .slides section {
+      padding: 20px;
+    }
+
+    .emoji-large {
+      font-size: 3em;
+      margin: 10px;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, var(--kotlin-purple), #9B7FFF);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+    }
+
+    .highlight-box-green {
+      background: linear-gradient(135deg, var(--android-green), #00C853);
+      color: #1A1A1A;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+    }
+
+    .info-box {
+      background: #E8F5E9;
+      border-left: 4px solid var(--android-green);
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .warning-box {
+      background: #FFF3E0;
+      border-left: 4px solid var(--kotlin-orange);
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .compare-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px solid #e9ecef;
+    }
+
+    .compare-card h4 {
+      margin-top: 0;
+      color: var(--kotlin-purple);
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .step {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--android-green);
+      color: #1A1A1A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .step.inactive {
+      background: #ccc;
+    }
+
+    .feature-list {
+      text-align: left;
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      padding: 8px 0;
+      padding-left: 30px;
+      position: relative;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--android-green);
+      font-weight: bold;
+    }
+
+    .quiz-option {
+      background: #f0f0f0;
+      padding: 12px 20px;
+      margin: 8px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+    }
+
+    .quiz-option:hover {
+      background: #e0e0e0;
+      transform: translateX(5px);
+    }
+
+    .code-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .code-comparison pre {
+      margin: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7em;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    .badge-kotlin { background: var(--kotlin-purple); color: white; }
+    .badge-compose { background: var(--compose-blue); color: white; }
+    .badge-xml { background: var(--kotlin-orange); color: white; }
+
+    .phone-mockup {
+      background: linear-gradient(180deg, #1A1A1A 0%, #2D2D2D 100%);
+      border-radius: 30px;
+      padding: 10px;
+      max-width: 280px;
+      margin: 0 auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .phone-screen {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      min-height: 200px;
+    }
+
+    .timeline {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 0;
+    }
+
+    .timeline-item {
+      text-align: center;
+      flex: 1;
+    }
+
+    .timeline-year {
+      background: var(--android-green);
+      color: #1A1A1A;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    table.styled {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table.styled th,
+    table.styled td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table.styled th {
+      background: var(--kotlin-purple);
+      color: white;
+    }
+
+    table.styled tr:hover {
+      background: #f5f5f5;
+    }
+
+    .mini-exercise {
+      background: linear-gradient(135deg, var(--android-green), #00E676);
+      color: #1A1A1A;
+      padding: 25px;
+      border-radius: 16px;
+      margin: 20px 0;
+    }
+
+    .mini-exercise h4 {
+      margin-top: 0;
+      color: #1A1A1A;
+    }
+
+    .architecture-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .arch-layer {
+      background: linear-gradient(90deg, var(--kotlin-purple), var(--compose-blue));
+      color: white;
+      padding: 15px 40px;
+      border-radius: 8px;
+      width: 80%;
+      text-align: center;
+    }
+
+    .arch-arrow {
+      font-size: 1.5em;
+      color: var(--android-green);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ==================== SEÇÃO 1: INTRODUÇÃO ==================== -->
+      
+      <!-- Título -->
+      <section data-background-gradient="linear-gradient(135deg, #1A1A1A 0%, #3DDC84 100%)">
+        <br><br>
+        <h4 style="color: white;">Programação para Dispositivos Móveis</h4>
+        <p style="color: rgba(255,255,255,0.8); font-size: .5em; font-weight: 300;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h2 style="color: white;">Aula 13 - Android com Kotlin</h2>
+        <div class="emoji-large">🤖</div>
+        <p style="color: rgba(255,255,255,0.9); font-size: 0.6em;">
+          Fundamentos • Jetpack Compose • XML Views • Projeto Prático
+        </p>
+      </section>
+
+      <!-- ==================== SEÇÃO: EVOLUÇÃO DAS APLICAÇÕES ==================== -->
+
+      <!-- Seção Principal -->
+      <section data-background-gradient="linear-gradient(135deg, #F6891F, #FFA726)">
+        <h2 style="color: white;">📱 Evolução das Aplicações</h2>
+        <p style="color: rgba(255,255,255,0.9);">Desktop • Web • Mobile Nativo</p>
+      </section>
+
+      <!-- Timeline Geral -->
+      <section>
+        <h3>A Jornada Tecnológica</h3>
+        <style>
+          .evolution-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            margin: 30px 0;
+            padding: 20px 0;
+          }
+
+          .evolution-stage {
+            text-align: center;
+            flex: 1;
+            position: relative;
+          }
+
+          .evolution-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+          }
+
+          .evolution-stage:hover .evolution-icon {
+            transform: scale(1.2) translateY(-10px);
+          }
+
+          .stage-title {
+            font-weight: bold;
+            color: var(--kotlin-purple);
+            margin-bottom: 8px;
+            font-size: 1.2em;
+          }
+
+          .stage-description {
+            font-size: 0.75em;
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            min-height: 60px;
+          }
+
+          .stage-bar {
+            height: 8px;
+            background: linear-gradient(90deg, var(--kotlin-purple), var(--compose-blue));
+            border-radius: 4px;
+            margin-bottom: 10px;
+          }
+
+          .evolution-arrow {
+            font-size: 1.5em;
+            color: var(--android-green);
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .timeline-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 0;
+            margin: 20px 0;
+          }
+
+          .timeline-container > * {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .stage-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--kotlin-purple), var(--compose-blue));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-top: 8px;
+            white-space: nowrap;
+          }
+
+          .era-marker {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 5px;
+          }
+
+          .desktop-era { color: #F57C00; }
+          .web-era { color: #1976D2; }
+          .mobile-era { color: var(--android-green); }
+        </style>
+
+        <div class="timeline-container">
+          <!-- Desktop -->
+          <div class="evolution-stage">
+            <div class="evolution-icon">💻</div>
+            <div class="stage-title">Desktop</div>
+            <div class="stage-description">
+              Aplicações para computadores<br>
+              Windows, Mac, Linux
+            </div>
+            <div class="stage-bar" style="width: 80px;"></div>
+            <div class="era-marker desktop-era">Desktop</div>
+          </div>
+
+          <!-- Arrow -->
+          <div class="evolution-arrow">⟹</div>
+
+          <!-- Web -->
+          <div class="evolution-stage">
+            <div class="evolution-icon">🌐</div>
+            <div class="stage-title">Web</div>
+            <div class="stage-description">
+              Aplicações no navegador<br>
+              HTML, CSS, JavaScript
+            </div>
+            <div class="stage-bar" style="width: 100px;"></div>
+            <div class="era-marker web-era">Web</div>
+          </div>
+
+          <!-- Arrow -->
+          <div class="evolution-arrow">⟹</div>
+
+          <!-- Mobile Nativo -->
+          <div class="evolution-stage">
+            <div class="evolution-icon">📱</div>
+            <div class="stage-title">Mobile Nativo</div>
+            <div class="stage-description">
+              Aplicações para dispositivos Móveis<br>
+              iOS, Android (Kotlin, Swift)
+            </div>
+            <div class="stage-bar" style="width: 120px; background: linear-gradient(90deg, var(--android-green), #00E676);"></div>
+            <div class="era-marker mobile-era">Mobile</div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- ==================== SEÇÃO: ARQUITETURA DE APLICAÇÕES ==================== -->
+
+      <style>
+        /* === ESTILOS ARQUITETURA === */
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+        @keyframes slideRight { 0%{transform:translateX(-30px);opacity:0} 100%{transform:translateX(0);opacity:1} }
+        @keyframes slideLeft  { 0%{transform:translateX(30px);opacity:0} 100%{transform:translateX(0);opacity:1} }
+        @keyframes fadeUp     { 0%{transform:translateY(20px);opacity:0} 100%{transform:translateY(0);opacity:1} }
+        @keyframes dataFlow   { 0%{left:-10%} 100%{left:110%} }
+        @keyframes shimmer    { 0%{left:-100%} 100%{left:100%} }
+
+        .cs-scene { display:flex; align-items:center; justify-content:center; gap:12px; margin:25px 0; }
+        .cs-node { text-align:center; padding:20px 18px; border-radius:16px; color:#fff; min-width:130px; 
+                    box-shadow:0 6px 20px rgba(0,0,0,.15); cursor:default; transition:all .3s; }
+        .cs-node:hover { transform:translateY(-8px) scale(1.04); box-shadow:0 12px 35px rgba(0,0,0,.25); }
+        .cs-node .icon { font-size:2.8em; }
+        .cs-node .label { font-weight:700; font-size:1em; margin-top:8px; }
+        .cs-node .desc  { font-size:.72em; opacity:.9; margin-top:4px; }
+
+        .cs-pipe { position:relative; width:100px; height:44px; display:flex; flex-direction:column; 
+                    align-items:center; justify-content:center; }
+        .cs-pipe .line { width:100%; height:3px; background:var(--android-green); border-radius:2px; position:relative; overflow:hidden; }
+        .cs-pipe .line::after { content:''; position:absolute; top:0; width:20px; height:100%; 
+                                 background:rgba(255,255,255,.7); border-radius:2px; animation:dataFlow 1.2s linear infinite; }
+        .cs-pipe .tag { font-size:.6em; font-weight:700; color:var(--android-green); margin-top:4px; }
+        .cs-pipe .dir { font-size:.55em; color:#999; }
+
+        .tier-stack { display:flex; flex-direction:column; align-items:center; gap:8px; margin:20px auto; max-width:520px; }
+        .tier-bar { width:100%; padding:18px 20px; border-radius:12px; color:#fff; display:flex; align-items:center; gap:15px;
+                    position:relative; overflow:hidden; cursor:default; transition:all .3s; }
+        .tier-bar:hover { transform:scale(1.03); box-shadow:0 8px 25px rgba(0,0,0,.25); }
+        .tier-bar::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+                            background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent); animation:shimmer 2.5s infinite; }
+        .tier-bar .t-icon { font-size:2em; z-index:1; }
+        .tier-bar .t-info { z-index:1; text-align:left; }
+        .tier-bar .t-name { font-weight:700; font-size:.95em; }
+        .tier-bar .t-desc { font-size:.7em; opacity:.9; }
+        .tier-conn { color:var(--android-green); font-size:1.2em; }
+
+        .benefit-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:18px 0; }
+        .benefit-card { background:#f8f9fa; padding:16px; border-radius:10px; border-left:4px solid var(--kotlin-purple);
+                        text-align:left; transition:all .3s; cursor:default; }
+        .benefit-card:hover { transform:translateY(-4px); box-shadow:0 6px 18px rgba(0,0,0,.1); }
+        .benefit-card h4 { margin:0 0 6px; font-size:.85em; color:var(--kotlin-purple); }
+        .benefit-card p { margin:0; font-size:.72em; color:#555; line-height:1.4; }
+
+        .flow-demo { display:flex; align-items:stretch; gap:0; margin:20px auto; max-width:800px; }
+        .flow-step { flex:1; padding:14px 10px; text-align:center; position:relative; }
+        .flow-step .f-num { width:30px; height:30px; border-radius:50%; background:var(--android-green); color:#1A1A1A;
+                            display:inline-flex; align-items:center; justify-content:center; font-weight:700; font-size:.8em; }
+        .flow-step .f-txt { font-size:.7em; margin-top:6px; color:#333; line-height:1.3; }
+        .flow-step::after { content:'→'; position:absolute; right:-8px; top:50%; transform:translateY(-50%);
+                            color:var(--android-green); font-size:1.2em; font-weight:700; }
+        .flow-step:last-child::after { content:none; }
+
+        .cs-miniapp {
+          max-width: 960px;
+          margin: 14px auto 0;
+          padding: 12px;
+          border-radius: 14px;
+          background: linear-gradient(135deg, #f7fbff, #eef6ff);
+          border: 2px solid #d6e9ff;
+          box-shadow: 0 10px 24px rgba(66, 133, 244, 0.12);
+          text-align: left;
+        }
+
+        .cs-miniapp-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          margin-bottom: 10px;
+        }
+
+        .cs-miniapp-head p {
+          margin: 0;
+          font-size: 0.58em;
+          color: #334155;
+        }
+
+        .cs-server-pill {
+          font-size: 0.52em;
+          font-weight: 700;
+          background: #d1fae5;
+          color: #065f46;
+          border: 1px solid #10b981;
+          border-radius: 999px;
+          padding: 5px 10px;
+          white-space: nowrap;
+        }
+
+        .cs-mini-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin-bottom: 10px;
+        }
+
+        .cs-mini-card {
+          background: #ffffff;
+          border: 1px solid #d8e7fa;
+          border-radius: 12px;
+          padding: 10px;
+        }
+
+        .cs-mini-card h4 {
+          margin: 0 0 6px;
+          font-size: 0.62em;
+          color: #334155;
+        }
+
+        .cs-mini-controls {
+          display: grid;
+          grid-template-columns: 90px 1fr auto;
+          gap: 6px;
+          margin-bottom: 6px;
+        }
+
+        .cs-mini-input, .cs-mini-select, .cs-mini-button {
+          border: 1px solid #cbd5e1;
+          border-radius: 8px;
+          padding: 6px 8px;
+          font-size: 0.52em;
+          font-family: inherit;
+        }
+
+        .cs-mini-select, .cs-mini-input {
+          background: #fff;
+        }
+
+        .cs-mini-button {
+          background: var(--android-green);
+          color: #0f172a;
+          font-weight: 700;
+          cursor: pointer;
+        }
+
+        .cs-mini-button:hover {
+          filter: brightness(0.97);
+        }
+
+        .cs-mini-button.secondary {
+          background: #e2e8f0;
+          color: #334155;
+          border-color: #cbd5e1;
+        }
+
+        .cs-mini-actions {
+          display: flex;
+          gap: 6px;
+          margin-bottom: 8px;
+        }
+
+        .cs-mini-code {
+          margin: 0;
+          border-radius: 8px;
+          background: #0f172a;
+          color: #e2e8f0;
+          font-size: 0.48em;
+          padding: 8px;
+          min-height: 66px;
+          overflow: auto;
+        }
+
+        .cs-mini-meta {
+          margin: 0 0 6px;
+          font-size: 0.5em;
+          color: #475569;
+        }
+
+        .cs-mini-messages {
+          margin-top: 6px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 5px;
+        }
+
+        .cs-msg-chip {
+          font-size: 0.48em;
+          background: #e0f2fe;
+          color: #0c4a6e;
+          border-radius: 999px;
+          padding: 2px 8px;
+          border: 1px solid #7dd3fc;
+        }
+
+        .cs-mini-log {
+          border: 1px solid #d8e7fa;
+          border-radius: 10px;
+          padding: 8px;
+          background: #ffffff;
+          min-height: 62px;
+          max-height: 110px;
+          overflow: auto;
+        }
+
+        .cs-mini-logline {
+          font-size: 0.48em;
+          color: #334155;
+          margin: 0 0 3px;
+          font-family: "Fira Code", "Consolas", monospace;
+        }
+
+        .cs-mini-logline.req { color: #1d4ed8; }
+        .cs-mini-logline.res { color: #065f46; }
+        .cs-mini-logline.err { color: #b91c1c; }
+
+        @media (max-width: 950px) {
+          .cs-mini-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      </style>
+
+      <!-- Slide Título Arquitetura -->
+      <section data-background-gradient="linear-gradient(135deg, #4285F4, #00BCD4)">
+        <h2 style="color: white;">🏗️ Arquitetura de Aplicações</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Cliente-Servidor • Três Camadas</p>
+      </section>
+
+      <!-- Slide: O que é Cliente-Servidor? -->
+      <section data-cs-miniapp>
+        <h3>🤔 O que é Cliente-Servidor?</h3>
+        <div class="highlight-box" style="max-width:700px; margin:25px auto; text-align:left;">
+          <p style="margin:0; font-size:.95em;">
+            É um modelo onde o <strong>cliente</strong> (app, navegador) faz pedidos e o <strong>servidor</strong> responde com dados ou ações.
+          </p>
+        </div>
+        <div style="display:flex; justify-content:center; gap:60px; margin:22px 0 12px;">
+          <div style="text-align:center;" class="fragment" data-fragment-index="1">
+            <div style="font-size:3.4em;">📱</div>
+            <strong>Cliente</strong><br>
+            <span style="font-size:.75em; color:#666;">Pede informações</span>
+          </div>
+          <div style="text-align:center; align-self:center;" class="fragment" data-fragment-index="2">
+            <div style="font-size:2.5em;">↔️</div>
+            <span style="font-size:.7em; color:var(--android-green); font-weight:700;">Internet</span>
+          </div>
+          <div style="text-align:center;" class="fragment" data-fragment-index="3">
+            <div style="font-size:3.4em;">🖥️</div>
+            <strong>Servidor</strong><br>
+            <span style="font-size:.75em; color:#666;">Processa e responde</span>
+          </div>
+        </div>
+      <!-- Slide: Simulação Visual Animada Cliente-Servidor -->
+      
+      </section>
+      <section>
+        <h3 style="margin-bottom:8px;">🔗 Fluxo Cliente-Servidor — Simulação</h3>
+        <p style="font-size:.7em; color:#666; margin:0 0 6px;">Clique no botão do celular e acompanhe a requisição percorrendo o sistema!</p>
+
+        <style>
+          /* === ANIMAÇÃO FLUXO CLIENTE-SERVIDOR === */
+          .seq-canvas { position:relative; width:100%; max-width:1000px; height:550px; margin:0 auto; user-select:none; padding:20px 0; }
+
+          /* ---- ENTIDADES (colunas do diagrama) ---- */
+          .seq-entity { position:absolute; top:10px; text-align:center; width:140px; z-index:3; }
+          .seq-entity .e-icon { font-size:2.6em; transition:transform .3s; }
+          .seq-entity .e-name { font-weight:700; font-size:.85em; margin-top:4px; }
+          .seq-entity .e-sub  { font-size:.62em; color:#888; }
+
+          .seq-entity.e-client  { left:15%; transform:translateX(-50%); }
+          .seq-entity.e-server  { left:50%; transform:translateX(-50%); }
+          .seq-entity.e-db      { left:85%; transform:translateX(-50%); }
+
+          /* Lifelines */
+          .seq-lifeline { position:absolute; top:75px; width:3px; height:380px; z-index:1; border-radius:2px; }
+          .ll-client { left:15%; transform:translateX(-50%); background:repeating-linear-gradient(180deg,#667EEA 0 6px,transparent 6px 12px); }
+          .ll-server { left:50%; transform:translateX(-50%); background:repeating-linear-gradient(180deg,#F5576C 0 6px,transparent 6px 12px); }
+          .ll-db     { left:85%; transform:translateX(-50%); background:repeating-linear-gradient(180deg,#4FACFE 0 6px,transparent 6px 12px); }
+
+          /* Status indicator boxes (activity bars) */
+          .seq-act { position:absolute; width:22px; border-radius:4px; z-index:2; opacity:0; transition:opacity .3s; }
+          .seq-act.visible { opacity:1; }
+          .act-client { left:calc(15% - 11px); background:#667EEA; }
+          .act-server { left:calc(50% - 11px); background:#F5576C; }
+          .act-db     { left:calc(85% - 11px); background:#4FACFE; }
+
+          /* ---- PACOTE animado ---- */
+          .seq-packet { position:absolute; z-index:10; opacity:0; transition:none; pointer-events:none; }
+          .seq-packet .pkt-body { padding:6px 14px; border-radius:20px; font-size:.65em; font-weight:700; color:#fff;
+                                   box-shadow:0 4px 16px rgba(0,0,0,.25); white-space:nowrap; }
+          .pkt-request  .pkt-body { background:linear-gradient(135deg,#667EEA,#764BA2); }
+          .pkt-query    .pkt-body { background:linear-gradient(135deg,#F5576C,#F093FB); }
+          .pkt-dbresult .pkt-body { background:linear-gradient(135deg,#4FACFE,#00F2FE); color:#1A1A1A; }
+          .pkt-response .pkt-body { background:linear-gradient(135deg,#00C853,#3DDC84); color:#1A1A1A; }
+
+          /* ---- BOTÃO NO CELULAR ---- */
+          .seq-phone { position:absolute; left:15%; transform:translateX(-50%); top:120px; width:240px; z-index:5; }
+          .seq-phone-frame { background:linear-gradient(180deg,#1A1A1A,#2D2D2D); border-radius:18px; padding:8px;
+                              box-shadow:0 8px 28px rgba(0,0,0,.4); }
+          .seq-phone-screen { background:#fff; border-radius:12px; padding:14px 12px; min-height:170px; }
+          .seq-phone-screen .ph-bar { background:var(--kotlin-purple); color:#fff; padding:6px; border-radius:5px;
+                                       text-align:center; font-size:.6em; font-weight:700; }
+          .seq-phone-screen .ph-item { font-size:.55em; padding:6px 0; border-bottom:1px solid #eee; color:#333; }
+          #seqSendBtn { display:block; width:100%; margin-top:8px; padding:9px; border:none; border-radius:6px;
+                        background:var(--android-green); color:#1A1A1A; font-weight:700; font-size:.68em;
+                        cursor:pointer; transition:all .2s; }
+          #seqSendBtn:hover:not(:disabled) { filter:brightness(.92); transform:scale(1.04); }
+          #seqSendBtn:disabled { opacity:.5; cursor:not-allowed; }
+
+          /* ---- SERVER BOX ---- */
+          .seq-server-box { position:absolute; left:50%; transform:translateX(-50%); top:120px; width:140px; z-index:5; }
+          .seq-server-inner { background:linear-gradient(135deg,#F5576C,#F093FB); border-radius:14px; padding:14px 10px;
+                               color:#fff; text-align:center; box-shadow:0 8px 28px rgba(245,87,108,.35);
+                               min-height:135px; display:flex; flex-direction:column; justify-content:center; }
+          .seq-server-inner .sv-icon { font-size:2.2em; }
+          .seq-server-inner .sv-status { font-size:.56em; margin-top:8px; padding:4px 10px; border-radius:10px;
+                                          background:rgba(255,255,255,.28); display:inline-block; }
+          #seqServerLog { font-size:.5em; margin-top:8px; color:rgba(255,255,255,.95); min-height:18px;
+                          font-family:'Fira Code',monospace; }
+
+          /* ---- DB BOX ---- */
+          .seq-db-box { position:absolute; left:85%; transform:translateX(-50%); top:120px; width:140px; z-index:5; }
+          .seq-db-inner { background:linear-gradient(135deg,#4FACFE,#00F2FE); border-radius:14px; padding:14px 10px;
+                           color:#1A1A1A; text-align:center; box-shadow:0 8px 28px rgba(79,172,254,.35);
+                           min-height:135px; display:flex; flex-direction:column; justify-content:center; }
+          .seq-db-inner .db-icon { font-size:2.2em; }
+          .seq-db-inner .db-rows { font-size:.52em; margin-top:8px; text-align:left; padding:0 6px; }
+          .seq-db-inner .db-row { padding:3px 0; border-bottom:1px solid rgba(0,0,0,.12); }
+
+          /* ---- STEP LOG na parte inferior ---- */
+          .seq-steps { position:absolute; bottom:20px; left:0; right:0; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+          .seq-step-pill { padding:6px 13px; border-radius:8px; font-size:.57em; background:#e9ecef; color:#999;
+                           transition:all .4s; font-weight:600; }
+          .seq-step-pill.active { background:var(--android-green); color:#1A1A1A; transform:scale(1.1); }
+          .seq-step-pill.done   { background:#C8E6C9; color:#2E7D32; }
+
+          /* ---- GLOW nas entidades ---- */
+          .glow-client .seq-phone-frame { box-shadow:0 0 24px rgba(102,126,234,.8); }
+          .glow-server .seq-server-inner { box-shadow:0 0 24px rgba(245,87,108,.8); }
+          .glow-db .seq-db-inner { box-shadow:0 0 24px rgba(79,172,254,.8); }
+
+          /* ---- RESULTADO no celular ---- */
+          .seq-phone-result { font-size:.52em; margin-top:6px; padding:6px 8px; border-radius:5px;
+                               background:#E8F5E9; color:#2E7D32; font-family:'Fira Code',monospace;
+                               min-height:18px; opacity:0; transition:opacity .4s; word-break:break-all; line-height:1.3; }
+          .seq-phone-result.visible { opacity:1; }
+        </style>
+
+        <div class="seq-canvas" id="seqCanvas">
+          <!-- Entidades no topo -->
+          <div class="seq-entity e-client">
+            <div class="e-icon">📱</div>
+            <div class="e-name">Cliente</div>
+            <div class="e-sub">App Android</div>
+          </div>
+
+          <!-- Lifelines -->
+          <div class="seq-lifeline ll-client"></div>
+          <div class="seq-lifeline ll-server"></div>
+          <div class="seq-lifeline ll-db"></div>
+
+          <!-- Celular interativo -->
+          <div class="seq-phone" id="seqPhone">
+            <div class="seq-phone-frame">
+              <div class="seq-phone-screen">
+                <div class="ph-bar">📋 Meu App</div>
+                <div class="ph-item">👤 Buscar usuário #42</div>
+                <button id="seqSendBtn" type="button">🔍 Buscar Dados</button>
+                <div class="seq-phone-result" id="seqPhoneResult"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servidor -->
+          <div class="seq-server-box" id="seqServerBox">
+            <div class="seq-server-inner">
+              <div class="sv-icon">🖥️</div>
+              <div class="sv-status" id="seqSvStatus">💤 Aguardando</div>
+              <div id="seqServerLog"></div>
+            </div>
+          </div>
+
+          <!-- Banco -->
+          <div class="seq-db-box" id="seqDbBox">
+            <div class="seq-db-inner">
+              <div class="db-icon">🗄️</div>
+              <div class="db-rows">
+                <div class="db-row"><strong>id:42</strong> Maria Silva</div>
+                <div class="db-row">id:43 João Costa</div>
+                <div class="db-row">id:44 Ana Souza</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pacotes animados (reutilizados via JS) -->
+          <div class="seq-packet pkt-request"  id="pkt1"><div class="pkt-body">📨 GET /usuarios/42</div></div>
+          <div class="seq-packet pkt-query"    id="pkt2"><div class="pkt-body">🔍 SELECT * WHERE id=42</div></div>
+          <div class="seq-packet pkt-dbresult" id="pkt3"><div class="pkt-body">📦 {Maria, 42}</div></div>
+          <div class="seq-packet pkt-response" id="pkt4"><div class="pkt-body">✅ 200 OK — JSON</div></div>
+
+          <!-- Passos -->
+          <div class="seq-steps">
+            <div class="seq-step-pill" id="ss1">① Clique</div>
+            <div class="seq-step-pill" id="ss2">② Request HTTP</div>
+            <div class="seq-step-pill" id="ss3">③ Query SQL</div>
+            <div class="seq-step-pill" id="ss4">④ Resultado BD</div>
+            <div class="seq-step-pill" id="ss5">⑤ Response JSON</div>
+            <div class="seq-step-pill" id="ss6">⑥ Exibe na tela</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide: Diagrama Animado Cliente-Servidor -->
+      <section>
+        <h3>🔗 Arquitetura Cliente-Servidor</h3>
+        <div class="cs-scene">
+          <div class="cs-node" style="background:linear-gradient(135deg,#667EEA,#764BA2);">
+            <div class="icon">📱</div>
+            <div class="label">Cliente</div>
+            <div class="desc">App Android<br>Interface</div>
+          </div>
+          <div class="cs-pipe">
+            <div class="line"></div>
+            <div class="tag">REQUEST →</div>
+            <div class="dir">HTTP / JSON</div>
+          </div>
+          <div class="cs-node" style="background:linear-gradient(135deg,#F093FB,#F5576C);">
+            <div class="icon">🖥️</div>
+            <div class="label">Servidor</div>
+            <div class="desc">REST API<br>Lógica</div>
+          </div>
+          <div class="cs-pipe">
+            <div class="line"></div>
+            <div class="tag">QUERY →</div>
+            <div class="dir">SQL</div>
+          </div>
+          <div class="cs-node" style="background:linear-gradient(135deg,#4FACFE,#00F2FE); color:#1A1A1A;">
+            <div class="icon">🗄️</div>
+            <div class="label">Banco</div>
+            <div class="desc">MySQL<br>PostgreSQL</div>
+          </div>
+        </div>
+
+        <div class="flow-demo fragment">
+          <div class="flow-step">
+            <div class="f-num">1</div>
+            <div class="f-txt">Usuário clica<br>"Buscar"</div>
+          </div>
+          <div class="flow-step">
+            <div class="f-num">2</div>
+            <div class="f-txt">App envia<br>requisição HTTP</div>
+          </div>
+          <div class="flow-step">
+            <div class="f-num">3</div>
+            <div class="f-txt">Servidor processa<br>regras de negócio</div>
+          </div>
+          <div class="flow-step">
+            <div class="f-num">4</div>
+            <div class="f-txt">Consulta o<br>banco de dados</div>
+          </div>
+          <div class="flow-step">
+            <div class="f-num">5</div>
+            <div class="f-txt">Retorna JSON<br>para o app</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide: Exemplo Real de Request/Response -->
+      <section>
+        <h3>📡 Exemplo: Request e Response</h3>
+        <div class="code-comparison">
+          <div>
+            <span class="badge" style="background:#667EEA;color:#fff;">📱 Cliente envia</span>
+            <pre><code class="http" data-trim data-noescape>
+GET /api/usuarios/42
+Host: meuservidor.com
+Authorization: Bearer abc123
+Accept: application/json
+            </code></pre>
+          </div>
+          <div>
+            <span class="badge" style="background:#F5576C;color:#fff;">🖥️ Servidor responde</span>
+            <pre><code class="json" data-trim data-noescape>
+{
+  "id": 42,
+  "nome": "Maria Silva",
+  "email": "maria@email.com",
+  "status": "ativo"
+}
+            </code></pre>
+          </div>
+        </div>
+        <div class="warning-box fragment" style="max-width:650px; margin:20px auto;">
+          <strong>⚠️ Importante:</strong> O cliente <strong>nunca</strong> acessa o banco diretamente! Sempre passa pelo servidor (segurança).
+        </div>
+      </section>
+      <!-- Slide: Intro Três Camadas -->
+      <!-- <section>
+        <h3>📚 Arquitetura de Três Camadas</h3>
+        <p style="font-size:.85em; color:#666;">Separando responsabilidades para código organizado</p>
+
+        <div class="tier-stack">
+          <div class="tier-bar fragment" style="background:linear-gradient(135deg,#667EEA,#764BA2);">
+            <div class="t-icon">🎨</div>
+            <div class="t-info">
+              <div class="t-name">Camada de Apresentação</div>
+              <div class="t-desc">Telas, botões, layouts — o que o usuário vê e toca</div>
+            </div>
+          </div>
+          <div class="tier-conn fragment">⬇️ comunica</div>
+          <div class="tier-bar fragment" style="background:linear-gradient(135deg,#F093FB,#F5576C);">
+            <div class="t-icon">⚙️</div>
+            <div class="t-info">
+              <div class="t-name">Camada de Negócio</div>
+              <div class="t-desc">Regras, validações, processamento — a lógica da aplicação</div>
+            </div>
+          </div>
+          <div class="tier-conn fragment">⬇️ comunica</div>
+          <div class="tier-bar fragment" style="background:linear-gradient(135deg,#4FACFE,#00F2FE); color:#1A1A1A;">
+            <div class="t-icon">🗄️</div>
+            <div class="t-info">
+              <div class="t-name">Camada de Dados</div>
+              <div class="t-desc">Banco local, APIs externas, cache — onde tudo é guardado</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box fragment" style="max-width:600px; margin:15px auto;">
+          <strong>💡 Regra de ouro:</strong> Cada camada só conversa com a vizinha. A tela <strong>nunca</strong> acessa o banco diretamente!
+        </div>
+      </section> -->
+
+      <!-- Slide: Camada de Apresentação -->
+      <!-- <section>
+        <h3>🎨 Camada de Apresentação</h3>
+        <div style="display:flex; gap:25px; align-items:flex-start; margin-top:20px;">
+          <div style="flex:1;">
+            <div class="phone-mockup" style="max-width:200px;">
+              <div class="phone-screen" style="min-height:160px; font-size:.75em; padding:12px;">
+                <div style="background:var(--kotlin-purple); color:#fff; padding:8px; border-radius:6px; text-align:center; font-weight:700;">📋 Lista de Tarefas</div>
+                <div style="padding:6px 0; border-bottom:1px solid #eee;">✅ Estudar Kotlin</div>
+                <div style="padding:6px 0; border-bottom:1px solid #eee;">⬜ Criar primeiro app</div>
+                <div style="padding:6px 0;">⬜ Publicar na Play Store</div>
+                <div style="background:var(--android-green); color:#1A1A1A; padding:6px; border-radius:6px; text-align:center; margin-top:8px; font-weight:700;">+ Nova Tarefa</div>
+              </div>
+            </div>
+          </div>
+          <div style="flex:2;">
+            <ul class="feature-list">
+              <li>Tudo que o usuário <strong>vê e interage</strong></li>
+              <li>Telas, botões, listas, formulários</li>
+              <li>Jetpack Compose ou XML Views</li>
+              <li>Validação visual (campo vazio, formato)</li>
+              <li><strong>Não contém</strong> lógica de negócio</li>
+            </ul>
+            <div class="highlight-box fragment" style="padding:12px 16px; font-size:.8em;">
+              <strong>No Android:</strong> Activities, Fragments, Composables
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- Slide: Camada de Negócio -->
+      <!-- <section>
+        <h3>⚙️ Camada de Negócio</h3>
+        <div style="display:flex; gap:25px; align-items:flex-start; margin-top:20px;">
+          <div style="flex:1;">
+            <div style="background:#2D2D2D; border-radius:12px; padding:15px; color:#ddd; font-family:monospace; font-size:.65em; line-height:1.6;">
+              <span style="color:#C792EA;">fun</span> <span style="color:#82AAFF;">adicionarTarefa</span>(texto) {<br>
+              &nbsp;&nbsp;<span style="color:#89DDFF;">if</span> (texto.isBlank())<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#F07178;">return</span> <span style="color:#C3E88D;">"Erro!"</span><br>
+              &nbsp;&nbsp;<span style="color:#89DDFF;">if</span> (tarefas.size >= <span style="color:#F78C6C;">50</span>)<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#F07178;">return</span> <span style="color:#C3E88D;">"Limite!"</span><br>
+              &nbsp;&nbsp;repo.<span style="color:#82AAFF;">salvar</span>(tarefa)<br>
+              }
+            </div>
+          </div>
+          <div style="flex:2;">
+            <ul class="feature-list">
+              <li>As <strong>regras</strong> da aplicação</li>
+              <li>Validações complexas e processamento</li>
+              <li>Decide <em>o que</em> fazer, não <em>como</em> mostrar</li>
+              <li>Independente de UI — pode mudar a tela sem alterar</li>
+              <li>Orquestra a comunicação entre apresentação e dados</li>
+            </ul>
+            <div class="highlight-box fragment" style="padding:12px 16px; font-size:.8em; background:linear-gradient(135deg,#F093FB,#F5576C);">
+              <strong>No Android:</strong> ViewModels, UseCases, Services
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- Slide: Camada de Dados -->
+      <!-- <section>
+        <h3>🗄️ Camada de Dados</h3>
+        <div style="display:flex; gap:25px; align-items:flex-start; margin-top:20px;">
+          <div style="flex:1;">
+            <div style="background:#f0f8ff; border:2px solid #4FACFE; border-radius:12px; padding:15px; text-align:center;">
+              <div style="font-size:2.5em;">🗄️</div>
+              <div style="font-size:.75em; margin-top:8px;">
+                <div style="background:#4FACFE; color:#fff; padding:4px 8px; border-radius:4px; margin:3px 0; font-size:.9em;">📦 Room (SQLite local)</div>
+                <div style="background:#FF7043; color:#fff; padding:4px 8px; border-radius:4px; margin:3px 0; font-size:.9em;">🌐 Retrofit (API REST)</div>
+                <div style="background:#AB47BC; color:#fff; padding:4px 8px; border-radius:4px; margin:3px 0; font-size:.9em;">💾 SharedPreferences</div>
+              </div>
+            </div>
+          </div>
+          <div style="flex:2;">
+            <ul class="feature-list">
+              <li><strong>Onde</strong> e <strong>como</strong> os dados são armazenados</li>
+              <li>Banco local (SQLite/Room)</li>
+              <li>APIs remotas (Retrofit, Ktor)</li>
+              <li>Cache e preferências</li>
+              <li>A camada de negócio <strong>não sabe</strong> de onde vem o dado</li>
+            </ul>
+            <div class="highlight-box fragment" style="padding:12px 16px; font-size:.8em; background:linear-gradient(135deg,#4FACFE,#00BCD4);">
+              <strong>No Android:</strong> Repository, DAO (Room), DataSource, SharedPrefs
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- Slide: Benefícios -->
+      <!-- <section>
+        <h3>✨ Por que separar em camadas?</h3>
+        <div class="benefit-grid" style="margin-top:25px;">
+          <div class="benefit-card fragment">
+            <h4>🎯 Organização</h4>
+            <p>Cada parte do código tem seu lugar. Fácil de encontrar e entender.</p>
+          </div>
+          <div class="benefit-card fragment">
+            <h4>🧪 Testabilidade</h4>
+            <p>Testa cada camada separadamente. Lógica sem precisar de tela!</p>
+          </div>
+          <div class="benefit-card fragment">
+            <h4>♻️ Reutilização</h4>
+            <p>Mesma lógica serve para app, web ou tablet. Muda só a interface.</p>
+          </div>
+          <div class="benefit-card fragment">
+            <h4>👥 Trabalho em Equipe</h4>
+            <p>Um cuida da tela, outro da lógica, outro do banco. Sem conflito!</p>
+          </div>
+        </div>
+        <div class="highlight-box-green fragment" style="max-width:600px; margin:20px auto; padding:14px; font-size:.85em;">
+          <strong>🚀 Resumo:</strong> Código separado = mais fácil de manter, testar, escalar e trabalhar em equipe!
+        </div>
+      </section> -->
+
+      <!-- Slide: Código Exemplo -->
+      <section>
+        <h3>💻 Na Prática: Cadastro de Usuário</h3>
+        <div class="code-comparison">
+          <div>
+            <span class="badge badge-kotlin">🎨 Tela (Compose)</span>
+            <pre><code class="kotlin" data-trim data-noescape>
+@Composable
+fun RegistroScreen(vm: RegistroVM) {
+    var nome by remember { 
+        mutableStateOf("") 
+    }
+    
+    TextField(value = nome,
+        onValueChange = { nome = it })
+    
+    Button(onClick = { 
+        vm.salvarUsuario(nome)
+    }) {
+        Text("Cadastrar")
+    }
+}
+            </code></pre>
+          </div>
+          <div>
+            <span class="badge badge-kotlin">⚙️ Lógica (ViewModel)</span>
+            <pre><code class="kotlin" data-trim data-noescape>
+class RegistroVM(
+    val repo: UsuarioRepo
+) : ViewModel() {
+
+    fun salvarUsuario(nome: String) {
+        if (nome.isBlank()) return
+        
+        val user = Usuario(
+            nome = nome,
+            data = LocalDate.now()
+        )
+        repo.salvar(user)
+    }
+}
+            </code></pre>
+          </div>
+        </div>
+        <div class="info-box fragment" style="margin-top:15px; font-size:.85em;">
+          <strong>📌 Observe:</strong> A tela só sabe <em>chamar</em> o ViewModel. O ViewModel só sabe <em>chamar</em> o Repository. Ninguém faz tudo sozinho!
+        </div>
+      </section>
+
+      <!-- Kotlin vs Java -->
+      <section>
+        <h3>☕ Por que Kotlin e não Java?</h3>
+        <div class="code-comparison">
+          <div>
+            <span class="badge badge-kotlin">Kotlin</span>
+            <pre><code class="kotlin" data-trim data-noescape>
+// Classe de dados em 1 linha!
+data class Pessoa(
+    val nome: String,
+    val idade: Int
+)
+
+// Null safety nativo
+val nome: String? = null
+println(nome?.length ?: 0)
+
+// Funções de extensão
+fun String.grito() = this.uppercase() + "!"
+println("olá".grito()) // "OLÁ!"
+            </code></pre>
+          </div>
+          <div>
+            <span class="badge" style="background: #F89820; color: white;">Java</span>
+            <pre><code class="java" data-trim data-noescape>
+// Muito mais código...
+public class Pessoa {
+    private String nome;
+    private int idade;
+    // getters, setters, equals,
+    // hashCode, toString...
+    // +50 linhas de código!
+}
+
+// NullPointerException 💥
+String nome = null;
+System.out.println(nome.length());
+            </code></pre>
+          </div>
+        </div>
+        <p class="fragment" style="font-size: 0.8em;">Kotlin é <strong>100% interoperável</strong> com Java! 🤝</p>
+      </section>
+
+      <!-- ==================== SEÇÃO 2: FUNDAMENTOS KOTLIN ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #7F52FF, #9B7FFF)">
+        <h2 style="color: white;">Parte 1</h2>
+        <h1 style="color: white;">Fundamentos do Kotlin</h1>
+        <p style="color: rgba(255,255,255,0.9);">Variáveis • Tipos • Coleções</p>
+      </section>
+
+      <!-- Variáveis: val vs var -->
+      <section>
+        <h3>📦 Variáveis: <code>val</code> vs <code>var</code></h3>
+        <div class="code-comparison">
+          <div>
+            <span class="badge badge-kotlin">val - Imutável</span>
+            <pre><code class="kotlin" data-trim data-noescape>
+// NÃO pode ser reatribuída
+val pi = 3.14159
+pi = 3.14  // ❌ ERRO!
+
+val cpf = "123.456.789-00"
+cpf = "000"  // ❌ ERRO!
+
+// Mas objetos podem mudar internamente
+val lista = mutableListOf(1, 2, 3)
+lista.add(4)  // ✅ OK
+            </code></pre>
+          </div>
+          <div>
+            <span class="badge badge-kotlin">var - Mutável</span>
+            <pre><code class="kotlin" data-trim data-noescape>
+// Pode ser reatribuída
+var nome = "Maria"
+nome = "Maria Silva"  // ✅ OK
+
+var contador = 0
+contador++  // ✅ OK
+contador = 100  // ✅ OK
+
+var cidade = "Recife"
+cidade = "São Paulo"  // ✅ OK
+            </code></pre>
+          </div>
+        </div>
+        <div class="warning-box fragment">
+          <strong>⚠️ Regra de ouro:</strong> Sempre use <code>val</code> por padrão. Use <code>var</code> apenas quando realmente precisar alterar o valor.
+        </div>
+      </section>
+
+    
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="./dist/reveal.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      slideNumber: 'c/t',
+      hash: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      plugins: [RevealHighlight],
+      // Configurações adicionais
+      width: 1200,
+      height: 700,
+      margin: 0.1,
+    });
+
+    (function initClientServerMiniApp() {
+      const section = document.querySelector("[data-cs-miniapp]");
+      if (!section || section.dataset.bound === "true") return;
+      section.dataset.bound = "true";
+    })();
+
+    /* ========== ANIMAÇÃO DIAGRAMA DE SEQUÊNCIA ========== */
+    (function initSeqDiagram() {
+      const btn = document.getElementById("seqSendBtn");
+      if (!btn || btn.dataset.bound) return;
+      btn.dataset.bound = "1";
+
+      const canvas   = document.getElementById("seqCanvas");
+      const phone    = document.getElementById("seqPhone");
+      const svBox    = document.getElementById("seqServerBox");
+      const dbBox    = document.getElementById("seqDbBox");
+      const svStatus = document.getElementById("seqSvStatus");
+      const svLog    = document.getElementById("seqServerLog");
+      const phResult = document.getElementById("seqPhoneResult");
+
+      const pkt1 = document.getElementById("pkt1");
+      const pkt2 = document.getElementById("pkt2");
+      const pkt3 = document.getElementById("pkt3");
+      const pkt4 = document.getElementById("pkt4");
+
+      const steps = [
+        document.getElementById("ss1"),
+        document.getElementById("ss2"),
+        document.getElementById("ss3"),
+        document.getElementById("ss4"),
+        document.getElementById("ss5"),
+        document.getElementById("ss6"),
+      ];
+
+      /* posições em percentuais para responsividade */
+      const CX = { 
+        client: () => canvas.offsetWidth * 0.15,
+        server: () => canvas.offsetWidth * 0.50, 
+        db: () => canvas.offsetWidth * 0.85 
+      };
+      const PKT_Y = 280; /* altura Y do pacote animando */
+
+      function resetAll() {
+        [pkt1,pkt2,pkt3,pkt4].forEach(p => {
+          p.style.opacity = "0";
+          p.style.transition = "none";
+          p.style.left = "0px";
+          p.style.top = PKT_Y + "px";
+        });
+        steps.forEach(s => { s.className = "seq-step-pill"; });
+        canvas.classList.remove("glow-client","glow-server","glow-db");
+        svStatus.textContent = "💤 Aguardando";
+        svLog.textContent = "";
+        phResult.textContent = "";
+        phResult.classList.remove("visible");
+      }
+
+      function activateStep(idx) {
+        for (let i = 0; i < idx; i++) steps[i].className = "seq-step-pill done";
+        steps[idx].className = "seq-step-pill active";
+      }
+
+      function animatePacket(pkt, fromX, toX, y, duration) {
+        return new Promise(resolve => {
+          pkt.style.transition = "none";
+          pkt.style.left = fromX + "px";
+          pkt.style.top = y + "px";
+          pkt.style.opacity = "1";
+          /* force reflow */
+          void pkt.offsetWidth;
+          pkt.style.transition = "left " + duration + "ms cubic-bezier(.4,.0,.2,1), top " + duration + "ms ease";
+          pkt.style.left = toX + "px";
+          setTimeout(() => {
+            pkt.style.opacity = "0";
+            resolve();
+          }, duration);
+        });
+      }
+
+      function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+      let running = false;
+
+      async function runSequence() {
+        if (running) return;
+        running = true;
+        btn.disabled = true;
+        btn.textContent = "⏳ Processando...";
+        resetAll();
+        await sleep(300);
+
+        /* 1 — Clique */
+        activateStep(0);
+        canvas.classList.add("glow-client");
+        phone.querySelector(".e-icon,.seq-phone-frame").style.transform = "scale(1.02)";
+        await sleep(900);
+        canvas.classList.remove("glow-client");
+
+        /* 2 — Request HTTP: Client → Server */
+        activateStep(1);
+        await animatePacket(pkt1, CX.client(), CX.server() - 40, PKT_Y - 20, 1200);
+
+        /* 3 — Server recebe e processa */
+        canvas.classList.add("glow-server");
+        svStatus.textContent = "⚡ Processando...";
+        svLog.textContent = "Validando token...";
+        await sleep(600);
+        svLog.textContent = "Token OK ✓";
+        await sleep(500);
+
+        /* 4 — Query SQL: Server → DB */
+        activateStep(2);
+        svLog.textContent = "Consultando BD...";
+        await animatePacket(pkt2, CX.server(), CX.db() - 40, PKT_Y + 15, 1100);
+        canvas.classList.remove("glow-server");
+
+        /* 5 — BD processa */
+        canvas.classList.add("glow-db");
+        activateStep(3);
+        await sleep(1000);
+        canvas.classList.remove("glow-db");
+
+        /* 6 — Resultado BD: DB → Server */
+        await animatePacket(pkt3, CX.db() - 40, CX.server(), PKT_Y + 50, 1100);
+
+        /* 7 — Server monta response */
+        canvas.classList.add("glow-server");
+        svStatus.textContent = "📦 Montando JSON";
+        svLog.textContent = "Serializando...";
+        await sleep(700);
+        svLog.textContent = "JSON pronto ✓";
+        canvas.classList.remove("glow-server");
+
+        /* 8 — Response: Server → Client */
+        activateStep(4);
+        await animatePacket(pkt4, CX.server() - 40, CX.client(), PKT_Y + 80, 1200);
+
+        /* 9 — Exibe resultado no celular */
+        activateStep(5);
+        canvas.classList.add("glow-client");
+        svStatus.textContent = "✅ Concluído";
+        svLog.textContent = "200 OK (728ms)";
+        phResult.textContent = '{"id":42,"nome":"Maria Silva","email":"maria@email.com"}';
+        phResult.classList.add("visible");
+        await sleep(1500);
+        canvas.classList.remove("glow-client");
+
+        /* Todos concluídos */
+        steps.forEach(s => { s.className = "seq-step-pill done"; });
+
+        btn.disabled = false;
+        btn.textContent = "🔄 Buscar Novamente";
+        running = false;
+      }
+
+      btn.addEventListener("click", runSequence);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playground de JavaScript Dark</title>
+  <!-- CodeMirror CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/codemirror.min.css">
+  <!-- Tema Dark do CodeMirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/theme/dracula.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Fira Code', monospace;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #2d2d2d;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    /* Editor CodeMirror ocupará a área designada */
+    .CodeMirror {
+      border: 1px solid #444;
+      border-radius: 4px;
+      height: 300px;
+      font-size: 14px;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background-color: #6272a4;
+      color: #fff;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #505c8b;
+    }
+    .output {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #1e1e1e;
+      border: 1px solid #444;
+      border-radius: 4px;
+      min-height: 100px;
+      overflow: auto;
+      white-space: pre-wrap;
+      font-size: 14px;
+    }
+  </style>
+  <!-- CodeMirror JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/codemirror.min.js"></script>
+  <!-- Modo JavaScript para CodeMirror -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/mode/javascript/javascript.min.js"></script>
+  <!-- js-beautify para formatação do código -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify.min.js"></script>
+  <!-- jsPDF para geração de PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Playground de JavaScript</h1>
+    <p>Digite seu código, formate, execute e baixe!</p>
+    <textarea id="codeArea">// Escreva seu código aqui
+console.log('Hello, World!');</textarea>
+    <div class="buttons">
+      <button id="formatButton">Identar Código</button>
+      <button id="runButton">Executar</button>
+      <button id="downloadPdfButton">Baixar PDF</button>
+      <button id="downloadJsButton">Baixar .js</button>
+    </div>
+    <div class="output" id="output">
+      <strong>Saída:</strong>
+    </div>
+  </div>
+  <script>
+    // Inicializa o CodeMirror no textarea
+    var editor = CodeMirror.fromTextArea(document.getElementById('codeArea'), {
+      mode: "javascript",
+      theme: "dracula",
+      lineNumbers: true,
+      indentUnit: 2,
+      tabSize: 2,
+      lineWrapping: true,
+    });
+
+    // Redefine o console.log para exibir a saída na área de output
+    (function() {
+      const oldLog = console.log;
+      const outputDiv = document.getElementById('output');
+      
+      console.log = function(...args) {
+        args.forEach(arg => {
+          let msg = arg;
+          if (typeof arg === 'object') {
+            try {
+              msg = JSON.stringify(arg, null, 2);
+            } catch(e) {
+              msg = String(arg);
+            }
+            outputDiv.innerHTML += '<pre>' + msg + '</pre>';
+          } else {
+            outputDiv.innerHTML += '<p>' + msg + '</p>';
+          }
+        });
+        oldLog.apply(console, args);
+      };
+    })();
+
+    // Botão para executar o código
+    document.getElementById('runButton').addEventListener('click', function() {
+      document.getElementById('output').innerHTML = '<strong>Saída:</strong>';
+      const code = editor.getValue();
+      try {
+        eval(code);
+      } catch(e) {
+        document.getElementById('output').innerHTML += '<p style="color:#ff5555;">Erro: ' + e.message + '</p>';
+      }
+    });
+
+    // Botão para formatar (identar) o código com js-beautify
+    document.getElementById('formatButton').addEventListener('click', function() {
+      const code = editor.getValue();
+      const formattedCode = js_beautify(code, { indent_size: 2, space_in_empty_paren: true });
+      editor.setValue(formattedCode);
+    });
+
+    // Botão para baixar o código como PDF com paginação e rodapé com data e horário
+    document.getElementById('downloadPdfButton').addEventListener('click', function() {
+      const code = editor.getValue();
+      const lines = code.split('\n');
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+
+      // Definições de margens e medidas
+      const margin = 40;
+      const topMargin = 40;
+      const bottomMargin = 40;
+      const headerHeight = 70; // Apenas na primeira página
+      const firstPageCodeStartY = headerHeight + 20; // Início do bloco de código na primeira página
+      const subsequentPageCodeStartY = topMargin + 15; // Início do bloco nas páginas seguintes
+      const lineHeight = 14;
+      const codeBoxWidth = pageWidth - margin * 2;
+      
+      // Função para adicionar o rodapé com data e hora
+      function addFooter() {
+        const now = new Date();
+        const dateString = "Data: " + now.toLocaleDateString('pt-BR') + " " + now.toLocaleTimeString('pt-BR');
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.text(dateString, pageWidth / 2, pageHeight - 25, { align: "center" });
+        doc.text("Desenvolvido por: Prof. Msc. Nator Junior", pageWidth / 2, pageHeight - 10, { align: "center" });
+
+      }
+
+      // Desenha o cabeçalho na primeira página
+      doc.setFillColor(230, 230, 230);
+      doc.rect(0, 0, pageWidth, headerHeight, 'F');
+      doc.setDrawColor(200, 200, 200);
+      doc.line(0, headerHeight, pageWidth, headerHeight);
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Playground de JavaScript", 40, 30);
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      doc.text("Plataforma: natorjunior.github.io/playground/JS", 40, 45);
+      
+      // Desenha o fundo e a borda do bloco de código na primeira página
+      doc.setFillColor(247, 247, 247);
+      doc.rect(margin, firstPageCodeStartY - 15, codeBoxWidth, pageHeight - firstPageCodeStartY - bottomMargin + 15, 'F');
+      doc.setDrawColor(200, 200, 200);
+      doc.rect(margin, firstPageCodeStartY - 15, codeBoxWidth, pageHeight - firstPageCodeStartY - bottomMargin + 15, 'S');
+      
+      // Inicia a impressão do código na primeira página
+      let currentY = firstPageCodeStartY;
+      
+      lines.forEach(line => {
+        // Se a próxima linha ultrapassar o espaço disponível, cria nova página
+        if (currentY + lineHeight > pageHeight - bottomMargin) {
+          addFooter();
+          doc.addPage();
+          // Desenha fundo e borda para o bloco de código na nova página
+          doc.setFillColor(247, 247, 247);
+          doc.rect(margin, topMargin, codeBoxWidth, pageHeight - topMargin - bottomMargin, 'F');
+          doc.setDrawColor(200, 200, 200);
+          doc.rect(margin, topMargin, codeBoxWidth, pageHeight - topMargin - bottomMargin, 'S');
+          currentY = subsequentPageCodeStartY;
+        }
+        doc.setFont("courier", "normal");
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        doc.text(line, margin + 5, currentY);
+        currentY += lineHeight;
+      });
+      
+      // Adiciona o rodapé na última página
+      addFooter();
+      
+      doc.save("codigo.pdf");
+    });
+
+    // Botão para baixar o código como arquivo .js
+    document.getElementById('downloadJsButton').addEventListener('click', function() {
+      const code = editor.getValue();
+      const blob = new Blob([code], { type: "text/javascript;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "codigo.js";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  </script>
+</body>
+</html>

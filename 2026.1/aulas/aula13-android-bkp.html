@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 13 - Android com Kotlin (Fundamentos)</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+
+  <style>
+    :root {
+      --kotlin-purple: #7F52FF;
+      --kotlin-orange: #F6891F;
+      --android-green: #3DDC84;
+      --android-dark: #1A1A1A;
+      --compose-blue: #4285F4;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3 {
+      color: var(--kotlin-purple);
+    }
+
+    .reveal pre code {
+      font-size: 0.85em;
+      background: var(--android-dark);
+      border-radius: 12px;
+      padding: 16px;
+      max-height: 450px;
+    }
+
+    .reveal .slides section {
+      padding: 20px;
+    }
+
+    .emoji-large {
+      font-size: 3em;
+      margin: 10px;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, var(--kotlin-purple), #9B7FFF);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+    }
+
+    .highlight-box-green {
+      background: linear-gradient(135deg, var(--android-green), #00C853);
+      color: #1A1A1A;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+    }
+
+    .info-box {
+      background: #E8F5E9;
+      border-left: 4px solid var(--android-green);
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .warning-box {
+      background: #FFF3E0;
+      border-left: 4px solid var(--kotlin-orange);
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .compare-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px solid #e9ecef;
+    }
+
+    .compare-card h4 {
+      margin-top: 0;
+      color: var(--kotlin-purple);
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .step {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--android-green);
+      color: #1A1A1A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .step.inactive {
+      background: #ccc;
+    }
+
+    .feature-list {
+      text-align: left;
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      padding: 8px 0;
+      padding-left: 30px;
+      position: relative;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--android-green);
+      font-weight: bold;
+    }
+
+    .quiz-option {
+      background: #f0f0f0;
+      padding: 12px 20px;
+      margin: 8px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+    }
+
+    .quiz-option:hover {
+      background: #e0e0e0;
+      transform: translateX(5px);
+    }
+
+    .code-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .code-comparison pre {
+      margin: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7em;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    .badge-kotlin { background: var(--kotlin-purple); color: white; }
+    .badge-compose { background: var(--compose-blue); color: white; }
+    .badge-xml { background: var(--kotlin-orange); color: white; }
+
+    .phone-mockup {
+      background: linear-gradient(180deg, #1A1A1A 0%, #2D2D2D 100%);
+      border-radius: 30px;
+      padding: 10px;
+      max-width: 280px;
+      margin: 0 auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .phone-screen {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      min-height: 200px;
+    }
+
+    .timeline {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 0;
+    }
+
+    .timeline-item {
+      text-align: center;
+      flex: 1;
+    }
+
+    .timeline-year {
+      background: var(--android-green);
+      color: #1A1A1A;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    table.styled {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table.styled th,
+    table.styled td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table.styled th {
+      background: var(--kotlin-purple);
+      color: white;
+    }
+
+    table.styled tr:hover {
+      background: #f5f5f5;
+    }
+
+    .mini-exercise {
+      background: linear-gradient(135deg, var(--android-green), #00E676);
+      color: #1A1A1A;
+      padding: 25px;
+      border-radius: 16px;
+      margin: 20px 0;
+    }
+
+    .mini-exercise h4 {
+      margin-top: 0;
+      color: #1A1A1A;
+    }
+
+    .architecture-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .arch-layer {
+      background: linear-gradient(90deg, var(--kotlin-purple), var(--compose-blue));
+      color: white;
+      padding: 15px 40px;
+      border-radius: 8px;
+      width: 80%;
+      text-align: center;
+    }
+
+    .arch-arrow {
+      font-size: 1.5em;
+      color: var(--android-green);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ==================== SEÇÃO 1: INTRODUÇÃO ==================== -->
+      
+      <!-- Título -->
+      <section data-background-gradient="linear-gradient(135deg, #1A1A1A 0%, #3DDC84 100%)">
+        <br><br>
+        <h4 style="color: white;">Programação para Dispositivos Móveis</h4>
+        <p style="color: rgba(255,255,255,0.8); font-size: .5em; font-weight: 300;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h2 style="color: white;">Aula 13 - Android com Kotlin</h2>
+        <div class="emoji-large">🤖</div>
+        <p style="color: rgba(255,255,255,0.9); font-size: 0.6em;">
+          Fundamentos • Jetpack Compose • XML Views • Projeto Prático
+        </p>
+      </section>
+
+      <!-- Agenda da Aula -->
+      <section>
+        <h3>📋 O que vamos aprender hoje?</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+          <div class="fragment" data-fragment-index="1">
+            <div class="compare-card">
+              <h4>🎯 Parte 1</h4>
+              <ul class="feature-list">
+                <li>Ecossistema Android</li>
+                <li>Fundamentos do Kotlin</li>
+                <li>Variáveis e Tipos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="fragment" data-fragment-index="2">
+            <div class="compare-card">
+              <h4>🎯 Parte 2</h4>
+              <ul class="feature-list">
+                <li>Classes e Data Classes</li>
+                <li>Null Safety</li>
+                <li>Funções e Lambdas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="fragment" data-fragment-index="3">
+            <div class="compare-card">
+              <h4>🎯 Parte 3</h4>
+              <ul class="feature-list">
+                <li>Jetpack Compose</li>
+                <li>State e Remember</li>
+                <li>Componentes de UI</li>
+              </ul>
+            </div>
+          </div>
+          <div class="fragment" data-fragment-index="4">
+            <div class="compare-card">
+              <h4>🎯 Parte 4</h4>
+              <ul class="feature-list">
+                <li>XML Views (alternativa)</li>
+                <li>Projeto: Lista de Tarefas</li>
+                <li>Exercícios Práticos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Por que Android? -->
+      <section>
+        <h3>🚀 Por que desenvolver para Android?</h3>
+        <div class="compare-grid">
+          <div class="fragment">
+            <div class="highlight-box-green">
+              <h4 style="margin-top: 0;">🌍 Maior Market Share</h4>
+              <p style="font-size: 0.8em;">~70% dos smartphones no mundo rodam Android</p>
+            </div>
+          </div>
+          <div class="fragment">
+            <div class="highlight-box-green">
+              <h4 style="margin-top: 0;">🔓 Open Source</h4>
+              <p style="font-size: 0.8em;">Código aberto, comunidade ativa, mais flexibilidade</p>
+            </div>
+          </div>
+          <div class="fragment">
+            <div class="highlight-box-green">
+              <h4 style="margin-top: 0;">💼 Oportunidades</h4>
+              <p style="font-size: 0.8em;">Milhares de vagas para desenvolvedores Android</p>
+            </div>
+          </div>
+          <div class="fragment">
+            <div class="highlight-box-green">
+              <h4 style="margin-top: 0;">🎨 Kotlin + Compose</h4>
+              <p style="font-size: 0.8em;">Ferramentas modernas e produtivas</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ecossistema Android -->
+      <section>
+        <h3>🤖 Ecossistema de Desenvolvimento Android</h3>
+        <div class="timeline">
+          <div class="timeline-item fragment">
+            <span class="timeline-year">Android Studio</span>
+            <p style="font-size: 0.7em;">IDE oficial (baseada no IntelliJ)</p>
+          </div>
+          <div class="timeline-item fragment">
+            <span class="timeline-year">Kotlin</span>
+            <p style="font-size: 0.7em;">Linguagem oficial desde 2019</p>
+          </div>
+          <div class="timeline-item fragment">
+            <span class="timeline-year">Compose</span>
+            <p style="font-size: 0.7em;">UI toolkit moderno</p>
+          </div>
+          <div class="timeline-item fragment">
+            <span class="timeline-year">Jetpack</span>
+            <p style="font-size: 0.7em;">Bibliotecas oficiais</p>
+          </div>
+        </div>
+        <div class="info-box fragment">
+          <strong>💡 Dica:</strong> Jetpack Compose é o presente e futuro do Android, mas XML Views ainda são muito usadas em apps legados.
+        </div>
+      </section>
+
+      <!-- Kotlin vs Java -->
+      <section>
+        <h3>☕ Por que Kotlin e não Java?</h3>
+        <div class="code-comparison">
+          <div>
+            <span class="badge badge-kotlin">Kotlin</span>
+            <pre><code class="kotlin" data-trim data-noescape>
+// Classe de dados em 1 linha!
+data class Pessoa(
+    val nome: String,
+    val idade: Int
+)
+
+// Null safety nativo
+val nome: String? = null
+println(nome?.length ?: 0)
+
+// Funções de extensão
+fun String.grito() = this.uppercase() + "!"
+println("olá".grito()) // "OLÁ!"
+            </code></pre>
+          </div>
+          <div>
+            <span class="badge" style="background: #F89820; color: white;">Java</span>
+            <pre><code class="java" data-trim data-noescape>
+// Muito mais código...
+public class Pessoa {
+    private String nome;
+    private int idade;
+    // getters, setters, equals,
+    // hashCode, toString...
+    // +50 linhas de código!
+}
+
+// NullPointerException 💥
+String nome = null;
+System.out.println(nome.length());
+            </code></pre>
+          </div>
+        </div>
+        <p class="fragment" style="font-size: 0.8em;">Kotlin é <strong>100% interoperável</strong> com Java! 🤝</p>
+      </section>
+
+      <!-- ==================== SEÇÃO 2: FUNDAMENTOS KOTLIN ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #7F52FF, #9B7FFF)">
+        <h2 style="color: white;">Parte 1</h2>
+        <h1 style="color: white;">Fundamentos do Kotlin</h1>
+        <p style="color: rgba(255,255,255,0.9);">Variáveis • Tipos • Coleções</p>
+      </section>
+
+      <!-- Variáveis: val vs var -->
+      <section>
+        <h3>📦 Variáveis: <code>val</code> vs <code>var</code></h3>
+        <div class="code-comparison">
+          <div>
+            <span class="badge badge-kotlin">val - Imutável</span>
+            <pre><code class="kotlin" data-trim data-noescape>
+// NÃO pode ser reatribuída
+val pi = 3.14159
+pi = 3.14  // ❌ ERRO!
+
+val cpf = "123.456.789-00"
+cpf = "000"  // ❌ ERRO!
+
+// Mas objetos podem mudar internamente
+val lista = mutableListOf(1, 2, 3)
+lista.add(4)  // ✅ OK
+            </code></pre>
+          </div>
+          <div>
+            <span class="badge badge-kotlin">var - Mutável</span>
+            <pre><code class="kotlin" data-trim data-noescape>
+// Pode ser reatribuída
+var nome = "Maria"
+nome = "Maria Silva"  // ✅ OK
+
+var contador = 0
+contador++  // ✅ OK
+contador = 100  // ✅ OK
+
+var cidade = "Recife"
+cidade = "São Paulo"  // ✅ OK
+            </code></pre>
+          </div>
+        </div>
+        <div class="warning-box fragment">
+          <strong>⚠️ Regra de ouro:</strong> Sempre use <code>val</code> por padrão. Use <code>var</code> apenas quando realmente precisar alterar o valor.
+        </div>
+      </section>
+
+      <!-- Type Inference e Type Annotation -->
+      <section>
+        <h3>🏷️ Tipos em Kotlin</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 Type Inference (Kotlin deduz o tipo automaticamente)
+val nome = "João"           // String
+val idade = 30              // Int
+val altura = 1.75           // Double
+val ativo = true            // Boolean
+
+// 📌 Type Annotation (você define o tipo explicitamente)
+val peso: Double = 70.0     // Explicitamente Double
+val codigo: String = "A001"
+val quantidade: Int = 100
+
+// 📌 Conversão de tipos
+val numero = 42
+val texto = numero.toString()   // "42"
+val decimal = numero.toDouble() // 42.0
+val inteiro = "123".toInt()     // 123
+        </code></pre>
+        <div class="fragment">
+          <table class="styled" style="font-size: 0.7em;">
+            <tr>
+              <th>Tipo</th><th>Exemplo</th><th>Descrição</th>
+            </tr>
+            <tr><td>Int</td><td>42, -10</td><td>Números inteiros</td></tr>
+            <tr><td>Double</td><td>3.14, -0.5</td><td>Números decimais</td></tr>
+            <tr><td>String</td><td>"Olá"</td><td>Texto</td></tr>
+            <tr><td>Boolean</td><td>true, false</td><td>Verdadeiro/Falso</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <!-- String Templates -->
+      <section>
+        <h3>📝 String Templates</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+val nome = "Ana"
+val idade = 22
+val curso = "ADS"
+
+// 🎯 Interpolação simples com $
+val mensagem = "Olá, meu nome é $nome"
+println(mensagem)  // "Olá, meu nome é Ana"
+
+// 🎯 Expressões com ${...}
+val apresentacao = "$nome tem $idade anos e estuda $curso"
+println(apresentacao)  // "Ana tem 22 anos e estuda ADS"
+
+// 🎯 Cálculos inline
+val nascimento = 2026 - idade
+println("$nome nasceu em $nascimento")  // "Ana nasceu em 2004"
+
+// 🎯 Strings multilinhas (raw strings)
+val bio = """
+    |Nome: $nome
+    |Idade: $idade
+    |Curso: $curso
+""".trimMargin()
+        </code></pre>
+      </section>
+
+      <!-- Coleções: Lists -->
+      <section>
+        <h3>📚 Listas</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 Lista imutável (somente leitura)
+val frutas = listOf("🍎", "🍊", "🍋")
+// frutas.add("🍇")  // ❌ ERRO! Não existe o método
+
+// 📌 Lista mutável
+val frutasMut = mutableListOf("🍎", "🍊", "🍋")
+frutasMut.add("🍇")           // Adiciona ao final
+frutasMut.add(1, "🍓")        // Insere na posição 1
+frutasMut.removeAt(0)         // Remove primeiro
+frutasMut[0] = "🥝"           // Altera elemento
+
+// 📌 Acessando elementos
+println(frutas[0])         // "🍎"
+println(frutas.first())    // "🍎"
+println(frutas.last())     // "🍋"
+println(frutas.getOrNull(10))  // null (seguro!)
+
+// 📌 Propriedades úteis
+println(frutas.size)           // Quantidade
+println(frutas.isEmpty())      // false
+println(frutas.contains("🍎")) // true
+        </code></pre>
+      </section>
+
+      <!-- Coleções: Maps -->
+      <section>
+        <h3>📖 Maps (Dicionários)</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 Map imutável
+val aluno = mapOf(
+    "nome" to "Carlos",
+    "idade" to 20,
+    "ativo" to true
+)
+
+val notas = mapOf(
+    "Prova 1" to 8.5,
+    "Prova 2" to 9.0,
+    "Trabalho" to 10.0
+)
+
+// 📌 Acessando valores
+println(aluno["nome"])     // "Carlos"
+println(notas["Prova 1"])  // 8.5
+println(aluno["email"])    // null (seguro!)
+
+// 📌 Map mutável
+val alunoMut = mutableMapOf("nome" to "Carlos")
+alunoMut["email"] = "carlos@email.com"  // Adiciona
+alunoMut["nome"] = "Carlos Silva"       // Atualiza
+alunoMut.remove("email")                // Remove
+
+// 📌 Iterando
+for ((chave, valor) in notas) {
+    println("$chave: $valor")
+}
+        </code></pre>
+      </section>
+
+      <!-- Quiz Interativo 1 -->
+      <section>
+        <h3>🧠 Quiz Rápido!</h3>
+        <p>Qual é a saída deste código?</p>
+        <pre><code class="kotlin" data-trim>
+val lista = mutableListOf(1, 2, 3)
+val outra = lista
+outra.add(4)
+println(lista.size)
+        </code></pre>
+        <div class="fragment">
+          <div class="quiz-option" style="background: #d4edda;">✅ <strong>4</strong> - Ambas apontam para a mesma lista!</div>
+        </div>
+        <div class="fragment">
+          <div class="info-box">
+            <strong>Explicação:</strong> Diferente de tipos primitivos, coleções são <em>reference types</em>. 
+            <code>val</code> impede reatribuição, mas não impede mutação do conteúdo.
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO 3: CLASSES E NULL SAFETY ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #3DDC84, #00E676)">
+        <h2 style="color: #1A1A1A;">Parte 2</h2>
+        <h1 style="color: #1A1A1A;">Classes e Null Safety</h1>
+        <p style="color: rgba(0,0,0,0.7);">Modelando dados no Kotlin</p>
+      </section>
+
+      <!-- Classes -->
+      <section>
+        <h3>🏛️ Classes em Kotlin</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 Classe simples com construtor primário
+class Aluno(
+    val nome: String,      // Propriedade imutável
+    var turma: String,     // Propriedade mutável
+    val matricula: Int
+) {
+    // Propriedade computada
+    val codigo: String
+        get() = "ALU-$matricula"
+    
+    // Método
+    fun apresentar(): String {
+        return "Sou $nome da turma $turma"
+    }
+    
+    // Bloco de inicialização
+    init {
+        println("Aluno $nome criado!")
+    }
+}
+
+// 📌 Usando a classe
+val joao = Aluno("João", "2026.1", 12345)
+println(joao.apresentar())  // "Sou João da turma 2026.1"
+println(joao.codigo)        // "ALU-12345"
+        </code></pre>
+      </section>
+
+      <!-- Data Classes -->
+      <section>
+        <h3>📦 Data Classes - O poder do Kotlin!</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 Data class = equals, hashCode, toString, copy GRÁTIS!
+data class Produto(
+    val id: Int,
+    val nome: String,
+    val preco: Double,
+    var estoque: Int = 0  // Valor padrão
+)
+
+// 📌 Usando
+val notebook = Produto(1, "MacBook", 12000.0, 5)
+println(notebook)  // Produto(id=1, nome=MacBook, preco=12000.0, estoque=5)
+
+// 📌 Copy com modificações
+val notebookPromo = notebook.copy(preco = 10000.0)
+println(notebookPromo.preco)  // 10000.0
+
+// 📌 Destructuring
+val (id, nome, preco, estoque) = notebook
+println("$nome custa R$ $preco")
+
+// 📌 Comparação automática
+val outro = Produto(1, "MacBook", 12000.0, 5)
+println(notebook == outro)  // true ✅
+        </code></pre>
+        <div class="info-box fragment">
+          <strong>💡 Use data class</strong> para classes que representam dados (DTOs, models, entidades).
+        </div>
+      </section>
+
+      <!-- Null Safety -->
+      <section>
+        <h3>🛡️ Null Safety - Adeus NullPointerException!</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 Por padrão, variáveis NÃO podem ser null
+var nome: String = "João"
+nome = null  // ❌ ERRO DE COMPILAÇÃO!
+
+// 📌 Para permitir null, use ?
+var email: String? = null  // ✅ OK
+email = "joao@email.com"   // ✅ OK
+
+// 📌 Acesso seguro com ?.
+println(email?.length)     // 15 (ou null se email for null)
+println(email?.uppercase())
+
+// 📌 Elvis operator ?: (valor padrão)
+val tamanho = email?.length ?: 0
+println("Tamanho: $tamanho")
+
+// 📌 Safe call chain
+data class Endereco(val rua: String?)
+data class Pessoa(val endereco: Endereco?)
+
+val pessoa: Pessoa? = null
+println(pessoa?.endereco?.rua ?: "Não informado")
+        </code></pre>
+      </section>
+
+      <!-- Null Safety Avançado -->
+      <section>
+        <h3>🔒 Mais Null Safety</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 let - Executar bloco se não for null
+val email: String? = "teste@email.com"
+
+email?.let { e ->
+    println("Email válido: $e")
+    enviarEmail(e)
+}
+
+// 📌 Versão compacta com it
+email?.let {
+    println("Email: $it")
+}
+
+// 📌 !! - Force unwrap (CUIDADO! Pode crashar)
+val tamanho = email!!.length  // Crash se null!
+
+// 📌 Verificação com if
+if (email != null) {
+    // Smart cast: email é String aqui (não String?)
+    println(email.length)
+}
+
+// 📌 require e check
+fun processar(nome: String?) {
+    requireNotNull(nome) { "Nome é obrigatório!" }
+    // nome é String aqui (não String?)
+    println(nome.uppercase())
+}
+        </code></pre>
+        <div class="warning-box fragment">
+          <strong>⚠️ Evite !!</strong> - Se precisar usar, provavelmente há um design melhor.
+        </div>
+      </section>
+
+      <!-- Funções -->
+      <section>
+        <h3>⚡ Funções em Kotlin</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 Função simples
+fun saudacao() {
+    println("Olá!")
+}
+
+// 📌 Com parâmetros e retorno
+fun soma(a: Int, b: Int): Int {
+    return a + b
+}
+
+// 📌 Single-expression function
+fun soma2(a: Int, b: Int) = a + b
+
+// 📌 Parâmetros nomeados
+fun criarUsuario(nome: String, idade: Int, ativo: Boolean = true) {
+    println("$nome, $idade, $ativo")
+}
+criarUsuario(nome = "Ana", idade = 25)
+criarUsuario(idade = 30, nome = "João", ativo = false)
+
+// 📌 Parâmetros com valor padrão
+fun exibir(mensagem: String, vezes: Int = 1) {
+    repeat(vezes) { println(mensagem) }
+}
+exibir("Oi")           // 1 vez
+exibir("Oi", vezes = 3)   // 3 vezes
+        </code></pre>
+      </section>
+
+      <!-- Lambdas -->
+      <section>
+        <h3>🎁 Lambdas (Funções Anônimas)</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 Lambda básica
+val saudacao: (String) -> String = { nome ->
+    "Olá, $nome!"
+}
+println(saudacao("João"))  // "Olá, João!"
+
+// 📌 Lambda com parâmetro implícito 'it'
+val dobrar: (Int) -> Int = { it * 2 }
+println(dobrar(5))  // 10
+
+// 📌 Funções de ordem superior (muito usado!)
+val numeros = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+val pares = numeros.filter { it % 2 == 0 }       // [2, 4, 6, 8, 10]
+val dobrados = numeros.map { it * 2 }             // [2, 4, 6, ...]
+val soma = numeros.reduce { acc, n -> acc + n }   // 55
+val primeiro = numeros.find { it > 5 }            // 6
+
+// 📌 Trailing lambda syntax
+numeros.forEach { numero ->
+    println("Número: $numero")
+}
+        </code></pre>
+      </section>
+
+      <!-- Mini Exercício -->
+      <section>
+        <div class="mini-exercise">
+          <h4>🏋️ Mini Exercício</h4>
+          <p>Crie uma data class <code>Produto</code> com:</p>
+          <ul style="text-align: left; font-size: 0.9em;">
+            <li><code>nome: String</code></li>
+            <li><code>preco: Double</code></li>
+            <li><code>quantidade: Int</code></li>
+            <li>Método de extensão <code>valorTotal()</code></li>
+          </ul>
+        </div>
+        <div class="fragment">
+          <pre><code class="kotlin" data-trim data-noescape>
+data class Produto(
+    val nome: String,
+    val preco: Double,
+    val quantidade: Int
+)
+
+// Função de extensão!
+fun Produto.valorTotal(): Double = preco * quantidade
+
+val notebook = Produto("MacBook", 12000.0, 2)
+println(notebook.valorTotal())  // 24000.0
+          </code></pre>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO 4: JETPACK COMPOSE ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #4285F4, #34A853)">
+        <h2 style="color: white;">Parte 3</h2>
+        <h1 style="color: white;">Jetpack Compose</h1>
+        <p style="color: rgba(255,255,255,0.9);">UI moderna e declarativa</p>
+      </section>
+
+      <!-- O que é Compose -->
+      <section>
+        <h3>✨ O que é Jetpack Compose?</h3>
+        <div class="compare-grid">
+          <div>
+            <div class="highlight-box" style="background: linear-gradient(135deg, #4285F4, #5C9CE6);">
+              <h4 style="margin-top: 0;">Declarativo</h4>
+              <p style="font-size: 0.8em;">Descreva <strong>O QUE</strong> quer ver, não COMO construir</p>
+            </div>
+            <div class="highlight-box" style="background: linear-gradient(135deg, #34A853, #4CAF50);">
+              <h4 style="margin-top: 0;">Reativo</h4>
+              <p style="font-size: 0.8em;">UI atualiza automaticamente quando o estado muda</p>
+            </div>
+          </div>
+          <div>
+            <div class="phone-mockup">
+              <div class="phone-screen" style="text-align: center;">
+                <h4 style="margin: 0;">👋 Olá!</h4>
+                <input type="text" placeholder="Seu nome" style="margin: 10px; padding: 8px; border-radius: 8px; border: 1px solid #ccc; width: 80%;">
+                <br>
+                <button style="background: #4285F4; color: white; border: none; padding: 10px 20px; border-radius: 8px;">Enviar</button>
+              </div>
+            </div>
+            <p style="font-size: 0.6em; color: #666;">Preview em tempo real no Android Studio</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Primeira Composable -->
+      <section>
+        <h3>🎨 Sua Primeira Composable</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.*
+
+@Composable
+fun Saudacao() {
+    Column(
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Olá, Jetpack Compose! 👋",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+        
+        Text(
+            text = "Bem-vindo ao desenvolvimento Android",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.secondary
+        )
+    }
+}
+
+// Preview para o Android Studio
+@Preview(showBackground = true)
+@Composable
+fun SaudacaoPreview() {
+    Saudacao()
+}
+        </code></pre>
+      </section>
+
+      <!-- Componentes Básicos -->
+      <section>
+        <h3>🧩 Componentes Básicos do Compose</h3>
+        <div class="compare-grid" style="font-size: 0.85em;">
+          <div>
+            <pre><code class="kotlin" data-trim data-noescape>
+// 📝 Textos
+Text(
+    text = "Título",
+    style = MaterialTheme.typography.titleLarge,
+    fontWeight = FontWeight.Bold
+)
+
+Text(
+    text = "Subtítulo",
+    style = MaterialTheme.typography.bodySmall,
+    color = Color.Gray
+)
+
+// 🖼️ Imagens
+Icon(
+    imageVector = Icons.Default.Star,
+    contentDescription = "Favorito",
+    tint = Color.Yellow
+)
+
+Image(
+    painter = painterResource(R.drawable.foto),
+    contentDescription = "Foto",
+    modifier = Modifier.size(100.dp).clip(CircleShape)
+)
+            </code></pre>
+          </div>
+          <div>
+            <pre><code class="kotlin" data-trim data-noescape>
+// 🔘 Botões
+Button(onClick = { println("Clicou!") }) {
+    Text("Clique aqui")
+}
+
+OutlinedButton(onClick = { }) {
+    Icon(Icons.Default.Add, null)
+    Spacer(Modifier.width(8.dp))
+    Text("Adicionar")
+}
+
+// ✅ Switches e Checkboxes
+var checked by remember { mutableStateOf(false) }
+
+Switch(
+    checked = checked,
+    onCheckedChange = { checked = it }
+)
+
+Checkbox(
+    checked = checked,
+    onCheckedChange = { checked = it }
+)
+            </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Layouts: Columns e Rows -->
+      <section>
+        <h3>📐 Layouts: Column, Row, Box</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 Column - Empilha verticalmente
+Column(
+    modifier = Modifier.fillMaxWidth(),
+    verticalArrangement = Arrangement.spacedBy(8.dp),
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    Text("Item 1")
+    Text("Item 2")
+    Text("Item 3")
+}
+
+// 📌 Row - Empilha horizontalmente
+Row(
+    modifier = Modifier.fillMaxWidth(),
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically
+) {
+    Icon(Icons.Default.Person, null)
+    Text("João Silva")
+    Text("Online")
+}
+
+// 📌 Box - Sobrepõe elementos
+Box(modifier = Modifier.size(100.dp)) {
+    Image(painter, null, Modifier.fillMaxSize())
+    Text("Sobre a imagem", Modifier.align(Alignment.BottomCenter))
+}
+        </code></pre>
+      </section>
+
+      <!-- Modifier -->
+      <section>
+        <h3>🎨 Modifier - Estilizando Componentes</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+Text(
+    text = "Compose é incrível!",
+    modifier = Modifier
+        .fillMaxWidth()              // Largura máxima
+        .padding(16.dp)              // Espaçamento interno
+        .background(                 // Cor de fundo
+            color = Color.Blue,
+            shape = RoundedCornerShape(8.dp)
+        )
+        .clickable { }               // Clicável
+        .shadow(4.dp)                // Sombra
+)
+        </code></pre>
+        <div class="warning-box fragment">
+          <strong>⚠️ A ordem importa!</strong> Modifiers são aplicados de cima para baixo.
+          <pre><code class="kotlin" style="font-size: 0.8em;">
+// Diferente:
+Modifier.padding(16.dp).background(Color.Red)  // Padding DENTRO do fundo
+Modifier.background(Color.Red).padding(16.dp)  // Padding FORA do fundo
+          </code></pre>
+        </div>
+      </section>
+
+      <!-- State -->
+      <section>
+        <h3>🔄 State - Gerenciando Estado</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+@Composable
+fun Contador() {
+    // 👇 remember + mutableStateOf = estado reativo
+    var contador by remember { mutableStateOf(0) }
+    
+    Column(
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Contador: $contador",
+            style = MaterialTheme.typography.headlineLarge
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(onClick = { contador-- }) {
+                Text("−")
+            }
+            Button(onClick = { contador++ }) {
+                Text("+")
+            }
+        }
+    }
+}
+        </code></pre>
+        <div class="info-box fragment">
+          <strong>💡 remember</strong> mantém o valor entre recomposições. <strong>mutableStateOf</strong> torna o valor observável.
+        </div>
+      </section>
+
+      <!-- TextField -->
+      <section>
+        <h3>📝 TextField e Formulários</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+@Composable
+fun Formulario() {
+    var nome by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var aceitouTermos by remember { mutableStateOf(false) }
+    
+    Column(modifier = Modifier.padding(16.dp)) {
+        OutlinedTextField(
+            value = nome,
+            onValueChange = { nome = it },
+            label = { Text("Nome completo") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        
+        Spacer(modifier = Modifier.height(8.dp))
+        
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("E-mail") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            modifier = Modifier.fillMaxWidth()
+        )
+        
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(checked = aceitouTermos, onCheckedChange = { aceitouTermos = it })
+            Text("Aceito os termos")
+        }
+        
+        Button(
+            onClick = { println("Nome: $nome, Email: $email") },
+            enabled = aceitouTermos && nome.isNotBlank()
+        ) {
+            Text("Cadastrar")
+        }
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- LazyColumn -->
+      <section>
+        <h3>📋 Listas com LazyColumn</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+data class Tarefa(
+    val id: Int,
+    val titulo: String,
+    var concluida: Boolean = false
+)
+
+@Composable
+fun ListaTarefas() {
+    val tarefas = remember {
+        mutableStateListOf(
+            Tarefa(1, "Estudar Kotlin", true),
+            Tarefa(2, "Criar app Android", false),
+            Tarefa(3, "Publicar na Play Store", false)
+        )
+    }
+    
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(tarefas, key = { it.id }) { tarefa ->
+            TarefaItem(
+                tarefa = tarefa,
+                onToggle = { tarefa.concluida = !tarefa.concluida }
+            )
+        }
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- Navigation -->
+      <section>
+        <h3>🧭 Navegação entre Telas</h3>
+        <pre><code class="kotlin" data-trim data-noescape style="font-size: 0.8em;">
+// 📌 Definir rotas
+sealed class Rota(val nome: String) {
+    object Home : Rota("home")
+    object Perfil : Rota("perfil")
+    object Detalhes : Rota("detalhes/{id}") // Com parâmetro
+}
+
+@Composable
+fun AppNavigation() {
+    val navController = rememberNavController()
+    
+    NavHost(navController = navController, startDestination = Rota.Home.nome) {
+        composable(Rota.Home.nome) {
+            TelaHome(
+                onNavigateToPerfil = { navController.navigate(Rota.Perfil.nome) },
+                onNavigateToDetalhes = { id -> 
+                    navController.navigate("detalhes/$id") 
+                }
+            )
+        }
+        composable(Rota.Perfil.nome) {
+            TelaPerfil(onVoltar = { navController.popBackStack() })
+        }
+        composable(
+            route = Rota.Detalhes.nome,
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getInt("id") ?: 0
+            TelaDetalhes(id = id)
+        }
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- ==================== SEÇÃO 5: XML VIEWS ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #F6891F, #FF9800)">
+        <h2 style="color: white;">Parte 4</h2>
+        <h1 style="color: white;">XML Views</h1>
+        <p style="color: rgba(255,255,255,0.9);">O sistema tradicional do Android</p>
+      </section>
+
+      <!-- XML Overview -->
+      <section>
+        <h3>📱 XML Views - Quando usar?</h3>
+        <div class="compare-grid">
+          <div class="compare-card">
+            <h4>✅ Use XML quando:</h4>
+            <ul style="font-size: 0.8em; text-align: left;">
+              <li>Projeto legado existente</li>
+              <li>Equipe ainda não domina Compose</li>
+              <li>Funcionalidades não disponíveis no Compose</li>
+              <li>Suporte a Android < 5.0</li>
+            </ul>
+          </div>
+          <div class="compare-card">
+            <h4>✅ Use Compose quando:</h4>
+            <ul style="font-size: 0.8em; text-align: left;">
+              <li>Projeto novo</li>
+              <li>UI complexa e dinâmica</li>
+              <li>Melhor produtividade</li>
+              <li>Código mais conciso</li>
+            </ul>
+          </div>
+        </div>
+        <div class="info-box fragment">
+          <strong>💡 Na prática:</strong> Muitos apps usam os dois! Compose pode incorporar views XML e vice-versa com AndroidView e ComposeView.
+        </div>
+      </section>
+
+      <!-- Layout XML -->
+      <section>
+        <h3>🏗️ Layout com XML</h3>
+        <pre><code class="xml" data-trim data-noescape style="font-size: 0.8em;">
+&lt;!-- res/layout/activity_main.xml --&gt;
+&lt;LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"&gt;
+
+    &lt;TextView
+        android:id="@+id/txtTitulo"
+        android:text="Olá, Android!"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/&gt;
+
+    &lt;EditText
+        android:id="@+id/edtNome"
+        android:hint="Digite seu nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"/&gt;
+
+    &lt;Button
+        android:id="@+id/btnEnviar"
+        android:text="Enviar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"/&gt;
+
+&lt;/LinearLayout&gt;
+        </code></pre>
+      </section>
+
+      <!-- Activity com ViewBinding -->
+      <section>
+        <h3>📱 Activity com View Binding</h3>
+        <pre><code class="kotlin" data-trim data-noescape>
+class MainActivity : AppCompatActivity() {
+    
+    // View Binding - acesso tipado aos elementos
+    private lateinit var binding: ActivityMainBinding
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        // Inflar o layout com View Binding
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        
+        // Acessar elementos diretamente
+        binding.txtTitulo.text = "Bem-vindo!"
+        
+        binding.btnEnviar.setOnClickListener {
+            val nome = binding.edtNome.text.toString()
+            if (nome.isNotBlank()) {
+                binding.txtTitulo.text = "Olá, $nome!"
+                Toast.makeText(this, "Enviado!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}
+        </code></pre>
+        <div class="info-box fragment">
+          <strong>💡 Habilitar View Binding:</strong> No build.gradle: <code>buildFeatures { viewBinding = true }</code>
+        </div>
+      </section>
+
+      <!-- RecyclerView -->
+      <section>
+        <h3>📋 RecyclerView - Listas no XML</h3>
+        <pre><code class="kotlin" data-trim data-noescape style="font-size: 0.75em;">
+class TarefasAdapter(
+    private val tarefas: List&lt;Tarefa&gt;,
+    private val onItemClick: (Tarefa) -> Unit
+) : RecyclerView.Adapter&lt;TarefasAdapter.ViewHolder&gt;() {
+
+    class ViewHolder(val binding: ItemTarefaBinding) : 
+        RecyclerView.ViewHolder(binding.root)
+    
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemTarefaBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ViewHolder(binding)
+    }
+    
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val tarefa = tarefas[position]
+        holder.binding.apply {
+            txtTitulo.text = tarefa.titulo
+            chkConcluida.isChecked = tarefa.concluida
+            root.setOnClickListener { onItemClick(tarefa) }
+        }
+    }
+    
+    override fun getItemCount() = tarefas.size
+}
+        </code></pre>
+        <p class="fragment" style="font-size: 0.8em;">Perceba como XML + RecyclerView é muito mais verboso que LazyColumn! 📝</p>
+      </section>
+
+      <!-- ==================== SEÇÃO 6: PROJETO PRÁTICO ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #FF5722, #E91E63)">
+        <h2 style="color: white;">🚀 Projeto Prático</h2>
+        <h1 style="color: white;">App de Lista de Tarefas</h1>
+        <p style="color: rgba(255,255,255,0.9);">Vamos criar juntos com Compose!</p>
+      </section>
+
+      <!-- Projeto: Estrutura -->
+      <section>
+        <h3>📁 Estrutura do Projeto</h3>
+        <div class="step-indicator">
+          <div class="step">1</div>
+          <div class="step inactive">2</div>
+          <div class="step inactive">3</div>
+          <div class="step inactive">4</div>
+        </div>
+        <pre><code class="kotlin" data-trim data-noescape>
+// 📌 Passo 1: Modelo de dados
+import java.util.UUID
+
+data class Tarefa(
+    val id: String = UUID.randomUUID().toString(),
+    val titulo: String,
+    val descricao: String = "",
+    val concluida: Boolean = false,
+    val dataCriacao: Long = System.currentTimeMillis()
+) {
+    // Formatar data
+    val dataFormatada: String
+        get() {
+            val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+            return sdf.format(Date(dataCriacao))
+        }
+}
+        </code></pre>
+        <div class="info-box">
+          <strong>💡 data class</strong> já nos dá equals, hashCode, toString e copy automaticamente!
+        </div>
+      </section>
+
+      <!-- Projeto: ViewModel -->
+      <section>
+        <h3>🧠 ViewModel (Lógica de Negócio)</h3>
+        <div class="step-indicator">
+          <div class="step">1</div>
+          <div class="step">2</div>
+          <div class="step inactive">3</div>
+          <div class="step inactive">4</div>
+        </div>
+        <pre><code class="kotlin" data-trim data-noescape style="font-size: 0.8em;">
+// 📌 Passo 2: Gerenciador de tarefas
+class TarefasViewModel : ViewModel() {
+    
+    private val _tarefas = mutableStateListOf&lt;Tarefa&gt;()
+    val tarefas: List&lt;Tarefa&gt; = _tarefas
+    
+    var novaTarefa by mutableStateOf("")
+    var novaDescricao by mutableStateOf("")
+    
+    fun adicionar() {
+        if (novaTarefa.isBlank()) return
+        _tarefas.add(Tarefa(titulo = novaTarefa, descricao = novaDescricao))
+        novaTarefa = ""
+        novaDescricao = ""
+    }
+    
+    fun remover(tarefa: Tarefa) {
+        _tarefas.remove(tarefa)
+    }
+    
+    fun alternarConclusao(tarefa: Tarefa) {
+        val index = _tarefas.indexOf(tarefa)
+        if (index != -1) {
+            _tarefas[index] = tarefa.copy(concluida = !tarefa.concluida)
+        }
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- Projeto: Tela Principal -->
+      <section>
+        <h3>📱 Tela Principal</h3>
+        <div class="step-indicator">
+          <div class="step">1</div>
+          <div class="step">2</div>
+          <div class="step">3</div>
+          <div class="step inactive">4</div>
+        </div>
+        <pre><code class="kotlin" data-trim data-noescape style="font-size: 0.72em;">
+// 📌 Passo 3: Interface principal
+@Composable
+fun TarefasScreen(viewModel: TarefasViewModel = viewModel()) {
+    var mostrarDialog by remember { mutableStateOf(false) }
+    
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("📋 Minhas Tarefas") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { mostrarDialog = true }) {
+                Icon(Icons.Default.Add, contentDescription = "Adicionar")
+            }
+        }
+    ) { padding ->
+        LazyColumn(
+            modifier = Modifier.padding(padding).fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(viewModel.tarefas, key = { it.id }) { tarefa ->
+                TarefaCard(tarefa, viewModel::alternarConclusao, viewModel::remover)
+            }
+        }
+    }
+    
+    if (mostrarDialog) {
+        NovaTarefaDialog(viewModel) { mostrarDialog = false }
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- Projeto: Componentes -->
+      <section>
+        <h3>🧩 Card da Tarefa</h3>
+        <div class="step-indicator">
+          <div class="step">1</div>
+          <div class="step">2</div>
+          <div class="step">3</div>
+          <div class="step">4</div>
+        </div>
+        <pre><code class="kotlin" data-trim data-noescape style="font-size: 0.75em;">
+// 📌 Passo 4: Componente do card
+@Composable
+fun TarefaCard(
+    tarefa: Tarefa,
+    onToggle: (Tarefa) -> Unit,
+    onRemover: (Tarefa) -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = if (tarefa.concluida) 
+                Color(0xFFE8F5E9) else MaterialTheme.colorScheme.surface
+        )
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(
+                checked = tarefa.concluida,
+                onCheckedChange = { onToggle(tarefa) }
+            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = tarefa.titulo,
+                    style = MaterialTheme.typography.titleMedium,
+                    textDecoration = if (tarefa.concluida) 
+                        TextDecoration.LineThrough else null
+                )
+                Text(tarefa.dataFormatada, style = MaterialTheme.typography.bodySmall)
+            }
+            IconButton(onClick = { onRemover(tarefa) }) {
+                Icon(Icons.Default.Delete, "Remover", tint = Color.Red)
+            }
+        }
+    }
+}
+        </code></pre>
+      </section>
+
+      <!-- Projeto: Dialog -->
+      <section>
+        <h3>➕ Dialog de Nova Tarefa</h3>
+        <pre><code class="kotlin" data-trim data-noescape style="font-size: 0.8em;">
+@Composable
+fun NovaTarefaDialog(
+    viewModel: TarefasViewModel,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Nova Tarefa") },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = viewModel.novaTarefa,
+                    onValueChange = { viewModel.novaTarefa = it },
+                    label = { Text("Título") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = viewModel.novaDescricao,
+                    onValueChange = { viewModel.novaDescricao = it },
+                    label = { Text("Descrição (opcional)") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = { viewModel.adicionar(); onDismiss() },
+                enabled = viewModel.novaTarefa.isNotBlank()
+            ) { Text("Salvar") }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("Cancelar") }
+        }
+    )
+}
+        </code></pre>
+      </section>
+
+      <!-- ==================== SEÇÃO 7: EXERCÍCIOS ==================== -->
+      
+      <section data-background-gradient="linear-gradient(135deg, #9C27B0, #673AB7)">
+        <h2 style="color: white;">🏋️ Exercícios</h2>
+        <h1 style="color: white;">Hora de Praticar!</h1>
+      </section>
+
+      <!-- Exercício 1 -->
+      <section>
+        <h3>📝 Exercício 1 - Nível Básico</h3>
+        <div class="mini-exercise">
+          <h4>Calculadora de IMC</h4>
+          <p>Crie um app com Jetpack Compose que:</p>
+          <ol style="text-align: left; font-size: 0.9em;">
+            <li>Tenha campos para peso (kg) e altura (m)</li>
+            <li>Botão para calcular IMC</li>
+            <li>Exiba o resultado e a classificação com cores</li>
+          </ol>
+          <p style="font-size: 0.8em;">Fórmula: IMC = peso / (altura × altura)</p>
+        </div>
+        <div class="fragment">
+          <div class="info-box">
+            <strong>💡 Dica:</strong> Use <code>remember { mutableStateOf("") }</code> para os campos. 
+            Use <code>toDoubleOrNull()</code> para conversão segura.
+          </div>
+        </div>
+      </section>
+
+      <!-- Exercício 2 -->
+      <section>
+        <h3>📝 Exercício 2 - Nível Intermediário</h3>
+        <div class="mini-exercise">
+          <h4>Lista de Contatos</h4>
+          <p>Crie um app que:</p>
+          <ol style="text-align: left; font-size: 0.9em;">
+            <li>Data class <code>Contato</code> com nome, telefone e email</li>
+            <li>Lista de contatos usando <code>LazyColumn</code></li>
+            <li>Tela de detalhes com navegação</li>
+            <li>FAB para adicionar novo contato</li>
+          </ol>
+        </div>
+        <div class="fragment">
+          <div class="info-box">
+            <strong>💡 Dica:</strong> Use <code>NavHost</code> para navegação.
+            Use <code>AlertDialog</code> ou uma nova tela para adicionar.
+          </div>
+        </div>
+      </section>
+
+      <!-- Exercício 3 -->
+      <section>
+        <h3>📝 Exercício 3 - Nível Avançado</h3>
+        <div class="mini-exercise">
+          <h4>App de Notas com Persistência</h4>
+          <p>Expanda o projeto de tarefas:</p>
+          <ol style="text-align: left; font-size: 0.9em;">
+            <li>Adicione categorias (Trabalho, Pessoal, Estudos)</li>
+            <li>Implemente filtros usando <code>Chip</code></li>
+            <li>Salve os dados usando <code>DataStore</code> ou <code>Room</code></li>
+            <li>Adicione busca com <code>SearchBar</code></li>
+          </ol>
+        </div>
+        <div class="fragment">
+          <pre><code class="kotlin" data-trim style="font-size: 0.8em;">
+// Dica: DataStore para persistência simples
+val Context.dataStore by preferencesDataStore(name = "tarefas")
+
+// Salvar
+dataStore.edit { prefs -> 
+    prefs[stringPreferencesKey("tarefas")] = Json.encodeToString(tarefas) 
+}
+
+// Carregar
+val tarefasJson = dataStore.data.map { prefs -> 
+    prefs[stringPreferencesKey("tarefas")] ?: "[]" 
+}
+          </code></pre>
+        </div>
+      </section>
+
+      <!-- Arquitetura -->
+      <section>
+        <h3>🏗️ Arquitetura Recomendada</h3>
+        <div class="architecture-diagram">
+          <div class="arch-layer fragment">📱 UI Layer (Compose)</div>
+          <div class="arch-arrow fragment">↕️</div>
+          <div class="arch-layer fragment">🧠 ViewModel (State Holder)</div>
+          <div class="arch-arrow fragment">↕️</div>
+          <div class="arch-layer fragment">📦 Repository (Data Layer)</div>
+          <div class="arch-arrow fragment">↕️</div>
+          <div class="arch-layer fragment">💾 Data Source (Room, API, DataStore)</div>
+        </div>
+        <div class="info-box fragment" style="margin-top: 20px;">
+          <strong>💡 MVVM + Clean Architecture</strong> é o padrão recomendado pelo Google para apps Android modernos.
+        </div>
+      </section>
+
+      <!-- Recursos e Links -->
+      <section>
+        <h3>📚 Recursos para Continuar Aprendendo</h3>
+        <div class="compare-grid">
+          <div class="compare-card">
+            <h4>🎓 Cursos Oficiais</h4>
+            <ul style="font-size: 0.8em; text-align: left;">
+              <li><a href="https://developer.android.com/courses" target="_blank">Android Developers Training</a></li>
+              <li><a href="https://developer.android.com/jetpack/compose" target="_blank">Jetpack Compose Docs</a></li>
+              <li><a href="https://kotlinlang.org/docs/home.html" target="_blank">Kotlin Documentation</a></li>
+            </ul>
+          </div>
+          <div class="compare-card">
+            <h4>🎬 Comunidade</h4>
+            <ul style="font-size: 0.8em; text-align: left;">
+              <li>Philipp Lackner (YouTube)</li>
+              <li>Coding with Mitch</li>
+              <li>r/androiddev (Reddit)</li>
+              <li>Android Developers (Medium)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="info-box fragment">
+          <strong>🎯 Próximo passo:</strong> Baixe o 
+          <a href="https://developer.android.com/studio" target="_blank">Android Studio</a> 
+          e crie seu primeiro projeto!
+        </div>
+      </section>
+
+      <!-- Resumo -->
+      <section>
+        <h3>📋 Resumo da Aula</h3>
+        <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+          <ul class="feature-list">
+            <li class="fragment"><strong>Kotlin</strong>: Linguagem moderna, concisa e null-safe</li>
+            <li class="fragment"><strong>val vs var</strong>: Imutável vs Mutável (prefira val!)</li>
+            <li class="fragment"><strong>Data Classes</strong>: equals, hashCode, toString, copy grátis</li>
+            <li class="fragment"><strong>Null Safety</strong>: ?. e ?: previnem NullPointerException</li>
+            <li class="fragment"><strong>Jetpack Compose</strong>: UI declarativa com state e remember</li>
+            <li class="fragment"><strong>XML Views</strong>: Sistema tradicional, ainda usado em legados</li>
+            <li class="fragment"><strong>Prática</strong>: A melhor forma de aprender é fazendo!</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Encerramento -->
+      <section data-background-gradient="linear-gradient(135deg, #1A1A1A 0%, #3DDC84 100%)">
+        <h2 style="color: white;">🤖 Parabéns!</h2>
+        <h3 style="color: rgba(255,255,255,0.9);">Você deu o primeiro passo no desenvolvimento Android</h3>
+        <br>
+        <div style="color: white; font-size: 0.9em;">
+          <p>Dúvidas? Sugestões?</p>
+          <p style="font-size: 0.7em;">Prof. Nator Junior</p>
+        </div>
+        <br>
+        <div class="emoji-large">🚀📱✨</div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="./dist/reveal.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      slideNumber: 'c/t',
+      hash: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      plugins: [RevealHighlight],
+      // Configurações adicionais
+      width: 1200,
+      height: 700,
+      margin: 0.1,
+    });
+  </script>
+</body>
+</html>

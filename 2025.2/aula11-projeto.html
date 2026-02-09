@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 12 - Revisão</title>
+
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="./dist/reveal.css">
+    <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+    <!-- Tema para código -->
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+    <link rel="stylesheet" href="css/workshop.css">
+
+    <!-- Menu plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
+
+    <style>
+        .reveal h1,
+        .reveal h2 {
+            color: #0056b3;
+            transition: color 0.3s ease;
+        }
+
+        .reveal pre code {
+            font-size: 0.75em;
+            background: #2d3748;
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 350px;
+            overflow-y: auto;
+            line-height: 1.4;
+        }
+
+        .reveal p {
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .concept-box {
+            background: rgba(40, 167, 69, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 2px solid #28a745;
+            font-size: 0.9em;
+        }
+
+        .example-box {
+            background: rgba(0, 123, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 2px solid #007bff;
+        }
+
+        .exercise-box {
+            background: rgba(255, 193, 7, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 2px solid #ffc107;
+        }
+
+        .quiz-box {
+            background: rgba(220, 53, 69, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #dc3545;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .topic-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid #0056b3;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 120px;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 86, 179, 0.1);
+        }
+
+        .emoji-large {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .summary-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.5s ease;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .step.active {
+            background: #28a745;
+        }
+
+        .step.completed {
+            background: #007bff;
+        }
+
+        .code-highlight {
+            background: rgba(255, 193, 7, 0.2);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Título -->
+            <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-top: 40px;">
+                    Programação para Dispositivos Móveis
+                </h4>
+                <p style="color: white; font-size: 0.8em; margin: 10px 0;">
+                    Prof. Msc. Nator Junior Carvalho da Costa
+                </p>
+                <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin: 25px 0;">
+                    Aula 12 - Revisão Básica
+                </h2>
+                <h1 style="margin: 25px 0;">🎯</h1>
+                <p style="color: white; font-size: 1.1em;">
+                    Consolidando conhecimentos em React Native
+                </p>
+            </section>
+
+            <!-- Slide 2: Objetivos -->
+            <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+                <h2 style="color: white; margin-bottom: 25px;">🎯 Objetivos da Revisão</h2>
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 15px;">
+                    <ul style="list-style: none; color: white; font-size: 1em; margin: 0;">
+                        <li class="fragment fade-up" style="margin: 12px 0; display: flex; align-items: center;">
+                            <span style="margin-right: 10px;">📱</span>
+                            <span>Revisar componentes fundamentais do React Native</span>
+                        </li>
+                        <li class="fragment fade-up" style="margin: 12px 0; display: flex; align-items: center;">
+                            <span style="margin-right: 10px;">🪝</span>
+                            <span>Consolidar uso de Hooks (useState, useEffect)</span>
+                        </li>
+                        <li class="fragment fade-up" style="margin: 12px 0; display: flex; align-items: center;">
+                            <span style="margin-right: 10px;">🧭</span>
+                            <span>Praticar navegação entre telas</span>
+                        </li>
+                        <li class="fragment fade-up" style="margin: 12px 0; display: flex; align-items: center;">
+                            <span style="margin-right: 10px;">🌐</span>
+                            <span>Integrar APIs e gerenciar dados externos</span>
+                        </li>
+                        <li class="fragment fade-up" style="margin: 12px 0; display: flex; align-items: center;">
+                            <span style="margin-right: 10px;">💾</span>
+                            <span>Implementar persistência com AsyncStorage</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 3: Roteiro Progressivo -->
+            <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <h2 style="color: white; margin-bottom: 25px;">📋 Roteiro Progressivo</h2>
+                <div class="topic-grid">
+                    <div class="topic-card fragment fade-in" data-fragment-index="1">
+                        <div class="emoji-large">📱</div>
+                        <h4 style="color: white; margin: 8px 0;">Componentes</h4>
+                        <p style="color: white; font-size: 0.8em;">Base da aplicação</p>
+                    </div>
+                    <div class="topic-card fragment fade-in" data-fragment-index="2">
+                        <div class="emoji-large">🪝</div>
+                        <h4 style="color: white; margin: 8px 0;">Estado & Hooks</h4>
+                        <p style="color: white; font-size: 0.8em;">Gerenciar dados</p>
+                    </div>
+                    <div class="topic-card fragment fade-in" data-fragment-index="3">
+                        <div class="emoji-large">🧭</div>
+                        <h4 style="color: white; margin: 8px 0;">Navegação</h4>
+                        <p style="color: white; font-size: 0.8em;">Entre telas</p>
+                    </div>
+                    <div class="topic-card fragment fade-in" data-fragment-index="4">
+                        <div class="emoji-large">🌐</div>
+                        <h4 style="color: white; margin: 8px 0;">APIs</h4>
+                        <p style="color: white; font-size: 0.8em;">Comunicação</p>
+                    </div>
+                    <div class="topic-card fragment fade-in" data-fragment-index="5">
+                        <div class="emoji-large">💾</div>
+                        <h4 style="color: white; margin: 8px 0;">Storage</h4>
+                        <p style="color: white; font-size: 0.8em;">Persistência</p>
+                    </div>
+                    <div class="topic-card fragment fade-in" data-fragment-index="6">
+                        <div class="emoji-large">🚀</div>
+                        <h4 style="color: white; margin: 8px 0;">Projeto Final</h4>
+                        <p style="color: white; font-size: 0.8em;">Aplicação completa</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 1: COMPONENTES -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">📱 Componentes Básicos</h1>
+                    <p style="color: white; font-size: 1.1em;">Os blocos de construção fundamentais</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 16.67%;"></div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>📚 Fundamentos Teóricos</h2>
+                    <div class="concept-box">
+                        <h3>O que são Componentes?</h3>
+                        <ul style="font-size: 0.9em; line-height: 1.5;">
+                            <li class="fragment"><strong>Definição:</strong> Unidades reutilizáveis de interface do usuário</li>
+                            <li class="fragment"><strong>Conceito:</strong> Encapsulam estrutura, comportamento e estilo</li>
+                            <li class="fragment"><strong>Hierarquia:</strong> Organizados em árvore (pai-filho)</li>
+                            <li class="fragment"><strong>Props:</strong> Dados passados de pai para filho (imutáveis)</li>
+                            <li class="fragment"><strong>Estado:</strong> Dados internos do componente (mutáveis)</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Componentes básicos</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>📱 Básicos</h3>
+                            <ul style="font-size: 0.9em;">
+                                <li><span class="code-highlight">View</span> - Container principal</li>
+                                <li><span class="code-highlight">Text</span> - Exibir texto</li>
+                                <li><span class="code-highlight">Button</span> - Botões interativos</li>
+                                <li><span class="code-highlight">TextInput</span> - Entrada de dados</li>
+                                <li><span class="code-highlight">Image</span> - Exibir imagens</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>📋 Listas</h3>
+                            <ul style="font-size: 0.9em;">
+                                <li><span class="code-highlight">FlatList</span> - Lista otimizada</li>
+                                <li><span class="code-highlight">ScrollView</span> - Área com rolagem</li>
+                                <li><span class="code-highlight">SectionList</span> - Lista com seções</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Exemplo: App Simples</h2>
+                    <div class="concept-box">
+                        <pre><code class="language-jsx" data-trim>
+import React, { useState } from 'react';
+import { View, Text, Button, TextInput, Alert } from 'react-native';
+
+export default function MeuPrimeiroApp() {
+  const [nome, setNome] = useState('');
+
+  const cumprimentar = () => {
+    if (nome.trim()) {
+      Alert.alert('Olá!', `Bem-vindo, ${nome}!`);
+    } else {
+      Alert.alert('Ops!', 'Por favor, digite seu nome');
+    }
+  };
+
+  return (
+    &lt;View style={{ flex: 1, padding: 20, justifyContent: 'center' }}&gt;
+      &lt;Text style={{ fontSize: 24, textAlign: 'center', marginBottom: 20 }}&gt;
+        Meu Primeiro App
+      &lt;/Text&gt;
+      
+      &lt;TextInput
+        style={{ 
+          borderWidth: 1, 
+          borderColor: '#ccc',
+          padding: 15, 
+          marginBottom: 15,
+          borderRadius: 8
+        }}
+        placeholder="Digite seu nome"
+        value={nome}
+        onChangeText={setNome}
+      /&gt;
+      
+      &lt;Button title="Cumprimentar" onPress={cumprimentar} /&gt;
+    &lt;/View&gt;
+  );
+}
+                        </code></pre>
+                    </div>
+                </section>
+
+                <!-- <section data-background="#f8f9fa">
+                    <h2>💡 Exercício Prático</h2>
+                    <div class="exercise-box">
+                        <h3>Desafio: Calculadora Simples</h3>
+                        <p><strong>Objetivo:</strong> Criar uma calculadora básica com soma</p>
+                        <ul style="font-size: 0.9em;">
+                            <li>✅ Dois campos de entrada (TextInput)</li>
+                            <li>✅ Botão para calcular</li>
+                            <li>✅ Exibir resultado</li>
+                            <li>✅ Validar entradas numéricas</li>
+                        </ul>
+                        <p style="margin-top: 15px;">
+                            <strong>Dica:</strong> Use <span class="code-highlight">parseFloat()</span> para converter texto em número
+                        </p>
+                    </div>
+                </section> -->
+            </section>
+
+            <!-- SEÇÃO 2: ESTADO E HOOKS -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">🪝 Estado e Hooks</h1>
+                    <p style="color: white; font-size: 1.1em;">Gerenciando dados dinâmicos</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 33.33%;"></div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h5>📚 O que são Hooks?</h5>
+                    <div class="concept-box">
+     
+                        
+                        <h3 style="margin-top: 20px;">Principais Hooks</h3>
+                        <div class="two-column" style="margin-top: 10px;">
+                            <div>
+                                <h4>🔄 useState</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Gerencia estado local</li>
+                                    <li>Retorna [valor, setter]</li>
+                                    <li>Triggers re-render</li>
+                                </ul>
+                                
+                                <h4>⚡ useEffect</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Efeitos colaterais</li>
+                                    <li>Substitui ciclo de vida</li>
+                                    <li>Cleanup function</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>🌐 useContext</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Estado global</li>
+                                    <li>Evita prop drilling</li>
+                                    <li>Context Provider/Consumer</li>
+                                </ul>
+                                
+                                <h4>📝 useReducer</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Estado complexo</li>
+                                    <li>Padrão Redux-like</li>
+                                    <li>Actions e Reducer</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>🔄 Ciclo de Vida com Hooks</h2>
+                    <div class="concept-box">
+                        <h3>useEffect - Dependências</h3>
+                        <div style="font-size: 0.85em;">
+                            <div style="background: #f0f8ff; padding: 10px; margin: 10px 0; border-left: 4px solid #007bff;">
+                                <strong>useEffect(() => {}</strong> - Executa uma vez (componentDidMount)
+                            </div>
+                            <div style="background: #fff0f5; padding: 10px; margin: 10px 0; border-left: 4px solid #dc3545;">
+                                <strong>useEffect(() => {})</strong> - Executa sempre (componentDidUpdate)
+                            </div>
+                            <div style="background: #f0fff0; padding: 10px; margin: 10px 0; border-left: 4px solid #28a745;">
+                                <strong>useEffect(() => {}, [dep])</strong> - Executa quando dep muda
+                            </div>
+                            <div style="background: #fffacd; padding: 10px; margin: 10px 0; border-left: 4px solid #ffc107;">
+                                <strong>return () => {}</strong> - Cleanup (componentWillUnmount)
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>useState - Gerenciando Estado</h2>
+                    <div class="concept-box">
+                        <pre><code class="language-jsx" data-trim>
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
+
+export default function ContadorInteligente() {
+  const [contador, setContador] = useState(0);
+  const [historico, setHistorico] = useState([]);
+
+  const incrementar = () => {
+    const novoValor = contador + 1;
+    setContador(novoValor);
+    setHistorico([...historico, `+1 = ${novoValor}`]);
+  };
+
+  const decrementar = () => {
+    const novoValor = contador - 1;
+    setContador(novoValor);
+    setHistorico([...historico, `-1 = ${novoValor}`]);
+  };
+
+  const resetar = () => {
+    setContador(0);
+    setHistorico(['Reset para 0']);
+  };
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.titulo}&gt;Contador: {contador}&lt;/Text&gt;
+      
+      &lt;View style={styles.botoes}&gt;
+        &lt;Button title="-" onPress={decrementar} /&gt;
+        &lt;Button title="Reset" onPress={resetar} /&gt;
+        &lt;Button title="+" onPress={incrementar} /&gt;
+      &lt;/View&gt;
+
+      &lt;Text style={styles.historico}&gt;
+        Último: {historico[historico.length - 1] || 'Nenhuma ação'}
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { padding: 20, alignItems: 'center' },
+  titulo: { fontSize: 28, marginBottom: 20 },
+  botoes: { flexDirection: 'row', gap: 15, marginBottom: 20 },
+  historico: { fontSize: 14, color: '#666' }
+});
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>useEffect - Efeitos e Ciclo de Vida</h2>
+                    <div class="concept-box">
+                        <pre><code class="language-jsx" data-trim>
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button } from 'react-native';
+
+export default function CronometroAvancado() {
+  const [segundos, setSegundos] = useState(0);
+  const [ativo, setAtivo] = useState(false);
+  const [voltas, setVoltas] = useState([]);
+
+  // Effect para o timer
+  useEffect(() => {
+    let interval = null;
+    
+    if (ativo) {
+      interval = setInterval(() => {
+        setSegundos(segundos => segundos + 1);
+      }, 1000);
+    } else if (!ativo && segundos !== 0) {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval); // Cleanup
+  }, [ativo, segundos]);
+
+  // Effect para salvar no histórico
+  useEffect(() => {
+    if (segundos > 0 && segundos % 10 === 0) {
+      console.log(`Marco: ${segundos} segundos`);
+    }
+  }, [segundos]);
+
+  const marcarVolta = () => {
+    setVoltas([...voltas, segundos]);
+  };
+
+  const formatarTempo = (tempo) => {
+    const mins = Math.floor(tempo / 60);
+    const secs = tempo % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  return (
+    &lt;View style={{ padding: 20, alignItems: 'center' }}&gt;
+      &lt;Text style={{ fontSize: 48, marginBottom: 20 }}&gt;
+        {formatarTempo(segundos)}
+      &lt;/Text&gt;
+      
+      &lt;View style={{ flexDirection: 'row', gap: 10, marginBottom: 20 }}&gt;
+        &lt;Button 
+          title={ativo ? 'Pausar' : 'Iniciar'} 
+          onPress={() => setAtivo(!ativo)} 
+        /&gt;
+        &lt;Button title="Volta" onPress={marcarVolta} /&gt;
+        &lt;Button 
+          title="Reset" 
+          onPress={() => {
+            setSegundos(0);
+            setAtivo(false);
+            setVoltas([]);
+          }} 
+        /&gt;
+      &lt;/View&gt;
+
+      &lt;Text&gt;Voltas: {voltas.length}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>🎯 Hooks</h2>
+                    <div class="quiz-box">
+                        <h3>Quando usar useEffect?</h3>
+                        <div class="fragment fade-in" style="margin-top: 15px;">
+                            <p style="color: green; margin: 8px 0;">✅ Chamadas de API</p>
+                            <p style="color: green; margin: 8px 0;">✅ Timers e intervalos</p>
+                            <!-- <p style="color: green; margin: 8px 0;">✅ Subscriptions (eventos)</p> -->
+                            <!-- <p style="color: green; margin: 8px 0;">✅ Limpeza de recursos (cleanup)</p> -->
+                            <p style="color: red; margin: 8px 0;">❌ Cálculos síncronos simples</p>
+                            <!-- <p style="color: red; margin: 8px 0;">❌ Atualizações diretas de estado</p> -->
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- SEÇÃO 3: NAVEGAÇÃO -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">🧭 Navegação</h1>
+                    <p style="color: white; font-size: 1.1em;">Movendo entre telas</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%;"></div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h5>📚 Teoria da Navegação</h5>
+                    <div class="concept-box">
+                        <!-- <h3>Conceitos Fundamentais</h3> -->
+                        <ul style="font-size: 0.9em; line-height: 1.5;">
+                            <li><strong>Navigator:</strong> Container que gerencia o histórico de telas</li>
+                            <li><strong>Screen:</strong> Componente que representa uma tela/página</li>
+                            <li><strong>Route:</strong> Definição de uma tela (nome + componente)</li>
+                            <li><strong>Navigation Prop:</strong> Objeto com métodos de navegação</li>
+                            <!-- <li><strong>Route Params:</strong> Dados passados entre telas</li> -->
+                        </ul>
+                        
+                        <!-- <h3 style="margin-top: 20px;">Tipos de Navegadores</h3> -->
+                        <div class="two-column" style="margin-top: 10px;">
+                            <div>
+                                <h4>📚 Stack Navigator</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Pilha de telas (LIFO)</li>
+                                    <li>Header automático</li>
+                                    <!-- <li>Botão de voltar</li> -->
+                                    <li>Transições nativas</li>
+                                </ul>
+                                
+                                <h4>📑 Tab Navigator</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Abas na parte inferior</li>
+                                    <li>Navegação rápida</li>
+                                    <!-- <li>Ícones personalizáveis</li> -->
+                                    <li>Estado preservado</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>🍔 Drawer Navigator</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Menu lateral deslizante</li>
+                                    <li>Mais opções de menu</li>
+                                    <li>Gestos de swipe</li>
+                                    <li>Header customizável</li>
+                                </ul>
+                                <h4> Bottom Tabs</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Abas na parte inferior</li>
+                                    <!-- <li>Navegação rápida</li> -->
+                                    <li>Ícones personalizáveis</li>
+                                    <li>Estado preservado</li>
+                                </ul>
+                
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Stack Navigator - Configuração</h2>
+                    <div class="concept-box">
+                        <pre><code class="language-jsx" data-trim>
+// App.js
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './screens/HomeScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import SettingsScreen from './screens/SettingsScreen';
+
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Stack.Navigator 
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: { backgroundColor: '#0056b3' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' }
+        }}
+      &gt;
+        &lt;Stack.Screen 
+          name="Home" 
+          component={HomeScreen}
+          options={{ title: 'Página Inicial' }}
+        /&gt;
+        &lt;Stack.Screen 
+          name="Profile" 
+          component={ProfileScreen}
+          options={{ title: 'Meu Perfil' }}
+        /&gt;
+        &lt;Stack.Screen 
+          name="Settings" 
+          component={SettingsScreen}
+          options={{ title: 'Configurações' }}
+        /&gt;
+      &lt;/Stack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Navegação com Parâmetros</h2>
+                    <div class="example-box">
+                        <pre><code class="language-jsx" data-trim>
+// HomeScreen.js
+import React from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
+
+export default function HomeScreen({ navigation }) {
+  const irParaPerfil = () => {
+    navigation.navigate('Profile', {
+      userId: 123,
+      userName: 'João Silva',
+      userEmail: 'joao@email.com'
+    });
+  };
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.titulo}&gt;Bem-vindo ao App!&lt;/Text&gt;
+      
+      &lt;View style={styles.menu}&gt;
+        &lt;Button 
+          title="Ver Perfil" 
+          onPress={irParaPerfil}
+        /&gt;
+        &lt;Button 
+          title="Configurações" 
+          onPress={() => navigation.navigate('Settings')}
+        /&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+// ProfileScreen.js
+export default function ProfileScreen({ route, navigation }) {
+  const { userId, userName, userEmail } = route.params;
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.titulo}&gt;Perfil do Usuário&lt;/Text&gt;
+      &lt;Text&gt;ID: {userId}&lt;/Text&gt;
+      &lt;Text&gt;Nome: {userName}&lt;/Text&gt;
+      &lt;Text&gt;Email: {userEmail}&lt;/Text&gt;
+      
+      &lt;Button 
+        title="Voltar" 
+        onPress={() => navigation.goBack()}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 20, justifyContent: 'center' },
+  titulo: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
+  menu: { gap: 15 }
+});
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>💡 Exercício: Tab Navigator</h2>
+                    <div class="exercise-box">
+                        <h3>Desafio: App com Abas</h3>
+                        <p><strong>Criar:</strong> Navegação por abas com 3 telas</p>
+                        <ul style="font-size: 0.9em;">
+                            <li>✅ Aba "Home" - Lista de itens</li>
+                            <li>✅ Aba "Favoritos" - Itens marcados</li>
+                            <li>✅ Aba "Perfil" - Dados do usuário</li>
+                            <li>✅ Ícones nas abas (Ionicons)</li>
+                        </ul>
+                        <p style="margin-top: 15px;">
+                            <strong>Biblioteca:</strong> <span class="code-highlight">@react-navigation/bottom-tabs</span>
+                        </p>
+                    </div>
+                </section>
+            </section>
+
+            <!-- SEÇÃO 4: APIs -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">🌐 APIs e Comunicação</h1>
+                    <p style="color: white; font-size: 1.1em;">Conectando com o mundo exterior</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 66.67%;"></div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>📚 Teoria de APIs</h2>
+                    <div class="concept-box">
+                        <h3>Conceitos de API</h3>
+                        <ul style="font-size: 0.7em; line-height: 1.5;">
+                            <li><strong>API:</strong> Application Programming Interface - interface de comunicação</li>
+                            <li><strong>REST:</strong> Representational State Transfer - arquitetura web</li>
+                            <li><strong>HTTP:</strong> Protocolo de comunicação (GET, POST, PUT, DELETE)</li>
+                            <li><strong>JSON:</strong> JavaScript Object Notation - formato de dados</li>
+                            <li><strong>Endpoint:</strong> URL específica que oferece um serviço</li>
+                        </ul>
+                        
+                        <h6 style="margin-top: 10px;">Métodos HTTP</h6>
+                        <div style="font-size: 0.7em; display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; margin-top: 10px;">
+                            <div style="background: #e3f2fd; padding: 10px; border-radius: 5px;">
+                                <strong>GET:</strong> Buscar dados (Read)
+                            </div>
+                            <div style="background: #f3e5f5; padding: 10px; border-radius: 5px;">
+                                <strong>POST:</strong> Criar dados (Create)
+                            </div>
+                            <div style="background: #fff3e0; padding: 10px; border-radius: 5px;">
+                                <strong>PUT:</strong> Atualizar dados (Update)
+                            </div>
+                            <div style="background: #ffebee; padding: 10px; border-radius: 5px;">
+                                <strong>DELETE:</strong> Remover dados (Delete)
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Fetch API - Padrão Completo</h2>
+                    <div class="concept-box">
+                        <pre><code class="language-jsx" data-trim>
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, ActivityIndicator, Alert } from 'react-native';
+
+export default function ListaUsuarios() {
+  const [usuarios, setUsuarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [erro, setErro] = useState(null);
+
+  useEffect(() => {
+    buscarUsuarios();
+  }, []);
+
+  const buscarUsuarios = async () => {
+    try {
+      setLoading(true);
+      setErro(null);
+      
+      const response = await fetch(
+        'https://jsonplaceholder.typicode.com/users'
+      );
+      
+      if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      setUsuarios(data);
+      
+    } catch (error) {
+      console.error('Erro ao buscar usuários:', error);
+      setErro(error.message);
+      Alert.alert('Erro', 'Não foi possível carregar os usuários');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      &lt;View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}&gt;
+        &lt;ActivityIndicator size="large" color="#0056b3" /&gt;
+        &lt;Text style={{ marginTop: 10 }}&gt;Carregando usuários...&lt;/Text&gt;
+      &lt;/View&gt;
+    );
+  }
+
+  if (erro) {
+    return (
+      &lt;View style={{ flex: 1, justifyContent: 'center', padding: 20 }}&gt;
+        &lt;Text style={{ textAlign: 'center', color: 'red' }}&gt;
+          Erro: {erro}
+        &lt;/Text&gt;
+        &lt;Button title="Tentar Novamente" onPress={buscarUsuarios} /&gt;
+      &lt;/View&gt;
+    );
+  }
+
+  return (
+    &lt;FlatList
+      data={usuarios}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }) => (
+        &lt;View style={{ 
+          padding: 15, 
+          borderBottomWidth: 1, 
+          borderBottomColor: '#eee' 
+        }}&gt;
+          &lt;Text style={{ fontSize: 16, fontWeight: 'bold' }}&gt;
+            {item.name}
+          &lt;/Text&gt;
+          &lt;Text style={{ color: '#666' }}&gt;{item.email}&lt;/Text&gt;
+          &lt;Text style={{ color: '#666' }}&gt;{item.phone}&lt;/Text&gt;
+        &lt;/View&gt;
+      )}
+      refreshing={loading}
+      onRefresh={buscarUsuarios}
+    /&gt;
+  );
+}
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>💡 Exercício: App de Notícias</h2>
+                    <div class="exercise-box">
+                        <h3>Desafio: Lista de Posts</h3>
+                        <p><strong>API:</strong> https://jsonplaceholder.typicode.com/posts</p>
+                        <ul style="font-size: 0.9em;">
+                            <li>✅ Buscar lista de posts</li>
+                            <li>✅ Exibir título e corpo</li>
+                            <li>✅ Pull-to-refresh</li>
+                            <li>✅ Loading state</li>
+                            <li>✅ Tratamento de erro</li>
+                            <li>✅ Navegar para detalhes do post</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- SEÇÃO 5: STORAGE -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">💾 Persistência de Dados</h1>
+                    <p style="color: white; font-size: 1.1em;">Salvando informações localmente</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 83.33%;"></div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>📚 Teoria de Persistência</h2>
+                    <div class="concept-box">
+                        <h3>Tipos de Armazenamento</h3>
+                        <div class="two-column" style="margin-top: 10px;">
+                            <div>
+                                <h4>🗂️ AsyncStorage</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Chave-valor assíncrono</li>
+                                    <li>Dados não críticos</li>
+                                    <li>Preferências do usuário</li>
+                                    <li>Cache temporário</li>
+                                </ul>
+                                
+                                <h4>🗄️ SQLite</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Banco relacional</li>
+                                    <li>Dados estruturados</li>
+                                    <li>Consultas complexas</li>
+                                    <li>ACID compliance</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>🔐 Secure Storage</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Dados sensíveis</li>
+                                    <li>Tokens de autenticação</li>
+                                    <li>Senhas e chaves</li>
+                                    <li>Criptografia nativa</li>
+                                </ul>
+                                
+                                <h4>☁️ Cloud Storage</h4>
+                                <ul style="font-size: 0.8em;">
+                                    <li>Firebase/AWS</li>
+                                    <li>Sincronização</li>
+                                    <li>Backup automático</li>
+                                    <li>Acesso multiplataforma</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- <h3 style="margin-top: 20px;">Boas Práticas</h3>
+                        <ul style="font-size: 0.8em;">
+                            <li>✅ Sempre usar try/catch para operações assíncronas</li>
+                            <li>✅ Implementar fallbacks para dados não encontrados</li>
+                            <li>✅ Validar dados antes de armazenar</li>
+                            <li>✅ Usar prefixos nas chaves para organização</li>
+                            <li>❌ Não armazenar dados sensíveis em AsyncStorage</li>
+                        </ul> -->
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>AsyncStorage - Padrão Completo</h2>
+                    <div class="concept-box">
+                        <pre><code class="language-jsx" data-trim>
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export default function GerenciadorPreferencias() {
+  const [usuario, setUsuario] = useState({
+    nome: '',
+    email: '',
+    tema: 'claro'
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    carregarDados();
+  }, []);
+
+  const carregarDados = async () => {
+    try {
+      setLoading(true);
+      
+      // Carregar múltiplos valores
+      const keys = ['@usuario_nome', '@usuario_email', '@usuario_tema'];
+      const values = await AsyncStorage.multiGet(keys);
+      
+      const dadosCarregados = {};
+      values.forEach(([key, value]) => {
+        if (value !== null) {
+          const campo = key.replace('@usuario_', '');
+          dadosCarregados[campo] = value;
+        }
+      });
+
+      setUsuario(prevUsuario => ({
+        ...prevUsuario,
+        ...dadosCarregados
+      }));
+      
+    } catch (error) {
+      console.error('Erro ao carregar dados:', error);
+      Alert.alert('Erro', 'Não foi possível carregar suas preferências');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const salvarDados = async () => {
+    try {
+      // Salvar múltiplos valores
+      const dadosParaSalvar = [
+        ['@usuario_nome', usuario.nome],
+        ['@usuario_email', usuario.email],
+        ['@usuario_tema', usuario.tema]
+      ];
+
+      await AsyncStorage.multiSet(dadosParaSalvar);
+      Alert.alert('Sucesso', 'Preferências salvas com sucesso!');
+      
+    } catch (error) {
+      console.error('Erro ao salvar dados:', error);
+      Alert.alert('Erro', 'Não foi possível salvar suas preferências');
+    }
+  };
+
+  const limparDados = async () => {
+    try {
+      await AsyncStorage.multiRemove([
+        '@usuario_nome', 
+        '@usuario_email', 
+        '@usuario_tema'
+      ]);
+      
+      setUsuario({ nome: '', email: '', tema: 'claro' });
+      Alert.alert('Sucesso', 'Dados limpos com sucesso!');
+      
+    } catch (error) {
+      console.error('Erro ao limpar dados:', error);
+    }
+  };
+
+  if (loading) {
+    return (
+      &lt;View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}&gt;
+        &lt;Text&gt;Carregando preferências...&lt;/Text&gt;
+      &lt;/View&gt;
+    );
+  }
+
+  return (
+    &lt;View style={{ padding: 20 }}&gt;
+      &lt;Text style={{ fontSize: 24, marginBottom: 20, textAlign: 'center' }}&gt;
+        Minhas Preferências
+      &lt;/Text&gt;
+      
+      &lt;TextInput
+        style={{ borderWidth: 1, padding: 10, marginBottom: 15, borderRadius: 5 }}
+        placeholder="Nome"
+        value={usuario.nome}
+        onChangeText={(texto) => setUsuario({...usuario, nome: texto})}
+      /&gt;
+      
+      &lt;TextInput
+        style={{ borderWidth: 1, padding: 10, marginBottom: 15, borderRadius: 5 }}
+        placeholder="Email"
+        value={usuario.email}
+        onChangeText={(texto) => setUsuario({...usuario, email: texto})}
+        keyboardType="email-address"
+      /&gt;
+      
+      &lt;View style={{ gap: 10 }}&gt;
+        &lt;Button title="Salvar Preferências" onPress={salvarDados} /&gt;
+        &lt;Button title="Limpar Dados" onPress={limparDados} color="red" /&gt;
+      &lt;/View&gt;
+      
+      &lt;Text style={{ marginTop: 20, fontSize: 16 }}&gt;
+        Tema atual: {usuario.tema}
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+                        </code></pre>
+                    </div>
+                </section>
+            </section>
+
+            <!-- SEÇÃO 6: PROJETO FINAL -->
+            <!-- <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">🚀 Projeto Final</h1>
+                    <p style="color: white; font-size: 1.1em;">App Lista de Tarefas Completo</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>📋 Funcionalidades do Projeto</h2>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <h4>✅ CRUD de Tarefas</h4>
+                            <p>Criar, listar, editar, excluir</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>💾 Persistência Local</h4>
+                            <p>AsyncStorage para salvar dados</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>🧭 Navegação Stack</h4>
+                            <p>Múltiplas telas organizadas</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>🎨 Interface Moderna</h4>
+                            <p>Componentes bem estilizados</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>🔄 Estados Dinâmicos</h4>
+                            <p>Loading, erro, sucesso</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>📱 Responsivo</h4>
+                            <p>Adaptável a diferentes telas</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Arquitetura do Projeto</h2>
+                    <div class="example-box">
+                        <pre><code class="language-jsx" data-trim>
+// Estrutura de pastas sugerida:
+src/
+├── components/
+│   ├── TaskCard.js
+│   ├── LoadingSpinner.js
+│   └── CustomButton.js
+├── screens/
+│   ├── TaskListScreen.js
+│   ├── AddTaskScreen.js
+│   ├── EditTaskScreen.js
+│   └── SettingsScreen.js
+├── services/
+│   └── StorageService.js
+├── utils/
+│   └── dateUtils.js
+└── App.js
+
+// App.js - Navegação principal
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import TaskListScreen from './src/screens/TaskListScreen';
+import AddTaskScreen from './src/screens/AddTaskScreen';
+import EditTaskScreen from './src/screens/EditTaskScreen';
+
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Stack.Navigator
+        initialRouteName="TaskList"
+        screenOptions={{
+          headerStyle: { backgroundColor: '#0056b3' },
+          headerTintColor: '#fff'
+        }}
+      &gt;
+        &lt;Stack.Screen 
+          name="TaskList" 
+          component={TaskListScreen}
+          options={{ title: 'Minhas Tarefas' }}
+        /&gt;
+        &lt;Stack.Screen 
+          name="AddTask" 
+          component={AddTaskScreen}
+          options={{ title: 'Nova Tarefa' }}
+        /&gt;
+        &lt;Stack.Screen 
+          name="EditTask" 
+          component={EditTaskScreen}
+          options={{ title: 'Editar Tarefa' }}
+        /&gt;
+      &lt;/Stack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>🎯 Desafio Final</h2>
+                    <div class="exercise-box">
+                        <h3>Implementar App Completo</h3>
+                        <p><strong>Prazo:</strong> Próxima aula</p>
+                        <h4>Requisitos Obrigatórios:</h4>
+                        <ul style="font-size: 0.9em;">
+                            <li>✅ Lista de tarefas com FlatList</li>
+                            <li>✅ Adicionar nova tarefa</li>
+                            <li>✅ Marcar como concluída</li>
+                            <li>✅ Editar tarefa existente</li>
+                            <li>✅ Excluir tarefa</li>
+                            <li>✅ Persistir dados com AsyncStorage</li>
+                            <li>✅ Navegação entre 3 telas mínimo</li>
+                        </ul>
+                        <h4>Bônus:</h4>
+                        <ul style="font-size: 0.9em;">
+                            <li>🌟 Filtros (todas, pendentes, concluídas)</li>
+                            <li>🌟 Data de criação/conclusão</li>
+                            <li>🌟 Categoria das tarefas</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- SEÇÃO 7: RESUMO FINAL -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h3 style="color: white;">📚 Resumo Consolidado</h3>
+                    <p style="color: white; font-size: 1.1em;">Nossa jornada de aprendizado</p>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h3>🎯 Conhecimentos Dominados</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <h4>📱 Componentes</h4>
+                            <p>View, Text, Button, TextInput, FlatList, Image</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>🪝 Hooks Essenciais</h4>
+                            <p>useState, useEffect, useContext</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>🧭 Navegação</h4>
+                            <p>Stack Navigator, Tab Navigator, Parâmetros</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>🌐 APIs</h4>
+                            <p>Fetch, async/await, Tratamento de erro</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h3>🎯 Conhecimentos Dominados</h3>
+                    <div class="summary-grid">
+                        
+                        <div class="summary-item">
+                            <h4>💾 Persistência</h4>
+                            <p>AsyncStorage, SecureStore, SQLite</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>🏗️ Arquitetura</h4>
+                            <p>Organização, Componentes, Boas práticas</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>🚀 Próximos Horizontes</h2>
+                    <div style="text-align: left; max-width: 700px; margin: 0 auto;">
+                        <ul style="font-size: 0.8em; line-height: 1.5;">
+                            <li class="fragment fade-right">
+                                <strong>📱 Funcionalidades Nativas:</strong> Câmera, Geolocalização, Notificações Push
+                            </li>
+                            <li class="fragment fade-right">
+                                <strong>⚡ Performance:</strong> Otimização, Lazy Loading, Memorização
+                            </li>
+                            <li class="fragment fade-right">
+                                <strong>🧪 Testes:</strong> Jest, React Native Testing Library
+                            </li>
+                            <li class="fragment fade-right">
+                                <strong>🎨 UI Avançada:</strong> Animações, Gestos, Tema Escuro
+                            </li>
+                            <li class="fragment fade-right">
+                                <strong>🚢 Publicação:</strong> App Store, Google Play Store
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>📖 Recursos para Continuar</h2>
+                    <div class="concept-box">
+                        <div class="two-column">
+                            <div>
+                                <h4>📚 Documentação</h4>
+                                <ul style="font-size: 0.9em;">
+                                    <li>React Native Docs</li>
+                                    <li>Expo Documentation</li>
+                                    <li>React Navigation</li>
+                                </ul>
+
+                                <h4>🛠️ Ferramentas</h4>
+                                <ul style="font-size: 0.9em;">
+                                    <li>Expo Snack (playground)</li>
+                                    <li>React Native Debugger</li>
+                                    <li>VS Code Extensions</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>👥 Comunidade</h4>
+                                <ul style="font-size: 0.9em;">
+                                    <li>Stack Overflow</li>
+                                    <li>GitHub Discussions</li>
+                                    <li>Discord/Reddit</li>
+                                </ul>
+
+                                <h4>📺 Aprendizado</h4>
+                                <ul style="font-size: 0.9em;">
+                                    <li>YouTube Channels</li>
+                                    <li>Udemy/Coursera</li>
+                                    <li>React Native Blog</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- SEÇÃO DE QUESTÕES ENADE -->
+            <section>
+                <section data-background-gradient="radial-gradient(#8e24aa, #3f51b5)">
+                    <h1 style="color: white;">🎓 Questões</h1>
+                    <p style="color: white; font-size: 1.1em;">Questões sobre React Native</p>
+                    <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 15px; margin: 15px 0;">
+                        <p style="color: white; font-size: 0.85em;">
+                            As próximas questões avaliam o conhecimento técnico em desenvolvimento mobile com React Native,
+                            seguindo o padrão das questões do Exame Nacional de Desempenho dos Estudantes (ENADE).
+                        </p>
+                    </div>
+                </section>
+<!-- Questão 1 -->
+<section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+  <h5 style="margin-bottom: 8px;">📝 Questão 1 - Hooks e Estado em React Native</h5>
+  <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+    <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+      Em React Native, o uso do <code>useEffect</code> é essencial para ações como a busca de dados ao montar o componente. 
+      Também é fundamental controlar o estado de carregamento e tratar erros da requisição, evitando falhas visuais ou travamentos na aplicação. 
+      O código abaixo implementa esse fluxo com boas práticas.
+    </p>
+
+    <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+      <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+useEffect(() => {
+  setLoading(true);
+  fetch('https://api.exemplo.com/produtos')
+    .then(response => response.json())
+    .then(data => setProdutos(data))
+    .catch(error => setErro(error.message))
+    .finally(() => setLoading(false));
+}, []);
+      </code></pre>
+    </div>
+
+    <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Analise as afirmativas:</strong></p>
+    <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+      <p style="margin: 2px 0;">I. O array vazio faz com que o <code>useEffect</code> execute apenas uma vez.</p>
+      <p style="margin: 2px 0;">II. O <code>setLoading(true)</code> deve vir antes da requisição.</p>
+      <p style="margin: 2px 0;">III. O <code>.finally()</code> garante que <code>setLoading(false)</code> seja sempre executado.</p>
+      <p style="margin: 2px 0;">IV. Sem tratamento de erro, a aplicação pode apresentar falhas graves.</p>
+    </div>
+
+    <p style="font-size: 0.75em; margin-top: 10px;"><strong>Assinale a alternativa correta:</strong></p>
+    <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+      <li>A) I, II e IV, apenas.</li>
+      <li>B) I, III e IV, apenas.</li>
+      <li>C) II, III e IV, apenas.</li>
+      <li>D) I, II e III, apenas.</li>
+      <li>E) I, II, III e IV.</li>
+    </ul>
+
+    <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+      <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: E) I, II, III e IV.</strong>
+      <p style="font-size: 0.65em; margin: 2px 0;">
+        Todas as afirmativas estão corretas e seguem boas práticas com hooks.
+      </p>
+    </div>
+  </div>
+</section>
+
+                <!-- Questão 2 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 2 - Arrow Functions e Contexto</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Em JavaScript ES6+, as arrow functions têm comportamento diferente das funções tradicionais 
+                            em relação ao contexto (this). Considere o código abaixo implementado em um componente React Native:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+class MinhaClasse {
+  constructor() {
+    this.nome = 'React Native';
+    this.funcaoTradicional = function() { return this.nome; };
+    this.arrowFunction = () => { return this.nome; };
+  }
+  
+  metodoTeste() {
+    setTimeout(this.funcaoTradicional, 100);
+    setTimeout(this.arrowFunction, 100);
+  }
+}
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Analise as afirmativas sobre arrow functions:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. Arrow functions não possuem seu próprio contexto <code>this</code>.</p>
+                            <p style="margin: 2px 0;">II. <code>this.arrowFunction</code> manterá o contexto da instância da classe.</p>
+                            <p style="margin: 2px 0;">III. <code>this.funcaoTradicional</code> perderá o contexto quando usada no setTimeout.</p>
+                            <p style="margin: 2px 0;">IV. Arrow functions são sempre mais performáticas que funções tradicionais.</p>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Assinale a alternativa correta:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e III, apenas.</li>
+                            <li>B) I, II e IV, apenas.</li>
+                            <li>C) II, III e IV, apenas.</li>
+                            <li>D) I, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) I, II e III, apenas.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                IV é falsa: performance depende do contexto de uso, não há regra absoluta.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 3 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 3 - Operador Ternário e Renderização Condicional</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Em React Native, a renderização condicional é frequentemente implementada usando operadores ternários 
+                            e operadores lógicos. Analise o código JSX abaixo:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+const usuario = { nome: 'João', idade: 25, premium: false };
+const lista = [];
+
+return (
+  &lt;View&gt;
+    {usuario.nome && &lt;Text&gt;Olá, {usuario.nome}&lt;/Text&gt;}
+    {usuario.idade >= 18 ? &lt;Button title="Entrar" /&gt; : &lt;Text&gt;Menor de idade&lt;/Text&gt;}
+    {usuario.premium ? &lt;Text&gt;Usuário Premium&lt;/Text&gt; : null}
+    {lista.length > 0 && &lt;FlatList data={lista} /&gt;}
+  &lt;/View&gt;
+);
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Qual será o resultado renderizado?</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) Apenas "Olá, João" e o botão "Entrar"</li>
+                            <li>B) "Olá, João", "Entrar" e "Usuário Premium"</li>
+                            <li>C) "Olá, João", "Entrar" e FlatList vazia</li>
+                            <li>D) Apenas "Olá, João" e "Menor de idade"</li>
+                            <li>E) Todos os elementos serão renderizados</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) Apenas "Olá, João" e o botão "Entrar"</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                usuario.nome é truthy, idade >= 18 é true, premium é false (não renderiza), lista vazia não renderiza FlatList.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 4 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 4 - Destructuring e Spread Operator</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            O destructuring e spread operator são recursos essenciais do JavaScript moderno, 
+                            muito utilizados em React Native para manipulação de props e estado:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+const usuario = { id: 1, nome: 'Ana', email: 'ana@email.com', idade: 30 };
+const novosDados = { idade: 31, cidade: 'São Paulo' };
+
+// Operação 1
+const { nome, email, ...resto } = usuario;
+
+// Operação 2  
+const usuarioAtualizado = { ...usuario, ...novosDados };
+
+// Operação 3
+const { idade: idadeUsuario = 25 } = usuario;
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Analise os resultados:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. <code>resto</code> conterá <code>{ id: 1, idade: 30 }</code></p>
+                            <p style="margin: 2px 0;">II. <code>usuarioAtualizado.idade</code> será 31</p>
+                            <p style="margin: 2px 0;">III. <code>idadeUsuario</code> será 30</p>
+                            <p style="margin: 2px 0;">IV. <code>usuarioAtualizado</code> terá a propriedade <code>cidade</code></p>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Estão corretas:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e III, apenas.</li>
+                            <li>B) I, II e IV, apenas.</li>
+                            <li>C) II, III e IV, apenas.</li>
+                            <li>D) I, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: E) I, II, III e IV.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                Todas as operações estão corretas conforme sintaxe do destructuring e spread.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 5 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 5 - Array Methods e Functional Programming</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Os métodos de array como map, filter e reduce são fundamentais para manipulação de dados 
+                            em React Native. Considere o array de produtos abaixo:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+const produtos = [
+  { id: 1, nome: 'Notebook', preco: 2500, categoria: 'eletrônicos' },
+  { id: 2, nome: 'Mouse', preco: 50, categoria: 'eletrônicos' },
+  { id: 3, nome: 'Livro', preco: 30, categoria: 'educação' },
+  { id: 4, nome: 'Teclado', preco: 150, categoria: 'eletrônicos' }
+];
+
+const resultado = produtos
+  .filter(p => p.categoria === 'eletrônicos')
+  .map(p => ({ ...p, precoComDesconto: p.preco * 0.9 }))
+  .reduce((total, p) => total + p.precoComDesconto, 0);
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Qual será o valor de <code>resultado</code>?</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) 2700</li>
+                            <li>B) 2430</li>
+                            <li>C) 2500</li>
+                            <li>D) 2250</li>
+                            <li>E) 2070</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: B) 2430</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                Eletrônicos: (2500 + 50 + 150) * 0.9 = 2700 * 0.9 = 2430
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 6 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 6 - Async/Await e Promises</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            O tratamento de operações assíncronas é crucial em React Native. Analise as implementações 
+                            equivalentes abaixo para buscar dados de uma API:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+// Implementação A - Promises
+function buscarDados() {
+  return fetch('/api/dados')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+}
+
+// Implementação B - Async/Await
+async function buscarDados() {
+  try {
+    const response = await fetch('/api/dados');
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Sobre essas implementações:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. Ambas são funcionalmente equivalentes</p>
+                            <p style="margin: 2px 0;">II. Async/await torna o código mais legível</p>
+                            <p style="margin: 2px 0;">III. Promises são mais performáticas que async/await</p>
+                            <p style="margin: 2px 0;">IV. Try/catch substitui o .catch() das promises</p>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Estão corretas:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e IV, apenas.</li>
+                            <li>B) I, II e III, apenas.</li>
+                            <li>C) II, III e IV, apenas.</li>
+                            <li>D) I, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) I, II e IV, apenas.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                III é falsa: performance é equivalente, async/await é syntactic sugar para promises.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 7 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 7 - Operadores Lógicos e Short-Circuit</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Os operadores lógicos em JavaScript têm comportamento de short-circuit evaluation. 
+                            Analise o código abaixo usado em um componente React Native:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+const usuario = null;
+const configuracoes = { tema: 'escuro' };
+const lista = [];
+
+const resultado1 = usuario && usuario.nome || 'Visitante';
+const resultado2 = configuracoes?.tema ?? 'claro';
+const resultado3 = lista.length && 'Lista preenchida';
+const resultado4 = '' || 'Texto padrão';
+const resultado5 = 0 ?? 'Zero é falsy mas não nullish';
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Quais são os valores corretos?</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) 'Visitante', 'escuro', false, 'Texto padrão', 0</li>
+                            <li>B) null, 'escuro', 0, 'Texto padrão', 'Zero é falsy mas não nullish'</li>
+                            <li>C) 'Visitante', 'claro', false, 'Texto padrão', 0</li>
+                            <li>D) undefined, 'escuro', 0, '', 0</li>
+                            <li>E) 'Visitante', 'escuro', 0, 'Texto padrão', 0</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: E) 'Visitante', 'escuro', 0, 'Texto padrão', 0</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                ?? (nullish coalescing) só considera null/undefined, não valores falsy como 0.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 8 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 8 - Template Literals e Interpolação</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Template literals oferecem uma forma elegante de construir strings em JavaScript. 
+                            Em React Native, são muito úteis para interpolação de valores e construção de textos dinâmicos:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+const produto = { nome: 'Smartphone', preco: 1200, desconto: 10 };
+const usuario = { nome: 'Carlos', vip: true };
+
+const mensagem1 = `Olá ${usuario.nome}${usuario.vip ? ' (VIP)' : ''}!`;
+
+const mensagem2 = `Produto: ${produto.nome}
+Preço: R$ ${produto.preco}
+Desconto: ${produto.desconto}%
+Total: R$ ${produto.preco * (1 - produto.desconto/100)}`;
+
+const cssClass = `produto ${produto.preco > 1000 ? 'caro' : 'barato'} ${usuario.vip ? 'vip-discount' : ''}`;
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Qual será o valor de <code>cssClass</code>?</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) "produto caro vip-discount"</li>
+                            <li>B) "produto barato vip-discount"</li>
+                            <li>C) "produto caro"</li>
+                            <li>D) "produto caro "</li>
+                            <li>E) "produto caro vip-discount "</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) "produto caro vip-discount"</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                preco > 1000 é true (1200), usuario.vip é true, resultando nas três classes.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 9 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 9 - Higher-Order Functions e Closures</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            Higher-order functions e closures são conceitos importantes para criar código reutilizável 
+                            em React Native. Analise a implementação de um sistema de cache simples:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+function criarCache() {
+  const cache = {};
+  
+  return function(chave, valor) {
+    if (valor !== undefined) {
+      cache[chave] = valor;
+      return valor;
+    }
+    return cache[chave];
+  };
+}
+
+const meuCache = criarCache();
+meuCache('user1', { nome: 'João' });
+meuCache('user2', { nome: 'Maria' });
+
+const resultado1 = meuCache('user1');
+const resultado2 = meuCache('user3');
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Sobre este código:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. <code>resultado1</code> será <code>{ nome: 'João' }</code></p>
+                            <p style="margin: 2px 0;">II. <code>resultado2</code> será <code>undefined</code></p>
+                            <p style="margin: 2px 0;">III. A variável <code>cache</code> é privada e persiste entre chamadas</p>
+                            <p style="margin: 2px 0;">IV. Cada chamada de <code>criarCache()</code> cria um cache independente</p>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Estão corretas:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e III, apenas.</li>
+                            <li>B) I, II e IV, apenas.</li>
+                            <li>C) II, III e IV, apenas.</li>
+                            <li>D) I, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: E) I, II, III e IV.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                Todas as afirmativas demonstram corretamente o comportamento de closures.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 10 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 10 - Event Handling e Binding</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            O tratamento de eventos em React Native requer atenção ao contexto e binding. 
+                            Considere as diferentes abordagens para passar parâmetros em event handlers:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+function ListaItens({ itens }) {
+  const handleClick = (id, evento) => {
+    console.log('Clicou no item:', id);
+  };
+
+  return (
+    &lt;View&gt;
+      {itens.map(item => (
+        &lt;TouchableOpacity
+          key={item.id}
+          onPress={() => handleClick(item.id)}           // Opção A
+          onPress={handleClick.bind(null, item.id)}      // Opção B  
+          onPress={(e) => handleClick(item.id, e)}       // Opção C
+        &gt;
+          &lt;Text&gt;{item.nome}&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      ))}
+    &lt;/View&gt;
+  );
+}
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Sobre essas implementações:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. A Opção A cria uma nova função a cada render</p>
+                            <p style="margin: 2px 0;">II. A Opção B é mais performática que A</p>
+                            <p style="margin: 2px 0;">III. A Opção C permite acesso ao evento original</p>
+                            <p style="margin: 2px 0;">IV. Todas as três opções são funcionalmente equivalentes</p>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Estão corretas:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e III, apenas.</li>
+                            <li>B) I, II e IV, apenas.</li>
+                            <li>C) I, III e IV, apenas.</li>
+                            <li>D) II, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) I, II e III, apenas.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                IV é falsa: C permite acesso ao evento, diferenciando-se funcionalmente das outras.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Questão 11 -->
+                <section data-background="#f8f9fa" style="padding: 10px; font-size: 0.75em; line-height: 1.3; box-sizing: border-box; height: 100%;">
+                    <h5 style="margin-bottom: 8px;">📝 Questão 11 - Módulos ES6 e Import/Export</h5>
+                    <div class="quiz-box" style="padding: 6px; margin: 6px 0; max-height: 86%; overflow-y: auto;">
+
+                        <p style="font-size: 0.85em; text-align: justify; margin-bottom: 10px;">
+                            A modularização é fundamental em React Native. Analise as diferentes formas de 
+                            exportar e importar módulos em JavaScript ES6:
+                        </p>
+
+                        <div style="background: #f5f5f5; padding: 6px; border-radius: 4px; margin-bottom: 10px;">
+                            <pre style="font-size: 0.6em; margin: 0; white-space: pre-wrap; word-break: break-word;"><code>
+// utils.js
+export const API_URL = 'https://api.exemplo.com';
+export function formatarData(data) { return data.toLocaleDateString(); }
+export default function conectarAPI(endpoint) { return fetch(API_URL + endpoint); }
+
+// helpers.js  
+const validarEmail = (email) => email.includes('@');
+const calcularIdade = (nascimento) => new Date().getFullYear() - nascimento;
+export { validarEmail, calcularIdade as idade };
+
+// main.js
+import conectarAPI, { API_URL, formatarData } from './utils';
+import { validarEmail, idade } from './helpers';
+import * as todosHelpers from './helpers';
+                            </code></pre>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-bottom: 6px;"><strong>Sobre esses imports/exports:</strong></p>
+                        <div style="font-size: 0.7em; text-align: left; line-height: 1.4;">
+                            <p style="margin: 2px 0;">I. <code>conectarAPI</code> é importado como default export</p>
+                            <p style="margin: 2px 0;">II. <code>calcularIdade</code> é renomeado para <code>idade</code> no export</p>
+                            <p style="margin: 2px 0;">III. <code>todosHelpers.validarEmail</code> estará disponível</p>
+                            <p style="margin: 2px 0;">IV. Um módulo pode ter múltiplos default exports</p>
+                        </div>
+
+                        <p style="font-size: 0.75em; margin-top: 10px;"><strong>Estão corretas:</strong></p>
+                        <ul style="font-size: 0.7em; list-style-type: none; padding-left: 0;">
+                            <li>A) I, II e III, apenas.</li>
+                            <li>B) I, II e IV, apenas.</li>
+                            <li>C) II, III e IV, apenas.</li>
+                            <li>D) I, III e IV, apenas.</li>
+                            <li>E) I, II, III e IV.</li>
+                        </ul>
+
+                        <div class="fragment fade-in" style="margin-top: 12px; padding: 8px; background: #e8f5e8; border-radius: 4px;">
+                            <strong style="color: #2e7d32; font-size: 0.75em;">Resposta correta: A) I, II e III, apenas.</strong>
+                            <p style="font-size: 0.65em; margin: 2px 0;">
+                                IV é falsa: cada módulo pode ter apenas um default export.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+            </section>
+
+            <!-- Slide Final -->
+            <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <h1 style="color: white; font-size: 3.5em; margin-bottom: 25px;">🎉</h1>
+                <h2 style="color: white; margin-bottom: 20px;">Missão Cumprida!</h2>
+                               <p style="color: white; font-size: 1.2em; margin-bottom: 25px;">
+                    Você domina os fundamentos do React Native!
+                </p>
+                <div class="fragment fade-in">
+                    <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; margin: 20px;">
+                        <p style="color: white; font-size: 1em; font-style: italic; margin-bottom: 15px;">
+                            "O sucesso é a soma de pequenos esforços repetidos dia após dia."
+                        </p>
+                        <p style="color: white; font-size: 0.9em;">
+                            Continue praticando, criando e evoluindo! 🚀
+                        </p>
+                    </div>
+                    <p style="color: white; font-size: 0.8em; margin-top: 20px;">
+                        #ReactNative #MobileDevelopment #NeverStopLearning
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Scripts Reveal.js -->
+    <script src="./dist/reveal.js"></script>
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+
+    <script>
+        Reveal.initialize({
+            center: true,
+            controls: true,
+            progress: true,
+            slideNumber: true,
+            history: true,
+            transition: 'convex',
+            hash: true,
+
+            plugins: [RevealMarkdown, RevealHighlight],
+
+            menu: {
+                themes: false,
+                transitions: false,
+                markers: true,
+                hideMissingTitles: true,
+            }
+        });
+    </script>
+</body>
+
+</html>

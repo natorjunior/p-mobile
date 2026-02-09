@@ -1,7 +1,6 @@
 import { openDatabaseAsync } from 'expo-sqlite';
 
 let db;
-
 export const initDB = async () => {
   try {
     db = await openDatabaseAsync('users.db');
@@ -18,6 +17,7 @@ export const initDB = async () => {
     throw error;
   }
 };
+
 
 export const insertUser = async (name, age) => {
   if (!db) {

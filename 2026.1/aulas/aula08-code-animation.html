@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenvolvimento Progressivo em React Native</title>
+    <link rel="stylesheet" href="../dist/reveal.css">
+    <link rel="stylesheet" href="../dist/theme/black.css">
+    <link rel="stylesheet" href="../plugin/highlight/monokai.css">
+    <style>
+        .reveal section img { background:none; border:none; box-shadow:none; }
+        .app-preview {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 300px;
+        }
+        .emoji-header {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide Inicial -->
+            <section>
+                <h2>Construindo um App React Native</h2>
+                <p>Uma jornada passo a passo 🚀</p>
+                <div class="emoji-header">📱</div>
+            </section>
+
+            <!-- Exemplo 1: Componente Básico -->
+            <section>
+                <section>
+                    <h3>1. Criando um Componente Básico</h3>
+                    <p>Vamos começar com uma estrutura simples</p>
+                </section>
+
+                <section data-auto-animate>
+                    <h4>Passo 1: Estrutura Inicial</h4>
+                    <pre data-id="code-animation"><code class="language-jsx" data-trim data-line-numbers>
+import React from 'react';
+import { View, Text } from 'react-native';
+
+const TaskApp = () => {
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;Minha Lista de Tarefas&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};</code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <h4>Passo 2: Adicionando Estilo</h4>
+                    <pre data-id="code-animation"><code class="language-jsx" data-trim data-line-numbers>
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const TaskApp = () => {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Minha Lista de Tarefas&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5'
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333'
+  }
+});</code></pre>
+                </section>
+            </section>
+
+            <!-- Exemplo 2: Adicionando Estado -->
+            <section>
+                <section data-auto-animate>
+                    <h4>2. Gerenciando Estado</h4>
+                    <pre data-id="code-animation-2"><code class="language-jsx" data-trim data-line-numbers>
+const TaskApp = () => {
+  const [tasks, setTasks] = useState([]);
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Minha Lista de Tarefas&lt;/Text&gt;
+      &lt;Text&gt;Total: {tasks.length} tarefas&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};</code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <h4>Adicionando Tarefas</h4>
+                    <pre data-id="code-animation-2"><code class="language-jsx" data-trim data-line-numbers>
+const TaskApp = () => {
+  const [tasks, setTasks] = useState([
+    { id: 1, text: 'Estudar React Native' },
+    { id: 2, text: 'Fazer exercícios' }
+  ]);
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Minha Lista de Tarefas&lt;/Text&gt;
+      &lt;Text&gt;Total: {tasks.length} tarefas&lt;/Text&gt;
+      {tasks.map(task => (
+        &lt;Text key={task.id}&gt;• {task.text}&lt;/Text&gt;
+      ))}
+    &lt;/View&gt;
+  );
+};</code></pre>
+                </section>
+            </section>
+
+            <!-- Exemplo 3: Interatividade -->
+            <section>
+                <section data-auto-animate>
+                    <h4>3. Adicionando Interatividade</h4>
+                    <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+const TaskApp = () => {
+  const [tasks, setTasks] = useState([
+    { id: 1, text: 'Estudar React Native', done: false },
+    { id: 2, text: 'Fazer exercícios', done: false }
+  ]);
+
+  const toggleTask = (id) => {
+    setTasks(tasks.map(task =>
+      task.id === id ? { ...task, done: !task.done } : task
+    ));
+  };</code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <h4>Interface Interativa</h4>
+                    <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
+const TaskApp = () => {
+  const [tasks, setTasks] = useState([
+    { id: 1, text: 'Estudar React Native', done: false },
+    { id: 2, text: 'Fazer exercícios', done: false }
+  ]);
+
+  const toggleTask = (id) => {
+    setTasks(tasks.map(task =>
+      task.id === id ? { ...task, done: !task.done } : task
+    ));
+  };
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Minha Lista de Tarefas&lt;/Text&gt;
+      {tasks.map(task => (
+        &lt;TouchableOpacity
+          key={task.id}
+          onPress={() => toggleTask(task.id)}
+          style={styles.task}
+        &gt;
+          &lt;Text style={[
+            styles.taskText,
+            task.done && styles.taskDone
+          ]}&gt;
+            {task.done ? '✅' : '⭕'} {task.text}
+          &lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      ))}
+    &lt;/View&gt;
+  );
+};</code></pre>
+                </section>
+            </section>
+
+            <!-- Slide Final -->
+            <section>
+                <h3>🎉 App Completo!</h3>
+                <div class="app-preview">
+                    <img src="https://via.placeholder.com/280x500/1a1a1a/ffffff?text=App+Preview" alt="App Preview">
+                </div>
+                <p>Um app funcional em apenas 3 passos!</p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="../dist/reveal.js"></script>
+    <script src="../plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            center: true,
+            transition: 'slide',
+            plugins: [ RevealHighlight ],
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.8,
+            autoAnimateUnmatched: false
+        });
+    </script>
+</body>
+</html>

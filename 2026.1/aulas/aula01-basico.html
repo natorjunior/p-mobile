@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 01 - Fundamentos de Programação Mobile</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+
+  <style>
+    .reveal h1,
+    .reveal h2 {
+      color: #0056b3;
+    }
+
+    .reveal pre code {
+      font-size: 1em;
+      background: #222;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .reveal p {
+      font-size: 1.05em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Título -->
+      <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+        <br><br><br><br>
+        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+          Programação para dispositivos Móveis
+        </h4>
+        <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+          Aula 01 - Fundamentos de Programação Mobile
+        </h6>
+        <h1>🚀</h1>
+      </section>
+
+      <!-- Por que mobile? -->
+      <section>
+        <h3>Por que aprender mobile?</h3>
+        <ul>
+          <li class="fragment">Maior parte do tempo online está em apps.</li>
+          <li class="fragment">Mercado aquecido e multiplataforma.</li>
+          <li class="fragment">Habilidades que combinam design + código + negócio.</li>
+        </ul>
+      </section>
+
+      <!-- Variáveis -->
+      <section>
+        <h3>Variáveis em JavaScript (base do React Native)</h3>
+        <pre><code class="javascript" data-trim data-noescape>
+// let: pode mudar
+let nome = "Ana";
+nome = "Ana Clara";
+
+// const: não muda a referência
+const PI = 3.14;
+
+// tipos comuns
+const ativo = true;
+const idade = 21;
+const tecnologias = ["JS", "React Native", "Expo"];
+        </code></pre>
+      </section>
+
+      <!-- Classes -->
+      <section>
+        <h3>Classe simples</h3>
+        <pre><code class="javascript" data-trim data-noescape>
+class Aluno {
+  constructor(nome, turma) {
+    this.nome = nome;
+    this.turma = turma;
+  }
+
+  saudacao() {
+    return `Olá, eu sou ${this.nome} da turma ${this.turma}`;
+  }
+}
+
+const maria = new Aluno("Maria", "2026.1");
+console.log(maria.saudacao());
+        </code></pre>
+      </section>
+
+      <!-- Primeiro componente -->
+      <section>
+        <h3>Primeiro componente React Native</h3>
+        <pre><code class="javascript" data-trim data-noescape>
+import { Text, View, StatusBar } from "react-native";
+
+export default function App() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <StatusBar barStyle="light-content" />
+      <Text style={{ fontSize: 20 }}>Bem-vindo ao React Native!</Text>
+    </View>
+  );
+}
+        </code></pre>
+        <p class="fragment">Rode com <code>npx expo start</code> e escaneie o QR no app Expo Go.</p>
+      </section>
+
+      <!-- Elementos de UI -->
+      <section>
+        <h3>Criando elementos de UI</h3>
+        <pre><code class="javascript" data-trim data-noescape>
+import { View, Text, TextInput, Button } from "react-native";
+
+export default function Login() {
+  return (
+    <View style={{ padding: 24 }}>
+      <Text style={{ fontSize: 24, marginBottom: 12 }}>Login</Text>
+      <TextInput
+        placeholder="Email"
+        style={{ borderWidth: 1, padding: 10, marginBottom: 8 }}
+      />
+      <TextInput
+        placeholder="Senha"
+        secureTextEntry
+        style={{ borderWidth: 1, padding: 10, marginBottom: 16 }}
+      />
+      <Button title="Entrar" onPress={() => {}} />
+    </View>
+  );
+}
+        </code></pre>
+      </section>
+
+      <!-- Atividade -->
+      <section>
+        <h3>Atividade rápida</h3>
+        <ul>
+          <li class="fragment">Crie um componente <code>Perfil</code> que recebe <code>nome</code> e <code>curso</code> como props.</li>
+          <li class="fragment">Mostre um botão "Ver detalhes" que exibe um <code>alert</code> com as props.</li>
+          <li class="fragment">Substitua texto fixo por variáveis e teste no Expo.</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="./dist/reveal.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      slideNumber: true,
+      transition: 'convex',
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

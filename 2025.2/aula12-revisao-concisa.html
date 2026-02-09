@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão Concisa - React Native</title>
+
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="./dist/reveal.css">
+    <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+    <!-- Tema para código -->
+    <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+    <link rel="stylesheet" href="css/workshop.css">
+
+    <!-- Menu plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
+
+    <style>
+        .reveal h1,
+        .reveal h2 {
+            color: #0056b3;
+        }
+
+        .reveal pre code {
+            font-size: 0.65em;
+            background: #2d3748;
+            border-radius: 8px;
+            padding: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .concept-box {
+            background: rgba(40, 167, 69, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 2px solid #28a745;
+            font-size: 0.85em;
+        }
+
+        .code-box {
+            background: rgba(0, 123, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 2px solid #007bff;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .topic-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #0056b3;
+            text-align: center;
+        }
+
+        .code-highlight {
+            background: rgba(255, 193, 7, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .small-text {
+            font-size: 0.8em;
+        }
+
+        ul {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Título -->
+            <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <h4 style="color: white; margin-top: 40px;">
+                    Programação para Dispositivos Móveis
+                </h4>
+                <p style="color: white; font-size: 0.8em;">
+                    Prof. Msc. Nator Junior
+                </p>
+                <h2 style="color: white; margin: 25px 0;">
+                    Revisão Concisa
+                </h2>
+                <h1 style="margin: 25px 0;">🎯</h1>
+                <p style="color: white; font-size: 1em;">
+                    React Native - Principais Conceitos
+                </p>
+            </section>
+
+            <!-- Slide 2: Índice -->
+            <section data-background="#f8f9fa">
+                <h2>📋 Tópicos da Revisão</h2>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="topic-card">
+                        <h3>📱 1. Componentes</h3>
+                        <p class="small-text">View, Text, Button, FlatList</p>
+                    </div>
+                    <div class="topic-card">
+                        <h3>🪝 2. Hooks</h3>
+                        <p class="small-text">useState, useEffect</p>
+                    </div>
+                    <div class="topic-card">
+                        <h3>🧭 3. Navegação</h3>
+                        <p class="small-text">Stack, Tab, Drawer</p>
+                    </div>
+                    <div class="topic-card">
+                        <h3>🌐 4. APIs</h3>
+                        <p class="small-text">fetch, axios, integração</p>
+                    </div>
+                    <div class="topic-card">
+                        <h3>💾 5. Storage</h3>
+                        <p class="small-text">AsyncStorage, persistência</p>
+                    </div>
+                    <div class="topic-card">
+                        <h3>🚀 6. Integração</h3>
+                        <p class="small-text">Projeto completo</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPONENTES -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">📱 Componentes</h1>
+                    <p style="color: white;">Blocos básicos da interface</p>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Componentes Essenciais</h2>
+                    <div class="concept-box">
+                        <div class="grid-2">
+                            <div>
+                                <h4>📦 Containers</h4>
+                                <ul>
+                                    <li><code>View</code> - Container principal</li>
+                                    <li><code>ScrollView</code> - Área rolável</li>
+                                    <li><code>SafeAreaView</code> - Área segura</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>📝 Conteúdo</h4>
+                                <ul>
+                                    <li><code>Text</code> - Exibir texto</li>
+                                    <li><code>Image</code> - Exibir imagens</li>
+                                    <li><code>Button</code> - Botões</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>📋 Listas</h4>
+                                <ul>
+                                    <li><code>FlatList</code> - Lista otimizada</li>
+                                    <li><code>SectionList</code> - Lista com seções</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>⌨️ Entrada</h4>
+                                <ul>
+                                    <li><code>TextInput</code> - Campo de texto</li>
+                                    <li><code>TouchableOpacity</code> - Toque</li>
+                                    <li><code>Pressable</code> - Interação</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Exemplo: Componente Básico</h2>
+                    <pre><code class="language-jsx" data-trim>
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+
+export default function AppSimples() {
+  const [nome, setNome] = useState('');
+
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.titulo}&gt;Olá Mundo!&lt;/Text&gt;
+      
+      &lt;TextInput
+        style={styles.input}
+        placeholder="Digite seu nome"
+        value={nome}
+        onChangeText={setNome}
+      /&gt;
+      
+      &lt;Button title="Enviar" onPress={() => alert(`Olá, ${nome}!`)} /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 20, justifyContent: 'center' },
+  titulo: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
+  input: { borderWidth: 1, padding: 10, marginBottom: 15, borderRadius: 5 }
+});
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>FlatList - Listas Eficientes</h2>
+                    <pre><code class="language-jsx" data-trim>
+import { FlatList, Text, View } from 'react-native';
+
+export default function ListaApp() {
+  const dados = [
+    { id: '1', nome: 'Ana' },
+    { id: '2', nome: 'Bruno' },
+    { id: '3', nome: 'Carlos' }
+  ];
+
+  return (
+    &lt;FlatList
+      data={dados}
+      keyExtractor={item => item.id}
+      renderItem={({ item }) => (
+        &lt;View style={{ padding: 15, borderBottomWidth: 1 }}&gt;
+          &lt;Text&gt;{item.nome}&lt;/Text&gt;
+        &lt;/View&gt;
+      )}
+    /&gt;
+  );
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- HOOKS -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">🪝 Hooks</h1>
+                    <p style="color: white;">Gerenciamento de estado e efeitos</p>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>useState - Estado Local</h2>
+                    <div class="concept-box">
+                        <p><strong>Função:</strong> Armazena e atualiza dados dinâmicos do componente</p>
+                        <p><strong>Sintaxe:</strong> <code>const [valor, setValor] = useState(inicial)</code></p>
+                    </div>
+                    <pre><code class="language-jsx" data-trim>
+import { useState } from 'react';
+import { View, Text, Button } from 'react-native';
+
+export default function Contador() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;Contador: {count}&lt;/Text&gt;
+      &lt;Button title="+" onPress={() => setCount(count + 1)} /&gt;
+      &lt;Button title="-" onPress={() => setCount(count - 1)} /&gt;
+      &lt;Button title="Reset" onPress={() => setCount(0)} /&gt;
+    &lt;/View&gt;
+  );
+}
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>useEffect - Efeitos Colaterais</h2>
+                    <div class="concept-box">
+                        <p><strong>Função:</strong> Executa código em momentos específicos do ciclo de vida</p>
+                        <div class="grid-2" style="margin-top: 10px;">
+                            <div>
+                                <p>✅ <code>[]</code> - Uma vez (mount)</p>
+                                <p>✅ Sem array - Sempre (update)</p>
+                            </div>
+                            <div>
+                                <p>✅ <code>[dep]</code> - Quando dep muda</p>
+                                <p>✅ <code>return () => {}</code> - Cleanup</p>
+                            </div>
+                        </div>
+                    </div>
+                    <pre><code class="language-jsx" data-trim>
+import { useState, useEffect } from 'react';
+import { Text } from 'react-native';
+
+export default function Timer() {
+  const [segundos, setSegundos] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSegundos(s => s + 1);
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup
+  }, []); // Executa uma vez
+
+  return &lt;Text&gt;Tempo: {segundos}s&lt;/Text&gt;;
+}
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Combinando useState + useEffect</h2>
+                    <pre><code class="language-jsx" data-trim>
+import { useState, useEffect } from 'react';
+import { View, Text, TextInput } from 'react-native';
+
+export default function BuscaApp() {
+  const [busca, setBusca] = useState('');
+  const [resultados, setResultados] = useState([]);
+
+  useEffect(() => {
+    if (busca.length > 2) {
+      // Simula busca com delay
+      const timer = setTimeout(() => {
+        const filtrados = dados.filter(item => 
+          item.toLowerCase().includes(busca.toLowerCase())
+        );
+        setResultados(filtrados);
+      }, 300);
+
+      return () => clearTimeout(timer); // Cleanup
+    }
+  }, [busca]); // Executa quando 'busca' muda
+
+  return (
+    &lt;View&gt;
+      &lt;TextInput 
+        placeholder="Buscar..."
+        value={busca}
+        onChangeText={setBusca}
+      /&gt;
+      &lt;Text&gt;Resultados: {resultados.length}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- NAVEGAÇÃO -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">🧭 Navegação</h1>
+                    <p style="color: white;">React Navigation</p>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Tipos de Navegação</h2>
+                    <div class="grid-2">
+                        <div class="concept-box">
+                            <h4>📚 Stack Navigator</h4>
+                            <p class="small-text">Navegação em pilha (push/pop)</p>
+                            <p class="small-text">✅ Telas empilhadas</p>
+                            <p class="small-text">✅ Botão voltar automático</p>
+                        </div>
+                        <div class="concept-box">
+                            <h4>📑 Tab Navigator</h4>
+                            <p class="small-text">Navegação por abas</p>
+                            <p class="small-text">✅ Abas inferiores</p>
+                            <p class="small-text">✅ Acesso rápido</p>
+                        </div>
+                        <div class="concept-box">
+                            <h4>📂 Drawer Navigator</h4>
+                            <p class="small-text">Menu lateral</p>
+                            <p class="small-text">✅ Gaveta deslizante</p>
+                            <p class="small-text">✅ Múltiplas opções</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Stack Navigator - Setup</h2>
+                    <pre><code class="language-jsx" data-trim>
+// Instalação
+npm install @react-navigation/native @react-navigation/native-stack
+npm install react-native-screens react-native-safe-area-context
+
+// App.js
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Stack.Navigator initialRouteName="Home"&gt;
+        &lt;Stack.Screen name="Home" component={HomeScreen} /&gt;
+        &lt;Stack.Screen name="Detalhes" component={DetalhesScreen} /&gt;
+      &lt;/Stack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Navegação entre Telas</h2>
+                    <pre><code class="language-jsx" data-trim>
+// HomeScreen.js
+function HomeScreen({ navigation }) {
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;Tela Inicial&lt;/Text&gt;
+      &lt;Button
+        title="Ir para Detalhes"
+        onPress={() => navigation.navigate('Detalhes', { id: 123 })}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+// DetalhesScreen.js
+function DetalhesScreen({ route, navigation }) {
+  const { id } = route.params;
+  
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;Detalhes do item {id}&lt;/Text&gt;
+      &lt;Button title="Voltar" onPress={() => navigation.goBack()} /&gt;
+    &lt;/View&gt;
+  );
+}
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Tab Navigator</h2>
+                    <pre><code class="language-jsx" data-trim>
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color, size }) => {
+            let iconName;
+            if (route.name === 'Home') iconName = 'home';
+            else if (route.name === 'Perfil') iconName = 'person';
+            return &lt;Ionicons name={iconName} size={size} color={color} /&gt;;
+          },
+        })}
+      &gt;
+        &lt;Tab.Screen name="Home" component={HomeScreen} /&gt;
+        &lt;Tab.Screen name="Perfil" component={PerfilScreen} /&gt;
+      &lt;/Tab.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- APIs -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">🌐 Consumo de APIs</h1>
+                    <p style="color: white;">fetch e integração de dados</p>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>fetch - Básico</h2>
+                    <div class="concept-box">
+                        <p><strong>Função:</strong> Buscar dados de APIs REST</p>
+                        <p><strong>Métodos:</strong> GET, POST, PUT, DELETE</p>
+                    </div>
+                    <pre><code class="language-jsx" data-trim>
+import { useState, useEffect } from 'react';
+import { View, Text, FlatList, ActivityIndicator } from 'react-native';
+
+export default function ListaUsuarios() {
+  const [usuarios, setUsuarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(data => {
+        setUsuarios(data);
+        setLoading(false);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  if (loading) return &lt;ActivityIndicator size="large" /&gt;;
+
+  return (
+    &lt;FlatList
+      data={usuarios}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }) => &lt;Text&gt;{item.name}&lt;/Text&gt;}
+    /&gt;
+  );
+}
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>POST - Enviar Dados</h2>
+                    <pre><code class="language-jsx" data-trim>
+const cadastrarUsuario = async (nome, email) => {
+  try {
+    const response = await fetch('https://api.exemplo.com/usuarios', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nome: nome,
+        email: email
+      })
+    });
+
+    const data = await response.json();
+    console.log('Sucesso:', data);
+    return data;
+  } catch (error) {
+    console.error('Erro:', error);
+  }
+};
+
+// Uso
+&lt;Button 
+  title="Cadastrar" 
+  onPress={() => cadastrarUsuario('João', 'joao@email.com')}
+/&gt;
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Tratamento de Erros</h2>
+                    <pre><code class="language-jsx" data-trim>
+import { useState, useEffect } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
+
+export default function AppComErros() {
+  const [dados, setDados] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [erro, setErro] = useState(null);
+
+  useEffect(() => {
+    fetch('https://api.exemplo.com/dados')
+      .then(response => {
+        if (!response.ok) throw new Error('Erro na requisição');
+        return response.json();
+      })
+      .then(data => {
+        setDados(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        setErro(error.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return &lt;ActivityIndicator /&gt;;
+  if (erro) return &lt;Text&gt;Erro: {erro}&lt;/Text&gt;;
+  return &lt;Text&gt;{JSON.stringify(dados)}&lt;/Text&gt;;
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- STORAGE -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">💾 AsyncStorage</h1>
+                    <p style="color: white;">Persistência de dados local</p>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>AsyncStorage - Conceito</h2>
+                    <div class="concept-box">
+                        <p><strong>O que é?</strong> Sistema de armazenamento chave-valor local</p>
+                        <p><strong>Uso:</strong> Salvar preferências, dados offline, cache</p>
+                        <p><strong>Importante:</strong> Dados são strings (usar JSON para objetos)</p>
+                    </div>
+                    <pre><code class="language-bash" data-trim>
+# Instalação
+npm install @react-native-async-storage/async-storage
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Operações Básicas</h2>
+                    <pre><code class="language-jsx" data-trim>
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// SALVAR
+const salvarDado = async (chave, valor) => {
+  try {
+    await AsyncStorage.setItem(chave, valor);
+    console.log('Salvo!');
+  } catch (error) {
+    console.error('Erro ao salvar:', error);
+  }
+};
+
+// LER
+const lerDado = async (chave) => {
+  try {
+    const valor = await AsyncStorage.getItem(chave);
+    return valor !== null ? valor : 'Não encontrado';
+  } catch (error) {
+    console.error('Erro ao ler:', error);
+  }
+};
+
+// REMOVER
+const removerDado = async (chave) => {
+  try {
+    await AsyncStorage.removeItem(chave);
+  } catch (error) {
+    console.error('Erro ao remover:', error);
+  }
+};
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Salvar Objetos JSON</h2>
+                    <pre><code class="language-jsx" data-trim>
+import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export default function AppStorage() {
+  const [usuario, setUsuario] = useState({ nome: '', email: '' });
+
+  // SALVAR objeto
+  const salvarUsuario = async () => {
+    try {
+      const jsonValue = JSON.stringify(usuario);
+      await AsyncStorage.setItem('usuario', jsonValue);
+      alert('Salvo!');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // CARREGAR objeto
+  const carregarUsuario = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('usuario');
+      if (jsonValue !== null) {
+        setUsuario(JSON.parse(jsonValue));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    carregarUsuario(); // Carrega ao iniciar
+  }, []);
+
+  return (
+    &lt;Button title="Salvar" onPress={salvarUsuario} /&gt;
+  );
+}
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Exemplo Completo: Lista de Tarefas</h2>
+                    <pre><code class="language-jsx" data-trim>
+import { useState, useEffect } from 'react';
+import { View, TextInput, Button, FlatList, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export default function TodoApp() {
+  const [tarefa, setTarefa] = useState('');
+  const [tarefas, setTarefas] = useState([]);
+
+  // Carregar tarefas ao iniciar
+  useEffect(() => {
+    carregarTarefas();
+  }, []);
+
+  // Salvar sempre que tarefas mudar
+  useEffect(() => {
+    salvarTarefas();
+  }, [tarefas]);
+
+  const salvarTarefas = async () => {
+    try {
+      await AsyncStorage.setItem('tarefas', JSON.stringify(tarefas));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const carregarTarefas = async () => {
+    try {
+      const data = await AsyncStorage.getItem('tarefas');
+      if (data) setTarefas(JSON.parse(data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const adicionarTarefa = () => {
+    if (tarefa.trim()) {
+      setTarefas([...tarefas, { id: Date.now().toString(), texto: tarefa }]);
+      setTarefa('');
+    }
+  };
+
+  return (
+    &lt;View style={{ padding: 20 }}&gt;
+      &lt;TextInput
+        value={tarefa}
+        onChangeText={setTarefa}
+        placeholder="Nova tarefa"
+      /&gt;
+      &lt;Button title="Adicionar" onPress={adicionarTarefa} /&gt;
+      
+      &lt;FlatList
+        data={tarefas}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => &lt;Text&gt;{item.texto}&lt;/Text&gt;}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- INTEGRAÇÃO COMPLETA -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">🚀 Integrando Tudo</h1>
+                    <p style="color: white;">App completo com todos os conceitos</p>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Estrutura do Projeto</h2>
+                    <div class="concept-box">
+                        <pre style="font-size: 0.7em; text-align: left;">
+src/
+├── screens/
+│   ├── HomeScreen.js       (Lista de usuários)
+│   ├── DetalhesScreen.js   (Detalhes do usuário)
+│   └── FavoritosScreen.js  (Favoritos salvos)
+├── components/
+│   └── UserCard.js         (Card de usuário)
+├── services/
+│   └── api.js              (Chamadas de API)
+└── App.js                  (Navegação principal)
+                        </pre>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>App.js - Navegação</h2>
+                    <pre><code class="language-jsx" data-trim>
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons';
+
+import HomeScreen from './screens/HomeScreen';
+import DetalhesScreen from './screens/DetalhesScreen';
+import FavoritosScreen from './screens/FavoritosScreen';
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function HomeStack() {
+  return (
+    &lt;Stack.Navigator&gt;
+      &lt;Stack.Screen name="Lista" component={HomeScreen} /&gt;
+      &lt;Stack.Screen name="Detalhes" component={DetalhesScreen} /&gt;
+    &lt;/Stack.Navigator&gt;
+  );
+}
+
+export default function App() {
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color, size }) => {
+            const iconName = route.name === 'Home' ? 'home' : 'heart';
+            return &lt;Ionicons name={iconName} size={size} color={color} /&gt;;
+          },
+        })}
+      &gt;
+        &lt;Tab.Screen name="Home" component={HomeStack} /&gt;
+        &lt;Tab.Screen name="Favoritos" component={FavoritosScreen} /&gt;
+      &lt;/Tab.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>HomeScreen - Lista com API</h2>
+                    <pre><code class="language-jsx" data-trim>
+import { useState, useEffect } from 'react';
+import { View, FlatList, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export default function HomeScreen({ navigation }) {
+  const [usuarios, setUsuarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    carregarUsuarios();
+  }, []);
+
+  const carregarUsuarios = async () => {
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/users');
+      const data = await response.json();
+      setUsuarios(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const adicionarFavorito = async (usuario) => {
+    try {
+      const favs = await AsyncStorage.getItem('favoritos');
+      const favoritos = favs ? JSON.parse(favs) : [];
+      favoritos.push(usuario);
+      await AsyncStorage.setItem('favoritos', JSON.stringify(favoritos));
+      alert('Adicionado aos favoritos!');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if (loading) return &lt;ActivityIndicator size="large" /&gt;;
+
+  return (
+    &lt;FlatList
+      data={usuarios}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }) => (
+        &lt;View style={{ padding: 15, borderBottomWidth: 1 }}&gt;
+          &lt;Text onPress={() => navigation.navigate('Detalhes', { usuario: item })}&gt;
+            {item.name}
+          &lt;/Text&gt;
+          &lt;Button title="♥ Favoritar" onPress={() => adicionarFavorito(item)} /&gt;
+        &lt;/View&gt;
+      )}
+    /&gt;
+  );
+}
+                    </code></pre>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>FavoritosScreen - Storage</h2>
+                    <pre><code class="language-jsx" data-trim>
+import { useState, useEffect } from 'react';
+import { View, FlatList, Text, Button } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export default function FavoritosScreen() {
+  const [favoritos, setFavoritos] = useState([]);
+
+  useEffect(() => {
+    carregarFavoritos();
+  }, []);
+
+  const carregarFavoritos = async () => {
+    try {
+      const data = await AsyncStorage.getItem('favoritos');
+      if (data) setFavoritos(JSON.parse(data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const removerFavorito = async (id) => {
+    try {
+      const novos = favoritos.filter(item => item.id !== id);
+      setFavoritos(novos);
+      await AsyncStorage.setItem('favoritos', JSON.stringify(novos));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    &lt;View&gt;
+      {favoritos.length === 0 ? (
+        &lt;Text&gt;Nenhum favorito&lt;/Text&gt;
+      ) : (
+        &lt;FlatList
+          data={favoritos}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({ item }) => (
+            &lt;View style={{ padding: 15 }}&gt;
+              &lt;Text&gt;{item.name}&lt;/Text&gt;
+              &lt;Button title="Remover" onPress={() => removerFavorito(item.id)} /&gt;
+            &lt;/View&gt;
+          )}
+        /&gt;
+      )}
+    &lt;/View&gt;
+  );
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- RESUMO -->
+            <section>
+                <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                    <h1 style="color: white;">📝 Resumo Final</h1>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Checklist de Conhecimentos</h2>
+                    <div class="grid-2">
+                        <div class="concept-box">
+                            <h4>✅ Componentes</h4>
+                            <ul class="small-text">
+                                <li>View, Text, Button</li>
+                                <li>TextInput, Image</li>
+                                <li>FlatList, ScrollView</li>
+                                <li>StyleSheet</li>
+                            </ul>
+                        </div>
+                        <div class="concept-box">
+                            <h4>✅ Hooks</h4>
+                            <ul class="small-text">
+                                <li>useState (estado)</li>
+                                <li>useEffect (ciclo de vida)</li>
+                                <li>Arrays de dependências</li>
+                                <li>Cleanup functions</li>
+                            </ul>
+                        </div>
+                        <div class="concept-box">
+                            <h4>✅ Navegação</h4>
+                            <ul class="small-text">
+                                <li>Stack Navigator</li>
+                                <li>Tab Navigator</li>
+                                <li>Passar parâmetros</li>
+                                <li>navigation.navigate()</li>
+                            </ul>
+                        </div>
+                        <div class="concept-box">
+                            <h4>✅ APIs</h4>
+                            <ul class="small-text">
+                                <li>fetch() GET/POST</li>
+                                <li>async/await</li>
+                                <li>Tratamento de erros</li>
+                                <li>ActivityIndicator</li>
+                            </ul>
+                        </div>
+                        <div class="concept-box">
+                            <h4>✅ Storage</h4>
+                            <ul class="small-text">
+                                <li>AsyncStorage.setItem</li>
+                                <li>AsyncStorage.getItem</li>
+                                <li>JSON.stringify/parse</li>
+                                <li>Persistência local</li>
+                            </ul>
+                        </div>
+                        <div class="concept-box">
+                            <h4>✅ Integração</h4>
+                            <ul class="small-text">
+                                <li>Combinar todos conceitos</li>
+                                <li>Estrutura de pastas</li>
+                                <li>Componentização</li>
+                                <li>Boas práticas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Padrões Importantes</h2>
+                    <div class="concept-box">
+                        <h4>🎯 Melhores Práticas</h4>
+                        <ul>
+                            <li><strong>Componentização:</strong> Divida a UI em componentes reutilizáveis</li>
+                            <li><strong>Estado mínimo:</strong> Use apenas o estado necessário</li>
+                            <li><strong>useEffect correto:</strong> Sempre defina dependências apropriadas</li>
+                            <li><strong>Tratamento de erros:</strong> Sempre use try/catch em operações assíncronas</li>
+                            <li><strong>Loading states:</strong> Mostre feedback ao usuário durante operações</li>
+                            <li><strong>Cleanup:</strong> Limpe timers, listeners e subscriptions</li>
+                            <li><strong>Naming:</strong> Use nomes descritivos para variáveis e funções</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background="#f8f9fa">
+                    <h2>Fluxo de Desenvolvimento</h2>
+                    <div style="text-align: left; padding: 20px;">
+                        <div style="background: #e3f2fd; padding: 15px; margin: 10px 0; border-left: 4px solid #2196f3;">
+                            <strong>1. Planejamento</strong><br>
+                            <span class="small-text">→ Definir telas, componentes e dados necessários</span>
+                        </div>
+                        <div style="background: #f3e5f5; padding: 15px; margin: 10px 0; border-left: 4px solid #9c27b0;">
+                            <strong>2. Componentes</strong><br>
+                            <span class="small-text">→ Criar estrutura visual com componentes básicos</span>
+                        </div>
+                        <div style="background: #fff3e0; padding: 15px; margin: 10px 0; border-left: 4px solid #ff9800;">
+                            <strong>3. Estado</strong><br>
+                            <span class="small-text">→ Adicionar useState para dados dinâmicos</span>
+                        </div>
+                        <div style="background: #e8f5e9; padding: 15px; margin: 10px 0; border-left: 4px solid #4caf50;">
+                            <strong>4. Navegação</strong><br>
+                            <span class="small-text">→ Conectar telas com React Navigation</span>
+                        </div>
+                        <div style="background: #fce4ec; padding: 15px; margin: 10px 0; border-left: 4px solid #e91e63;">
+                            <strong>5. API</strong><br>
+                            <span class="small-text">→ Integrar dados externos com fetch</span>
+                        </div>
+                        <div style="background: #f1f8e9; padding: 15px; margin: 10px 0; border-left: 4px solid #8bc34a;">
+                            <strong>6. Persistência</strong><br>
+                            <span class="small-text">→ Salvar dados localmente com AsyncStorage</span>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- DICAS FINAIS -->
+            <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <h2 style="color: white;">💡 Dicas para Estudar</h2>
+                <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; margin: 20px;">
+                    <ul style="list-style: none; color: white; font-size: 0.95em; text-align: left;">
+                        <li style="margin: 12px 0;">📚 <strong>Pratique:</strong> Crie pequenos projetos para cada conceito</li>
+                        <li style="margin: 12px 0;">🔄 <strong>Repita:</strong> Refaça os exemplos sem olhar o código</li>
+                        <li style="margin: 12px 0;">🐛 <strong>Debug:</strong> Aprenda a ler mensagens de erro</li>
+                        <li style="margin: 12px 0;">📖 <strong>Documentação:</strong> Consulte docs oficiais do React Native</li>
+                        <li style="margin: 12px 0;">🎯 <strong>Foco:</strong> Domine os conceitos básicos antes de avançar</li>
+                        <li style="margin: 12px 0;">🤝 <strong>Colabore:</strong> Discuta código com colegas</li>
+                        <li style="margin: 12px 0;">💪 <strong>Persistência:</strong> Programação exige prática constante</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- RECURSOS -->
+            <section data-background="#f8f9fa">
+                <h2>📚 Recursos Úteis</h2>
+                <div class="concept-box">
+                    <h4>Documentação Oficial</h4>
+                    <ul class="small-text">
+                        <li>🌐 <a href="https://reactnative.dev/" target="_blank">React Native Docs</a></li>
+                        <li>🧭 <a href="https://reactnavigation.org/" target="_blank">React Navigation</a></li>
+                        <li>💾 <a href="https://react-native-async-storage.github.io/async-storage/" target="_blank">AsyncStorage</a></li>
+                        <li>🎨 <a href="https://expo.dev/" target="_blank">Expo Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="concept-box" style="margin-top: 15px;">
+                    <h4>Ferramentas de Teste</h4>
+                    <ul class="small-text">
+                        <li>🔧 <a href="https://snack.expo.dev/" target="_blank">Expo Snack</a> - Testar online</li>
+                        <li>🌐 <a href="https://jsonplaceholder.typicode.com/" target="_blank">JSONPlaceholder</a> - API de teste</li>
+                        <li>📱 Expo Go App - Testar no celular</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ENCERRAMENTO -->
+            <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <h1 style="color: white; font-size: 3em;">🎉</h1>
+                <h2 style="color: white;">Boa Revisão!</h2>
+                <p style="color: white; font-size: 1.2em; margin-top: 30px;">
+                    Pratique, experimente e construa!
+                </p>
+                <div style="margin-top: 40px; color: white; font-size: 0.9em;">
+                    <p>Prof. Msc. Nator Junior</p>
+                    <p>Programação para Dispositivos Móveis</p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/search/search.js"></script>
+
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealSearch],
+            menu: {
+                themes: false,
+                transitions: false,
+                openButton: true,
+                openSlideNumber: true,
+                markers: true
+            }
+        });
+    </script>
+</body>
+
+</html>

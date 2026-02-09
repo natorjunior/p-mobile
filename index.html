@@ -133,7 +133,7 @@
           <div class="flex items-center gap-2">
             <label for="period-select" class="text-sm text-gray-300">Período/Referência</label>
             <select id="period-select" class="bg-gray-700 text-gray-100 border border-gray-600 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
-              <option value="aulas">Geral (padrão)</option>
+              <option value="2026.1">2026.1 (padrão)</option>
               <option value="2025.2">2025.2</option>
               <option value="2025.1">2025.1</option>
             </select>
@@ -149,7 +149,7 @@
   <!-- RODAPÉ -->
   <footer class="bg-gray-800 text-gray-400 text-center py-4 mt-8 border-t border-gray-700">
     <p class="text-sm">
-      &copy; 2025 | Programação Mobile - Prof. Nator Junior. Todos os direitos reservados.
+      &copy; 2026 | Programação Mobile - Prof. Nator Junior. Todos os direitos reservados.
     </p>
   </footer>
 
@@ -164,9 +164,15 @@
   document.addEventListener("DOMContentLoaded", function() {
     const listaAulas = document.getElementById("aulas-list");
     const periodSelect = document.getElementById("period-select");
+    const PERIOD_MAP = {
+      "2026.1": "./2026.1/aulas/aulas.json",
+      "2025.2": "./2025.2/aulas.json",
+      "2025.1": "./2025.1/aulas/aulas.json"
+    };
+    const DEFAULT_PERIOD = "2026.1";
 
     function resolveSource(periodo) {
-      return periodo === '2025.2' ? './2025.2/aulas.json' : './2025.1/aulas/aulas.json';
+      return PERIOD_MAP[periodo] || PERIOD_MAP[DEFAULT_PERIOD];
     }
 
     async function loadAulas(periodo) {
@@ -201,9 +207,13 @@
     }
 
     // Inicializa a partir do localStorage (ou padrão)
-    const saved = localStorage.getItem('pmobile.periodo') || 'aulas';
-    periodSelect.value = saved;
-    loadAulas(saved);
+    const saved = localStorage.getItem('pmobile.periodo');
+    const initialPeriod = PERIOD_MAP[saved] ? saved : DEFAULT_PERIOD;
+    periodSelect.value = initialPeriod;
+    if (!PERIOD_MAP[saved]) {
+      localStorage.setItem('pmobile.periodo', DEFAULT_PERIOD);
+    }
+    loadAulas(initialPeriod);
 
     // Escuta alterações
     periodSelect.addEventListener('change', (e) => {
