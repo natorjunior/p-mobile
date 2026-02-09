@@ -66,5 +66,9 @@
   {
     "titulo": "Extra 3 - iOS com Swift (Aprofundamento)",
     "link": "./2026.1/aulas/extra3-swift-ios.html"
+  },
+  {
+    "titulo": "Extra 4 - Banco de Dados com ORM (Sequelize)",
+    "link": "./2026.1/aulas/extra4-database-orm.html"
   }
 ]

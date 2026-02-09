@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extra 4 - Banco de Dados com ORM (Sequelize)</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+
+  <!-- Tema para código -->
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+  <link rel="stylesheet" href="./css/extra4-database-orm.css">
+
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ==================== SEÇÃO 1: INTRODUÇÃO ==================== -->
+
+      <!-- Título -->
+      <section data-background-gradient="linear-gradient(135deg, #1A1A1A 0%, #336791 100%)">
+        <br><br>
+        <h4 style="color: white;">Programação para Dispositivos Móveis</h4>
+        <p style="color: rgba(255,255,255,0.8); font-size: .5em; font-weight: 300;">
+          Prof. Msc. Nator Junior Carvalho da Costa
+        </p>
+        <h2 style="color: white;">Extra 4 - Banco de Dados com ORM</h2>
+        <div class="emoji-large">🗄️</div>
+        <p style="color: rgba(255,255,255,0.9); font-size: 0.6em;">
+          SQL Básico • Sequelize ORM • CRUD • Associações
+        </p>
+      </section>
+
+      <!-- ==================== SEÇÃO: EVOLUÇÃO DO ARMAZENAMENTO ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #F6891F, #FFA726)">
+        <h2 style="color: white;">💾 Evolução do Armazenamento</h2>
+        <p style="color: rgba(255,255,255,0.9);">Arquivos • SQL • ORM</p>
+      </section>
+
+      <!-- Timeline -->
+      <section>
+        <h3>A Jornada do Armazenamento</h3>
+        <div class="timeline-container">
+          <div class="evolution-stage">
+            <div class="evolution-icon">📁</div>
+            <div class="stage-title">Arquivos</div>
+            <div class="stage-description">
+              Dados em arquivos de texto<br>
+              .txt, .csv, .json
+            </div>
+            <div class="stage-bar" style="width: 80px;"></div>
+            <div class="era-marker desktop-era">1960s</div>
+          </div>
+
+          <div class="evolution-arrow">⟹</div>
+
+          <div class="evolution-stage">
+            <div class="evolution-icon">🗃️</div>
+            <div class="stage-title">Banco SQL</div>
+            <div class="stage-description">
+              Dados estruturados e relacionados<br>
+              MySQL, PostgreSQL, SQLite
+            </div>
+            <div class="stage-bar" style="width: 100px;"></div>
+            <div class="era-marker web-era">1970s</div>
+          </div>
+
+          <div class="evolution-arrow">⟹</div>
+
+          <div class="evolution-stage">
+            <div class="evolution-icon">🔮</div>
+            <div class="stage-title">ORM</div>
+            <div class="stage-description">
+              Objetos mapeados para tabelas<br>
+              Sequelize, Prisma, TypeORM
+            </div>
+            <div class="stage-bar" style="width: 120px; background: linear-gradient(90deg, #336791, #2379bd);"></div>
+            <div class="era-marker mobile-era">Moderno</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO: O QUE É BANCO DE DADOS ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #4285F4, #00BCD4)">
+        <h2 style="color: white;">🗄️ Banco de Dados</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Conceitos Fundamentais</p>
+      </section>
+
+      <section>
+        <h3>🤔 O que é um Banco de Dados?</h3>
+        <div class="highlight-box" style="max-width:700px; margin:25px auto; text-align:left;">
+          <p style="margin:0; font-size:.95em;">
+            É um sistema organizado para <strong>armazenar, gerenciar e recuperar</strong> dados de forma estruturada e eficiente.
+          </p>
+        </div>
+        <div style="display:flex; justify-content:center; gap:60px; margin:22px 0 12px;">
+          <div style="text-align:center;" class="fragment" data-fragment-index="1">
+            <div style="font-size:3.4em;">📊</div>
+            <strong>Tabelas</strong><br>
+            <span style="font-size:.75em; color:#666;">Organizam os dados</span>
+          </div>
+          <div style="text-align:center;" class="fragment" data-fragment-index="2">
+            <div style="font-size:3.4em;">🔗</div>
+            <strong>Relações</strong><br>
+            <span style="font-size:.75em; color:#666;">Conectam as tabelas</span>
+          </div>
+          <div style="text-align:center;" class="fragment" data-fragment-index="3">
+            <div style="font-size:3.4em;">🔍</div>
+            <strong>Consultas</strong><br>
+            <span style="font-size:.75em; color:#666;">Buscam informações</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Exemplo visual de tabela -->
+      <section>
+        <h3>📊 Como é uma Tabela?</h3>
+        <p style="font-size:.8em; color:#666;">Tabela <strong>usuarios</strong></p>
+        <table style="margin:20px auto; font-size:.75em; border-collapse:collapse;">
+          <thead>
+            <tr style="background:#336791; color:white;">
+              <th style="padding:8px 18px;">id</th>
+              <th style="padding:8px 18px;">nome</th>
+              <th style="padding:8px 18px;">email</th>
+              <th style="padding:8px 18px;">idade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="fragment"><td style="padding:6px 18px; border:1px solid #ddd;">1</td><td style="padding:6px 18px; border:1px solid #ddd;">Maria Silva</td><td style="padding:6px 18px; border:1px solid #ddd;">maria@email.com</td><td style="padding:6px 18px; border:1px solid #ddd;">25</td></tr>
+            <tr class="fragment"><td style="padding:6px 18px; border:1px solid #ddd;">2</td><td style="padding:6px 18px; border:1px solid #ddd;">João Costa</td><td style="padding:6px 18px; border:1px solid #ddd;">joao@email.com</td><td style="padding:6px 18px; border:1px solid #ddd;">30</td></tr>
+            <tr class="fragment"><td style="padding:6px 18px; border:1px solid #ddd;">3</td><td style="padding:6px 18px; border:1px solid #ddd;">Ana Souza</td><td style="padding:6px 18px; border:1px solid #ddd;">ana@email.com</td><td style="padding:6px 18px; border:1px solid #ddd;">22</td></tr>
+          </tbody>
+        </table>
+        <div class="info-box fragment" style="max-width:500px; margin:15px auto;">
+          Cada <strong>linha</strong> é um registro. Cada <strong>coluna</strong> é um campo.
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO: SQL BÁSICO ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #f29111, #FFA726)">
+        <h2 style="color: white;">📝 SQL Básico</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Structured Query Language</p>
+      </section>
+
+      <!-- CRUD Conceito -->
+      <section>
+        <h3>🔄 O que é CRUD?</h3>
+        <p style="font-size:.8em; color:#666;">As 4 operações fundamentais com dados</p>
+        <div class="crud-grid">
+          <div class="crud-card card-create fragment">
+            <div style="font-size:2em;">➕</div>
+            <strong>Create</strong>
+            <span>INSERT INTO</span>
+          </div>
+          <div class="crud-card card-read fragment">
+            <div style="font-size:2em;">🔍</div>
+            <strong>Read</strong>
+            <span>SELECT</span>
+          </div>
+          <div class="crud-card card-update fragment">
+            <div style="font-size:2em;">✏️</div>
+            <strong>Update</strong>
+            <span>UPDATE SET</span>
+          </div>
+          <div class="crud-card card-delete fragment">
+            <div style="font-size:2em;">🗑️</div>
+            <strong>Delete</strong>
+            <span>DELETE FROM</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SQL CREATE TABLE -->
+      <section>
+        <section data-auto-animate>
+          <h3>📝 SQL: Criar Tabela</h3>
+          <pre data-id="code-animation"><code class="sql" data-trim data-line-numbers>
+CREATE TABLE usuarios (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome VARCHAR(100) NOT NULL,
+  email VARCHAR(150) UNIQUE,
+  idade INTEGER
+);
+          </code></pre>
+        </section>
+
+        <!-- SQL INSERT -->
+        <section data-auto-animate>
+          <h3>📝 SQL: Inserir Dados</h3>
+          <pre data-id="code-animation"><code class="sql" data-trim data-line-numbers>
+INSERT INTO usuarios (nome, email, idade)
+VALUES ('Maria Silva', 'maria@email.com', 25);
+          </code></pre>
+        </section>
+
+        <!-- SQL SELECT -->
+        <section data-auto-animate>
+          <h3>📝 SQL: Buscar Dados</h3>
+          <pre data-id="code-animation"><code class="sql" data-trim data-line-numbers>
+-- Buscar todos
+SELECT * FROM usuarios;
+
+-- Buscar por condição
+SELECT nome, email FROM usuarios
+WHERE idade > 20;
+          </code></pre>
+        </section>
+
+        <!-- SQL UPDATE -->
+        <section data-auto-animate>
+          <h3>📝 SQL: Atualizar Dados</h3>
+          <pre data-id="code-animation"><code class="sql" data-trim data-line-numbers>
+UPDATE usuarios
+SET idade = 26
+WHERE id = 1;
+          </code></pre>
+        </section>
+
+        <!-- SQL DELETE -->
+        <section data-auto-animate>
+          <h3>📝 SQL: Remover Dados</h3>
+          <pre data-id="code-animation"><code class="sql" data-trim data-line-numbers>
+DELETE FROM usuarios
+WHERE id = 3;
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: ARQUITETURA COM ORM ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #7c4dff, #536DFE)">
+        <h2 style="color: white;">🏗️ Arquitetura com ORM</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Aplicação → ORM → Banco de Dados</p>
+      </section>
+
+      <!-- O que é ORM -->
+      <section>
+        <h3>🔮 O que é ORM?</h3>
+        <div class="highlight-box" style="max-width:700px; margin:25px auto; text-align:left;">
+          <p style="margin:0; font-size:.95em;">
+            <strong>Object-Relational Mapping</strong>: técnica que mapeia objetos do código para tabelas do banco de dados, sem escrever SQL diretamente.
+          </p>
+        </div>
+        <div class="db-layers fragment" style="margin:30px auto;">
+          <div class="db-layer layer-app">
+            <strong>📱 Aplicação (JavaScript)</strong><br>
+            <span style="font-size:.75em;">Trabalha com objetos e métodos</span>
+          </div>
+          <div class="db-layer-arrow">⬇️ ORM traduz automaticamente ⬇️</div>
+          <div class="db-layer layer-orm">
+            <strong>🔮 ORM (Sequelize)</strong><br>
+            <span style="font-size:.75em;">Converte objetos ↔ SQL</span>
+          </div>
+          <div class="db-layer-arrow">⬇️ Gera SQL ⬇️</div>
+          <div class="db-layer layer-db">
+            <strong>🗄️ Banco de Dados (SQLite)</strong><br>
+            <span style="font-size:.75em;">Armazena os dados em tabelas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SQL vs ORM -->
+      <section>
+        <h3>⚔️ SQL Puro vs ORM</h3>
+        <div class="code-comparison">
+          <div>
+            <span class="badge badge-sql">📝 SQL Puro</span>
+            <pre><code class="sql" data-trim data-noescape>
+INSERT INTO usuarios
+  (nome, email, idade)
+VALUES
+  ('Maria', 'maria@email.com', 25);
+
+
+SELECT * FROM usuarios
+WHERE idade > 20
+ORDER BY nome;
+            </code></pre>
+          </div>
+          <div>
+            <span class="badge badge-orm">🔮 Sequelize ORM</span>
+            <pre><code class="javascript" data-trim data-noescape>
+await Usuario.create({
+  nome: 'Maria',
+  email: 'maria@email.com',
+  idade: 25
+});
+
+await Usuario.findAll({
+  where: { idade: { [Op.gt]: 20 } },
+  order: [['nome', 'ASC']]
+});
+            </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vantagens do ORM -->
+      <section>
+        <h3>✅ Por que usar Sequelize?</h3>
+        <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+          <div class="highlight-box fragment" style="flex:1; min-width:200px; max-width:280px;">
+            <div style="font-size:2em;">🛡️</div>
+            <strong>Segurança</strong><br>
+            <span style="font-size:.8em;">Proteção contra SQL Injection</span>
+          </div>
+          <div class="highlight-box fragment" style="flex:1; min-width:200px; max-width:280px;">
+            <div style="font-size:2em;">⚡</div>
+            <strong>Produtividade</strong><br>
+            <span style="font-size:.8em;">Menos código, mais rápido</span>
+          </div>
+          <div class="highlight-box fragment" style="flex:1; min-width:200px; max-width:280px;">
+            <div style="font-size:2em;">🔄</div>
+            <strong>Portabilidade</strong><br>
+            <span style="font-size:.8em;">Trocar de banco facilmente</span>
+          </div>
+          <div class="highlight-box fragment" style="flex:1; min-width:200px; max-width:280px;">
+            <div style="font-size:2em;">📦</div>
+            <strong>Migrations</strong><br>
+            <span style="font-size:.8em;">Versionamento do schema</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO: SIMULAÇÃO VISUAL ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #4285F4, #00BCD4)">
+        <h2 style="color: white;">🔗 Como Funciona na Prática?</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">App → ORM → Banco de Dados</p>
+      </section>
+
+      <section>
+        <h3 style="margin-bottom:8px;">🔗 App → Sequelize → BD — Simulação</h3>
+        <p style="font-size:.7em; color:#666; margin:0 0 6px;">Clique no botão e acompanhe a requisição passando pelo ORM!</p>
+
+        <div class="seq-canvas" id="seqCanvas">
+          <div class="seq-entity e-client">
+            <div class="e-icon">📱</div>
+            <div class="e-name">App</div>
+            <div class="e-sub">Express.js</div>
+          </div>
+
+          <div class="seq-lifeline ll-client"></div>
+          <div class="seq-lifeline ll-server"></div>
+          <div class="seq-lifeline ll-db"></div>
+
+          <div class="seq-phone" id="seqPhone">
+            <div class="seq-phone-frame">
+              <div class="seq-phone-screen">
+                <div class="ph-bar">📋 Minha API</div>
+                <div class="ph-item">👤 Buscar usuário #42</div>
+                <button id="seqSendBtn" type="button">🔍 Buscar Dados</button>
+                <div class="seq-phone-result" id="seqPhoneResult"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="seq-server-box" id="seqServerBox">
+            <div class="seq-server-inner">
+              <div class="sv-icon">🔮</div>
+              <div class="sv-status" id="seqSvStatus">💤 Aguardando</div>
+              <div id="seqServerLog"></div>
+            </div>
+          </div>
+
+          <div class="seq-db-box" id="seqDbBox">
+            <div class="seq-db-inner">
+              <div class="db-icon">🗄️</div>
+              <div class="db-rows">
+                <div class="db-row"><strong>id:42</strong> Maria Silva</div>
+                <div class="db-row">id:43 João Costa</div>
+                <div class="db-row">id:44 Ana Souza</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="seq-packet pkt-request"  id="pkt1"><div class="pkt-body">📨 findByPk(42)</div></div>
+          <div class="seq-packet pkt-query"    id="pkt2"><div class="pkt-body">🔍 SELECT * WHERE id=42</div></div>
+          <div class="seq-packet pkt-dbresult" id="pkt3"><div class="pkt-body">📦 {Maria, 42}</div></div>
+          <div class="seq-packet pkt-response" id="pkt4"><div class="pkt-body">✅ Model Instance → JSON</div></div>
+
+          <div class="seq-steps">
+            <div class="seq-step-pill" id="ss1">① Requisição</div>
+            <div class="seq-step-pill" id="ss2">② ORM Method</div>
+            <div class="seq-step-pill" id="ss3">③ SQL Gerado</div>
+            <div class="seq-step-pill" id="ss4">④ Resultado BD</div>
+            <div class="seq-step-pill" id="ss5">⑤ Mapeamento</div>
+            <div class="seq-step-pill" id="ss6">⑥ JSON Response</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO: SETUP DO PROJETO ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #68a063, #8BC34A)">
+        <h2 style="color: white;">⚙️ Configuração do Projeto</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Node.js + Express + Sequelize</p>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>⚙️ Inicializando o Projeto</h3>
+          <p style="font-size:.8em; color:#666;">Criando o projeto Node.js</p>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+mkdir meu-projeto
+cd meu-projeto
+npm init -y
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>⚙️ Instalando Dependências</h3>
+          <p style="font-size:.8em; color:#666;">Express + Sequelize + SQLite</p>
+          <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+npm install express sequelize sqlite3
+          </code></pre>
+          <div class="info-box fragment" style="max-width:600px; margin:15px auto;">
+            <strong>express</strong>: servidor web &nbsp;|&nbsp;
+            <strong>sequelize</strong>: ORM &nbsp;|&nbsp;
+            <strong>sqlite3</strong>: banco de dados
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📁 Estrutura do Projeto</h3>
+          <pre data-id="code-animation"><code class="text" data-trim data-line-numbers>
+meu-projeto/
+├── package.json
+├── app.js              ← Servidor Express
+├── database.js         ← Configuração Sequelize
+├── models/
+│   └── Usuario.js      ← Model (tabela)
+└── routes/
+    └── usuarios.js     ← Rotas CRUD
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: CONFIGURAÇÃO SEQUELIZE ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #2379bd, #42A5F5)">
+        <h2 style="color: white;">🔧 Configurando o Sequelize</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Conexão com o Banco de Dados</p>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🔧 Conexão com o Banco</h3>
+          <p style="font-size:.8em; color:#666;">arquivo: database.js</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const { Sequelize } = require('sequelize');
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔧 Conexão com o Banco</h3>
+          <p style="font-size:.8em; color:#666;">Criando a instância do Sequelize</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const { Sequelize } = require('sequelize');
+
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './banco.sqlite'
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔧 Conexão com o Banco</h3>
+          <p style="font-size:.8em; color:#666;">Exportando para usar em outros arquivos</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const { Sequelize } = require('sequelize');
+
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './banco.sqlite'
+});
+
+module.exports = sequelize;
+          </code></pre>
+          <div class="info-box fragment" style="max-width:600px; margin:15px auto;">
+            <strong>dialect</strong>: tipo do banco (sqlite, mysql, postgres)<br>
+            <strong>storage</strong>: arquivo onde os dados ficam salvos
+          </div>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: DEFININDO MODELS ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #7c4dff, #536DFE)">
+        <h2 style="color: white;">📋 Definindo Models</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Mapeando Objetos → Tabelas</p>
+      </section>
+
+      <!-- Tipos de dados -->
+      <section>
+        <h3>📊 Tipos de Dados no Sequelize</h3>
+        <p style="font-size:.8em; color:#666;">Os mais utilizados</p>
+        <div class="type-grid">
+          <div class="type-item fragment">
+            <strong>STRING</strong>
+            <span>Texto (VARCHAR)</span>
+          </div>
+          <div class="type-item fragment">
+            <strong>INTEGER</strong>
+            <span>Número inteiro</span>
+          </div>
+          <div class="type-item fragment">
+            <strong>FLOAT</strong>
+            <span>Número decimal</span>
+          </div>
+          <div class="type-item fragment">
+            <strong>BOOLEAN</strong>
+            <span>Verdadeiro/Falso</span>
+          </div>
+          <div class="type-item fragment">
+            <strong>DATE</strong>
+            <span>Data e hora</span>
+          </div>
+          <div class="type-item fragment">
+            <strong>TEXT</strong>
+            <span>Texto longo</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Model progressivo -->
+      <section>
+        <section data-auto-animate>
+          <h3>📋 Criando o Model Usuario</h3>
+          <p style="font-size:.8em; color:#666;">arquivo: models/Usuario.js</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database');
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📋 Criando o Model Usuario</h3>
+          <p style="font-size:.8em; color:#666;">Definindo os campos da tabela</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database');
+
+const Usuario = sequelize.define('Usuario', {
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📋 Criando o Model Usuario</h3>
+          <p style="font-size:.8em; color:#666;">Adicionando mais campos</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database');
+
+const Usuario = sequelize.define('Usuario', {
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    unique: true
+  },
+  idade: {
+    type: DataTypes.INTEGER
+  }
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>📋 Criando o Model Usuario</h3>
+          <p style="font-size:.8em; color:#666;">Exportando o model</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database');
+
+const Usuario = sequelize.define('Usuario', {
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    unique: true
+  },
+  idade: {
+    type: DataTypes.INTEGER
+  }
+});
+
+module.exports = Usuario;
+          </code></pre>
+          <div class="info-box fragment" style="max-width:600px; margin:15px auto;">
+            O Sequelize cria automaticamente: <strong>id</strong>, <strong>createdAt</strong> e <strong>updatedAt</strong>!
+          </div>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: CRUD COM SEQUELIZE ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #336791, #42A5F5)">
+        <h2 style="color: white;">🔄 CRUD com Sequelize</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Create • Read • Update • Delete</p>
+      </section>
+
+      <!-- CREATE -->
+      <section>
+        <section data-auto-animate>
+          <h3>➕ Create — Criar Registro</h3>
+          <p style="font-size:.8em; color:#666;">Inserindo um novo usuário</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Criar um usuário
+const novoUsuario = await Usuario.create({
+  nome: 'Maria Silva',
+  email: 'maria@email.com',
+  idade: 25
+});
+
+console.log(novoUsuario.id);  // 1 (gerado automaticamente)
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>➕ Create — Criar Vários</h3>
+          <p style="font-size:.8em; color:#666;">Inserindo múltiplos registros de uma vez</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Criar vários usuários de uma vez
+const usuarios = await Usuario.bulkCreate([
+  { nome: 'João Costa', email: 'joao@email.com', idade: 30 },
+  { nome: 'Ana Souza', email: 'ana@email.com', idade: 22 },
+  { nome: 'Pedro Lima', email: 'pedro@email.com', idade: 28 }
+]);
+
+console.log(usuarios.length);  // 3
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- READ -->
+      <section>
+        <section data-auto-animate>
+          <h3>🔍 Read — Buscar Todos</h3>
+          <p style="font-size:.8em; color:#666;">Equivalente a SELECT * FROM usuarios</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Buscar todos os usuários
+const todos = await Usuario.findAll();
+
+console.log(todos.length);
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔍 Read — Buscar por ID</h3>
+          <p style="font-size:.8em; color:#666;">Buscando um registro específico</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Buscar por chave primária (ID)
+const usuario = await Usuario.findByPk(1);
+
+console.log(usuario.nome);   // 'Maria Silva'
+console.log(usuario.email);  // 'maria@email.com'
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔍 Read — Buscar com Filtro</h3>
+          <p style="font-size:.8em; color:#666;">Usando condições (WHERE)</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const { Op } = require('sequelize');
+
+// Buscar com condição
+const jovens = await Usuario.findAll({
+  where: {
+    idade: { [Op.lt]: 30 }  // idade menor que 30
+  }
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔍 Read — Buscar Um</h3>
+          <p style="font-size:.8em; color:#666;">Retorna apenas o primeiro resultado</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Buscar um único registro
+const maria = await Usuario.findOne({
+  where: { nome: 'Maria Silva' }
+});
+
+console.log(maria.email);  // 'maria@email.com'
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- UPDATE -->
+      <section>
+        <section data-auto-animate>
+          <h3>✏️ Update — Atualizar Registro</h3>
+          <p style="font-size:.8em; color:#666;">Alterando dados existentes</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Buscar o usuário
+const usuario = await Usuario.findByPk(1);
+
+// Atualizar o campo
+usuario.idade = 26;
+
+// Salvar no banco
+await usuario.save();
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✏️ Update — Forma Direta</h3>
+          <p style="font-size:.8em; color:#666;">Atualizando com um único comando</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Atualizar diretamente
+await Usuario.update(
+  { idade: 26 },               // novos valores
+  { where: { id: 1 } }         // condição
+);
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- DELETE -->
+      <section>
+        <section data-auto-animate>
+          <h3>🗑️ Delete — Remover Registro</h3>
+          <p style="font-size:.8em; color:#666;">Deletando um usuário</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Buscar e remover
+const usuario = await Usuario.findByPk(3);
+await usuario.destroy();
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🗑️ Delete — Forma Direta</h3>
+          <p style="font-size:.8em; color:#666;">Removendo com condição</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Remover diretamente
+await Usuario.destroy({
+  where: { id: 3 }
+});
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: API CRUD COMPLETA ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #68a063, #43A047)">
+        <h2 style="color: white;">🚀 API CRUD Completa</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Express + Sequelize</p>
+      </section>
+
+      <!-- Rotas progressivas -->
+      <section>
+        <section data-auto-animate>
+          <h3>🚀 Montando a API</h3>
+          <p style="font-size:.8em; color:#666;">arquivo: app.js — Início</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const express = require('express');
+const sequelize = require('./database');
+const Usuario = require('./models/Usuario');
+
+const app = express();
+app.use(express.json());
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Rota: Listar Todos</h3>
+          <p style="font-size:.8em; color:#666;">GET /usuarios</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// GET /usuarios — Listar todos
+app.get('/usuarios', async (req, res) => {
+  const usuarios = await Usuario.findAll();
+  res.json(usuarios);
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Rota: Buscar por ID</h3>
+          <p style="font-size:.8em; color:#666;">GET /usuarios/:id</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// GET /usuarios/:id — Buscar por ID
+app.get('/usuarios/:id', async (req, res) => {
+  const usuario = await Usuario.findByPk(req.params.id);
+  if (!usuario) {
+    return res.status(404).json({ erro: 'Não encontrado' });
+  }
+  res.json(usuario);
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Rota: Criar</h3>
+          <p style="font-size:.8em; color:#666;">POST /usuarios</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// POST /usuarios — Criar novo
+app.post('/usuarios', async (req, res) => {
+  const { nome, email, idade } = req.body;
+  const usuario = await Usuario.create({
+    nome, email, idade
+  });
+  res.status(201).json(usuario);
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Rota: Atualizar</h3>
+          <p style="font-size:.8em; color:#666;">PUT /usuarios/:id</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// PUT /usuarios/:id — Atualizar
+app.put('/usuarios/:id', async (req, res) => {
+  const usuario = await Usuario.findByPk(req.params.id);
+  if (!usuario) {
+    return res.status(404).json({ erro: 'Não encontrado' });
+  }
+  await usuario.update(req.body);
+  res.json(usuario);
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Rota: Deletar</h3>
+          <p style="font-size:.8em; color:#666;">DELETE /usuarios/:id</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// DELETE /usuarios/:id — Remover
+app.delete('/usuarios/:id', async (req, res) => {
+  const usuario = await Usuario.findByPk(req.params.id);
+  if (!usuario) {
+    return res.status(404).json({ erro: 'Não encontrado' });
+  }
+  await usuario.destroy();
+  res.json({ mensagem: 'Removido com sucesso' });
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🚀 Iniciando o Servidor</h3>
+          <p style="font-size:.8em; color:#666;">Sincronizando o banco e subindo</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Sincronizar tabelas e iniciar
+sequelize.sync().then(() => {
+  console.log('Banco sincronizado!');
+  
+  app.listen(3000, () => {
+    console.log('Servidor rodando na porta 3000');
+  });
+});
+          </code></pre>
+          <div class="info-box fragment" style="max-width:600px; margin:15px auto;">
+            <strong>sync()</strong> cria as tabelas automaticamente a partir dos Models!
+          </div>
+        </section>
+      </section>
+
+      <!-- Código completo do app.js -->
+      <section>
+        <h3>📄 Código Completo — app.js</h3>
+        <pre style="font-size:.42em;"><code class="javascript" data-trim data-line-numbers>
+const express = require('express');
+const sequelize = require('./database');
+const Usuario = require('./models/Usuario');
+
+const app = express();
+app.use(express.json());
+
+app.get('/usuarios', async (req, res) => {
+  const usuarios = await Usuario.findAll();
+  res.json(usuarios);
+});
+
+app.get('/usuarios/:id', async (req, res) => {
+  const usuario = await Usuario.findByPk(req.params.id);
+  if (!usuario) return res.status(404).json({ erro: 'Não encontrado' });
+  res.json(usuario);
+});
+
+app.post('/usuarios', async (req, res) => {
+  const usuario = await Usuario.create(req.body);
+  res.status(201).json(usuario);
+});
+
+app.put('/usuarios/:id', async (req, res) => {
+  const usuario = await Usuario.findByPk(req.params.id);
+  if (!usuario) return res.status(404).json({ erro: 'Não encontrado' });
+  await usuario.update(req.body);
+  res.json(usuario);
+});
+
+app.delete('/usuarios/:id', async (req, res) => {
+  const usuario = await Usuario.findByPk(req.params.id);
+  if (!usuario) return res.status(404).json({ erro: 'Não encontrado' });
+  await usuario.destroy();
+  res.json({ mensagem: 'Removido com sucesso' });
+});
+
+sequelize.sync().then(() => {
+  app.listen(3000, () => console.log('Servidor na porta 3000'));
+});
+        </code></pre>
+      </section>
+
+      <!-- ==================== SEÇÃO: ASSOCIAÇÕES ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #f29111, #FF7043)">
+        <h2 style="color: white;">🔗 Associações</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Relacionamentos entre Models</p>
+      </section>
+
+      <section>
+        <h3>🔗 Tipos de Associações</h3>
+        <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+          <div class="highlight-box fragment" style="flex:1; min-width:240px; max-width:300px;">
+            <div style="font-size:2em;">1️⃣➡️♾️</div>
+            <strong>hasMany</strong><br>
+            <span style="font-size:.8em;">Um usuário tem muitos posts</span>
+          </div>
+          <div class="highlight-box fragment" style="flex:1; min-width:240px; max-width:300px;">
+            <div style="font-size:2em;">♾️➡️1️⃣</div>
+            <strong>belongsTo</strong><br>
+            <span style="font-size:.8em;">Um post pertence a um usuário</span>
+          </div>
+          <div class="highlight-box fragment" style="flex:1; min-width:240px; max-width:300px;">
+            <div style="font-size:2em;">♾️↔️♾️</div>
+            <strong>belongsToMany</strong><br>
+            <span style="font-size:.8em;">Alunos e disciplinas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Model Post -->
+      <section>
+        <section data-auto-animate>
+          <h3>🔗 Criando Model Post</h3>
+          <p style="font-size:.8em; color:#666;">arquivo: models/Post.js</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database');
+
+const Post = sequelize.define('Post', {
+  titulo: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  conteudo: {
+    type: DataTypes.TEXT
+  }
+});
+
+module.exports = Post;
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔗 Definindo a Associação</h3>
+          <p style="font-size:.8em; color:#666;">Um Usuário tem muitos Posts</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const Usuario = require('./models/Usuario');
+const Post = require('./models/Post');
+
+// Um usuário tem muitos posts
+Usuario.hasMany(Post);
+
+// Um post pertence a um usuário
+Post.belongsTo(Usuario);
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔗 Usando a Associação</h3>
+          <p style="font-size:.8em; color:#666;">Criando e buscando com relação</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Criar post para um usuário
+const post = await Post.create({
+  titulo: 'Meu primeiro post',
+  conteudo: 'Olá mundo!',
+  UsuarioId: 1     // chave estrangeira automática
+});
+
+// Buscar usuário COM seus posts
+const usuario = await Usuario.findByPk(1, {
+  include: Post    // inclui os posts relacionados
+});
+
+console.log(usuario.Posts);  // lista de posts
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: VALIDAÇÕES ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #E91E63, #F06292)">
+        <h2 style="color: white;">🛡️ Validações</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Protegendo a integridade dos dados</p>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🛡️ Validações no Model</h3>
+          <p style="font-size:.8em; color:#666;">Garantindo dados válidos</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const Usuario = sequelize.define('Usuario', {
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [2, 100]       // mínimo 2, máximo 100 caracteres
+    }
+  },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    validate: {
+      isEmail: true        // valida formato de email
+    }
+  },
+  idade: {
+    type: DataTypes.INTEGER,
+    validate: {
+      min: 0,
+      max: 150
+    }
+  }
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🛡️ Tratando Erros</h3>
+          <p style="font-size:.8em; color:#666;">Capturando erros de validação</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+app.post('/usuarios', async (req, res) => {
+  try {
+    const usuario = await Usuario.create(req.body);
+    res.status(201).json(usuario);
+  } catch (erro) {
+    if (erro.name === 'SequelizeValidationError') {
+      const msgs = erro.errors.map(e => e.message);
+      return res.status(400).json({ erros: msgs });
+    }
+    res.status(500).json({ erro: 'Erro interno' });
+  }
+});
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== SEÇÃO: OPERADORES ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #00BCD4, #26C6DA)">
+        <h2 style="color: white;">🔎 Consultas Avançadas</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">Operadores e Filtros</p>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h3>🔎 Operadores de Comparação</h3>
+          <p style="font-size:.8em; color:#666;">Filtrando com precisão</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const { Op } = require('sequelize');
+
+// Maior que
+const adultos = await Usuario.findAll({
+  where: { idade: { [Op.gte]: 18 } }
+});
+
+// Entre valores
+const faixa = await Usuario.findAll({
+  where: { idade: { [Op.between]: [20, 30] } }
+});
+
+// Contém texto
+const marias = await Usuario.findAll({
+  where: { nome: { [Op.like]: '%Maria%' } }
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔎 Ordenação e Limite</h3>
+          <p style="font-size:.8em; color:#666;">Organizando os resultados</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Ordenar por nome (A-Z)
+const ordenados = await Usuario.findAll({
+  order: [['nome', 'ASC']]
+});
+
+// Limitar e paginar
+const pagina = await Usuario.findAll({
+  limit: 10,         // 10 por página
+  offset: 20,        // pular os 20 primeiros
+  order: [['createdAt', 'DESC']]
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🔎 Contar e Agregar</h3>
+          <p style="font-size:.8em; color:#666;">Obtendo estatísticas</p>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// Contar registros
+const total = await Usuario.count();
+
+// Contar com filtro
+const totalJovens = await Usuario.count({
+  where: { idade: { [Op.lt]: 30 } }
+});
+
+// Buscar + contar em uma chamada
+const { count, rows } = await Usuario.findAndCountAll({
+  where: { idade: { [Op.gte]: 18 } },
+  limit: 10
+});
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- ==================== MINI DESAFIO ==================== -->
+
+      <section>
+        <section data-auto-animate>
+          <h3>🧪 Mini Desafio ORM</h3>
+          <p style="font-size:.8em; color:#666;">5 minutos</p>
+        </section>
+
+        <section data-auto-animate>
+          <h3>🧪 Mini Desafio</h3>
+          <div class="mini-exercise">
+            <p style="font-size:.9em; margin:0;">
+              Crie um Model <strong>Produto</strong> com: nome (string, obrigatório), preco (float), estoque (integer, padrão 0).
+              Depois, escreva uma rota GET que retorne todos os produtos com estoque maior que zero, ordenados pelo preço.
+            </p>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+// TODO: Definir o Model Produto
+
+// TODO: Criar a rota GET /produtos
+            </code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Resolução — Model</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+const Produto = sequelize.define('Produto', {
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  preco: {
+    type: DataTypes.FLOAT
+  },
+  estoque: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  }
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <h3>✅ Resolução — Rota</h3>
+          <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+app.get('/produtos', async (req, res) => {
+  const produtos = await Produto.findAll({
+    where: {
+      estoque: { [Op.gt]: 0 }
+    },
+    order: [['preco', 'ASC']]
+  });
+  res.json(produtos);
+});
+          </code></pre>
+        </section>
+
+        <section data-auto-animate>
+          <div class="info-box">
+            <strong>Resumo:</strong>
+            <code>define</code> (cria model) → <code>findAll</code> (busca) → <code>where</code> (filtra) → <code>order</code> (ordena).
+          </div>
+        </section>
+      </section>
+
+      <!-- ==================== FECHAMENTO ==================== -->
+
+      <section data-background-gradient="linear-gradient(135deg, #336791, #2379bd)">
+        <h2 style="color: white;">🏁 Fechamento — Banco de Dados com ORM</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size:.9em;">
+          Você já conhece: SQL básico, Sequelize, Models, CRUD, Associações, Validações e Consultas.
+        </p>
+        <div class="highlight-box" style="max-width:760px; margin:20px auto; background:linear-gradient(135deg,#1A1A1A,#2D2D2D);">
+          <p style="margin:0; font-size:.85em;">
+            Próximo passo: integrar essa API com um <strong>frontend React Native</strong> ou <strong>React Web</strong> para consumir os dados!
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="./dist/reveal.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+  <script src="./js/extra4-database-orm.js"></script>
+</body>
+</html>
