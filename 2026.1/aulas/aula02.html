@@ -65,30 +65,32 @@
             width: 48%;
         }
 
-    /* Torna o bloco de código relativo para posicionamento do botão */
-    pre {
-      position: relative;
-    }
-    /* Estilização discreta para o botão de copiar */
-    .copy-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(0, 0, 0, 0.6);
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      padding: 4px 8px;
-      font-size: 12px;
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    /* Exibe o botão quando o mouse está sobre o bloco */
-    pre:hover .copy-btn {
-      opacity: 1;
-    }
-  </style>
+        /* Torna o bloco de código relativo para posicionamento do botão */
+        pre {
+            position: relative;
+        }
+
+        /* Estilização discreta para o botão de copiar */
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Exibe o botão quando o mouse está sobre o bloco */
+        pre:hover .copy-btn {
+            opacity: 1;
+        }
+    </style>
 </head>
 
 <body>
@@ -219,19 +221,19 @@ npx expo start
                         intuitiva.</p>
                 </section>
 
-                <section>
+                <section data-auto-animate>
                     <h3>Considere esta declaração de variável:</h3>
-                    <pre><code class="hljs javascript">
+                    <pre data-id="code-jsx-decl"><code class="hljs javascript" data-trim data-line-numbers>
 const element = <h1>Hello, world!</h1>; //react.js
                     </code></pre>
                     <p class="fragment">Este código parece HTML, mas é JSX!</p>
                     <p class="fragment">JSX permite escrever código declarativo e reutilizável em React.</p>
                 </section>
 
-                <section>
+                <section data-auto-animate>
                     <h3>O que acontece por trás?</h3>
-                    <p class="fragment">O JSX acima é transformado em:</p>
-                    <pre><code class="hljs javascript">
+                    <p>O JSX acima é transformado em:</p>
+                    <pre data-id="code-jsx-decl"><code class="hljs javascript" data-trim data-line-numbers>
 const element = React.createElement("h1", null, "Hello, world!"); 
                     </code></pre>
                     <p class="fragment">Isso significa que JSX não é obrigatório, mas facilita muito a escrita de
@@ -255,17 +257,17 @@ const element = React.createElement("h1", null, "Hello, world!");
                         Isso não é novo</h4>
                 </section>
 
-                <section>
+                <section data-auto-animate>
                     <h3>Variáveis & Interpolação</h3>
-                    <pre class="fragment fade-in-then-out"><code class="hljs php">&lt;?php
+                    <pre data-id="code-php"><code class="hljs php" data-trim data-line-numbers>&lt;?php
     $nome = "Nator";
     echo "Olá, $nome!";
 ?&gt;</code></pre>
                 </section>
 
-                <section>
+                <section data-auto-animate>
                     <h3>Funções & Exibição Rápida</h3>
-                    <pre class="fragment"><code class="hljs php">&lt;?php
+                    <pre data-id="code-php"><code class="hljs php" data-trim data-line-numbers>&lt;?php
     $nome = "Nator";
     function saudacao($nome) {
         return "Olá, {$nome}!";
@@ -287,18 +289,18 @@ const element = React.createElement("h1", null, "Hello, world!");
                     <p class="fragment">Isso torna o código mais dinâmico e interativo.</p>
                 </section>
 
-                <section>
+                <section data-auto-animate>
                     <h3>Exemplo de Expressão em JSX</h3>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+                    <pre data-id="code-expr-jsx"><code class="hljs javascript" data-trim data-line-numbers>
 const name = "Nator";  //react.js
 const element = <h1>Olá, {name}!</h1>; //react.js
                     </code></pre>
                     <p class="fragment">Aqui, `{name}` é uma expressão JavaScript embutida dentro do JSX.</p>
                 </section>
 
-                <section>
+                <section data-auto-animate>
                     <h3>Exemplo com Função</h3>
-                    <pre><code class="hljs javascript">
+                    <pre data-id="code-expr-jsx"><code class="hljs javascript" data-trim data-line-numbers>
 function formatName(user) { //react.js
     return user.firstName + " " + user.lastName;
 }
@@ -310,14 +312,14 @@ const element = <h1>Olá, {formatName(user)}!</h1>; //react.js
                     <p class="fragment">Chamamos uma função diretamente dentro do JSX.</p>
                 </section>
 
-                <section>
+                <section data-auto-animate>
                     <h3>Operações Matemáticas e Expressões Lógicas</h3>
-                    <pre><code class="hljs javascript">
+                    <pre data-id="code-expr-jsx"><code class="hljs javascript" data-trim data-line-numbers>
 const element = <p>A soma de 2 + 2 é {2 + 2}</p>; //react.js
                     </code></pre>
                     <p class="fragment">Podemos usar operações matemáticas diretamente.</p>
 
-                    <pre><code class="hljs javascript">
+                    <pre><code class="hljs javascript" data-trim data-line-numbers>
 const isLoggedIn = true;
 const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>; //react.js
                     </code></pre>
@@ -325,55 +327,514 @@ const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>; //react.js
                 </section>
             </section>
 
+            
+
             <!-- ================================== -->
             <!-- PARTE 5: COMPONENTES BÁSICOS       -->
             <!-- ================================== -->
-<section>
-    <!-- Exemplo do componente Text -->
-    <section>
-        <h4>&lt;Text&gt; Component</h4>
-        <p>Utilizado para renderizar textos na tela.</p>
-        <pre class="code-snippet fragment fade-in-then-out">
-        <code>&lt;Text&gt;Meu texto&lt;/Text&gt;</code>
+
+
+
+
+
+
+            <!-- Slide 1: Componente &lt;Text&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <section>
+                    <br><br><br><br>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                        Componente &lt;Text&gt; no React Native
+                    </h4>
+                    <h1>🐝</h1>
+                </section>
+
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+                        <!-- Coluna 1: Conteúdo e código -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                                Introdução ao Componente &lt;Text&gt;
+                            </h4>
+                            <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                                O componente &lt;Text&gt; é a base para exibir texto em um app React Native. Use-o para
+                                renderizar strings simples.
+                                <br><br>
+
+                            </h6>
+                            <pre data-id="code-intro-text"
+                                style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; overflow: auto; margin-top: 20px;">
+  <code class="language-jsx" data-trim data-line-numbers>import React from 'react';
+import { Text, View } from 'react-native';
+</code>
         </pre>
-    </section>
-    
-    <!-- Exemplo do componente View -->
-    <section>
-        <h4>&lt;View&gt; Component</h4>
-        <p>Utilizado como container para organizar outros componentes.</p>
-        <pre class="code-snippet fragment fade-in-then-out language-jsx">
-        <code>&lt;View&gt; &lt;MeuComponent /&gt; &lt;/View&gt;</code> </pre>
-    </section>
+                        </div>
 
-    <section>
-        <h3>✏️ Atividade: Cartão de perfil</h3>
-        <p class="fragment">Usando <code>&lt;View&gt;</code> e <code>&lt;Text&gt;</code>, crie um cartão que exiba:</p>
-        <ul>
-            <li class="fragment">Seu nome completo</li>
-            <li class="fragment">Sua idade</li>
-            <li class="fragment">Seu curso</li>
-            <li class="fragment">Mensagem: "Maior de idade" ou "Menor de idade"</li>
-        </ul>
-    </section>
 
-    <section>
-        <h3>✏️ Atividade: Cartão de perfil</h3>
-        <pre ><code class="">import { Text, View } from 'react-native';
+
+                </section>
+
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                                Introdução ao Componente &lt;Text&gt;
+                            </h4>
+                            <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                                O componente &lt;Text&gt; é a base para exibir texto em um app React Native. Use-o para
+                                renderizar strings simples.
+                            </h6>
+                            <pre data-id="code-intro-text"
+                                style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; overflow: auto; margin-top: 20px;">
+  <code class="language-jsx" data-trim data-line-numbers>import React from 'react';
+import { Text, View } from 'react-native';
+
 export default function App() {
-    const perfil = { nome: "Maria Silva", idade: 20, curso: "Mobile" };
     return (
-    &lt;View style={{flex:1, alignItems:'center', justifyContent:'center'}}&gt;
-        &lt;Text style={{fontSize:22, fontWeight:'bold'}}&gt;{perfil.nome}&lt;/Text&gt;
-        &lt;Text&gt;Idade: {perfil.idade} anos&lt;/Text&gt;
-        &lt;Text&gt;Curso: {perfil.curso}&lt;/Text&gt;
-        &lt;Text&gt;{perfil.idade &gt;= 18 ? "✅ Maior de idade" : "❌ Menor de idade"}&lt;/Text&gt;
-    &lt;/View&gt;
+        &lt;View&gt;
+            &lt;Text&gt;Hello, React Native!&lt;/Text&gt;
+        &lt;/View&gt;
     );
+}</code>
+        </pre>
+                        </div>
+                </section>
+
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/ex01" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                    </div>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;Text&gt;</h3>
+                    <p style="color: white;">Crie uma tela com dois textos: título e subtítulo.</p>
+                    <pre data-id="code-text" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View, Text } from 'react-native';
+</code></pre>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;Text&gt;</h3>
+                    <p style="color: white;">Crie uma tela com dois textos: título e subtítulo.</p>
+                    <pre data-id="code-text" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View, Text } from 'react-native';
+
+export default function App() {
+  return (
+    &lt;View&gt;
+    &lt;/View&gt;
+  );
 }</code></pre>
-<h6 style="text-transform: normalcase;">playground: https://u.acilab.com.br/Oq</h6>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;Text&gt;</h3>
+                    <p style="color: white;">Crie uma tela com dois textos: título e subtítulo.</p>
+                    <pre data-id="code-text" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View, Text } from 'react-native';
+
+export default function App() {
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;Meu App&lt;/Text&gt;
+      &lt;Text&gt;Primeira tela com React Native&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+                </section>
+            </section>
+
+            <!-- Slide 2: Componente &lt;View&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <section>
+                    <br><br><br><br>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                        Componente &lt;View&gt; no React Native
+                    </h4>
+                    <h1>📦</h1>
+                </section>
+
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="padding: 20px; box-sizing: border-box;">
+                        <!-- Coluna: Conteúdo e código -->
+                            <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                                Exemplo de Uso do Componente &lt;View&gt;
+                            </h4>
+                            <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                                O componente &lt;View&gt; atua como um container para estruturar e agrupar outros componentes
+                                    na sua interface.
+                            </h6>
+                            <pre data-id="code-intro-view"
+                                style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+    <code class="language-jsx" data-trim data-line-numbers>import React from 'react';
+import { View, Text } from 'react-native';
+</code>
+                            </pre>
+                    </div>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="padding: 20px; box-sizing: border-box;">
+                            <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                                Exemplo de Uso do Componente &lt;View&gt;
+                            </h4>
+                            <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                                O componente &lt;View&gt; atua como um container para estruturar e agrupar outros componentes
+                                    na sua interface.
+                            </h6>
+                            <pre data-id="code-intro-view"
+                                style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+    <code class="language-jsx" data-trim data-line-numbers>import React from 'react';
+import { View, Text } from 'react-native';
+
+export default function App() { 
+    return ( 
+    &lt;View style={{alignItems: 'center'}}&gt; 
+        &lt;Text&gt;Bem-vindo ao React Native!&lt;/Text&gt; 
+    &lt;/View&gt; 
+    ); 
+}</code>
+                            </pre>
+                    </div>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/view" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                    </div>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/view2" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                    </div>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;View&gt;</h3>
+                    <p style="color: white;">Monte dois blocos com cores diferentes dentro de uma mesma tela.</p>
+                    <pre data-id="code-view" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View } from 'react-native';
+</code></pre>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;View&gt;</h3>
+                    <p style="color: white;">Monte dois blocos com cores diferentes dentro de uma mesma tela.</p>
+                    <pre data-id="code-view" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View } from 'react-native';
+
+export default function App() {
+  return (
+    &lt;View style={{ padding: 20 }}&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;View&gt;</h3>
+                    <p style="color: white;">Monte dois blocos com cores diferentes dentro de uma mesma tela.</p>
+                    <pre data-id="code-view" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View } from 'react-native';
+
+export default function App() {
+  return (
+    &lt;View style={{ padding: 20 }}&gt;
+      &lt;View style={{ height: 60, backgroundColor: '#4caf50', marginBottom: 10 }} /&gt;
+      &lt;View style={{ height: 60, backgroundColor: '#2196f3' }} /&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+                </section>
+            </section>
+
+
+
+            <!-- Slide 3: Componente &lt;Image&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+
+                <section>
+                    <br><br><br><br>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                        Componente &lt;Image&gt; no React Native
+                    </h4>
+                    <h1>🖼️</h1>
+                </section>
+                <section data-auto-animate>
+                    <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                        O componente &lt;Image&gt;
+                    </h6>
+                    <pre data-id="code-intro-image" class="fragment fade-in-then-out"><code class="language-jsx" data-trim data-line-numbers>import React from 'react';
+import { View, Image } from 'react-native';
+</code></pre>
+                </section>
+                <section data-auto-animate>
+                    <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                        O componente &lt;Image&gt;
+                    </h6>
+                    <pre data-id="code-intro-image"><code class="language-jsx" data-trim data-line-numbers>import React from 'react';
+import { View, Image } from 'react-native';
+
+export default function App() { 
+    return ( 
+    &lt;View style={{alignItems: 'center'}}&gt; 
+        &lt;Image 
+            source={{uri: 'https://reactnative.dev/img/tiny_logo.png'}}
+            style={{width: 50, height: 50}} 
+        /&gt; 
+    &lt;/View&gt; 
+    ); 
+}</code></pre>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/image" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                    </div>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;Image&gt;</h3>
+                    <p style="color: white;">Exiba uma imagem e abaixo dela um texto com legenda.</p>
+                    <pre data-id="code-image" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View, Image, Text } from 'react-native';
+</code></pre>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;Image&gt;</h3>
+                    <p style="color: white;">Exiba uma imagem e abaixo dela um texto com legenda.</p>
+                    <pre data-id="code-image" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View, Image, Text } from 'react-native';
+
+export default function App() {
+  return (
+    &lt;View style={{ alignItems: 'center', paddingTop: 30 }}&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;Image&gt;</h3>
+                    <p style="color: white;">Exiba uma imagem e abaixo dela um texto com legenda.</p>
+                    <pre data-id="code-image" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View, Image, Text } from 'react-native';
+
+export default function App() {
+  return (
+    &lt;View style={{ alignItems: 'center', paddingTop: 30 }}&gt;
+      &lt;Image source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+             style={{ width: 80, height: 80 }} /&gt;
+      &lt;Text&gt;Logo do React Native&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+                </section>
+            </section>
+
+            <!-- Slide 4: Componente &lt;Button&gt; -->
+            <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+                <section>
+                    <br><br><br><br>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                        Componente &lt;Button&gt; no React Native
+                    </h4>
+                    <h1>🔘</h1>
+                </section>
+                <section data-auto-animate>
+                    <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                        O componente &lt;Button&gt;
+                    </h6>
+                    <pre data-id="code-intro-button"><code class="language-jsx" data-trim data-line-numbers>import React from 'react';
+import { View, Button, Alert } from 'react-native';
+</code></pre>
+                </section>
+                <section data-auto-animate>
+                    <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+                        O componente &lt;Button&gt;
+                    </h6>
+                    <pre data-id="code-intro-button"><code class="language-jsx" data-trim data-line-numbers>import React from 'react';
+import { View, Button, Alert } from 'react-native';
+
+export default function App() { 
+    return ( 
+    &lt;View style={{alignItems: 'center'}}&gt; 
+        &lt;Button 
+            title="Pressione-me" 
+            onPress={() => Alert.alert('Botão pressionado!')}
+        /&gt; 
+    &lt;/View&gt; 
+    ); 
+}</code></pre>
+                </section>
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
+                <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
+                        <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                            <div data-snack-id="@natorjunior/button" data-snack-platform="web" data-snack-preview="true"
+                                data-snack-theme="light"
+                                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                            </div>
+                            <script async src="https://snack.expo.dev/embed.js"></script>
+                        </div>
+                    </div>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;Button&gt;</h3>
+                    <p style="color: white;">Crie um botão que mostra um alerta com a mensagem "Olá, turma!".</p>
+                    <pre data-id="code-button" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View, Button, Alert } from 'react-native';
+</code></pre>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;Button&gt;</h3>
+                    <p style="color: white;">Crie um botão que mostra um alerta com a mensagem "Olá, turma!".</p>
+                    <pre data-id="code-button" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View, Button, Alert } from 'react-native';
+
+export default function App() {
+  return (
+    &lt;View style={{ marginTop: 40 }}&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+                </section>
+                <section data-auto-animate data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+                    style="padding: 20px;">
+                    <h3 style="color: white;">✏️ Atividade simples: &lt;Button&gt;</h3>
+                    <p style="color: white;">Crie um botão que mostra um alerta com a mensagem "Olá, turma!".</p>
+                    <pre data-id="code-button" style="background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px;">
+<code class="language-jsx" data-trim data-line-numbers>import { View, Button, Alert } from 'react-native';
+
+export default function App() {
+  return (
+    &lt;View style={{ marginTop: 40 }}&gt;
+      &lt;Button title="Clique aqui"
+              onPress={() =&gt; Alert.alert('Olá, turma!')} /&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+                </section>
+            </section>
+
+
+<!-- Slide: Componente &lt;TextInput&gt; -->
+<section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+    <section>
+        <br><br><br><br>
+        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+            Componente &lt;TextInput&gt; no React Native
+        </h4>
+        <h1>⌨️</h1>
+    </section>
+    <section data-auto-animate>
+        <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+            O componente &lt;TextInput&gt; permite capturar entrada de texto do usuário.
+        </h6>
+        <pre data-id="code-intro-textinput"><code class="language-jsx" data-trim data-line-numbers>import React, { useState } from 'react';
+import { View, TextInput, Text } from 'react-native';
+</code></pre>
+    </section>
+    <section data-auto-animate>
+        <h6 style="color: white; max-width: 90%; margin: auto; line-height: 1.5;">
+            O componente &lt;TextInput&gt; permite capturar entrada de texto do usuário.
+        </h6>
+        <pre data-id="code-intro-textinput"><code class="language-jsx" data-trim data-line-numbers>import React, { useState } from 'react';
+import { View, TextInput, Text } from 'react-native';
+
+export default function App() { 
+    const [text, setText] = useState('');
+    
+    return ( 
+    &lt;View style={{alignItems: 'center', padding: 20}}&gt; 
+        &lt;TextInput 
+            style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, paddingHorizontal: 10}} 
+            placeholder="Digite algo..."
+            onChangeText={setText}
+            value={text}
+        /&gt; 
+        &lt;Text&gt;Você digitou: {text}&lt;/Text&gt;
+    &lt;/View&gt; 
+    ); 
+}</code></pre>
+    </section>
+    <!-- Slide: Introdução ao <TextInput> com Expo Snack lado a lado -->
+    <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
+        style="padding: 20px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+            <!-- Coluna 2: Embed do Expo Snack -->
+            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
+                <div data-snack-id="@natorjunior/textinput" data-snack-platform="web" data-snack-preview="true"
+                    data-snack-theme="light"
+                    style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
+                </div>
+                <script async src="https://snack.expo.dev/embed.js"></script>
+            </div>
+        </div>
     </section>
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <!-- ================================== -->
             <!-- PARTE 6: DESAFIOS COM SNACKS       -->
@@ -392,7 +853,7 @@ export default function App() {
     &lt;/View&gt; 
     ); 
 }</code></pre>
-<h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
+                    <h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
                 </section>
 
                 <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
@@ -457,12 +918,13 @@ const message = &lt;Text&gt;Olá, {user}!&lt;/Text&gt;;
                             <script async src="https://snack.expo.dev/embed.js"></script>
                         </div>
                     </div>
-<h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
+                    <h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
                 </section>
 
                 <section>
                     <h3>Desafio 3</h3>
-                    <p class="fragment">Crie um objeto <code>user</code> com <code>firstName</code> e <code>lastName</code> e exiba o nome completo.</p>
+                    <p class="fragment">Crie um objeto <code>user</code> com <code>firstName</code> e
+                        <code>lastName</code> e exiba o nome completo.</p>
                     <pre class="fragment fade-in-then-out"><code class="hljs javascript">
 const user = { firstName: "Nator", lastName: "Júnior" };
 
@@ -475,152 +937,9 @@ export default function App() {
 }
                     </code></pre>
                     <p class="fragment">JSX pode acessar propriedades de objetos diretamente.</p>
-<h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
+                    <h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
                 </section>
             </section>
-
-            <!-- ================================== -->
-            <!-- PARTE 7: EXERCÍCIOS EXTRAS EM JS   -->
-            <!-- ================================== -->
-            <section>
-                <section>
-                    <br><br><br><br>
-                    <h1>🏆</h1>
-                    <h6>Exercícios Extras</h6>
-                </section>
-
-                <section>
-                    <h5>Atividade: Verificação de Par ou Ímpar</h5>
-<ul>
-    <li style="text-align: justify;">Crie uma função em JavaScript que receba um número e verifique se ele é par ou ímpar, utilizando
-        operadores relacionais e lógicos.</li>
-</ul>
-<pre>
-    <code class="fragment fade-in-then-out">// Função para verificar se um número é par ou ímpar
-function verificarParImpar(num) {
-if(num % 2 === 0) {
-    return "Par";
-} else {
-    return "Ímpar";
-}
-}
-
-// Testando a função:
-console.log(verificarParImpar(4)); // Saída: "Par"
-console.log(verificarParImpar(7)); // Saída: "Ímpar"</code></pre>
-<h6>playground: http://u.acilab.com.br/Wa</h6>
-                </section>
-
-                <section>
-                    <h5>Atividade: Validação de Senha</h5>
-                    <p>
-                        <ul>
-                            <li style="text-align: justify;">Crie uma função que receba uma senha (string) e verifique se ela atende aos seguintes critérios:</li>
-                            <ul style="text-align: justify;">
-                                <li>Possuir pelo menos 8 caracteres;</li>
-                                <li>Conter ao menos uma letra e um número.</li>
-                            </ul>
-                        </ul>
-                    </p>
-                    <pre><code class="fragment fade-in-then-out">// Função para validar senha
-function validarSenha(senha) {
-    if (senha.length < 8) {
-        return false;
-    }
-    let temNumero = /\d/.test(senha);
-    let temLetra = /[a-zA-Z]/.test(senha);
-
-    return temNumero && temLetra;
-}
-console.log(validarSenha("abc12345")); // true
-console.log(validarSenha("abcdefg"));  // false</code></pre>
-<h6>playground: http://u.acilab.com.br/Wa</h6>
-                </section>
-
-                <section>
-                    <h5>Atividade: Função para Calcular Média</h5>
-                    <ul>
-                        <li style="text-align: justify;">
-                            Crie uma função que receba um array de números e retorne a média aritmética dos valores. Utilize
-                            um laço de repetição para somar os elementos do array.
-                       </li>
-                    </ul>
-                    <pre><code class="fragment fade-in-then-out">// Função para calcular a média
-function calcularMedia(numeros) {
-    let soma = 0;
-    for(let i = 0; i < numeros.length; i++) {
-        soma += numeros[i];
-    }
-    return soma / numeros.length;
-}
-
-// Testando a função:
-console.log(calcularMedia([10, 20, 30])); // Saída: 20</code></pre>
-<h6>playground: http://u.acilab.com.br/Wa</h6>
-                </section>
-
-                <section>
-                    <h5>Atividade: Contagem Regressiva</h5>
-<ul style="text-align: justify;">
-    <li>Crie um script que realize uma contagem regressiva a partir de um número fornecido pelo usuário
-        até zero, utilizando um laço de repetição.</li>
-</ul>
-<pre><code class="fragment fade-in-then-out">// Função para realizar a contagem regressiva
-function contagemRegressiva(inicio) {
-    for(let i = inicio; i >= 0; i--) {
-        console.log(i);
-    }
-}
-
-// Exemplo de uso:
-contagemRegressiva(5); 
-// Saída no console: 5, 4, 3, 2, 1, 0</code></pre>
-    <h6>playground: http://u.acilab.com.br/Wa</h6>
-                </section>
-
-                <section>
-                    <h3>Atividade: Calcular fatorial</h3>
-                    <p class="fragment">Crie uma função para calcular o fatorial de um número.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-function fatorial(n) {
-    let resultado = 1;
-    for (let i = 1; i <= n; i++) {
-        resultado *= i;
-    }
-    return resultado;
-}
-
-console.log(fatorial(5)); // 120
-                  </code></pre>
-                </section>
-
-                <section>
-                    <h3>Atividade: Filtrar números maiores que 5</h3>
-                    <p class="fragment">Dado um array de números, retorne apenas os valores maiores que 5.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-const lista = [2, 7, 5, 9, 3, 10];
-const filtrado = lista.filter(num => num > 5);
-console.log(filtrado); // [7, 9, 10]
-                  </code></pre>
-                </section>
-
-                <section>
-                    <h3>Atividade: Objeto e acesso às propriedades</h3>
-                    <p class="fragment">Crie um objeto <code>pessoa</code> e acesse suas propriedades <code>nome</code>
-                        e <code>idade</code>.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-const pessoa = {
-    nome: "Nator",
-    idade: 25
-};
-
-console.log(pessoa.nome);  // "Nator"
-console.log(pessoa.idade); // 25
-                  </code></pre>
-                </section>
-            </section>
-
-
 
         </div>
     </div>
@@ -628,27 +947,27 @@ console.log(pessoa.idade); // 25
     <!-- Scripts Reveal.js -->
     <script src="./dist/reveal.js"></script>
     <script src="./plugin/highlight/highlight.js"></script>
-<!-- Inclusão do Clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Para cada elemento <pre> com um <code>, adiciona um botão de copiar
-    document.querySelectorAll('pre').forEach(function(pre, index) {
-      var code = pre.querySelector('code');
-      var codeId = 'code-' + index;
-      code.setAttribute('id', codeId);
+    <!-- Inclusão do Clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Para cada elemento <pre> com um <code>, adiciona um botão de copiar
+            document.querySelectorAll('pre').forEach(function (pre, index) {
+                var code = pre.querySelector('code');
+                var codeId = 'code-' + index;
+                code.setAttribute('id', codeId);
 
-      var button = document.createElement('button');
-      button.className = 'copy-btn';
-      button.textContent = 'Copiar';
-      button.setAttribute('data-clipboard-target', '#' + codeId);
+                var button = document.createElement('button');
+                button.className = 'copy-btn';
+                button.textContent = 'Copiar';
+                button.setAttribute('data-clipboard-target', '#' + codeId);
 
-      pre.appendChild(button);
-    });
-    // Inicializa o ClipboardJS para todos os botões de copiar
-    new ClipboardJS('.copy-btn');
-  });
-</script>
+                pre.appendChild(button);
+            });
+            // Inicializa o ClipboardJS para todos os botões de copiar
+            new ClipboardJS('.copy-btn');
+        });
+    </script>
     <script>
         Reveal.initialize({
             center: false,
