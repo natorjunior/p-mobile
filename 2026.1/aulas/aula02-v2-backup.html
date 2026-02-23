@@ -99,7 +99,7 @@
             <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)">
                 <br><br><br><br>
                 <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
-                    Programação para Dispositivos Móveis
+                    Programação para dispositivos Móveis
                 </h4>
                 <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
                     Prof. Msc. Nator Junior Carvalho da Costa
@@ -110,9 +110,6 @@
                 <h1>🐢</h1>
             </section>
 
-            <!-- ================================== -->
-            <!-- PARTE 1: CONFIGURAÇÃO DO AMBIENTE  -->
-            <!-- ================================== -->
             <section>
                 <h6>Configuração do Node e Expo na sua máquina</h6>
 
@@ -131,10 +128,13 @@
                 <section>
                     <h4>Passo 2</h4>
                     <p>Verifique a instalação com:</p>
+
                     <pre><code data-trim data-noescape>
                     node -v // CMD ou bash 
                         </code></pre>
+
                     <p>Saída esperada:</p>
+
                     <pre><code data-trim data-noescape>
                     v18.17.0
                         </code></pre>
@@ -143,9 +143,11 @@
                 <section>
                     <h4>Passo 3</h4>
                     <p>Instale o <strong>Expo CLI</strong>:</p>
+
                     <pre><code class=""  data-trim data-noescape>
                   npm install -g expo
                     </code></pre>
+
                     <!-- Simulação de Terminal -->
                     <div class="terminal fragment fade-in-out"
                         style="background: #1e1e1e; text-align: left; color: #c5c8c6; padding: 10px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
@@ -154,6 +156,9 @@
                         <p>Expo CLI instalado com sucesso!</p>
                     </div>
                 </section>
+
+
+
 
                 <section style="text-align: left;">
                     <h4>Passo 4</h4>
@@ -169,6 +174,7 @@ npx expo --version
                     <pre><code data-trim data-noescape>
 npx create-expo-app meu-app --template blank
     </code></pre>
+                    <!-- <p>Escolha um template durante a configuração.</p> -->
                 </section>
 
                 <section style="text-align: left;">
@@ -179,12 +185,19 @@ cd meu-app
 npx expo start
     </code></pre>
                 </section>
+
+                <section>
+                    <h3>✏️ Atividade: Configure seu ambiente</h3>
+                    <ol>
+                        <li class="fragment">Instale o Node.js na sua máquina</li>
+                        <li class="fragment">Instale o Expo CLI globalmente</li>
+                        <li class="fragment">Crie um novo projeto chamado <code>meu-primeiro-app</code></li>
+                        <li class="fragment">Inicie o servidor e abra no navegador ou no celular</li>
+                    </ol>
+                    <p class="fragment" style="font-size: 0.8em; margin-top: 15px; color: #666;">⏱️ Tempo: 10 minutos</p>
+                </section>
             </section>
 
-
-            <!-- ================================== -->
-            <!-- PARTE 3: INTRODUÇÃO AO JSX         -->
-            <!-- ================================== -->
             <section>
                 <section>
                     <div class="fragment">
@@ -239,47 +252,9 @@ const element = React.createElement("h1", null, "Hello, world!");
                 </section>
             </section>
 
-            <!-- "De onde vem isso?" + PHP -->
-            <section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
-                <br><br><br><br>
-                <h1 class="text-5xl font-bold mb-4">🧐</h1>
-                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
-                    De onde vem isso?</h4>
-            </section>
 
-            <section>
-                <section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
-                    <br><br><br><br>
-                    <h1>😱</h1>
-                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
-                        Isso não é novo</h4>
-                </section>
 
-                <section>
-                    <h3>Variáveis & Interpolação</h3>
-                    <pre class="fragment fade-in-then-out"><code class="hljs php">&lt;?php
-    $nome = "Nator";
-    echo "Olá, $nome!";
-?&gt;</code></pre>
-                </section>
 
-                <section>
-                    <h3>Funções & Exibição Rápida</h3>
-                    <pre class="fragment"><code class="hljs php">&lt;?php
-    $nome = "Nator";
-    function saudacao($nome) {
-        return "Olá, {$nome}!";
-    }
-?&gt;
-
-&lt;h1&gt;Bem-vindo, &lt;?= $nome ?&gt;!&lt;/h1&gt;
-&lt;p&gt;&lt;?= saudacao("Mundo") ?&gt;&lt;/p&gt;</code></pre>
-                </section>
-            </section>
-
-            <!-- ================================== -->
-            <!-- PARTE 4: EXPRESSÕES EM JSX         -->
-            <!-- ================================== -->
             <section>
                 <section>
                     <h3>Incorporando Expressões em JSX</h3>
@@ -323,11 +298,67 @@ const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>; //react.js
                     </code></pre>
                     <p class="fragment">Expressões lógicas também são válidas dentro do JSX.</p>
                 </section>
+
+                <section>
+                    <h3>✏️ Atividade: Expressões dinâmicas em JSX</h3>
+                    <p class="fragment">Crie um componente que exiba:</p>
+                    <ul>
+                        <li class="fragment">Uma variável com seu nome</li>
+                        <li class="fragment">O resultado de uma operação matemática</li>
+                        <li class="fragment">Uma mensagem condicional (ex: horário do dia)</li>
+                    </ul>
+                    <pre class="fragment fade-in-then-out"><code class="">export default function App() {
+    const nome = "Seu Nome";
+    const hora = new Date().getHours();
+    return (
+    &lt;View style={{alignItems: 'center'}}&gt;
+        &lt;Text&gt;Olá, {nome}!&lt;/Text&gt;
+        &lt;Text&gt;2 + 3 = {2 + 3}&lt;/Text&gt;
+        &lt;Text&gt;{hora &lt; 12 ? "Bom dia!" : "Boa tarde!"}&lt;/Text&gt;
+    &lt;/View&gt;
+    );
+}</code></pre>
+<h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
+                </section>
+
+            </section>
+            <section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
+                <br><br><br><br>
+                <h1 class="text-5xl font-bold mb-4">🧐</h1>
+                <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                    De onde vem isso?</h4>
+            </section>
+            <section>
+
+                <section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
+                    <br><br><br><br>
+                    <h1>😱</h1>
+                    <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);">
+                        Isso não é novo</h4>
+                </section>
+
+                <section>
+                    <h3>Variáveis & Interpolação</h3>
+                    <pre class="fragment fade-in-then-out"><code class="hljs php">&lt;?php
+    $nome = "Nator";
+    echo "Olá, $nome!";
+?&gt;</code></pre>
+                </section>
+
+                <section>
+                    <h3>Funções & Exibição Rápida</h3>
+                    <pre class="fragment"><code class="hljs php">&lt;?php
+    $nome = "Nator";
+    function saudacao($nome) {
+        return "Olá, {$nome}!";
+    }
+?&gt;
+
+&lt;h1&gt;Bem-vindo, &lt;?= $nome ?&gt;!&lt;/h1&gt;
+&lt;p&gt;&lt;?= saudacao("Mundo") ?&gt;&lt;/p&gt;</code></pre>
+                </section>
             </section>
 
-            <!-- ================================== -->
-            <!-- PARTE 5: COMPONENTES BÁSICOS       -->
-            <!-- ================================== -->
 <section>
     <!-- Exemplo do componente Text -->
     <section>
@@ -355,11 +386,7 @@ const element = <p>{isLoggedIn ? "Bem-vindo!" : "Faça login"}</p>; //react.js
             <li class="fragment">Seu curso</li>
             <li class="fragment">Mensagem: "Maior de idade" ou "Menor de idade"</li>
         </ul>
-    </section>
-
-    <section>
-        <h3>✏️ Atividade: Cartão de perfil</h3>
-        <pre ><code class="">import { Text, View } from 'react-native';
+        <pre class="fragment fade-in-then-out"><code class="">import { Text, View } from 'react-native';
 export default function App() {
     const perfil = { nome: "Maria Silva", idade: 20, curso: "Mobile" };
     return (
@@ -371,13 +398,10 @@ export default function App() {
     &lt;/View&gt;
     );
 }</code></pre>
-<h6 style="text-transform: normalcase;">playground: https://u.acilab.com.br/Oq</h6>
+<h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
     </section>
 </section>
 
-            <!-- ================================== -->
-            <!-- PARTE 6: DESAFIOS COM SNACKS       -->
-            <!-- ================================== -->
             <section>
                 <section>
                     <h3>Atividade: Declaração de Variável JSX</h3>
@@ -394,10 +418,12 @@ export default function App() {
 }</code></pre>
 <h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
                 </section>
-
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
                 <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
                     style="padding: 20px;">
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
                         <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
                             <div data-snack-id="@natorjunior/ex02" data-snack-platform="web" data-snack-preview="true"
                                 data-snack-theme="light"
@@ -405,6 +431,7 @@ export default function App() {
                             </div>
                             <script async src="https://snack.expo.dev/embed.js"></script>
                         </div>
+
                     </div>
                 </section>
 
@@ -421,10 +448,12 @@ const greeting = &lt;Text&gt;Bem-vindo ao React Native!&lt;/Text&gt;
                     </p>
                     <h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
                 </section>
-
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
                 <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
                     style="padding: 20px;">
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
                         <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
                             <div data-snack-id="@natorjunior/ex03" data-snack-platform="web" data-snack-preview="true"
                                 data-snack-theme="light"
@@ -432,9 +461,9 @@ const greeting = &lt;Text&gt;Bem-vindo ao React Native!&lt;/Text&gt;
                             </div>
                             <script async src="https://snack.expo.dev/embed.js"></script>
                         </div>
+
                     </div>
                 </section>
-
                 <section>
                     <h3>Desafio 2</h3>
                     <p class="fragment">Agora, declare uma variável `user` e exiba o nome do usuário dinamicamente.
@@ -445,10 +474,12 @@ const message = &lt;Text&gt;Olá, {user}!&lt;/Text&gt;;
                     </code></pre>
                     <p class="fragment">Dica: Use `{ }` para incorporar variáveis em JSX.</p>
                 </section>
-
+                <!-- Slide: Introdução ao <Text> com Expo Snack lado a lado -->
                 <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
                     style="padding: 20px;">
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+
+                        <!-- Coluna 2: Embed do Expo Snack -->
                         <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
                             <div data-snack-id="@natorjunior/ex04" data-snack-platform="web" data-snack-preview="true"
                                 data-snack-theme="light"
@@ -456,9 +487,19 @@ const message = &lt;Text&gt;Olá, {user}!&lt;/Text&gt;;
                             </div>
                             <script async src="https://snack.expo.dev/embed.js"></script>
                         </div>
+
                     </div>
 <h6 style="text-transform: lowercase;">playground: https://u.acilab.com.br/Oq</h6>
                 </section>
+                <!-- <section>
+                    <h3>Agora é com você!</h3>
+                    <p class="fragment">Tente criar uma variável JSX que exiba um número aleatório entre 1 e 100.
+                    </p>
+                    <p class="fragment">Use a função `Math.random()` dentro das chaves `{ }`.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+const randomNumber = <p>Número aleatório: {Math.floor(Math.random() * 100) + 1}</p>;
+                    </code></pre>
+                </section> -->
 
                 <section>
                     <h3>Desafio 3</h3>
@@ -479,20 +520,21 @@ export default function App() {
                 </section>
             </section>
 
-            <!-- ================================== -->
-            <!-- PARTE 7: EXERCÍCIOS EXTRAS EM JS   -->
-            <!-- ================================== -->
+            <!-- ------------------------------ -->
+            <!-- REVISAO DE JS -->
+
+
             <section>
                 <section>
                     <br><br><br><br>
-                    <h1>🏆</h1>
-                    <h6>Exercícios Extras</h6>
+                    <h1>Extra</h1>
+                    <h6>Exercícios em JS</h6>
+                    <!-- Slide 1: Verificação de Par ou Ímpar -->
                 </section>
-
                 <section>
-                    <h5>Atividade: Verificação de Par ou Ímpar</h5>
+                    <h5>Atividade 1: Verificação de Par ou Ímpar</h5>
 <ul>
-    <li style="text-align: justify;">Crie uma função em JavaScript que receba um número e verifique se ele é par ou ímpar, utilizando
+    <li style="text-align: justify;" >Crie uma função em JavaScript que receba um número e verifique se ele é par ou ímpar, utilizando
         operadores relacionais e lógicos.</li>
 </ul>
 <pre>
@@ -511,12 +553,13 @@ console.log(verificarParImpar(7)); // Saída: "Ímpar"</code></pre>
 <h6>playground: http://u.acilab.com.br/Wa</h6>
                 </section>
 
+                <!-- Slide 2: Validação de Senha -->
                 <section>
-                    <h5>Atividade: Validação de Senha</h5>
+                    <h5>Atividade 2: Validação de Senha</h5>
                     <p>
                         <ul>
-                            <li style="text-align: justify;">Crie uma função que receba uma senha (string) e verifique se ela atende aos seguintes critérios:</li>
-                            <ul style="text-align: justify;">
+                            <li style="text-align: justify;" >Crie uma função que receba uma senha (string) e verifique se ela atende aos seguintes critérios:</li>
+                            <ul style="text-align: justify;" >
                                 <li>Possuir pelo menos 8 caracteres;</li>
                                 <li>Conter ao menos uma letra e um número.</li>
                             </ul>
@@ -537,14 +580,16 @@ console.log(validarSenha("abcdefg"));  // false</code></pre>
 <h6>playground: http://u.acilab.com.br/Wa</h6>
                 </section>
 
+                <!-- Slide 3: Cálculo da Média -->
                 <section>
-                    <h5>Atividade: Função para Calcular Média</h5>
+                    <h5>Atividade 3: Função para Calcular Média</h5>
                     <ul>
                         <li style="text-align: justify;">
                             Crie uma função que receba um array de números e retorne a média aritmética dos valores. Utilize
                             um laço de repetição para somar os elementos do array.
                        </li>
                     </ul>
+                   
                     <pre><code class="fragment fade-in-then-out">// Função para calcular a média
 function calcularMedia(numeros) {
     let soma = 0;
@@ -559,9 +604,10 @@ console.log(calcularMedia([10, 20, 30])); // Saída: 20</code></pre>
 <h6>playground: http://u.acilab.com.br/Wa</h6>
                 </section>
 
+                <!-- Slide 4: Contagem Regressiva -->
                 <section>
-                    <h5>Atividade: Contagem Regressiva</h5>
-<ul style="text-align: justify;">
+                    <h5>Atividade 4: Contagem Regressiva</h5>
+<ul  style="text-align: justify;">
     <li>Crie um script que realize uma contagem regressiva a partir de um número fornecido pelo usuário
         até zero, utilizando um laço de repetição.</li>
 </ul>
@@ -578,8 +624,360 @@ contagemRegressiva(5);
     <h6>playground: http://u.acilab.com.br/Wa</h6>
                 </section>
 
+                <!-- Slide 5: Jogo de Adivinhação -->
+                <!-- <section>
+                    <h5>Atividade 5: Jogo de Adivinhação</h5>
+                    <p>
+                        Desenvolva um jogo simples em JavaScript onde:
+                        <br>- O programa gera um número aleatório entre 1 e 100.
+                        <br>- O usuário deve adivinhar esse número.
+                        <br>- Após cada palpite, o programa informa se o chute foi <em>muito alto</em> ou <em>muito
+                            baixo</em>.
+                        <br>Utilize funções, operadores lógicos e laços de repetição para implementar o jogo.
+                    </p>
+                    <pre><code>
+  // Função para gerar número aleatório entre min e max (inclusive)
+  function gerarNumero(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  
+  // Jogo de Adivinhação
+  function jogoAdivinhacao() {
+    const numeroSecreto = gerarNumero(1, 100);
+    let palpite;
+    
+    do {
+      palpite = parseInt(prompt("Adivinhe o número entre 1 e 100:"), 10);
+      
+      if(palpite > numeroSecreto) {
+        console.log("Muito alto! Tente novamente.");
+      } else if(palpite < numeroSecreto) {
+        console.log("Muito baixo! Tente novamente.");
+      }
+    } while(palpite !== numeroSecreto);
+    
+    console.log("Parabéns! Você acertou o número.");
+  }
+  
+  // Iniciando o jogo:
+  jogoAdivinhacao();
+    </code></pre>
+                </section> -->
+            </section>
+
+
+
+            <section>
+                <br><br><br><br>
+                <h1>Extra</h1>
+                <h6>Revisão de JS</h6>
+            </section>
+
+
+            <!-- Slide 2 - Operador Ternário -->
+            <section>
+                <h2>Operador Ternário</h2>
+                <p>Forma compacta de verificar condições.</p>
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-3|1|2|3">let idade = 18;
+let acesso = (idade >= 18) ? "Permitido" : "Negado";
+console.log(acesso);
+                </code></pre>
+
+                <button class="test-button" onclick="testTernario()">Executar</button>
+                <div class="output" id="ternarioOutput"></div>
+            </section>
+
+            <!-- Atividade: Ternário -->
+            <section>
+                <h3>✏️ Atividade: Operador Ternário</h3>
+                <p class="fragment">Usando o operador ternário, crie uma variável que defina se um número é positivo ou negativo.</p>
+                <pre class="fragment fade-in-then-out"><code class="hljs javascript">let numero = -5;
+let resultado = (numero >= 0) ? "Positivo" : "Negativo";
+console.log(resultado); // "Negativo"</code></pre>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+            </section>
+
+            <!-- Slide 3A - If/Else -->
+            <section>
+                <h2>Condicional If/Else</h2>
+
+                <pre><code class="hljs javascript" data-line-numbers="1-10|1-2|4,6,8|5,7|10|1-10">let idade = 20;
+let acesso;
+
+if (idade >= 18) {
+    acesso = "Permitido";
+} else {
+    acesso = "Negado";
+}
+
+console.log(acesso);
+                </code></pre>
+
+                <button class="test-button" onclick="testIfElse()">Executar</button>
+                <div class="output" id="ifElseOutput"></div>
+            </section>
+
+            <!-- Slide 1 - Variáveis e seus Tipos -->
+            <section>
+                <h2>Variáveis e seus Tipos</h2>
+                <!-- <p>Exemplos de declaração de variáveis e verificação de seus tipos.</p> -->
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-8">let nome = "Maria";
+let idade = 30;
+const ativo = true;
+var salario = 2500.50;
+
+console.log("Tipo de nome:", typeof nome);
+console.log("Tipo de idade:", typeof idade);
+console.log("Tipo de ativo:", typeof ativo);
+console.log("Tipo de salario:", typeof salario);
+</code></pre>
+
+                <button class="test-button" onclick="testVariaveis()">Executar</button>
+                <div class="output" id="variaveisOutput"></div>
+            </section>
+
+            <!-- Atividade: Variáveis -->
+            <section>
+                <h3>✏️ Atividade: Variáveis</h3>
+                <p class="fragment">Declare 4 variáveis de tipos diferentes e exiba o tipo de cada uma com <code>typeof</code>.</p>
+                <pre class="fragment fade-in-then-out"><code class="hljs javascript">let cidade = "São Paulo";
+let populacao = 12000000;
+let capital = true;
+let bairros = ["Centro", "Pinheiros", "Moema"];
+
+console.log(typeof cidade);     // string
+console.log(typeof populacao);  // number
+console.log(typeof capital);    // boolean
+console.log(typeof bairros);    // object</code></pre>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+            </section>
+
+            <!-- Slide 2 - Operadores Aritméticos -->
+            <section>
+                <h6>Operadores Aritméticos</h6>
+                <!-- <p>Realizando operações básicas: soma, subtração, multiplicação, divisão e módulo.</p> -->
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-8">let a = 10;
+let b = 3;
+let soma = a + b;
+let sub = a - b;
+let mult = a * b;
+let div = a / b;
+let mod = a % b;
+
+console.log("Soma:", soma);
+console.log("Subtração:", sub);
+console.log("Multiplicação:", mult);
+console.log("Divisão:", div);
+console.log("Módulo:", mod);
+</code></pre>
+                <button class="test-button" onclick="testAritmeticos()">Executar</button>
+                <div class="output" id="aritmeticosOutput"></div>
+            </section>
+
+            <!-- Atividade: Operadores Aritméticos -->
+            <section>
+                <h3>✏️ Atividade: Calculadora simples</h3>
+                <p class="fragment">Crie uma função que receba dois números e retorne um objeto com todas as operações.</p>
+                <pre class="fragment fade-in-then-out"><code class="hljs javascript">function calculadora(a, b) {
+    return {
+        soma: a + b,
+        subtracao: a - b,
+        multiplicacao: a * b,
+        divisao: a / b,
+        modulo: a % b
+    };
+}
+
+console.log(calculadora(10, 3));
+// {soma: 13, subtracao: 7, multiplicacao: 30, divisao: 3.33, modulo: 1}</code></pre>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+            </section>
+
+            <!-- Slide 3 - Operadores Relacionais -->
+            <section>
+                <h2>Operadores Relacionais</h2>
+                <!-- <p>Comparações entre valores usando operadores relacionais.</p> -->
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-7">let a = 5;
+let b = 10;
+
+console.log("a > b:", a > b);
+console.log("a < b:", a < b);
+console.log("a == b:", a == b);
+console.log("a !== b:", a !== b);
+</code></pre>
+
+                <button class="test-button" onclick="testRelacionais()">Executar</button>
+                <div class="output" id="relacionaisOutput"></div>
+            </section>
+
+            <!-- Slide 4 - Operadores Lógicos -->
+            <section>
+                <h2>Operadores Lógicos</h2>
+                <p>Utilizando AND (&&), OR (||) e NOT (!).</p>
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-7">let possuiIngresso = true;
+let temIdentidade = false;
+
+console.log("Pode entrar (&&):", possuiIngresso && temIdentidade);
+console.log("Pode entrar (||):", possuiIngresso || temIdentidade);
+console.log("Negação (!possuiIngresso):", !possuiIngresso);
+</code></pre>
+
+                <button class="test-button" onclick="testLogicos()">Executar</button>
+                <div class="output" id="logicosOutput"></div>
+            </section>
+
+            <!-- Atividade: Operadores Relacionais e Lógicos -->
+            <section>
+                <h3>✏️ Atividade: Pode entrar no evento?</h3>
+                <p class="fragment">Crie variáveis para verificar se uma pessoa pode entrar em um evento (precisa ter ingresso E ter mais de 16 anos).</p>
+                <pre class="fragment fade-in-then-out"><code class="hljs javascript">let temIngresso = true;
+let idade = 15;
+
+let podeEntrar = temIngresso && (idade >= 16);
+console.log("Pode entrar:", podeEntrar); // false
+
+idade = 18;
+podeEntrar = temIngresso && (idade >= 16);
+console.log("Pode entrar:", podeEntrar); // true</code></pre>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+            </section>
+
+            <!-- Slide 5 - Laços de Repetição -->
+            <section>
+                <h2>Laços de Repetição</h2>
+                <p>Exemplo de loop utilizando o laço <code>for</code>.</p>
+
+                <pre>
+<code class="hljs javascript" data-line-numbers="1-6">let output = "";
+for (let i = 1; i <= 5; i++) {
+    output += "Número: " + i + "\n";
+}
+console.log(output);
+</code></pre>
+
+                <button class="test-button" onclick="testLacos()">Executar</button>
+                <div class="output" id="lacosOutput"></div>
+            </section>
+
+            <!-- Atividade: Laços -->
+            <section>
+                <h3>✏️ Atividade: Tabuada</h3>
+                <p class="fragment">Crie uma função que receba um número e exiba a tabuada dele (de 1 a 10).</p>
+                <pre class="fragment fade-in-then-out"><code class="hljs javascript">function tabuada(numero) {
+    for (let i = 1; i <= 10; i++) {
+        console.log(numero + " x " + i + " = " + (numero * i));
+    }
+}
+
+tabuada(7);
+// 7 x 1 = 7
+// 7 x 2 = 14
+// ... 
+// 7 x 10 = 70</code></pre>
+<h6>playground: http://u.acilab.com.br/Wa</h6>
+            </section>
+
+
+
+
+
+
+
+
+
+            <section>
+
+                <!-- Atividade 1 -->
                 <section>
-                    <h3>Atividade: Calcular fatorial</h3>
+                    <h3>Atividade 1: Soma de dois números</h3>
+                    <p class="fragment">Solicitar dois valores via <code class="hljs javascript">prompt()</code> e
+                        exibir a soma.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const a = Number(prompt("Digite o primeiro número:"));
+const b = Number(prompt("Digite o segundo número:"));
+alert("A soma é: " + (a + b));
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 2 -->
+                <section>
+                    <h3>Atividade 2: Imprimir números de 1 a 5</h3>
+                    <p class="fragment">Use um laço de repetição para exibir números sequencialmente.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+for (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 3 -->
+                <section>
+                    <h3>Atividade 3: Calcular média de notas</h3>
+                    <p class="fragment">Dado um array de notas, calcule a média e exiba o resultado.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const notas = [8, 7, 9, 10];
+const soma = notas.reduce((acc, nota) => acc + nota, 0);
+const media = soma / notas.length;
+console.log("Média:", media);
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 4 -->
+                <section>
+                    <h3>Atividade 4: Função para verificar par ou ímpar</h3>
+                    <p class="fragment">Crie uma função que receba um número e retorne <em>true</em> se for par, ou
+                        <em>false</em> se for ímpar.
+                    </p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+function ehPar(numero) {
+    return numero % 2 === 0;
+}
+
+console.log(ehPar(10)); // true
+console.log(ehPar(7));  // false
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 5 -->
+                <section>
+                    <h3>Atividade 5: Filtrar números maiores que 5</h3>
+                    <p class="fragment">Dado um array de números, retorne apenas os valores maiores que 5.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const lista = [2, 7, 5, 9, 3, 10];
+const filtrado = lista.filter(num => num > 5);
+console.log(filtrado); // [7, 9, 10]
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 6 -->
+                <section>
+                    <h3>Atividade 6: Exemplo de objeto e acesso às propriedades</h3>
+                    <p class="fragment">Crie um objeto <code>pessoa</code> e acesse suas propriedades <code>nome</code>
+                        e <code>idade</code>.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
+const pessoa = {
+    nome: "Nator",
+    idade: 25
+};
+
+console.log(pessoa.nome);  // "Nator"
+console.log(pessoa.idade); // 25
+                  </code></pre>
+                </section>
+
+                <!-- Atividade 7 -->
+                <section>
+                    <h3>Atividade 7: Calcular fatorial</h3>
                     <p class="fragment">Crie uma função para calcular o fatorial de um número.</p>
                     <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
 function fatorial(n) {
@@ -594,32 +992,21 @@ console.log(fatorial(5)); // 120
                   </code></pre>
                 </section>
 
+                <!-- Atividade 8 -->
                 <section>
-                    <h3>Atividade: Filtrar números maiores que 5</h3>
-                    <p class="fragment">Dado um array de números, retorne apenas os valores maiores que 5.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-const lista = [2, 7, 5, 9, 3, 10];
-const filtrado = lista.filter(num => num > 5);
-console.log(filtrado); // [7, 9, 10]
-                  </code></pre>
-                </section>
+                    <h3>Atividade 8: Retornar vogais de uma string</h3>
+                    <p class="fragment">Dada uma string, extraia apenas as vogais e exiba-as.</p>
+                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">
+// Resposta (Exemplo)
+function extrairVogais(texto) {
+    return texto.match(/[aeiou]/gi) || [];
+}
 
-                <section>
-                    <h3>Atividade: Objeto e acesso às propriedades</h3>
-                    <p class="fragment">Crie um objeto <code>pessoa</code> e acesse suas propriedades <code>nome</code>
-                        e <code>idade</code>.</p>
-                    <pre class="fragment fade-in-then-out"><code class="hljs javascript">// Resposta (Exemplo)
-const pessoa = {
-    nome: "Nator",
-    idade: 25
-};
-
-console.log(pessoa.nome);  // "Nator"
-console.log(pessoa.idade); // 25
+console.log(extrairVogais("Programação")); 
+// [ 'o', 'a', 'a', 'ã', 'o' ]
                   </code></pre>
                 </section>
             </section>
-
 
 
         </div>
