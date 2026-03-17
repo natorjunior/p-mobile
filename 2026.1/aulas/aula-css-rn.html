@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula - CSS no React Native</title>
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="./dist/reveal.css">
+  <link rel="stylesheet" href="./dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css">
+
+  <!-- Menu plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0056b3;
+      --primary-light: #e3f2fd;
+      --accent: #00c9a7;
+      --accent-warm: #ff6b6b;
+      --dark: #1a1a2e;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+      --radius: 16px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.12);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.2);
+    }
+
+    .reveal {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .reveal h2 { color: var(--primary); }
+    .reveal h3 { color: var(--primary); }
+
+    .reveal pre {
+      box-shadow: var(--shadow);
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+
+    .reveal pre code {
+      font-size: 0.85em;
+      background: #1e1e2e;
+      border-radius: 12px;
+      padding: 18px 20px;
+      line-height: 1.6;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    .reveal p { font-size: 1em; line-height: 1.6; }
+
+    .reveal .slides section { text-align: left; }
+
+    /* ═══ Card System ═══ */
+    .card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+    /* ═══ Slide helpers ═══ */
+    .slide-title {
+      margin-left: 40px;
+      color: white !important;
+      font-size: 1.6em !important;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .slide-content {
+      margin: 16px 40px;
+      color: white;
+    }
+
+    .slide-content ul { font-size: 1em; list-style-type: none; padding: 0; }
+    .slide-content li {
+      padding: 8px 0 8px 30px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .slide-content li::before {
+      content: '▸';
+      position: absolute;
+      left: 8px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* ═══ Badge / Tag ═══ */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .badge-green { background: #10b981; color: white; }
+    .badge-red { background: #ef4444; color: white; }
+    .badge-blue { background: #3b82f6; color: white; }
+    .badge-yellow { background: #f59e0b; color: white; }
+    .badge-purple { background: #8b5cf6; color: white; }
+
+    /* ═══ Comparison Layout ═══ */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 0;
+      align-items: center;
+    }
+    .compare-side {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .compare-arrow {
+      text-align: center;
+      font-size: 2em;
+      color: var(--accent);
+    }
+
+    /* ═══ Phone Mockup ═══ */
+    .phone-mockup {
+      width: 200px;
+      height: 380px;
+      background: #fff;
+      border-radius: 30px;
+      border: 4px solid #2d2d3f;
+      box-shadow: var(--shadow-lg), inset 0 0 0 2px #444;
+      overflow: hidden;
+      position: relative;
+      margin: 0 auto;
+    }
+    .phone-notch {
+      width: 100px;
+      height: 22px;
+      background: #2d2d3f;
+      border-radius: 0 0 14px 14px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .phone-screen {
+      padding: 8px;
+      height: calc(100% - 30px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ═══ Visual Diagram Boxes ═══ */
+    .flex-demo-container {
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 10px;
+      padding: 8px;
+      min-height: 100px;
+    }
+    .flex-demo-item {
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.7em;
+    }
+
+    /* ═══ Table styling ═══ */
+    .styled-table {
+      width: 100%;
+      color: white;
+      font-size: 0.78em;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .styled-table thead tr {
+      background: rgba(255,255,255,0.15);
+    }
+    .styled-table th, .styled-table td {
+      padding: 12px 16px;
+      text-align: left;
+    }
+    .styled-table tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s;
+    }
+    .styled-table tbody tr:hover {
+      background: rgba(255,255,255,0.05);
+    }
+    .styled-table code {
+      background: rgba(0,0,0,0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    /* ═══ Activity cards ═══ */
+    .activity-card {
+      background: rgba(255,255,255,0.07);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 24px 28px;
+      margin: 10px 0;
+    }
+    .activity-number {
+      display: inline-flex;
+      width: 36px; height: 36px;
+      background: var(--accent);
+      color: var(--dark);
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9em;
+      margin-right: 10px;
+    }
+
+    /* ═══ Tip / Warning boxes ═══ */
+    .tip-box {
+      background: rgba(16,185,129,0.15);
+      border: 1px solid rgba(16,185,129,0.4);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-top: 12px;
+      font-size: 0.85em;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .warn-box {
+      background: rgba(245,158,11,0.15);
+      border: 1px solid rgba(245,158,11,0.4);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-top: 12px;
+      font-size: 0.85em;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    /* ═══ Section cover ═══ */
+    .section-cover {
+      text-align: center;
+    }
+    .section-icon {
+      font-size: 3.5em;
+      margin-bottom: 10px;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+    }
+    .section-subtitle {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95em;
+      font-weight: 300;
+      margin-top: 8px;
+    }
+
+    /* ═══ Box model diagram ═══ */
+    .box-model {
+      display: inline-block;
+      text-align: center;
+    }
+    .box-model-margin {
+      border: 2px dashed rgba(255,152,0,0.7);
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(255,152,0,0.08);
+      position: relative;
+    }
+    .box-model-border {
+      border: 3px solid #42a5f5;
+      padding: 16px;
+      border-radius: 10px;
+      background: rgba(66,165,245,0.08);
+    }
+    .box-model-padding {
+      border: 2px dashed rgba(76,175,80,0.7);
+      padding: 16px;
+      border-radius: 8px;
+      background: rgba(76,175,80,0.12);
+    }
+    .box-model-content {
+      background: var(--primary);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85em;
+    }
+    .box-label {
+      font-size: 0.6em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 4px 0;
+      opacity: 0.8;
+    }
+
+    /* ═══ Animated gradient backgrounds ═══ */
+    .bg-gradient-main {
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e) !important;
+    }
+    .bg-gradient-warm {
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460) !important;
+    }
+    .bg-gradient-cool {
+      background: linear-gradient(135deg, #0d1b2a, #1b2838, #2d4059) !important;
+    }
+
+    /* ═══ Responsive flexbox demos ═══ */
+    .demo-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .demo-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <!-- ╔══════════════════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE TÍTULO                                        ║ -->
+      <!-- ╚══════════════════════════════════════════════════════╝ -->
+      <section data-background="linear-gradient(135deg, #0f0c29, #302b63, #24243e)">
+        <br><br><br>
+        <div style="text-align: center;">
+          <p style="font-size: 3.5em; margin: 0; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">🎨</p>
+          <h4 style="color: rgba(255,255,255,0.6); font-weight: 300; font-size: 0.9em; letter-spacing: 3px; text-transform: uppercase; margin: 10px 0 5px;">
+            Programação para Dispositivos Móveis
+          </h4>
+          <h2 style="color: white; font-size: 2em; margin: 10px 0; text-shadow: 0 2px 12px rgba(0,0,0,0.4);">
+            Estilos e Layout no React Native
+          </h2>
+          <div style="width: 80px; height: 3px; background: var(--accent); margin: 15px auto; border-radius: 2px;"></div>
+          <p style="color: rgba(255,255,255,0.5); font-size: 0.75em; margin-top: 15px;">
+            Prof. Msc. Nator Junior Carvalho da Costa
+          </p>
+        </div>
+      </section>
+
+
+      <!-- ╔══════════════════════════════════════════════════════╗ -->
+      <!-- ║  AGENDA                                              ║ -->
+      <!-- ╚══════════════════════════════════════════════════════╝ -->
+      <section data-background="linear-gradient(135deg, #0f0c29, #302b63, #24243e)">
+        <br>
+        <h2 class="slide-title" style="font-size: 1.4em !important;">📋 Roteiro da Aula</h2>
+        <div class="slide-content">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px;">
+            <div class="card">
+              <span class="badge badge-blue">Bloco 1</span>
+              <h4 style="color: white; font-size: 0.85em; margin: 8px 0 4px;">CSS Web × React Native</h4>
+              <p style="font-size: 0.7em; color: rgba(255,255,255,0.6); margin: 0;">O que muda no mobile</p>
+            </div>
+            <div class="card">
+              <span class="badge badge-green">Bloco 2</span>
+              <h4 style="color: white; font-size: 0.85em; margin: 8px 0 4px;">StyleSheet.create</h4>
+              <p style="font-size: 0.7em; color: rgba(255,255,255,0.6); margin: 0;">Formas de aplicar estilos</p>
+            </div>
+            <div class="card">
+              <span class="badge badge-purple">Bloco 3</span>
+              <h4 style="color: white; font-size: 0.85em; margin: 8px 0 4px;">Propriedades Essenciais</h4>
+              <p style="font-size: 0.7em; color: rgba(255,255,255,0.6); margin: 0;">Texto, cores, bordas, espaçamento</p>
+            </div>
+            <div class="card">
+              <span class="badge badge-yellow">Bloco 4</span>
+              <h4 style="color: white; font-size: 0.85em; margin: 8px 0 4px;">Flexbox</h4>
+              <p style="font-size: 0.7em; color: rgba(255,255,255,0.6); margin: 0;">O sistema de layout padrão</p>
+            </div>
+            <div class="card" style="grid-column: span 2;">
+              <span class="badge badge-red">Bloco 5</span>
+              <h4 style="color: white; font-size: 0.85em; margin: 8px 0 4px;">Atividades Práticas + Desafios</h4>
+              <p style="font-size: 0.7em; color: rgba(255,255,255,0.6); margin: 0;">Praticar tudo que aprendemos</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ╔══════════════════════════════════════════════════════╗ -->
+      <!-- ║  BLOCO 1 — CSS WEB × REACT NATIVE                   ║ -->
+      <!-- ╚══════════════════════════════════════════════════════╝ -->
+      <section data-background="linear-gradient(135deg, #0f0c29, #302b63, #24243e)">
+
+        <!-- Capa -->
+        <section class="section-cover">
+          <br><br><br>
+          <span class="section-icon">🌐</span>
+          <h2 style="color: white; font-size: 1.8em;">Do CSS Web ao React Native</h2>
+          <p class="section-subtitle">O que muda quando saímos do navegador?</p>
+          <div style="width: 60px; height: 3px; background: var(--accent); margin: 20px auto; border-radius: 2px;"></div>
+        </section>
+
+        <!-- Comparação lado a lado -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">CSS Web vs React Native</h3>
+          <div class="slide-content">
+            <p style="font-size: 0.9em; color: rgba(255,255,255,0.8); margin-bottom: 15px;">
+              No React Native, <strong>não existe CSS tradicional</strong>. Usamos objetos JavaScript.
+            </p>
+            <div class="compare-grid">
+              <div class="compare-side">
+                <p style="text-align: center; margin: 0 0 10px;"><span class="badge badge-blue">CSS Web</span></p>
+                <pre style="margin: 0; box-shadow: none;"><code class="language-css" style="font-size: 0.78em; padding: 14px;">.titulo {
+  background-color: #2d8659;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 8px;
+}</code></pre>
+              </div>
+              <div class="compare-arrow">→</div>
+              <div class="compare-side">
+                <p style="text-align: center; margin: 0 0 10px;"><span class="badge badge-green">React Native</span></p>
+                <pre style="margin: 0; box-shadow: none;"><code class="language-jsx" style="font-size: 0.78em; padding: 14px;">titulo: {
+  backgroundColor: '#2d8659',
+  color: 'white',
+  fontSize: 20,
+  padding: 10,
+  borderRadius: 8,
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tabela de diferenças -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">Principais Diferenças</h3>
+          <div class="slide-content">
+            <table class="styled-table">
+              <thead>
+                <tr>
+                  <th style="width: 45%;">🌐 CSS Web</th>
+                  <th style="width: 45%;">📱 React Native</th>
+                  <th style="width: 10%;"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>background-color</code></td>
+                  <td><code>backgroundColor</code></td>
+                  <td><span class="badge badge-blue" style="font-size: 0.6em;">camelCase</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td><code>font-size: 20px</code></td>
+                  <td><code>fontSize: 20</code></td>
+                  <td><span class="badge badge-green" style="font-size: 0.6em;">sem px</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Arquivo <code>.css</code> separado</td>
+                  <td><code>StyleSheet.create({})</code></td>
+                  <td><span class="badge badge-purple" style="font-size: 0.6em;">JS obj</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Seletores: <code>.class</code>, <code>#id</code></td>
+                  <td>Aplica direto via <code>style={}</code></td>
+                  <td><span class="badge badge-yellow" style="font-size: 0.6em;">direto</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td><code>:hover</code>, <code>:active</code></td>
+                  <td><code>Pressable</code> + callbacks</td>
+                  <td><span class="badge badge-red" style="font-size: 0.6em;">eventos</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Layout padrão: <strong>block</strong></td>
+                  <td>Layout padrão: <strong>flexbox (column)</strong></td>
+                  <td><span class="badge badge-blue" style="font-size: 0.6em;">flex</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Regra de ouro -->
+        <section>
+          <div class="slide-content" style="text-align: center; padding-top: 40px;">
+            <p style="font-size: 3em; margin: 0;">💡</p>
+            <blockquote style="border: none; background: rgba(255,255,255,0.05); border-radius: var(--radius); padding: 30px 40px; margin: 20px auto; max-width: 600px; border-left: 4px solid var(--accent);">
+              <p style="font-size: 1.2em; font-style: italic; color: rgba(255,255,255,0.95); margin: 0;">
+                "Se você sabe CSS, já sabe 80% dos estilos do React Native."
+              </p>
+            </blockquote>
+            <p class="fragment" style="font-size: 0.85em; color: rgba(255,255,255,0.6); max-width: 500px; margin: 20px auto;">
+              A diferença é a <strong style="color: var(--accent);">sintaxe</strong> (camelCase, sem unidades) e a
+              <strong style="color: var(--accent);">ausência de seletores e cascata</strong>.
+            </p>
+          </div>
+        </section>
+
+      </section>
+
+
+      <!-- ╔══════════════════════════════════════════════════════╗ -->
+      <!-- ║  BLOCO 2 — STYLESHEET                               ║ -->
+      <!-- ╚══════════════════════════════════════════════════════╝ -->
+      <section data-background="linear-gradient(135deg, #0d1b2a, #1b2838, #2d4059)">
+
+        <!-- Capa -->
+        <section class="section-cover">
+          <br><br><br>
+          <span class="section-icon">📝</span>
+          <h2 style="color: white; font-size: 1.8em;">StyleSheet</h2>
+          <p class="section-subtitle">Três formas de aplicar estilos no React Native</p>
+          <div style="width: 60px; height: 3px; background: var(--accent); margin: 20px auto; border-radius: 2px;"></div>
+        </section>
+
+        <!-- Forma 1: Inline -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">
+            <span class="badge badge-red" style="font-size: 0.55em; vertical-align: middle;">1</span>
+            Estilo Inline
+          </h3>
+          <div class="slide-content">
+            <pre><code class="language-jsx">&lt;Text style={{ color: 'red', fontSize: 20 }}&gt;
+  Texto vermelho
+&lt;/Text&gt;</code></pre>
+            <div class="warn-box fragment">
+              <span>⚠️</span>
+              <span>Funciona, mas <strong>não é recomendado</strong> para código extenso — cria novos objetos a cada render.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Forma 2: Objeto -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">
+            <span class="badge badge-yellow" style="font-size: 0.55em; vertical-align: middle;">2</span>
+            Objeto de Estilo
+          </h3>
+          <div class="slide-content">
+            <pre><code class="language-jsx">const meuEstilo = {
+  color: 'red',
+  fontSize: 20,
+};
+
+&lt;Text style={meuEstilo}&gt;Texto vermelho&lt;/Text&gt;</code></pre>
+            <div class="warn-box fragment">
+              <span>💭</span>
+              <span>Melhor que inline, mas sem validação de propriedades nem otimização interna.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Forma 3: StyleSheet.create — passo 1 -->
+        <section data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">
+            <span class="badge badge-green" style="font-size: 0.55em; vertical-align: middle;">3</span>
+            StyleSheet.create  ✅
+          </h3>
+          <div class="slide-content">
+            <pre data-id="code-ss"><code class="language-jsx">import { StyleSheet } from 'react-native';</code></pre>
+          </div>
+        </section>
+
+        <!-- Forma 3: passo 2 -->
+        <section data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">
+            <span class="badge badge-green" style="font-size: 0.55em; vertical-align: middle;">3</span>
+            StyleSheet.create  ✅
+          </h3>
+          <div class="slide-content">
+            <pre data-id="code-ss"><code class="language-jsx" data-line-numbers="3-9">import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  titulo: {
+    color: 'red',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});</code></pre>
+          </div>
+        </section>
+
+        <!-- Forma 3: passo 3 (uso) -->
+        <section data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">
+            <span class="badge badge-green" style="font-size: 0.55em; vertical-align: middle;">3</span>
+            StyleSheet.create  ✅
+          </h3>
+          <div class="slide-content">
+            <pre data-id="code-ss"><code class="language-jsx" data-line-numbers="11-13">import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  titulo: {
+    color: 'red',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});
+
+// Uso no componente:
+&lt;Text style={styles.titulo}&gt;
+  Texto vermelho e negrito
+&lt;/Text&gt;</code></pre>
+            <div class="tip-box">
+              <span>✅</span>
+              <span><strong>Recomendado!</strong> Valida propriedades em dev, otimiza performance e separa lógica de estilo.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Combinando estilos -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">🔀 Combinando Estilos</h3>
+          <div class="slide-content">
+            <p style="font-size: 0.9em; color: rgba(255,255,255,0.8);">Use um <strong>array</strong> para combinar múltiplos estilos:</p>
+            <pre><code class="language-jsx">// Combinação simples
+&lt;Text style={[styles.texto, styles.negrito]}&gt;
+  Texto com dois estilos
+&lt;/Text&gt;
+
+// Estilo condicional
+&lt;Text style={[styles.texto, ativo && styles.destaque]}&gt;
+  Muda de cor se ativo = true
+&lt;/Text&gt;</code></pre>
+            <div class="tip-box fragment">
+              <span>📌</span>
+              <span>O <strong>último</strong> estilo do array tem prioridade — sobrescreve os anteriores (como CSS specificity).</span>
+            </div>
+          </div>
+        </section>
+
+      </section>
+
+
+      <!-- ╔══════════════════════════════════════════════════════╗ -->
+      <!-- ║  BLOCO 3 — PROPRIEDADES ESSENCIAIS                  ║ -->
+      <!-- ╚══════════════════════════════════════════════════════╝ -->
+      <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)">
+
+        <!-- Capa -->
+        <section class="section-cover">
+          <br><br><br>
+          <span class="section-icon">🎯</span>
+          <h2 style="color: white; font-size: 1.8em;">Propriedades Essenciais</h2>
+          <p class="section-subtitle">Texto, cores, bordas e espaçamento</p>
+          <div style="width: 60px; height: 3px; background: var(--accent); margin: 20px auto; border-radius: 2px;"></div>
+        </section>
+
+        <!-- Texto -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">✍️ Propriedades de Texto</h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 20px; align-items: flex-start;">
+              <div style="flex: 1.3;">
+                <pre style="margin: 0;"><code class="language-jsx" style="font-size: 0.75em;">titulo: {
+  fontSize: 22,
+  fontWeight: 'bold',
+  fontStyle: 'italic',
+  color: '#1e293b',
+  textAlign: 'center',
+  textDecorationLine: 'underline',
+  letterSpacing: 1.5,
+  lineHeight: 30,
+}</code></pre>
+              </div>
+              <!-- Preview visual -->
+              <div style="flex: 0.7;" class="fragment">
+                <div class="phone-mockup" style="height: 260px; width: 170px;">
+                  <div class="phone-notch" style="width: 70px; height: 16px;"></div>
+                  <div class="phone-screen" style="justify-content: center; align-items: center; padding: 15px;">
+                    <p style="font-size: 12px; font-weight: bold; font-style: italic; color: #1e293b; text-align: center; text-decoration: underline; letter-spacing: 1.5px; line-height: 18px; margin: 0;">
+                      Texto com todos os estilos aplicados
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Cores -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">🎨 Cores</h3>
+          <div class="slide-content">
+            <p style="font-size: 0.85em; color: rgba(255,255,255,0.7); margin-bottom: 12px;">React Native aceita vários formatos:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+              <div class="card" style="text-align: center; padding: 16px;">
+                <div style="width: 40px; height: 40px; background: red; border-radius: 50%; margin: 0 auto 8px; box-shadow: 0 2px 8px rgba(255,0,0,0.4);"></div>
+                <code style="font-size: 0.75em; color: rgba(255,255,255,0.9);">'red'</code>
+                <p style="font-size: 0.6em; color: rgba(255,255,255,0.5); margin: 4px 0 0;">Nome</p>
+              </div>
+              <div class="card" style="text-align: center; padding: 16px;">
+                <div style="width: 40px; height: 40px; background: #FF5733; border-radius: 50%; margin: 0 auto 8px; box-shadow: 0 2px 8px rgba(255,87,51,0.4);"></div>
+                <code style="font-size: 0.75em; color: rgba(255,255,255,0.9);">'#FF5733'</code>
+                <p style="font-size: 0.6em; color: rgba(255,255,255,0.5); margin: 4px 0 0;">Hex</p>
+              </div>
+              <div class="card" style="text-align: center; padding: 16px;">
+                <div style="width: 40px; height: 40px; background: rgba(0,150,255,0.6); border-radius: 50%; margin: 0 auto 8px; box-shadow: 0 2px 8px rgba(0,150,255,0.3);"></div>
+                <code style="font-size: 0.75em; color: rgba(255,255,255,0.9);">'rgba(0,150,255,0.6)'</code>
+                <p style="font-size: 0.6em; color: rgba(255,255,255,0.5); margin: 4px 0 0;">RGBA</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bordas e Sombras -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">📦 Bordas e Sombras</h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 20px; align-items: flex-start;">
+              <div style="flex: 1.2;">
+                <pre style="margin: 0;"><code class="language-jsx" style="font-size: 0.72em;">card: {
+  borderWidth: 1,
+  borderColor: '#e2e8f0',
+  borderRadius: 12,
+
+  // Sombra iOS
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 4 },
+  shadowOpacity: 0.15,
+  shadowRadius: 8,
+
+  // Sombra Android
+  elevation: 6,
+}</code></pre>
+              </div>
+              <!-- Preview -->
+              <div style="flex: 0.8;" class="fragment">
+                <div style="text-align: center;">
+                  <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); width: 180px; margin: 0 auto;">
+                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; margin: 0 auto 10px;"></div>
+                    <p style="font-size: 11px; font-weight: 700; color: #1e293b; margin: 0;">Card Estilizado</p>
+                    <p style="font-size: 9px; color: #64748b; margin: 4px 0 0;">Com borda e sombra</p>
+                  </div>
+                  <p style="font-size: 0.6em; color: rgba(255,255,255,0.4); margin-top: 10px;">Preview visual</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Margin vs Padding — Diagrama profissional -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">📐 Margin vs Padding</h3>
+          <div class="slide-content" style="text-align: center;">
+            <div class="box-model" style="margin-top: 10px;">
+              <p class="box-label" style="color: #ff9800;">MARGIN</p>
+              <div class="box-model-margin">
+                <p class="box-label" style="color: #42a5f5;">BORDER</p>
+                <div class="box-model-border">
+                  <p class="box-label" style="color: #66bb6a;">PADDING</p>
+                  <div class="box-model-padding">
+                    <div class="box-model-content">CONTEÚDO</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <pre class="fragment" style="margin-top: 14px;"><code class="language-jsx" style="font-size: 0.75em;">// margin → espaço FORA do componente
+// padding → espaço DENTRO do componente
+{
+  margin: 10,             // todos os lados
+  marginHorizontal: 15,   // esquerda + direita
+  padding: 20,
+  paddingVertical: 10,    // cima + baixo
+}</code></pre>
+          </div>
+        </section>
+
+        <!-- Exemplo: Card completo (auto-animate) -->
+        <section data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">🖼️ Exemplo Completo: Card</h3>
+          <div class="slide-content">
+            <pre data-id="code-card"><code class="language-jsx" style="font-size: 0.78em;">import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';</code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">🖼️ Exemplo Completo: Card</h3>
+          <div class="slide-content">
+            <pre data-id="code-card"><code class="language-jsx" style="font-size: 0.78em;" data-line-numbers="4-12">import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+export default function Card() {
+  return (
+    &lt;View style={styles.card}&gt;
+      &lt;Text style={styles.titulo}&gt;Meu Card&lt;/Text&gt;
+      &lt;Text style={styles.desc}&gt;
+        Um componente estilizado com StyleSheet!
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">🖼️ Exemplo Completo: Card</h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 20px; align-items: flex-start;">
+              <pre data-id="code-card" style="flex: 1.3; margin: 0;"><code class="language-jsx" style="font-size: 0.65em;" data-line-numbers="15-30">import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+export default function Card() {
+  return (
+    &lt;View style={styles.card}&gt;
+      &lt;Text style={styles.titulo}&gt;Meu Card&lt;/Text&gt;
+      &lt;Text style={styles.desc}&gt;
+        Um componente estilizado com StyleSheet!
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+    margin: 16,
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+  },
+  titulo: {
+    fontSize: 20, fontWeight: '700',
+    color: '#1e293b', marginBottom: 8,
+  },
+  desc: {
+    fontSize: 14, color: '#64748b',
+    lineHeight: 20,
+  },
+});</code></pre>
+              <!-- Phone preview -->
+              <div style="flex: 0.6;" class="fragment">
+                <div class="phone-mockup" style="height: 300px; width: 170px;">
+                  <div class="phone-notch" style="width: 70px; height: 16px;"></div>
+                  <div class="phone-screen" style="background: #f1f5f9; padding: 12px;">
+                    <div style="background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 20px;">
+                      <p style="font-size: 12px; font-weight: 700; color: #1e293b; margin: 0 0 5px;">Meu Card</p>
+                      <p style="font-size: 9px; color: #64748b; line-height: 1.4; margin: 0;">Um componente estilizado com StyleSheet!</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </section>
+
+
+      <!-- ╔══════════════════════════════════════════════════════╗ -->
+      <!-- ║  BLOCO 4 — FLEXBOX                                  ║ -->
+      <!-- ╚══════════════════════════════════════════════════════╝ -->
+      <section data-background="linear-gradient(135deg, #0f0c29, #302b63, #24243e)">
+
+        <!-- Capa -->
+        <section class="section-cover">
+          <br><br><br>
+          <span class="section-icon">📦</span>
+          <h2 style="color: white; font-size: 1.8em;">Flexbox no React Native</h2>
+          <p class="section-subtitle">O sistema de layout padrão — todo View já é flex!</p>
+          <div style="width: 60px; height: 3px; background: var(--accent); margin: 20px auto; border-radius: 2px;"></div>
+        </section>
+
+        <!-- Conceito -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">O que é Flexbox?</h3>
+          <div class="slide-content">
+            <ul>
+              <li class="fragment">Sistema de layout <strong>unidimensional</strong> (linha ou coluna)</li>
+              <li class="fragment">No React Native, <strong>todo componente já é flex</strong> por padrão</li>
+              <li class="fragment">Direção padrão: <code>column</code> ↓ (diferente da web!)</li>
+            </ul>
+            <div class="fragment" style="margin-top: 20px;">
+              <div class="compare-grid" style="grid-template-columns: 1fr 40px 1fr;">
+                <div class="card" style="text-align: center; padding: 16px;">
+                  <span class="badge badge-blue" style="font-size: 0.6em;">CSS Web</span>
+                  <p style="font-size: 0.85em; margin: 8px 0 0;">Padrão: <code>row</code> →</p>
+                </div>
+                <div style="text-align: center; font-size: 1.5em; color: rgba(255,255,255,0.3);">≠</div>
+                <div class="card" style="text-align: center; padding: 16px;">
+                  <span class="badge badge-green" style="font-size: 0.6em;">React Native</span>
+                  <p style="font-size: 0.85em; margin: 8px 0 0;">Padrão: <code>column</code> ↓</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- flexDirection visual -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">flexDirection</h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 24px; justify-content: center; margin-top: 10px;">
+              <!-- Column -->
+              <div style="text-align: center;">
+                <p style="margin: 0 0 8px;"><code style="background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 4px; font-size: 0.75em;">column</code> <span class="badge badge-green" style="font-size: 0.5em;">padrão</span></p>
+                <div class="flex-demo-container" style="width: 100px; display: flex; flex-direction: column; gap: 6px;">
+                  <div class="flex-demo-item" style="height: 32px; background: #ef4444;">A</div>
+                  <div class="flex-demo-item" style="height: 32px; background: #3b82f6;">B</div>
+                  <div class="flex-demo-item" style="height: 32px; background: #10b981;">C</div>
+                </div>
+              </div>
+              <!-- Row -->
+              <div style="text-align: center;">
+                <p style="margin: 0 0 8px;"><code style="background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 4px; font-size: 0.75em;">row</code></p>
+                <div class="flex-demo-container" style="width: 240px; height: 120px; display: flex; flex-direction: row; gap: 6px;">
+                  <div class="flex-demo-item" style="flex: 1; background: #ef4444;">A</div>
+                  <div class="flex-demo-item" style="flex: 1; background: #3b82f6;">B</div>
+                  <div class="flex-demo-item" style="flex: 1; background: #10b981;">C</div>
+                </div>
+              </div>
+            </div>
+            <pre class="fragment" style="margin-top: 14px;"><code class="language-jsx" style="font-size: 0.75em;">flexDirection: 'column'          // ↓ padrão
+flexDirection: 'row'             // →
+flexDirection: 'column-reverse'  // ↑
+flexDirection: 'row-reverse'     // ←</code></pre>
+          </div>
+        </section>
+
+        <!-- justifyContent -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">justifyContent <span style="font-size: 0.5em; font-weight: 300; color: rgba(255,255,255,0.5);">— eixo principal</span></h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+              <!-- flex-start -->
+              <div style="text-align: center; width: 110px;">
+                <code style="font-size: 0.55em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">flex-start</code>
+                <div class="flex-demo-container" style="height: 120px; margin-top: 6px; display: flex; flex-direction: column; justify-content: flex-start; gap: 4px;">
+                  <div class="flex-demo-item" style="height: 22px; background: #ef4444;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #3b82f6;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #10b981;"></div>
+                </div>
+              </div>
+              <!-- center -->
+              <div style="text-align: center; width: 110px;">
+                <code style="font-size: 0.55em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">center</code>
+                <div class="flex-demo-container" style="height: 120px; margin-top: 6px; display: flex; flex-direction: column; justify-content: center; gap: 4px;">
+                  <div class="flex-demo-item" style="height: 22px; background: #ef4444;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #3b82f6;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #10b981;"></div>
+                </div>
+              </div>
+              <!-- flex-end -->
+              <div style="text-align: center; width: 110px;">
+                <code style="font-size: 0.55em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">flex-end</code>
+                <div class="flex-demo-container" style="height: 120px; margin-top: 6px; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px;">
+                  <div class="flex-demo-item" style="height: 22px; background: #ef4444;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #3b82f6;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #10b981;"></div>
+                </div>
+              </div>
+              <!-- space-between -->
+              <div style="text-align: center; width: 110px;">
+                <code style="font-size: 0.55em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">space-between</code>
+                <div class="flex-demo-container" style="height: 120px; margin-top: 6px; display: flex; flex-direction: column; justify-content: space-between;">
+                  <div class="flex-demo-item" style="height: 22px; background: #ef4444;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #3b82f6;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #10b981;"></div>
+                </div>
+              </div>
+              <!-- space-around -->
+              <div style="text-align: center; width: 110px;">
+                <code style="font-size: 0.55em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">space-around</code>
+                <div class="flex-demo-container" style="height: 120px; margin-top: 6px; display: flex; flex-direction: column; justify-content: space-around;">
+                  <div class="flex-demo-item" style="height: 22px; background: #ef4444;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #3b82f6;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #10b981;"></div>
+                </div>
+              </div>
+              <!-- space-evenly -->
+              <div style="text-align: center; width: 110px;">
+                <code style="font-size: 0.55em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">space-evenly</code>
+                <div class="flex-demo-container" style="height: 120px; margin-top: 6px; display: flex; flex-direction: column; justify-content: space-evenly;">
+                  <div class="flex-demo-item" style="height: 22px; background: #ef4444;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #3b82f6;"></div>
+                  <div class="flex-demo-item" style="height: 22px; background: #10b981;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- alignItems -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">alignItems <span style="font-size: 0.5em; font-weight: 300; color: rgba(255,255,255,0.5);">— eixo cruzado</span></h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+              <div style="text-align: center; width: 140px;">
+                <code style="font-size: 0.55em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">flex-start</code>
+                <div class="flex-demo-container" style="height: 80px; margin-top: 6px; display: flex; flex-direction: row; align-items: flex-start; gap: 4px;">
+                  <div class="flex-demo-item" style="width: 32px; height: 30px; background: #ef4444;"></div>
+                  <div class="flex-demo-item" style="width: 32px; height: 50px; background: #3b82f6;"></div>
+                  <div class="flex-demo-item" style="width: 32px; height: 20px; background: #10b981;"></div>
+                </div>
+              </div>
+              <div style="text-align: center; width: 140px;">
+                <code style="font-size: 0.55em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">center</code>
+                <div class="flex-demo-container" style="height: 80px; margin-top: 6px; display: flex; flex-direction: row; align-items: center; gap: 4px;">
+                  <div class="flex-demo-item" style="width: 32px; height: 30px; background: #ef4444;"></div>
+                  <div class="flex-demo-item" style="width: 32px; height: 50px; background: #3b82f6;"></div>
+                  <div class="flex-demo-item" style="width: 32px; height: 20px; background: #10b981;"></div>
+                </div>
+              </div>
+              <div style="text-align: center; width: 140px;">
+                <code style="font-size: 0.55em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">stretch</code>
+                <div class="flex-demo-container" style="height: 80px; margin-top: 6px; display: flex; flex-direction: row; align-items: stretch; gap: 4px;">
+                  <div class="flex-demo-item" style="width: 32px; background: #ef4444;"></div>
+                  <div class="flex-demo-item" style="width: 32px; background: #3b82f6;"></div>
+                  <div class="flex-demo-item" style="width: 32px; background: #10b981;"></div>
+                </div>
+              </div>
+              <div style="text-align: center; width: 140px;">
+                <code style="font-size: 0.55em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">flex-end</code>
+                <div class="flex-demo-container" style="height: 80px; margin-top: 6px; display: flex; flex-direction: row; align-items: flex-end; gap: 4px;">
+                  <div class="flex-demo-item" style="width: 32px; height: 30px; background: #ef4444;"></div>
+                  <div class="flex-demo-item" style="width: 32px; height: 50px; background: #3b82f6;"></div>
+                  <div class="flex-demo-item" style="width: 32px; height: 20px; background: #10b981;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- flex (proporção) -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">flex — Proporção</h3>
+          <div class="slide-content">
+            <p style="font-size: 0.85em; color: rgba(255,255,255,0.7);">Controla quanto espaço cada filho ocupa:</p>
+            <div class="flex-demo-container" style="display: flex; gap: 6px; height: 50px; margin: 14px 0;">
+              <div class="flex-demo-item" style="flex: 1; background: #ef4444;">flex: 1</div>
+              <div class="flex-demo-item" style="flex: 2; background: #3b82f6;">flex: 2</div>
+              <div class="flex-demo-item" style="flex: 1; background: #10b981;">flex: 1</div>
+            </div>
+            <pre><code class="language-jsx" style="font-size: 0.78em;">&lt;View style={{ flexDirection: 'row' }}&gt;
+  &lt;View style={{ flex: 1, backgroundColor: '#ef4444' }} /&gt;
+  &lt;View style={{ flex: 2, backgroundColor: '#3b82f6' }} /&gt;
+  &lt;View style={{ flex: 1, backgroundColor: '#10b981' }} /&gt;
+&lt;/View&gt;</code></pre>
+            <div class="tip-box fragment">
+              <span>📌</span>
+              <span><code>flex: 1</code> no componente pai = "ocupe <strong>todo</strong> o espaço disponível".</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Layout completo (auto-animate) -->
+        <section data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">📱 Layout: Header + Conteúdo + Footer</h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 20px; align-items: flex-start;">
+              <pre data-id="code-layout" style="flex: 1.3; margin: 0;"><code class="language-jsx" style="font-size: 0.68em;">import React from 'react';
+import { SafeAreaView, View, Text, 
+         StyleSheet } from 'react-native';
+
+export default function App() {
+  return (
+    &lt;SafeAreaView style={s.container}&gt;
+      &lt;View style={s.header}&gt;
+        &lt;Text style={s.headerTxt}&gt;Meu App&lt;/Text&gt;
+      &lt;/View&gt;
+      &lt;View style={s.content}&gt;
+        &lt;Text&gt;Conteúdo principal&lt;/Text&gt;
+      &lt;/View&gt;
+      &lt;View style={s.footer}&gt;
+        &lt;Text style={s.footerTxt}&gt;Footer&lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}</code></pre>
+              <!-- Phone preview -->
+              <div style="flex: 0.6;">
+                <div class="phone-mockup" style="height: 320px; width: 170px;">
+                  <div class="phone-notch" style="width: 70px; height: 16px;"></div>
+                  <div class="phone-screen" style="background: #f1f5f9; display: flex; flex-direction: column;">
+                    <!-- Header -->
+                    <div style="background: #0056b3; padding: 10px; text-align: center;">
+                      <p style="font-size: 10px; font-weight: 700; color: white; margin: 0;">Meu App</p>
+                    </div>
+                    <!-- Content -->
+                    <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+                      <p style="font-size: 9px; color: #475569; margin: 0;">Conteúdo principal</p>
+                    </div>
+                    <!-- Footer -->
+                    <div style="background: #1e293b; padding: 8px; text-align: center;">
+                      <p style="font-size: 8px; color: #94a3b8; margin: 0;">Footer</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">📱 Layout: Os Estilos</h3>
+          <div class="slide-content">
+            <pre data-id="code-layout"><code class="language-jsx" style="font-size: 0.72em;" data-line-numbers="1-12">const s = StyleSheet.create({
+  container: { flex: 1 },
+  header: {
+    backgroundColor: '#0056b3',
+    padding: 16, alignItems: 'center',
+  },
+  headerTxt: { color: '#fff', fontSize: 18, fontWeight: '700' },
+  content: {
+    flex: 1, // ← ocupa todo o espaço restante!
+    justifyContent: 'center', alignItems: 'center',
+  },
+  footer: {
+    backgroundColor: '#1e293b',
+    padding: 12, alignItems: 'center',
+  },
+  footerTxt: { color: '#94a3b8', fontSize: 12 },
+});</code></pre>
+            <div class="tip-box fragment">
+              <span>🎯</span>
+              <span>O segredo: <code>flex: 1</code> no container + <code>flex: 1</code> no content = footer fica grudado no rodapé!</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Centralizar -->
+        <section>
+          <h3 class="slide-title" style="font-size: 1.3em !important;">🎯 Como Centralizar?</h3>
+          <div class="slide-content" style="text-align: center;">
+            <p style="font-size: 0.9em; color: rgba(255,255,255,0.7);">A pergunta mais frequente do CSS:</p>
+            <div style="display: inline-block; margin: 20px auto;">
+              <div class="flex-demo-container" style="width: 200px; height: 140px; display: flex; justify-content: center; align-items: center;">
+                <div class="flex-demo-item" style="width: 60px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); font-size: 0.6em; border-radius: 8px;">✨</div>
+              </div>
+            </div>
+            <pre style="max-width: 450px; margin: 10px auto;"><code class="language-jsx" style="font-size: 0.82em;">centralizado: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+}</code></pre>
+            <p class="fragment" style="font-size: 0.75em; color: rgba(255,255,255,0.5); margin-top: 10px;">
+              <code>flex: 1</code> + <code>justifyContent: 'center'</code> + <code>alignItems: 'center'</code> = ✨
+            </p>
+          </div>
+        </section>
+
+      </section>
+
+
+      <!-- ╔══════════════════════════════════════════════════════╗ -->
+      <!-- ║  BLOCO 5 — ATIVIDADES                               ║ -->
+      <!-- ╚══════════════════════════════════════════════════════╝ -->
+      <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)">
+
+        <!-- Capa -->
+        <section class="section-cover">
+          <br><br><br>
+          <span class="section-icon">✏️</span>
+          <h2 style="color: white; font-size: 1.8em;">Atividades Práticas</h2>
+          <p class="section-subtitle">Hora de colocar a mão no código!</p>
+          <div style="width: 60px; height: 3px; background: var(--accent); margin: 20px auto; border-radius: 2px;"></div>
+        </section>
+
+        <!-- Atividade 1: Enunciado -->
+        <section data-background-color="#1e293b" data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">
+            <span class="activity-number">1</span> Card de Perfil
+          </h3>
+          <div class="slide-content">
+            <div class="activity-card">
+              <p style="font-size: 0.88em; margin: 0 0 12px;">
+                Crie um componente <code>ProfileCard</code> que exiba:
+              </p>
+              <ul style="font-size: 0.82em;">
+                <li>Nome em <strong>negrito</strong>, tamanho 22</li>
+                <li>Descrição em cinza, tamanho 14</li>
+                <li>Container branco com borda arredondada, padding e sombra</li>
+              </ul>
+            </div>
+            <div class="tip-box" style="margin-top: 14px;">
+              <span>💡</span>
+              <span>Use <code>StyleSheet.create</code> + propriedades de texto, cores e bordas que aprendemos.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Atividade 1: Resposta -->
+        <section data-background-color="#1e293b" data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">
+            <span class="activity-number">1</span> Resposta
+          </h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 18px; align-items: flex-start;">
+              <pre style="flex: 1.3; margin: 0;"><code class="language-jsx" style="font-size: 0.62em;">import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+export default function ProfileCard() {
+  return (
+    &lt;View style={styles.card}&gt;
+      &lt;Text style={styles.nome}&gt;Maria Silva&lt;/Text&gt;
+      &lt;Text style={styles.desc}&gt;
+        Desenvolvedora React Native
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 16, padding: 24, margin: 16,
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15, shadowRadius: 8,
+  },
+  nome: { fontSize: 22, fontWeight: '700', color: '#1e293b' },
+  desc: { fontSize: 14, color: '#64748b', marginTop: 6 },
+});</code></pre>
+              <div style="flex: 0.55;">
+                <div class="phone-mockup" style="height: 260px; width: 155px;">
+                  <div class="phone-notch" style="width: 60px; height: 14px;"></div>
+                  <div class="phone-screen" style="background: #f1f5f9; padding: 10px;">
+                    <div style="background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 15px;">
+                      <p style="font-size: 12px; font-weight: 700; color: #1e293b; margin: 0;">Maria Silva</p>
+                      <p style="font-size: 9px; color: #64748b; margin: 4px 0 0;">Desenvolvedora React Native</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Atividade 2: Enunciado -->
+        <section data-background-color="#0f172a" data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">
+            <span class="activity-number">2</span> Layout com Flexbox
+          </h3>
+          <div class="slide-content">
+            <div class="activity-card">
+              <p style="font-size: 0.88em; margin: 0 0 12px;">
+                Crie uma tela com:
+              </p>
+              <ul style="font-size: 0.82em;">
+                <li><strong>Header</strong> fixo no topo (fundo azul, texto branco centralizado)</li>
+                <li><strong>Conteúdo</strong> que ocupa todo o espaço restante</li>
+                <li><strong>Footer</strong> fixo no rodapé (fundo escuro)</li>
+              </ul>
+            </div>
+            <div class="tip-box" style="margin-top: 14px;">
+              <span>💡</span>
+              <span><code>flex: 1</code> no container + <code>flex: 1</code> no conteúdo. Header e Footer sem flex.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Atividade 2: Resposta -->
+        <section data-background-color="#0f172a" data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">
+            <span class="activity-number">2</span> Resposta
+          </h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 18px; align-items: flex-start;">
+              <pre style="flex: 1.3; margin: 0;"><code class="language-jsx" style="font-size: 0.6em;">import React from 'react';
+import { SafeAreaView, View, Text, 
+         StyleSheet } from 'react-native';
+
+export default function Layout() {
+  return (
+    &lt;SafeAreaView style={s.container}&gt;
+      &lt;View style={s.header}&gt;
+        &lt;Text style={s.headerTxt}&gt;Meu App&lt;/Text&gt;
+      &lt;/View&gt;
+      &lt;View style={s.content}&gt;
+        &lt;Text style={{ fontSize: 18 }}&gt;Bem-vindo!&lt;/Text&gt;
+      &lt;/View&gt;
+      &lt;View style={s.footer}&gt;
+        &lt;Text style={s.footerTxt}&gt;© 2026&lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+const s = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#f8fafc' },
+  header: {
+    backgroundColor: '#0056b3',
+    padding: 16, alignItems: 'center',
+  },
+  headerTxt: { color: '#fff', fontSize: 20, fontWeight: '700' },
+  content: {
+    flex: 1,
+    justifyContent: 'center', alignItems: 'center',
+  },
+  footer: {
+    backgroundColor: '#1e293b',
+    padding: 12, alignItems: 'center',
+  },
+  footerTxt: { color: '#94a3b8', fontSize: 12 },
+});</code></pre>
+              <div style="flex: 0.55;">
+                <div class="phone-mockup" style="height: 300px; width: 155px;">
+                  <div class="phone-notch" style="width: 60px; height: 14px;"></div>
+                  <div class="phone-screen" style="background: #f8fafc; display: flex; flex-direction: column;">
+                    <div style="background: #0056b3; padding: 10px; text-align: center;">
+                      <p style="font-size: 10px; font-weight: 700; color: white; margin: 0;">Meu App</p>
+                    </div>
+                    <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+                      <p style="font-size: 10px; color: #475569; margin: 0;">Bem-vindo!</p>
+                    </div>
+                    <div style="background: #1e293b; padding: 7px; text-align: center;">
+                      <p style="font-size: 7px; color: #94a3b8; margin: 0;">© 2026</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Atividade 3: Enunciado -->
+        <section data-background-color="#172554" data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">
+            <span class="activity-number">3</span> Três Colunas Coloridas
+          </h3>
+          <div class="slide-content">
+            <div class="activity-card">
+              <p style="font-size: 0.88em; margin: 0 0 12px;">
+                Crie 3 colunas lado a lado com proporção <code>1 : 2 : 1</code>:
+              </p>
+            </div>
+            <div class="flex-demo-container" style="display: flex; gap: 6px; height: 50px; margin-top: 14px;">
+              <div class="flex-demo-item" style="flex: 1; background: #ef4444; border-radius: 8px;">flex: 1</div>
+              <div class="flex-demo-item" style="flex: 2; background: #3b82f6; border-radius: 8px;">flex: 2</div>
+              <div class="flex-demo-item" style="flex: 1; background: #10b981; border-radius: 8px;">flex: 1</div>
+            </div>
+            <div class="tip-box" style="margin-top: 14px;">
+              <span>💡</span>
+              <span><code>flexDirection: 'row'</code> + <code>flex: N</code> em cada coluna.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Atividade 3: Resposta -->
+        <section data-background-color="#172554" data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">
+            <span class="activity-number">3</span> Resposta
+          </h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 18px; align-items: flex-start;">
+              <pre style="flex: 1.3; margin: 0;"><code class="language-jsx" style="font-size: 0.65em;">import React from 'react';
+import { SafeAreaView, View, StyleSheet } from 'react-native';
+
+export default function Colunas() {
+  return (
+    &lt;SafeAreaView style={s.container}&gt;
+      &lt;View style={s.row}&gt;
+        &lt;View style={[s.col, { flex: 1, 
+          backgroundColor: '#ef4444' }]} /&gt;
+        &lt;View style={[s.col, { flex: 2, 
+          backgroundColor: '#3b82f6' }]} /&gt;
+        &lt;View style={[s.col, { flex: 1, 
+          backgroundColor: '#10b981' }]} /&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+const s = StyleSheet.create({
+  container: { flex: 1 },
+  row: { flex: 1, flexDirection: 'row' },
+  col: { justifyContent: 'center', 
+         alignItems: 'center' },
+});</code></pre>
+              <div style="flex: 0.55;">
+                <div class="phone-mockup" style="height: 280px; width: 155px;">
+                  <div class="phone-notch" style="width: 60px; height: 14px;"></div>
+                  <div class="phone-screen" style="display: flex; flex-direction: row;">
+                    <div style="flex: 1; background: #ef4444;"></div>
+                    <div style="flex: 2; background: #3b82f6;"></div>
+                    <div style="flex: 1; background: #10b981;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </section>
+
+
+      <!-- ╔══════════════════════════════════════════════════════╗ -->
+      <!-- ║  BLOCO 6 — DESAFIOS                                 ║ -->
+      <!-- ╚══════════════════════════════════════════════════════╝ -->
+      <section data-background="linear-gradient(135deg, #0f0c29, #302b63, #24243e)">
+
+        <!-- Capa -->
+        <section class="section-cover">
+          <br><br><br>
+          <span class="section-icon">🏆</span>
+          <h2 style="color: white; font-size: 1.8em;">Desafios</h2>
+          <p class="section-subtitle">Combine tudo que aprendeu!</p>
+          <div style="width: 60px; height: 3px; background: #f59e0b; margin: 20px auto; border-radius: 2px;"></div>
+        </section>
+
+        <!-- Desafio 1: Tela de Login -->
+        <section data-background-color="#312e81" data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">
+            🏆 Desafio: Tela de Login
+          </h3>
+          <div class="slide-content">
+            <div class="activity-card" style="border-left-color: #f59e0b;">
+              <p style="font-size: 0.88em; margin: 0 0 12px;">Crie uma tela de login com:</p>
+              <ul style="font-size: 0.82em;">
+                <li>Título <strong>"Bem-vindo"</strong> centralizado</li>
+                <li>Dois <code>TextInput</code> (email e senha) com borda e padding</li>
+                <li>Um <code>Pressable</code> estilizado como botão</li>
+                <li>Tudo centralizado vertical e horizontalmente</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Desafio 1: Resposta -->
+        <section data-background-color="#312e81" data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">
+            🏆 Resposta: Tela de Login
+          </h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 18px; align-items: flex-start;">
+              <pre style="flex: 1.3; margin: 0;"><code class="language-jsx" style="font-size: 0.55em;">import React, { useState } from 'react';
+import { SafeAreaView, View, Text, TextInput,
+         Pressable, StyleSheet } from 'react-native';
+
+export default function LoginScreen() {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  return (
+    &lt;SafeAreaView style={s.container}&gt;
+      &lt;View style={s.form}&gt;
+        &lt;Text style={s.titulo}&gt;Bem-vindo&lt;/Text&gt;
+        &lt;TextInput style={s.input} placeholder="Email"
+          value={email} onChangeText={setEmail} /&gt;
+        &lt;TextInput style={s.input} placeholder="Senha"
+          value={senha} onChangeText={setSenha} secureTextEntry /&gt;
+        &lt;Pressable style={s.btn}
+          onPress={() =&gt; alert('Login!')}&gt;
+          &lt;Text style={s.btnTxt}&gt;Entrar&lt;/Text&gt;
+        &lt;/Pressable&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+const s = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center',
+    backgroundColor: '#f0f4f8' },
+  form: { padding: 32 },
+  titulo: { fontSize: 28, fontWeight: '700',
+    textAlign: 'center', color: '#1e293b', marginBottom: 32 },
+  input: { backgroundColor: '#fff', borderWidth: 1,
+    borderColor: '#cbd5e1', borderRadius: 10,
+    padding: 14, fontSize: 16, marginBottom: 16 },
+  btn: { backgroundColor: '#0056b3', borderRadius: 10,
+    padding: 16, alignItems: 'center', marginTop: 8 },
+  btnTxt: { color: '#fff', fontSize: 16, fontWeight: '600' },
+});</code></pre>
+              <div style="flex: 0.55;">
+                <div class="phone-mockup" style="height: 320px; width: 155px;">
+                  <div class="phone-notch" style="width: 60px; height: 14px;"></div>
+                  <div class="phone-screen" style="background: #f0f4f8; display: flex; flex-direction: column; justify-content: center; padding: 12px;">
+                    <p style="font-size: 13px; font-weight: 700; color: #1e293b; text-align: center; margin: 0 0 14px;">Bem-vindo</p>
+                    <div style="background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; margin-bottom: 7px;">
+                      <p style="font-size: 8px; color: #94a3b8; margin: 0;">Email</p>
+                    </div>
+                    <div style="background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; margin-bottom: 10px;">
+                      <p style="font-size: 8px; color: #94a3b8; margin: 0;">Senha</p>
+                    </div>
+                    <div style="background: #0056b3; border-radius: 6px; padding: 8px; text-align: center;">
+                      <p style="font-size: 9px; font-weight: 600; color: white; margin: 0;">Entrar</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Desafio 2: Grid de cores -->
+        <section data-background-color="#134e4a" data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">
+            🏆 Desafio: Grid 2×2 de Cores
+          </h3>
+          <div class="slide-content">
+            <div class="activity-card" style="border-left-color: #f59e0b;">
+              <p style="font-size: 0.88em; margin: 0 0 12px;">Crie um grid 2×2 com 4 quadrados coloridos:</p>
+              <ul style="font-size: 0.82em;">
+                <li>Cada quadrado ocupa metade da largura</li>
+                <li>Use <code>flexDirection: 'row'</code> para cada linha</li>
+                <li>Arredonde os cantos com <code>borderRadius</code></li>
+              </ul>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 140px; margin: 16px auto;">
+              <div style="height: 50px; background: #ef4444; border-radius: 8px;"></div>
+              <div style="height: 50px; background: #3b82f6; border-radius: 8px;"></div>
+              <div style="height: 50px; background: #f59e0b; border-radius: 8px;"></div>
+              <div style="height: 50px; background: #10b981; border-radius: 8px;"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Desafio 2: Resposta -->
+        <section data-background-color="#134e4a" data-auto-animate>
+          <h3 class="slide-title" style="font-size: 1.2em !important;">
+            🏆 Resposta: Grid 2×2
+          </h3>
+          <div class="slide-content">
+            <div style="display: flex; gap: 18px; align-items: flex-start;">
+              <pre style="flex: 1.3; margin: 0;"><code class="language-jsx" style="font-size: 0.65em;">import React from 'react';
+import { SafeAreaView, View, StyleSheet } from 'react-native';
+
+const cores = ['#ef4444','#3b82f6','#f59e0b','#10b981'];
+
+export default function Grid() {
+  return (
+    &lt;SafeAreaView style={s.container}&gt;
+      &lt;View style={s.row}&gt;
+        &lt;View style={[s.box, 
+          { backgroundColor: cores[0] }]} /&gt;
+        &lt;View style={[s.box, 
+          { backgroundColor: cores[1] }]} /&gt;
+      &lt;/View&gt;
+      &lt;View style={s.row}&gt;
+        &lt;View style={[s.box, 
+          { backgroundColor: cores[2] }]} /&gt;
+        &lt;View style={[s.box, 
+          { backgroundColor: cores[3] }]} /&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+const s = StyleSheet.create({
+  container: { flex: 1, padding: 12 },
+  row: { flex: 1, flexDirection: 'row', 
+         gap: 12, marginBottom: 12 },
+  box: { flex: 1, borderRadius: 16 },
+});</code></pre>
+              <div style="flex: 0.55;">
+                <div class="phone-mockup" style="height: 280px; width: 155px;">
+                  <div class="phone-notch" style="width: 60px; height: 14px;"></div>
+                  <div class="phone-screen" style="padding: 8px; display: flex; flex-direction: column; gap: 6px;">
+                    <div style="flex: 1; display: flex; gap: 6px;">
+                      <div style="flex: 1; background: #ef4444; border-radius: 10px;"></div>
+                      <div style="flex: 1; background: #3b82f6; border-radius: 10px;"></div>
+                    </div>
+                    <div style="flex: 1; display: flex; gap: 6px;">
+                      <div style="flex: 1; background: #f59e0b; border-radius: 10px;"></div>
+                      <div style="flex: 1; background: #10b981; border-radius: 10px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </section>
+
+
+      <!-- ╔══════════════════════════════════════════════════════╗ -->
+      <!-- ║  CHEAT SHEET                                        ║ -->
+      <!-- ╚══════════════════════════════════════════════════════╝ -->
+      <section data-background="linear-gradient(135deg, #0d1b2a, #1b2838, #2d4059)">
+        <h3 class="slide-title" style="font-size: 1.2em !important;">📋 Cheat Sheet — CSS → React Native</h3>
+        <div class="slide-content">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>�� CSS Web</th>
+                <th>📱 React Native</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>background-color: red</code></td><td><code>backgroundColor: 'red'</code></td></tr>
+              <tr><td><code>font-size: 20px</code></td><td><code>fontSize: 20</code></td></tr>
+              <tr><td><code>font-weight: bold</code></td><td><code>fontWeight: 'bold'</code></td></tr>
+              <tr><td><code>text-align: center</code></td><td><code>textAlign: 'center'</code></td></tr>
+              <tr><td><code>border: 1px solid #ccc</code></td><td><code>borderWidth: 1, borderColor: '#ccc'</code></td></tr>
+              <tr><td><code>border-radius: 10px</code></td><td><code>borderRadius: 10</code></td></tr>
+              <tr><td><code>box-shadow: ...</code></td><td><code>elevation: 5</code> (Android) / <code>shadow*</code> (iOS)</td></tr>
+              <tr><td><code>display: flex</code></td><td>Padrão (não precisa declarar)</td></tr>
+              <tr><td><code>flex-direction: row</code></td><td><code>flexDirection: 'row'</code></td></tr>
+              <tr><td><code>:hover { ... }</code></td><td><code>Pressable</code> + callbacks</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+      <!-- ╔══════════════════════════════════════════════════════╗ -->
+      <!-- ║  RESUMO FINAL                                       ║ -->
+      <!-- ╚══════════════════════════════════════════════════════╝ -->
+      <section data-background="linear-gradient(135deg, #0f0c29, #302b63, #24243e)">
+        <br>
+        <div style="text-align: center;">
+          <p style="font-size: 2.5em; margin: 0;">📋</p>
+          <h2 style="color: white; font-size: 1.6em; margin: 10px 0;">Resumo da Aula</h2>
+          <div style="width: 60px; height: 3px; background: var(--accent); margin: 10px auto 20px; border-radius: 2px;"></div>
+        </div>
+        <div class="slide-content" style="max-width: 650px; margin: 0 auto;">
+          <div style="display: grid; gap: 10px;">
+            <div class="card fragment" style="padding: 14px 20px; display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 1.3em;">📝</span>
+              <span style="font-size: 0.85em;">React Native usa <strong>objetos JS</strong>, não CSS. Use <code>StyleSheet.create</code></span>
+            </div>
+            <div class="card fragment" style="padding: 14px 20px; display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 1.3em;">🔤</span>
+              <span style="font-size: 0.85em;">Propriedades em <strong>camelCase</strong>, sem unidades (px)</span>
+            </div>
+            <div class="card fragment" style="padding: 14px 20px; display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 1.3em;">📦</span>
+              <span style="font-size: 0.85em;"><strong>Flexbox</strong> é o layout padrão — direção <code>column</code></span>
+            </div>
+            <div class="card fragment" style="padding: 14px 20px; display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 1.3em;">🎯</span>
+              <span style="font-size: 0.85em;"><code>justifyContent</code> = eixo principal · <code>alignItems</code> = eixo cruzado</span>
+            </div>
+            <div class="card fragment" style="padding: 14px 20px; display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 1.3em;">✨</span>
+              <span style="font-size: 0.85em;"><code>flex: 1</code> = "ocupe todo o espaço disponível"</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    </div>
+  </div>
+
+  <!-- Scripts Reveal.js -->
+  <script src="./dist/reveal.js"></script>
+  <script src="./plugin/markdown/markdown.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+
+  <script>
+    Reveal.initialize({
+      center: false,
+      controls: true,
+      progress: true,
+      slideNumber: true,
+      history: true,
+      transition: 'convex',
+      plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
+      markdown: {
+        smartypants: true,
+      }
+    });
+  </script>
+</body>
+
+</html>

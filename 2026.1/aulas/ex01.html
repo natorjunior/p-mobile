@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="resultado"></div>
+    <button id="btn">Click</button>
+
+    <script>
+        let resultado = document.getElementById("resultado")
+        let btn = document.getElementById("btn")
+        let x = 50;
+        resultado.innerHTML = x
+        btn.addEventListener("click", ()=>{
+            x += 100
+            resultado.innerHTML = x
+            // console.log(x)
+        })
+
+    </script>    
+
+</body>
+</html>

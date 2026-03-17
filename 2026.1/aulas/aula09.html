@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula 09 - axios</title>
+  <title>Aula 09 - Storage e SQLite</title>
 
   <!-- Reveal.js -->
   <link rel="stylesheet" href="./dist/reveal.css">
@@ -17,49 +17,64 @@
   <!-- Menu plugin -->
   <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="./plugin/highlight/atom-one-dark.css"> -->
   <link rel="stylesheet" href="aula04-materials/style.css">
   <link rel="stylesheet" href="css/workshop.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+
   <style>
     .reveal h1,
     .reveal h2 {
       color: #0056b3;
+      transition: color 0.3s ease;
     }
 
     .reveal pre code {
-      font-size: 1em;
+      font-size: 0.95em;
       background: #222;
       border-radius: 8px;
-      padding: 10px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .reveal pre code:hover {
+      transform: scale(1.01);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .reveal p {
       font-size: 1.1em;
+      line-height: 1.6;
     }
 
     .step-box {
-      background: rgba(0, 123, 255, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 15px;
-      border: 2px solid #0056b3;
+      background: rgba(0, 123, 255, 0.08);
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin: 10px;
+      border-left: 4px solid #0056b3;
+      transition: all 0.3s ease;
+    }
+
+    .step-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .concept-box {
-      background: rgba(40, 167, 69, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 15px;
-      border: 2px solid #28a745;
+      background: rgba(40, 167, 69, 0.08);
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin: 10px;
+      border-left: 4px solid #28a745;
+      transition: all 0.3s ease;
     }
 
-    .example-box {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .concept-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .fragment.visible {
+      transition: all 0.5s ease;
     }
   </style>
 </head>
@@ -77,577 +92,321 @@
           Prof. Msc. Nator Junior Carvalho da Costa
         </p>
         <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-          Aula 09 - Navegação e APIs REST em React Native
+          Aula 09 - Storage e SQLite em React Native
         </h6>
         <h1>📱</h1>
       </section>
 
+      <!-- Slide 2: Objetivos -->
       <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
         <div style="text-align: center;">
-          <div style="
-          background: rgba(255, 255, 255, 0.1);
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(10px);
-          border: 2px solid rgba(255, 255, 255, 0.1);
-          margin: 20px;
-        ">
-            <h1 style="
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-          ">Objetivos da Aula 🎯</h1>
+          <div style="background: rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px); border: 2px solid rgba(255, 255, 255, 0.1); margin: 20px;">
+            <h1 style="color: white; font-size: 2.5em; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Objetivos 🎯</h1>
 
-            <ul style="
-            list-style: none;
-            padding: 0;
-            text-align: left;
-            color: white;
-            font-size: 1.2em;
-          ">
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>🧭</span>
-                Configurar React Navigation
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>📚</span>
-                Implementar Stack Navigation
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>📱</span>
-                Implementar Tab Navigation
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>🗄️</span>
-                Implementar Drawer Navigation
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>🌐</span>
-                Trabalhar com APIs REST
-              </li>
+            <ul style="list-style: none; padding: 0; text-align: left; color: white; font-size: 1.2em;">
+              <li class="fragment fade-up" style="margin: 15px 0;"><span>💾</span> AsyncStorage - Dados simples</li>
+              <li class="fragment fade-up" style="margin: 15px 0;"><span>🔒</span> Secure Store - Dados sensíveis</li>
+              <li class="fragment fade-up" style="margin: 15px 0;"><span>🗄️</span> SQLite - Banco de dados completo</li>
+              <li class="fragment fade-up" style="margin: 15px 0;"><span>🔄</span> CRUD operacional</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- Seção Navigation -->
-      <section>
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">React Navigation 🧭</h2>
-          <div class="concept-box">
-            <h6 style="color: white;">Configuração Inicial</h6>
-            <pre><code class="language-bash" data-trim>
-# Instalação
-npm install @react-navigation/native
-npm install @react-navigation/stack
-npm install react-native-screens react-native-safe-area-context</code></pre>
-          </div>
-
-          <div class="concept-box">
-            <h6 style="color: white;">Usando o Snack</h6>
-            <pre><code class="language-bash" data-trim>
-              {
-                "dependencies": {
-                  "react-native-paper": "4.9.2",
-                  "@expo/vector-icons": "^14.0.2",
-                  "@react-navigation/native": "^6.1.18",
-                  "@react-navigation/stack": "^6.4.1",
-                  "react-native-screens": "~4.4.0",
-                  "react-native-safe-area-context": "4.12.0",
-                  "react-native-gesture-handler": "~2.20.2"
-                }
-              }</code></pre>
+      <!-- Seção AsyncStorage -->
+      <section data-autoanimate>
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="title" style="color: white;">AsyncStorage 💾</h2>
+          <div class="concept-box" data-autoanimate-id="content">
+            <h3 style="color: white; margin-top: 0;">O que é?</h3>
+            <ul style="color: white; font-size: 1em;">
+              <li class="fragment fade-up">Armazenamento assíncrono, não criptografado</li>
+              <li class="fragment fade-up">Funciona como localStorage do navegador</li>
+              <li class="fragment fade-up">Pares chave-valor no dispositivo</li>
+            </ul>
           </div>
         </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <h2 style="color: white;">Stack Navigator</h2>
-          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers >
-// App.js
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="title" style="color: white;">Setup</h2>
+          <div data-autoanimate-id="content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-bash">npm install @react-native-async-storage/async-storage
 
-const Stack = createStackNavigator();
-</code></pre>
+import AsyncStorage from '@react-native-async-storage/async-storage';</code></pre>
+            </div>
+          </div>
         </section>
 
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="title" style="color: white;">Salvar • Recuperar • Remover</h2>
+          <div data-autoanimate-id="content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-javascript">// Salvar
+await AsyncStorage.setItem('nome', JSON.stringify(valor));
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <h2 style="color: white;">Stack Navigator</h2>
-          <pre data-id="code-animation-3" style="height: 70vh;"><code class="language-jsx" data-trim data-line-numbers>
-// App.js
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+// Recuperar
+const valor = await AsyncStorage.getItem('nome');
+const obj = valor ? JSON.parse(valor) : null;
 
-const Stack = createStackNavigator();
+// Remover
+await AsyncStorage.removeItem('nome');
+await AsyncStorage.clear(); // Remove tudo</code></pre>
+            </div>
+          </div>
+        </section>
 
-const App = () => {
-  return (
-    &lt;NavigationContainer&gt;
-      &lt;Stack.Navigator&gt;
-        &lt;Stack.Screen 
-          name="Home" 
-          component={HomeScreen}
-          options={{ title: 'Página Inicial' }}
-        /&gt;
-        &lt;Stack.Screen 
-          name="Details" 
-          component={DetailsScreen}
-          options={{ title: 'Detalhes' }}
-        /&gt;
-      &lt;/Stack.Navigator&gt;
-    &lt;/NavigationContainer&gt;
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="title" style="color: white;">Padrão Recomendado</h2>
+          <div data-autoanimate-id="content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-javascript">export const userStore = {
+  async save(user) {
+    await AsyncStorage.setItem('user', JSON.stringify(user));
+  },
+  async get() {
+    const data = await AsyncStorage.getItem('user');
+    return data ? JSON.parse(data) : null;
+  },
+  async clear() {
+    await AsyncStorage.removeItem('user');
+  }
+};
+
+// Uso
+await userStore.save({ name: 'João', age: 25 });
+const user = await userStore.get();</code></pre>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Seção Secure Store -->
+      <section data-autoanimate>
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="secure-title" style="color: white;">Secure Store 🔒</h2>
+          <div class="concept-box" data-autoanimate-id="secure-content">
+            <h3 style="color: white; margin-top: 0;">Para dados sensíveis</h3>
+            <ul style="color: white; font-size: 1em;">
+              <li class="fragment fade-up">Criptografia nativa do dispositivo</li>
+              <li class="fragment fade-up">Tokens, senhas, dados privados</li>
+              <li class="fragment fade-up">Limite: 2KB por item</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="secure-title" style="color: white;">Setup</h2>
+          <div data-autoanimate-id="secure-content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-bash">expo install expo-secure-store
+
+import * as SecureStore from 'expo-secure-store';</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="secure-title" style="color: white;">Salvar • Recuperar • Remover</h2>
+          <div data-autoanimate-id="secure-content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-javascript">// Salvar (criptografado)
+await SecureStore.setItemAsync('token', 'abc123...');
+
+// Recuperar (descriptografa)
+const token = await SecureStore.getItemAsync('token');
+
+// Remover
+await SecureStore.deleteItemAsync('token');
+
+// Logout
+await SecureStore.deleteItemAsync('token');
+await SecureStore.deleteItemAsync('userId');</code></pre>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Seção SQLite -->
+      <section data-autoanimate>
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="sqlite-title" style="color: white;">SQLite 🗄️</h2>
+          <div class="concept-box" data-autoanimate-id="sqlite-content">
+            <h3 style="color: white; margin-top: 0;">Banco de dados completo</h3>
+            <ul style="color: white; font-size: 1em;">
+              <li class="fragment fade-up">Banco relacional com SQL</li>
+              <li class="fragment fade-up">Dados estruturados e complexos</li>
+              <li class="fragment fade-up">Consultas avançadas</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="sqlite-title" style="color: white;">Setup</h2>
+          <div data-autoanimate-id="sqlite-content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-bash">expo install expo-sqlite
+
+import { openDatabaseAsync } from 'expo-sqlite';
+
+let db;
+db = await openDatabaseAsync('app.db');</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="sqlite-title" style="color: white;">Criar Tabela</h2>
+          <div data-autoanimate-id="sqlite-content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-javascript">export const initDB = async () => {
+  await db.execAsync(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE,
+      age INTEGER
+    );
+  `);
+};
+
+await initDB();</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="sqlite-title" style="color: white;">INSERT • Adicionar</h2>
+          <div data-autoanimate-id="sqlite-content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-javascript">export const insertUser = async (name, email, age) => {
+  const result = await db.runAsync(
+    'INSERT INTO users (name, email, age) VALUES (?, ?, ?);',
+    [name, email, age]
   );
-};</code></pre>
+  return result.lastInsertRowid;
+};
+
+// Uso
+const id = await insertUser('João', 'joao@email.com', 28);</code></pre>
+            </div>
+          </div>
         </section>
 
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="sqlite-title" style="color: white;">SELECT • Buscar</h2>
+          <div data-autoanimate-id="sqlite-content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-javascript">// Buscar todos
+export const getAll = async () => {
+  return await db.getAllAsync('SELECT * FROM users;');
+};
 
-
-
-
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <h2 style="color: white;">Navegação entre Telas</h2>
-          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
-// HomeScreen.js
-const HomeScreen = ({ navigation }) => {
-  return (
-    &lt;View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}&gt;
-      &lt;Button
-        title="Ir para Detalhes"
-        onPress={() => navigation.navigate('Details', {
-          itemId: 86,
-          otherParam: 'qualquer coisa',
-        })}
-      /&gt;
-    &lt;/View&gt;
+// Buscar por ID
+export const getById = async (id) => {
+  return await db.getFirstAsync(
+    'SELECT * FROM users WHERE id = ?;',
+    [id]
   );
 };
-</code></pre>
-        </section>
 
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <h2 style="color: white;">Navegação entre Telas</h2>
-          <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
-
-// DetailsScreen.js
-const DetailsScreen = ({ route, navigation }) => {
-  const { itemId, otherParam } = route.params;
-
-  return (
-    &lt;View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}&gt;
-      &lt;Text&gt;Detalhes do Item: {itemId}&lt;/Text&gt;
-      &lt;Text&gt;Outro Parâmetro: {otherParam}&lt;/Text&gt;
-      &lt;Button
-        title="Voltar"
-        onPress={() => navigation.goBack()}
-      /&gt;
-    &lt;/View&gt;
-  );
-};</code></pre>
-        </section>
-
-
-
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-            <!-- Coluna 2: Embed do Expo Snack -->
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/flatlist02" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
+// Uso
+const users = await getAll();
+const user = await getById(1);</code></pre>
             </div>
           </div>
         </section>
 
-        <!-- Seção Tab Navigator -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">(Tab Navigator) 🗂️</h2>
-          <div class="concept-box">
-            <h6 style="color: white;">Instalação</h6>
-            <pre><code class="language-bash">npm install @react-navigation/bottom-tabs
-npm install react-native-gesture-handler react-native-reanimated</code></pre>
-          </div>
-          <div class="concept-box">
-            <h6 style="color: white;">Usando o Snack</h6>
-            <pre><code class="language-bash" data-trim>
-              {
-                "dependencies": {
-                  "@expo/vector-icons": "^14.1.0",
-                  "react-native-paper": "4.9.2",
-                  "react-native-screens": "~4.10.0",
-                  "@react-navigation/stack": "^6.4.1",
-                  "react-native-reanimated": "~3.17.4",
-                  "@react-navigation/native": "^6.1.18",
-                  "@react-navigation/bottom-tabs": "^6.5.12",
-                  "react-native-safe-area-context": "5.4.0",
-                  "react-native-gesture-handler": "~2.24.0"
-                }
-              }</code></pre>
-          </div>
-        </section>
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <h2 style="color: white;">Exemplo de Tab Navigator</h2>
-          <pre><code class="language-jsx">import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-const Tab = createBottomTabNavigator();
-
-export default function App() {
-  return (
-    &lt;NavigationContainer&gt;
-      &lt;Tab.Navigator&gt;
-        &lt;Tab.Screen name="Home" component={HomeScreen} /&gt;
-        &lt;Tab.Screen name="Settings" component={SettingsScreen} /&gt;
-      &lt;/Tab.Navigator&gt;
-    &lt;/NavigationContainer&gt;
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="sqlite-title" style="color: white;">UPDATE • Atualizar</h2>
+          <div data-autoanimate-id="sqlite-content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-javascript">export const updateUser = async (id, name, email, age) => {
+  const result = await db.runAsync(
+    'UPDATE users SET name = ?, email = ?, age = ? WHERE id = ?;',
+    [name, email, age, id]
   );
-}</code></pre>
-        </section>
+  return result.changes > 0;
+};
 
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-            <!-- Coluna 2: Embed do Expo Snack -->
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/tab01" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
+// Uso
+await updateUser(1, 'João Silva', 'joao@novo.com', 29);</code></pre>
             </div>
           </div>
         </section>
 
-
-        <!-- Seção Drawer Navigator -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">
-            (Drawer Navigator) 🗄️</h2>
-          <div class="concept-box">
-            <h6 style="color: white;">Instalação</h6>
-            <pre><code class="language-bash">npm install @react-navigation/drawer
-npm install react-native-gesture-handler react-native-reanimated</code></pre>
-          </div>
-          <h6 style="color: white;">Exemplo de Drawer Navigator</h6>
-          <pre><code class="language-jsx">import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
-const Drawer = createDrawerNavigator();
-
-export default function App() {
-  return (
-    &lt;NavigationContainer&gt;
-      &lt;Drawer.Navigator&gt;
-        &lt;Drawer.Screen name="Home" component={HomeScreen} /&gt;
-        &lt;Drawer.Screen name="Profile" component={ProfileScreen} /&gt;
-      &lt;/Drawer.Navigator&gt;
-    &lt;/NavigationContainer&gt;
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="sqlite-title" style="color: white;">DELETE • Remover</h2>
+          <div data-autoanimate-id="sqlite-content" style="margin: 20px;">
+            <div class="step-box">
+              <pre><code class="language-javascript">export const deleteUser = async (id) => {
+  const result = await db.runAsync(
+    'DELETE FROM users WHERE id = ?;',
+    [id]
   );
-}</code></pre>
+  return result.changes > 0;
+};
+
+// Uso
+const deletado = await deleteUser(1);</code></pre>
+            </div>
+          </div>
         </section>
 
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="sqlite-title" style="color: white;">Consultas Úteis</h2>
+          <div data-autoanimate-id="sqlite-content" style="margin: 20px;">
+            <div class="step-box" style="font-size: 0.9em;">
+              <pre><code class="language-javascript">// Filtro
+await db.getAllAsync(
+  'SELECT * FROM users WHERE age > ?;', [18]
+);
 
-            <!-- Coluna 2: Embed do Expo Snack -->
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/drawer01" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
+// Contar
+const { total } = await db.getFirstAsync(
+  'SELECT COUNT(*) as total FROM users;'
+);
+
+// Ordenação e limite
+await db.getAllAsync(
+  'SELECT * FROM users ORDER BY name LIMIT 10;'
+);</code></pre>
             </div>
           </div>
         </section>
       </section>
 
-      <!-- Seção APIs REST -->
-      <section>
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">APIs REST em React Native 🌐</h2>
-          <div class="concept-box">
-            <h3 style="color: white;">O que é uma API REST?</h3>
+      <!-- Seção Atividades -->
+      <section data-autoanimate>
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="atividade-title" style="color: white;">Atividade 1 💻</h2>
+          <div class="concept-box" data-autoanimate-id="atividade-content">
+            <h3 style="color: white; margin-top: 0;">AsyncStorage</h3>
             <ul style="color: white;">
-              <li class="fragment fade-right">Interface para comunicação entre sistemas</li>
-              <li class="fragment fade-right">Baseada em requisições HTTP</li>
-              <li class="fragment fade-right">Retorna dados em formato JSON ou XML</li>
-              <li class="fragment fade-right">Métodos: GET, POST, PUT, DELETE</li>
+              <li class="fragment fade-up">Input para digitar nome</li>
+              <li class="fragment fade-up">Botão para salvar (AsyncStorage)</li>
+              <li class="fragment fade-up">Botão para carregar</li>
+              <li class="fragment fade-up">Exibir nome recuperado</li>
             </ul>
           </div>
         </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Usando Fetch API</h2>
-          <pre><code class="language-jsx" data-trim data-line-numbers>
-const [dados, setDados] = useState([]);
-const [loading, setLoading] = useState(true);
-
-useEffect(() => {
-  const fetchDados = async () => {
-    try {
-      const response = await fetch('https://api.exemplo.com/dados');
-      const json = await response.json();
-      setDados(json);
-    } catch (error) {
-      console.error('Erro:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchDados();
-}, []);</code></pre>
-        </section>
-
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/fetch01" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
-          </div>
-        </section>
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Usando Axios</h2>
-          <div class="concept-box">
-            <h6 style="color: white;">Instalação</h6>
-            <pre><code class="language-bash">npm install axios</code></pre>
-          </div>
-          <pre><code class="language-jsx" data-trim data-line-numbers>
-import axios from 'axios';
-
-const [dados, setDados] = useState([]);
-const [loading, setLoading] = useState(true);
-
-useEffect(() => {
-  const fetchDados = async () => {
-    try {
-      const response = await axios.get('https://api.exemplo.com/dados');
-      setDados(response.data);
-    } catch (error) {
-      console.error('Erro:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchDados();
-}, []);</code></pre>
-        </section>
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Exemplo Prático</h2>
-          <pre><code class="language-jsx" data-trim data-line-numbers>
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
-import axios from 'axios';
-
-export default function App() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
-      .then(response => {
-        setPosts(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error(error);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return (
-      &lt;View style={{ flex: 1, justifyContent: 'center' }}&gt;
-        &lt;ActivityIndicator size="large" /&gt;
-      &lt;/View&gt;
-    );
-  }
-
-  return (
-    &lt;FlatList
-      data={posts}
-      keyExtractor={item => item.id.toString()}
-      renderItem={({ item }) => (
-        &lt;View style={{ padding: 10, borderBottomWidth: 1 }}&gt;
-          &lt;Text style={{ fontSize: 18, fontWeight: 'bold' }}&gt;
-            {item.title}
-          &lt;/Text&gt;
-          &lt;Text&gt;{item.body}&lt;/Text&gt;
-        &lt;/View&gt;
-      )}
-    /&gt;
-  );
-}</code></pre>
-        </section>
-
-
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/fetch02" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <!-- Slide 1: Título do Workshop -->
-      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-        <br><br><br>
-        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-          Workshop Prático
-        </h4>
-        <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-          🚀 Construindo um Chat em Tempo Real
-        </h2>
-        <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-          Parte II
-        </p>
-        <p style="color: white; font-size: .8em; font-weight: 300; margin-top: 40px;">
-          Prof. Msc. Nator Junior Carvalho da Costa
-        </p>
-      </section>
-      <section>
-        <section data-background-gradient="linear-gradient(to right, #283b95, #17b2c3)">
-          <h2 style="color: white;">⚙️ Etapa 2: Preparando o Ambiente</h2>
-          <div class="workshop-step">
-            <h3 style="color: white;">Vamos precisar de:</h3>
-            <ul style="color: white; font-size: 1.1em;">
-              <li class="fragment fade-right">📱 Expo instalado</li>
-              <li class="fragment fade-right">📦 Biblioteca MQTT</li>
-              <li class="fragment fade-right">🎨 React Native Paper</li>
-            </ul>
-          </div>
-        </section>
-
-        <section data-background-color="#2c3e50">
-          <h3 style="color: white;">🛠️ Criando o Projeto</h3>
-          <pre><code class="language-bash" data-trim data-line-numbers>
-                    # Crie um novo projeto Expo
-                    npx create-expo-app chat-mqtt
-                    cd chat-mqtt
-
-                    # Instale as dependências
-                    npm install @react-navigation/native @react-navigation/stack
-                    npm install paho-mqtt
-                    npm install react-native-paper
-                </code></pre>
-          <div class="practical-exercise fragment fade-up">
-            <p>👩‍💻 Sua vez! Crie o projeto e instale as dependências</p>
-          </div>
-        </section>
-        <!-- Slide 1: Título do Workshop -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <br><br><br>
-          <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            Acesse o link abaixo e reproduza na sua máquina<br>
-            https://notepad.acilab.com.br/senacZap01
-          </p>
-          <ul style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            <li>Configure o Projeto e Inicialize com o código base</li>
-          </ul>
-        </section>
-        <!-- Slide 1: Título do Workshop -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <br><br><br>
-          <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            Acesse o link abaixo e reproduza na sua máquina<br>
-            https://notepad.acilab.com.br/senacZap02
-          </p>
-          <ul style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            <li>Vamos Melhorar a HomeScreen.js (Básica)</li>
-          </ul>
-        </section>
-
-        <!-- Slide 1: Título do Workshop -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <br><br><br>
-          <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            Acesse o link abaixo e reproduza na sua máquina<br>
-            https://notepad.acilab.com.br/senacZap03
-          </p>
-          <ul style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            <li>Vamos Melhorar a ChatScreen.js</li>
-          </ul>
-        </section>
-
-
-        <!-- Slide 1: Título do Workshop -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <br><br><br>
-          <p style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">
-            Acesse o link abaixo e reproduza na sua máquina<br>
-            https://notepad.acilab.com.br/senacZap04
-          </p>
-          <ul>
-            <li style="color: white; font-size: 1.2em; font-weight: 300; margin-top: 20px;">Aplicativo final</li>
-          </ul>
-        </section>
-      </section>
-
-      <!-- Seção de Atividades Práticas -->
-      <section>
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Atividades Práticas 💻</h2>
-          
-          <div class="concept-box">
-            <h3 style="color: white;">Atividade 1: Lista de Usuários com Fetch</h3>
-            <p style="color: white;">Crie um aplicativo que:</p>
+        <section data-autoanimate data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+          <h2 data-autoanimate-id="atividade-title" style="color: white;">Atividade 2 💻</h2>
+          <div class="concept-box" data-autoanimate-id="atividade-content">
+            <h3 style="color: white; margin-top: 0;">SQLite CRUD</h3>
             <ul style="color: white;">
-              <li>Busque usuários da API: https://jsonplaceholder.typicode.com/users</li>
-              <li>Exiba nome, email e empresa em uma FlatList</li>
-              <li>Implemente um indicador de carregamento</li>
-              <li>Adicione tratamento de erros</li>
+              <li class="fragment fade-up">Tabela 'notas' com: id, titulo, conteudo</li>
+              <li class="fragment fade-up">Adicionar nova nota</li>
+              <li class="fragment fade-up">Listar todas as notas</li>
+              <li class="fragment fade-up">Editar e deletar notas</li>
             </ul>
           </div>
         </section>
-
-
-      <!-- Seção de Atividades Práticas -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <h2 style="color: white;">Atividades Práticas 💻</h2>
-          <div class="concept-box">
-        <h3 style="color: white;">Atividade 2: Produtos com Axios</h3>
-        <p style="color: white;">Desenvolva um aplicativo que:</p>  
-        <ul style="color: white;">
-          <li>Use Axios para buscar produtos de: https://dummyjson.com/products</li>
-          <li>Implemente filtro por categoria de produto</li>
-          <li>Adicione busca por nome do produto</li>
-          <li>Exiba imagens e detalhes dos produtos em cards</li>
-          <li>Mostre indicador de carregamento durante as requisições</li>
-        </ul>
-          </div>
-        </section>
+      </section>
 
     </div>
   </div>
-
-
 
   <!-- Scripts Reveal.js -->
   <script src="dist/reveal.js"></script>
@@ -663,10 +422,12 @@ export default function App() {
       slideNumber: true,
       history: true,
       transition: 'convex',
+      transitionSpeed: 'default',
+      autoAnimate: true,
+      autoAnimateEasing: 'ease-in-out',
+      autoAnimateDuration: 0.8,
       plugins: [RevealMarkdown, RevealHighlight, RevealMenu],
-      markdown: {
-        smartypants: true
-      },
+      markdown: { smartypants: true },
       width: 1200,
       height: 800,
       hash: true,

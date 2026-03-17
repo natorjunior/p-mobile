@@ -18,45 +18,135 @@
   <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" rel="stylesheet">
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    .reveal h1,
-    .reveal h2 {
-      color: #0056b3;
+    :root {
+      --primary: #0056b3;
+      --accent: #00c9a7;
+      --dark: #1a1a2e;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.12);
+    }
+
+    .reveal {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .reveal h1, .reveal h2 {
+      color: var(--primary);
+    }
+
+    .reveal pre {
+      box-shadow: var(--shadow);
+      border-radius: 12px;
     }
 
     .reveal pre code {
-      font-size: 1em;
-      background: #222;
-      border-radius: 8px;
-      padding: 10px;
+      font-size: 0.9em;
+      background: #1e1e2e;
+      border-radius: 12px;
+      padding: 18px 20px;
+      line-height: 1.6;
     }
 
     .reveal p {
-      font-size: 1.1em;
+      font-size: 1em;
+      line-height: 1.6;
     }
 
+    .card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .badge-green { background: #10b981; color: white; }
+    .badge-blue { background: #3b82f6; color: white; }
+    .badge-purple { background: #8b5cf6; color: white; }
+
     .step-box {
-      background: rgba(0, 123, 255, 0.1);
+      background: rgba(0, 123, 255, 0.15);
       padding: 20px;
-      border-radius: 10px;
+      border-radius: var(--radius);
       margin: 15px;
-      border: 2px solid #0056b3;
+      border-left: 4px solid #0056b3;
     }
 
     .concept-box {
-      background: rgba(40, 167, 69, 0.1);
+      background: rgba(40, 167, 69, 0.15);
       padding: 20px;
-      border-radius: 10px;
+      border-radius: var(--radius);
       margin: 15px;
-      border: 2px solid #28a745;
+      border-left: 4px solid #28a745;
     }
 
     .example-box {
       background: rgba(255, 255, 255, 0.1);
       padding: 20px;
-      border-radius: 10px;
+      border-radius: var(--radius);
       margin: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .tip-box {
+      background: rgba(16,185,129,0.15);
+      border: 1px solid rgba(16,185,129,0.4);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-top: 12px;
+      font-size: 0.85em;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .styled-table {
+      width: 100%;
+      color: white;
+      font-size: 0.9em;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .styled-table thead tr {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .styled-table th, .styled-table td {
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    .styled-table tbody tr:hover {
+      background: rgba(255,255,255,0.05);
     }
   </style>
 </head>
@@ -65,97 +155,61 @@
   <div class="reveal">
     <div class="slides">
       <!-- Slide 1: Título -->
-      <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-        <br><br><br><br>
-        <h4 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-          Programação para Dispositivos Móveis
-        </h4>
-        <p style="color: white; font-size: .5em; font-weight: 300; margin-top: 10px;">
-          Prof. Msc. Nator Junior Carvalho da Costa
-        </p>
-        <h6 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
-          Aula 06 - useContext e Context em React Native
-        </h6>
-        <h1>🌐</h1>
+      <section data-background="linear-gradient(135deg, #0f0c29, #302b63, #24243e)">
+        <br><br><br>
+        <div style="text-align: center;">
+          <p style="font-size: 3.5em; margin: 0; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">🌐</p>
+          <h4 style="color: rgba(255,255,255,0.6); font-weight: 300; font-size: 0.9em; letter-spacing: 3px; text-transform: uppercase; margin: 10px 0 5px;">
+            Programação para Dispositivos Móveis
+          </h4>
+          <h2 style="color: white; font-size: 2em; margin: 10px 0; text-shadow: 0 2px 12px rgba(0,0,0,0.4);">
+            useContext e Context API
+          </h2>
+          <div style="width: 80px; height: 3px; background: #00c9a7; margin: 15px auto; border-radius: 2px;"></div>
+          <p style="color: rgba(255,255,255,0.5); font-size: 0.75em; margin-top: 15px;">
+            Prof. Msc. Nator Junior Carvalho da Costa
+          </p>
+        </div>
       </section>
 
-
-
-      <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
-        <div style="text-align: center;">
-          <div style="
-          background: rgba(255, 255, 255, 0.1);
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(10px);
-          border: 2px solid rgba(255, 255, 255, 0.1);
-          margin: 20px;
-        ">
-            <h1 style="
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-          ">Objetivos da Aula 🎯</h1>
-
-            <ul style="
-            list-style: none;
-            padding: 0;
-            text-align: left;
-            color: white;
-            font-size: 1.2em;
-          ">
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>✨</span>
-                Entender o Context API
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>🔄</span>
-                Resolver o problema do prop drilling
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>⚡</span>
-                Implementar gerenciamento de estado global
-              </li>
-              <li class="fragment fade-up" style="margin: 15px 0; padding-left: 25px; position: relative;">
-                <span>🛠️</span>
-                Criar um projeto prático
-              </li>
-            </ul>
-          </div>
+      <!-- Slide 2: Objetivos da Aula -->
+      <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)">
+        <br>
+        <h2 style="color: white; text-align: center; margin-bottom: 30px;">🎯 Objetivos da Aula</h2>
+        <div style="max-width: 700px; margin: 0 auto;">
+          <ul style="list-style: none; padding: 0; font-size: 0.95em;">
+            <li class="fragment" style="margin: 12px 0; padding-left: 30px; position: relative; color: rgba(255,255,255,0.9);">
+              <span style="position: absolute; left: 0; color: #00c9a7; font-weight: bold;">✨</span>
+              Entender o <strong>Context API</strong> e seu propósito
+            </li>
+            <li class="fragment" style="margin: 12px 0; padding-left: 30px; position: relative; color: rgba(255,255,255,0.9);">
+              <span style="position: absolute; left: 0; color: #00c9a7; font-weight: bold;">🔄</span>
+              Resolver o problema do <strong>prop drilling</strong>
+            </li>
+            <li class="fragment" style="margin: 12px 0; padding-left: 30px; position: relative; color: rgba(255,255,255,0.9);">
+              <span style="position: absolute; left: 0; color: #00c9a7; font-weight: bold;">⚡</span>
+              Implementar <strong>gerenciamento de estado global</strong>
+            </li>
+            <li class="fragment" style="margin: 12px 0; padding-left: 30px; position: relative; color: rgba(255,255,255,0.9);">
+              <span style="position: absolute; left: 0; color: #00c9a7; font-weight: bold;">🛠️</span>
+              Criar um projeto prático com Context
+            </li>
+          </ul>
         </div>
-        </li>
       </section>
 
       <section>
         <!-- Frame: Entendendo o problema -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
-          <div style="
-          background: rgba(255, 255, 255, 0.1);
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(10px);
-          border: 2px solid rgba(255, 255, 255, 0.1);
-        ">
-            <h2 style="
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin-bottom: 30px;
-          ">Entendendo o problema! 🤔</h2>
-
-            <div class="fragment fade-up">
-              <p style="
-              color: white;
-              font-size: 1.3em;
-              text-align: center;
-              line-height: 1.6;
-            ">
-                Como compartilhar dados entre componentes<br>
-                sem passar props manualmente por vários níveis?
-              </p>
-            </div>
+        <section data-background="linear-gradient(135deg, #0f0c29, #302b63, #24243e)">
+          <br><br><br>
+          <div style="text-align: center;">
+            <p style="font-size: 2.5em; margin: 0;">🤔</p>
+            <h2 style="color: white; font-size: 1.8em; margin: 15px 0;">Entendendo o Problema</h2>
+            <div style="width: 60px; height: 3px; background: #00c9a7; margin: 15px auto; border-radius: 2px;"></div>
+            <p class="fragment" style="color: rgba(255,255,255,0.8); font-size: 1.1em; max-width: 600px; margin: 20px auto;">
+              Como compartilhar dados entre componentes<br>
+              sem passar <strong>props manualmente</strong> por vários níveis?
+            </p>
           </div>
         </section>
 
@@ -163,140 +217,60 @@
 
 
         <!-- Frame: Relembrando Props -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <div style="
-          background: rgba(255, 255, 255, 0.1);
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(10px);
-          border: 2px solid rgba(255, 255, 255, 0.1);
-        ">
-            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-              Relembrando Props 🔄
-            </h2>
-
-            <div>
-              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
-// Componente Pai
+        <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" data-auto-animate>
+          <h3 style="color: white; margin-bottom: 30px;">🔄 Relembrando: Props</h3>
+          <pre data-id="code-animation-3"><code class="language-jsx" style="font-size: 0.8em; width: 100%;">// Componente Pai
 const ListaDeTarefas = () => {
-  const tarefas = []; //o começo
-...</code></pre>
-            </div>
-          </div>
+  const tarefas = []; // dados no pai
+  return &lt;ExibirTarefa tarefas={tarefas} /&gt;;
+};</code></pre>
         </section>
 
-
-        <!-- Frame: Relembrando Props -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <div style="
-          background: rgba(255, 255, 255, 0.1);
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(10px);
-          border: 2px solid rgba(255, 255, 255, 0.1);
-        ">
-            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-              Relembrando Props 🔄
-            </h2>
-
-            <div>
-              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
-      // Componente Pai
-      const ListaDeTarefas = () => {
-        const tarefas = [
-          { id: 1, texto: "Estudar React", concluida: false },
-          { id: 2, texto: "Fazer exercícios", concluida: true }
-        ]; // Incluindo valores na lista
-        ...</code></pre>
-            </div>
-          </div>
-        </section>
-
-        <!-- Frame: Relembrando Props -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <div style="
-    background: rgba(255, 255, 255, 0.1);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-  ">
-            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-              Relembrando Props 🔄
-            </h2>
-
-            <div>
-              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
-// Componente Pai
+        <!-- Frame: Props step 2 -->
+        <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" data-auto-animate>
+          <h3 style="color: white; margin-bottom: 30px;">🔄 Relembrando: Props</h3>
+          <pre data-id="code-animation-3"><code class="language-jsx" style="font-size: 0.75em;">// Componente Pai
 const ListaDeTarefas = () => {
   const tarefas = [
     { id: 1, texto: "Estudar React", concluida: false },
     { id: 2, texto: "Fazer exercícios", concluida: true }
   ];
+  return &lt;ExibirTarefa tarefas={tarefas} /&gt;;
+};
 
+// Componente Filho recebe via props
+const ExibirTarefa = ({ tarefas }) => {
   return (
-    &lt;View style={styles.container}&gt;
-      &lt;Text style={styles.titulo}&gt;Minhas Tarefas&lt;/Text&gt;
-      &lt;ExibirTarefa tarefas={tarefas} /&gt;
+    &lt;View&gt;
+      {tarefas.map(t =&gt; (
+        &lt;Tarefa key={t.id} tarefa={t} /&gt;
+      ))}
     &lt;/View&gt;
   );
 };</code></pre>
-            </div>
+          <div class="tip-box fragment" style="color: white; background: rgba(59,130,246,0.2); border-left-color: #3b82f6; margin-top: 15px;">
+            <span>📌</span>
+            <span>Props fluem <strong>de cima para baixo</strong> (unidirecional)</span>
           </div>
-
         </section>
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <div style="
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-          ">
-            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-              Relembrando Props 🔄
-            </h2>
 
-            <div>
-              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1-15|16|17|20-24|16-28">
-        // Componente Pai
-        const ListaDeTarefas = () => {
-          const tarefas = [
-            { id: 1, texto: "Estudar React", concluida: false },
-            { id: 2, texto: "Fazer exercícios", concluida: true }
-          ];
-  
-          return (
-            &lt;View style={styles.container}&gt;
-              &lt;Text style={styles.titulo}&gt;Minhas Tarefas&lt;/Text&gt;
-              &lt;ExibirTarefa tarefas={tarefas} /&gt;
-            &lt;/View&gt;
-          );
-        };
-  
-        // Componente Filho
-        const ExibirTarefa = (props) => {
-          return (
-            &lt;View&gt;
-              {props.tarefas.map(tarefa => (
-                &lt;Text key={tarefa.id}&gt;
-                  {tarefa.concluida ? '✅' : '⭕'} {tarefa.texto}
-                &lt;/Text&gt;
-              ))}
-            &lt;/View&gt;
-          );
-        };</code></pre>
-            </div>
-
-            <ul style="color: white; text-align: left;">
-              <li class="fragment fade-up">Props são somente leitura</li>
-              <li class="fragment fade-up">Passam dados de cima para baixo</li>
-              <li class="fragment fade-up">São imutáveis no componente filho</li>
-            </ul>
+        <!-- Frame: Prop Drilling Visual -->
+        <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)">
+          <h3 style="color: white; margin-bottom: 25px;">⚠️ O Problema: Prop Drilling</h3>
+          <p class="fragment" style="color: rgba(255,255,255,0.8); font-size: 0.95em; text-align: center; margin-bottom: 20px;">
+            Quando dados precisam passar por <strong>muitos níveis</strong> de componentes:
+          </p>
+          <pre class="fragment" style="margin: 10px;"><code class="language-jsx" style="font-size: 0.7em;">// Dados em App
+&lt;App user={usuario}&gt;
+  &lt;Header user={usuario}&gt;            {/* passa user */}
+    &lt;Profile user={usuario}&gt;         {/* passa user */}
+      &lt;Avatar user={usuario} /&gt;      {/* finalmente usa! */}
+    &lt;/Profile&gt;
+  &lt;/Header&gt;
+&lt;/App&gt;</code></pre>
+          <div class="tip-box fragment" style="background: rgba(239,68,68,0.15); border-left-color: #ef4444; color: white;">
+            <span>❌</span>
+            <span><strong>Ineficiente:</strong> Componentes intermediários não usam o dado, apenas repassam</span>
           </div>
         </section>
 
@@ -304,262 +278,177 @@ const ListaDeTarefas = () => {
 
 
 
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-
-            <!-- Coluna 2: Embed do Expo Snack -->
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/aula07-ex1" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
+        <!-- Exemplo Expo Snack -->
+        <section data-align="center" data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" style="padding: 20px;">
+          <h3 style="color: white; margin-bottom: 20px;">📱 Veja um exemplo prático:</h3>
+          <div data-snack-id="@natorjunior/aula06-props" data-snack-platform="web" data-snack-preview="true" data-snack-theme="light"
+            style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%; max-width: 600px; margin: 0 auto;">
           </div>
+          <script async src="https://snack.expo.dev/embed.js"></script>
         </section>
 
-        <!-- Frame: Relembrando Props -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <div style="
-          background: rgba(255, 255, 255, 0.1);
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(10px);
-          border: 2px solid rgba(255, 255, 255, 0.1);
-        ">
-            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-              Props 🔄
-            </h2>
-
-            <div>
-              <pre data-id="code-animation-4"><code class="language-jsx" data-trim data-line-numbers>
-      // Componente Pai
-      const ListaDeTarefas = () => {
-        const tarefas = [
-          { id: 1, texto: "Estudar React", concluida: false },
-          { id: 2, texto: "Fazer exercícios", concluida: true }
-        ];
-
-        return (
-          &lt;View style={styles.container}&gt;
-            &lt;Text style={styles.titulo}&gt;Minhas Tarefas&lt;/Text&gt;
-            &lt;ExibirTarefa tarefas={tarefas} /&gt;
-          &lt;/View&gt;
-        );
-      };
-
-      // Componente Filho
-      const ExibirTarefa = (props) => {
-        return (
-          &lt;View&gt;
-            {props.tarefas.map(tarefa => (
-              &lt;Tarefa key={tarefa.id} tarefa={tarefa} /&gt;
-            ))}
-          &lt;/View&gt;
-        );
-      };
-
-      // Componente Neto
-      const Tarefa = ({ tarefa }) => {
-        return (
-          &lt;Text&gt;
-            {tarefa.concluida ? '✅' : '⭕'} {tarefa.texto}
-          &lt;/Text&gt;
-        );
-      };</code></pre>
-            </div>
-
-          </div>
-        </section>
-
-
-
-
-
-
-
-
-
-
-        <section data-background-gradient="radial-gradient(#1e3c72, #2a5298)">
+        <!-- Context API - Introdução -->
+        <section data-background="linear-gradient(135deg, #0f0c29, #302b63, #24243e)">
           <br><br><br>
           <div style="text-align: center;">
-            <div style="
-          background: rgba(255, 255, 255, 0.1);
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(10px);
-          border: 2px solid rgba(255, 255, 255, 0.1);
-          margin: 20px;
-        ">
-
-              <h1 style="
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-          ">Ampliando os Exemplos🎯</h1>
-            </div>
+            <p style="font-size: 2.5em; margin: 0;">⚡</p>
+            <h2 style="color: white; font-size: 1.8em; margin: 15px 0;">Context API</h2>
+            <div style="width: 60px; height: 3px; background: #00c9a7; margin: 15px auto; border-radius: 2px;"></div>
+            <p class="fragment" style="color: rgba(255,255,255,0.8); font-size: 1.1em; max-width: 600px; margin: 20px auto;">
+              Uma forma de <strong>compartilhar estado</strong> sem passar props por todos os componentes
+            </p>
           </div>
-          </li>
         </section>
+
+        <!-- Como funciona Context -->
+        <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" data-auto-animate>
+          <h3 style="color: white; margin-bottom: 25px;">✨ Solução: useContext</h3>
+          <pre data-id="code-animation-4"><code class="language-jsx" style="font-size: 0.75em;">// Passo 1: Criar Context
+import { createContext } from 'react';
+const UserContext = createContext();</code></pre>
+        </section>
+
+        <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" data-auto-animate>
+          <h3 style="color: white; margin-bottom: 25px;">✨ Solução: useContext</h3>
+          <pre data-id="code-animation-4"><code class="language-jsx" style="font-size: 0.7em;">// Passo 2: Criar Provider
+const UserProvider = ({ children }) =&gt; {
+  const usuario = { nome: 'João', idade: 25 };
+  
+  return (
+    &lt;UserContext.Provider value={usuario}&gt;
+      {children}
+    &lt;/UserContext.Provider&gt;
+  );
+};</code></pre>
+        </section>
+
+        <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" data-auto-animate>
+          <h3 style="color: white; margin-bottom: 25px;">✨ Solução: useContext</h3>
+          <pre data-id="code-animation-4"><code class="language-jsx" style="font-size: 0.75em;">// Passo 3: Envolver App com Provider
+const App = () =&gt; {
+  return (
+    &lt;UserProvider&gt;
+      &lt;Header /&gt;
+      &lt;Content /&gt;
+      &lt;Footer /&gt;
+    &lt;/UserProvider&gt;
+  );
+};</code></pre>
+          <div class="tip-box fragment" style="color: white; background: rgba(16,185,129,0.2); border-left-color: #10b981;">
+            <span>✅</span>
+            <span>Sem prop drilling! Todos os componentes filhos podem usar dados</span>
+          </div>
+        </section>
+
+        <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" data-auto-animate>
+          <h3 style="color: white; margin-bottom: 25px;">✨ Solução: useContext</h3>
+          <pre data-id="code-animation-4"><code class="language-jsx" style="font-size: 0.8em;">// Passo 4: Consumir dados em qualquer componente
+import { useContext } from 'react';
+
+const Avatar = () =&gt; {
+  const user = useContext(UserContext);
+  
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;{user.nome}&lt;/Text&gt;
+      &lt;Text&gt;{user.idade} anos&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};</code></pre>
+          <p class="fragment" style="color: #00c9a7; font-weight: bold; font-size: 0.9em;">Nenhuma prop intermediária! 🎉</p>
+        </section>
+
+
+
+
+
+
+
+
+
+
+      <!-- Ampliando os Exemplos -->
+      <section data-background="linear-gradient(135deg, #0f0c29, #302b63, #24243e)">
+        <br><br><br>
+        <div style="text-align: center;">
+          <p style="font-size: 2.5em; margin: 0;">🎯</p>
+          <h2 style="color: white; font-size: 1.8em; margin: 15px 0;">Ampliando os Exemplos</h2>
+          <div style="width: 60px; height: 3px; background: #00c9a7; margin: 15px auto; border-radius: 2px;"></div>
+          <p class="fragment" style="color: rgba(255,255,255,0.8); font-size: 1.05em; max-width: 600px; margin: 20px auto;">
+            Vamos ver como usar Context em um projeto real
+          </p>
+        </div>
+      </section>
 
 
         <!-- Frame: Exemplo de Prop Drilling -->
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <div style="background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-          ">
-            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-              Exemplo de Prop Drilling 🔄
-            </h2>
+        <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" data-auto-animate>
+          <h3 style="color: white; margin-bottom: 25px;">⚠️ Prop Drilling — Nível 1</h3>
+          <pre data-id="code-prop-drill"><code class="language-jsx" style="font-size: 0.78em;">// App: cria o estado
+const App = () => {
+  const prefs = {
+    fontSize: 16,
+    isDarkMode: true,
+    language: 'pt'
+  };
+  
+  return &lt;Header prefs={prefs} /&gt;;
+};</code></pre>
+        </section>
 
-            <div>
-              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers>
-      // Componente Pai
-      const App = () => {
-        const userPreferences = {
-          fontSize: 16,
-          isDarkMode: true,
-          language: 'pt'
-        };</code></pre>
-            </div>
+        <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" data-auto-animate>
+          <h3 style="color: white; margin-bottom: 25px;">⚠️ Prop Drilling — Nível 2</h3>
+          <pre data-id="code-prop-drill"><code class="language-jsx" style="font-size: 0.75em;">// Header: repassa props (não usa!)
+const Header = ({ prefs }) =&gt; (
+  &lt;View&gt;
+    &lt;NavBar prefs={prefs} /&gt;
+    &lt;Content prefs={prefs} /&gt;
+  &lt;/View&gt;
+);
+
+// NavBar: repassa novamente!
+const NavBar = ({ prefs }) =&gt; (
+  &lt;View&gt;
+    &lt;Menu prefs={prefs} /&gt;
+  &lt;/View&gt;
+);</code></pre>
+          <p class="fragment" style="color: #f59e0b; font-size: 0.85em; margin-top: 10px;">😩 Componentes que não usam os dados</p>
+        </section>
+
+        <section data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" data-auto-animate>
+          <h3 style="color: white; margin-bottom: 25px;">⚠️ Prop Drilling — Nível 3</h3>
+          <pre data-id="code-prop-drill"><code class="language-jsx" style="font-size: 0.7em;">// Menu: ainda repassa!
+const Menu = ({ prefs }) =&gt; (
+  &lt;View&gt;
+    &lt;ThemeButton prefs={prefs} /&gt;
+    &lt;LanguageButton prefs={prefs} /&gt;
+  &lt;/View&gt;
+);
+
+// ThemeButton: FINALMENTE usa!
+const ThemeButton = ({ prefs }) =&gt; (
+  &lt;Pressable&gt;
+    &lt;Text style={{
+      fontSize: prefs.fontSize,
+      color: prefs.isDarkMode ? '#fff' : '#000'
+    }}&gt;
+      {prefs.isDarkMode ? '🌙' : '☀️'}
+    &lt;/Text&gt;
+  &lt;/Pressable&gt;
+);</code></pre>
+          <div class="tip-box fragment" style="background: rgba(239,68,68,0.2); border-left-color: #ef4444; color: white; font-size: 0.8em;">
+            <span>❌</span>
+            <span><strong>3 componentes</strong> apenas repassando dados que não usam!</span>
           </div>
         </section>
 
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <div style="
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-          ">
-            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-              Exemplo de Prop Drilling 🔄
-            </h2>
-
-            <div>
-              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1|3-7|11|12|13|12">
-      // Componente Pai
-      const App = () => {
-        const userPreferences = {
-          fontSize: 16,
-          isDarkMode: true,
-          language: 'pt'
-        };
-
-        return (
-          &lt;View&gt;
-            &lt;Header userPreferences={userPreferences} /&gt;
-            &lt;MainContent userPreferences={userPreferences} /&gt;
-            &lt;Footer userPreferences={userPreferences} /&gt;
-          &lt;/View&gt;
-        );
-      };</code></pre>
-            </div>
+        <!-- Exemplo Expo Snack - Prop Drilling -->
+        <section data-align="center" data-background="linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)" style="padding: 20px;">
+          <h3 style="color: white; margin-bottom: 20px;">📱 Veja um exemplo com Prop Drilling:</h3>
+          <div data-snack-id="@natorjunior/aula06-prop-drilling" data-snack-platform="web" data-snack-preview="true" data-snack-theme="light"
+            style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%; max-width: 600px; margin: 0 auto;">
           </div>
-        </section>
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <div style="
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-          ">
-            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-              Exemplo de Prop Drilling 🔄
-            </h2>
-
-            <div>
-              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1|3-7|5|10|12-15|14">
-      const MainContent = ({ userPreferences }) => {
-        return (
-          &lt;View&gt;
-            &lt;Sidebar userPreferences={userPreferences} /&gt;
-            &lt;Content userPreferences={userPreferences} /&gt;
-          &lt;/View&gt;
-        );
-      };
-
-      const Content = ({ userPreferences }) => {
-        return (
-          &lt;View&gt;
-            &lt;Article userPreferences={userPreferences} /&gt;
-            &lt;Comments userPreferences={userPreferences} /&gt;
-          &lt;/View&gt;
-        );
-      };</code></pre>
-            </div>
-          </div>
-        </section>
-
-        <section data-background-gradient="radial-gradient(#283b95, #17b2c3)" data-auto-animate>
-          <div style="
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-          ">
-            <h2 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-              Exemplo de Prop Drilling 🔄
-            </h2>
-
-            <div>
-              <pre data-id="code-animation-3"><code class="language-jsx" data-trim data-line-numbers="1|3-7|5|10|11|13-18">
-      const Comments = ({ userPreferences }) => {
-        return (
-          &lt;View&gt;
-            &lt;CommentList userPreferences={userPreferences} /&gt;
-            &lt;CommentForm userPreferences={userPreferences} /&gt;
-          &lt;/View&gt;
-        );
-      };
-
-      const CommentForm = ({ userPreferences }) => {
-        const { fontSize, isDarkMode, language } = userPreferences;
-        return (
-          &lt;View style={{ 
-            backgroundColor: isDarkMode ? '#333' : '#fff'
-          }}&gt;
-            &lt;TextInput style={{ fontSize: fontSize }} /&gt;
-            &lt;Text&gt;{language === 'pt' ? 'Enviar' : 'Submit'}&lt;/Text&gt;
-          &lt;/View&gt;
-        );
-      };</code></pre>
-            </div>
-
-            <ul style="color: white; text-align: left;">
-              <li class="fragment fade-up">Observe como userPreferences é passado por vários níveis</li>
-              <li class="fragment fade-up">Cada componente intermediário precisa receber e passar adiante</li>
-              <li class="fragment fade-up">Isso é o prop drilling!</li>
-            </ul>
-          </div>
-        </section>
-        <section data-align="center" data-background-gradient="radial-gradient(#283b95, #17b2c3)"
-          style="padding: 20px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
-            <div style="flex: 1 1 50%; padding: 20px; box-sizing: border-box;">
-              <div data-snack-id="@natorjunior/aula07-ex2" data-snack-platform="web" data-snack-preview="true"
-                data-snack-theme="light"
-                style="overflow:hidden;background:#fbfcfd;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%">
-              </div>
-              <script async src="https://snack.expo.dev/embed.js"></script>
-            </div>
-          </div>
+          <script async src="https://snack.expo.dev/embed.js"></script>
         </section>
       </section>
 
